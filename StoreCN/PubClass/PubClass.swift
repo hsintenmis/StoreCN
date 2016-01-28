@@ -18,20 +18,13 @@ class PubClass {
     var AppDelg: AppDelegate!
     
     // 本專案 其他 public property
-    var aryLangCode = ["Base", "zh-Hans", "zh-Hant", "es"]  // 語系相關
-    
-    // private property
-    private let mVCtrl: UIViewController!
-    
-    // pop Window 相關
-    var isPopWindowShow = false; // 頁面是否有 popWindow 顯示中
-    var mPopLoading: UIAlertController? // 目前產生 pop Loading 視窗的 'ViewControler'
+    let aryLangCode = ["Base", "zh-Hans"]  // 語系相關
+    let filenameMEADDB = "meaddb.txt"  // MEAD DB 資料檔名稱
     
     /**
     * init
     */
-    init(viewControl: UIViewController) {
-        mVCtrl = viewControl;
+    init() {
         AppDelg = UIApplication.sharedApplication().delegate! as! AppDelegate
     }
     
@@ -47,6 +40,13 @@ class PubClass {
      */
     func getAppDelgVal(strKey: String)->AnyObject {
         return AppDelg.valueForKey(strKey)!
+    }
+    
+    /**
+     * AppDelegate reload
+     */
+    func ReloadAppDelg() {
+        self.AppDelg = UIApplication.sharedApplication().delegate! as! AppDelegate
     }
     
     /**
@@ -69,7 +69,7 @@ class PubClass {
         dictPref["acc"] = ""
         dictPref["psd"] = ""
         dictPref["issave"] = true
-        dictPref["lang"] = aryLangCode[0]
+        dictPref["lang"] = aryLangCode[1]
         
         // 取得 pref data
         if let strAcc: String = mPref.objectForKey("acc") as? String {
@@ -121,7 +121,7 @@ class PubClass {
     /**
      * [我知道了] 彈出視窗
      */
-    func popIsee(var Title strTitle: String? = nil, Msg strMsg: String!) {
+    func popIsee(mVCtrl: UIViewController, var Title strTitle: String? = nil, Msg strMsg: String!) {
         if strTitle == nil {
             strTitle = getLang("sysprompt")
         }
@@ -131,14 +131,14 @@ class PubClass {
         mAlert.addAction(UIAlertAction(title:getLang("i_see"), style: UIAlertActionStyle.Default, handler:nil))
         
         dispatch_async(dispatch_get_main_queue(), {
-            self.mVCtrl.presentViewController(mAlert, animated: true, completion: nil)
+            mVCtrl.presentViewController(mAlert, animated: true, completion: nil)
         })
     }
     
     /**
      * [我知道了] 彈出視窗, with 'handler'
      */
-    func popIsee(var Title strTitle: String? = nil, Msg strMsg: String!, withHandler mHandler:()->Void) {
+    func popIsee(mVCtrl: UIViewController, var Title strTitle: String? = nil, Msg strMsg: String!, withHandler mHandler:()->Void) {
         if strTitle == nil {
             strTitle = getLang("sysprompt")
         }
@@ -150,7 +150,7 @@ class PubClass {
         ))
         
         dispatch_async(dispatch_get_main_queue(), {
-            self.mVCtrl.presentViewController(mAlert, animated: true, completion: nil)
+            mVCtrl.presentViewController(mAlert, animated: true, completion: nil)
         })
     }
     
@@ -160,11 +160,11 @@ class PubClass {
      * @param aryMsg: ex. ary[0]=title, ary[1]=msg
      * @param withHandlerYes, withHandlerNo: 點取 Y,N 執行程序
      */
-    func popConfirm(aryMsg: Array<String>!, withHandlerYes mHandlerYes:()->Void, withHandlerNo mHandlerNo:()->Void) {
+    func popConfirm(mVCtrl: UIViewController, aryMsg: Array<String>!, withHandlerYes mHandlerYes:()->Void, withHandlerNo mHandlerNo:()->Void) {
         let strTitle = (aryMsg[0] == "") ? getLang("sysprompt") : aryMsg[0]
         let mAlert = UIAlertController(title: strTitle, message: aryMsg[1], preferredStyle:UIAlertControllerStyle.Alert)
         
-        // btn 'Yes', 跳離本頁
+        // btn 'Yes', 執行 執行程序
         mAlert.addAction(UIAlertAction(title:self.getLang("confirm_yes"), style:UIAlertActionStyle.Default, handler:{
             (action: UIAlertAction!) in
             mHandlerYes()
@@ -177,7 +177,7 @@ class PubClass {
         }))
         
         dispatch_async(dispatch_get_main_queue(), {
-            self.mVCtrl.presentViewController(mAlert, animated: true, completion: nil)
+            mVCtrl.presentViewController(mAlert, animated: true, completion: nil)
         })
     }
     
@@ -196,10 +196,10 @@ class PubClass {
     }
     
     /**
-    * HTTP 連線, 使用 post 方式, 'callBack' 需要實作<BR>
-    * callBack 參數為 JSON data
-    */
-    func startHTTPConn(dictParm: Dictionary<String, String>!, callBack: (Dictionary<String, AnyObject>)->Void ) {
+     * HTTP 連線, 使用 post 方式, 'callBack' 需要實作<BR>
+     * callBack 參數為 JSON data, UIAlertController
+     */
+    func taskHTTPConn(ConnParm dictParm: Dictionary<String, String>!, callBack: (Dictionary<String, AnyObject>)->Void ) {
         
         // 將 dict 參數轉為 string
         var strConnParm: String = "";
@@ -213,38 +213,28 @@ class PubClass {
                 strConnParm += "&"
             }
         }
+        // 產生 http Request
+        let mRequest = NSMutableURLRequest(URL: NSURL(string: self.D_WEBURL)!)
+        mRequest.HTTPBody = strConnParm.dataUsingEncoding(NSUTF8StringEncoding)
+        mRequest.HTTPMethod = "POST"
+        mRequest.timeoutInterval = 60
+        mRequest.HTTPShouldHandleCookies = false
         
-        // 產生 popWindow
-        let mPop = self.getPopLoading(nil)
-        
-        self.mVCtrl.presentViewController(mPop, animated: false, completion:{
-            // 產生 http Request
-            let mRequest = NSMutableURLRequest(URL: NSURL(string: self.D_WEBURL)!)
-            mRequest.HTTPBody = strConnParm.dataUsingEncoding(NSUTF8StringEncoding)
-            mRequest.HTTPMethod = "POST"
-            mRequest.timeoutInterval = 60
-            mRequest.HTTPShouldHandleCookies = false
+        // 產生 'task' 使用閉包
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(mRequest) {
+            data, response, error in
+            var dictRS = Dictionary<String, AnyObject>();
             
-            // 產生 'task' 使用閉包
-            let task = NSURLSession.sharedSession().dataTaskWithRequest(mRequest) {
-                data, response, error in
-                
-                var dictRS = Dictionary<String, AnyObject>();
-                
-                if error != nil {
-                    dictRS = self.getHTTPJSONData(nil)
-                } else {
-                    dictRS = self.getHTTPJSONData(data!)
-                }
-                
-                // 關閉 popWindow
-                mPop.dismissViewControllerAnimated(false, completion:nil)
-                
-                callBack(dictRS)
+            if error != nil {
+                dictRS = self.getHTTPJSONData(nil)
+            } else {
+                dictRS = self.getHTTPJSONData(data!)
             }
             
-            task.resume()
-        })
+            callBack(dictRS)
+        }
+        
+        task.resume()
     }
     
     /**

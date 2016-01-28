@@ -12,7 +12,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // 全域參數
     var V_USRACC: String?, V_USRPSD: String?
-    var V_LANGCODE: String = "Base"
+    var V_LANGCODE: String = "zh-Hans"
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.

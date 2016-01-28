@@ -5,7 +5,7 @@
 import Foundation
 
 /**
- * 本專案會員的設定檔與公用 method
+ * 本專案JSON 相關公用程式
  */
 class JSONClass {
     let isDebug = false
