@@ -8,7 +8,7 @@ import Foundation
 /**
  * 本專案首頁，USER登入頁面
  */
-class MainLogin: UIViewController, PubClassDelegate {
+class MainLogin: UIViewController {
 
     // @IBOutlet
     @IBOutlet weak var edAcc: UITextField!
@@ -32,7 +32,6 @@ class MainLogin: UIViewController, PubClassDelegate {
         
         // 固定初始參數
         mVCtrl = self
-        pubClass.mDelege = self
         dictPref = pubClass.getPrefData()
     }
     
@@ -84,45 +83,28 @@ class MainLogin: UIViewController, PubClassDelegate {
         var dictParm = Dictionary<String, String>()
         dictParm["acc"] = edAcc.text?.uppercaseString;
         dictParm["psd"] = edPsd.text;
-        //dictParm["page"] = "memberdata";
-        //dictParm["act"] = "memberdata_login";
         
         // HTTP 開始連線
-        pubClass.HTTPConn(mVCtrl, ConnParm: dictParm)
+        pubClass.HTTPConn(mVCtrl, ConnParm: dictParm, callBack: HttpResponChk)
     }
     
     /**
-     * @mark: pubClass Delegate
      * HTTP 連線後取得連線結果
      */
-    func HttpResponChk(dictRS: Dictionary<String, AnyObject>, AlertVC vcPopLoading: UIAlertController) {
+    func HttpResponChk(dictRS: Dictionary<String, AnyObject>) {
+        /* 解析正確的 http 回傳結果，執行後續動作,
+        jobj Data 資料：mead, member, pict(會員照片檔名) */
+        
         // 任何錯誤跳離
         if (dictRS["result"] as! Bool != true) {
-            vcPopLoading.title = pubClass.getLang("sysprompt")
-            vcPopLoading.message = pubClass.getLang(dictRS["msg"] as? String)
-            vcPopLoading.addAction(UIAlertAction(title:pubClass.getLang("i_see"), style: UIAlertActionStyle.Default, handler:nil))
+            dispatch_async(dispatch_get_main_queue(), {
+                self.pubClass.popIsee(self.mVCtrl, Msg: self.pubClass.getLang(dictRS["msg"] as? String))
+            })
             
             return
         }
         
-        // 關閉 'vcPopLoading'
-        vcPopLoading.dismissViewControllerAnimated(true, completion: {
-            self.analyHTTPRespon(dictRS)
-        })
-    }
-    
-    /**
-     * 解析 HTTP 連線結果，執行後續相關程序
-     */
-    private func analyHTTPRespon(dictRS: Dictionary<String, AnyObject>!) {
-        // 任何錯誤跳離
-        if (dictRS["result"] as! Bool != true) {
-            self.pubClass.popIsee(self.mVCtrl, Msg: dictRS["msg"] as! String)
-            return
-        }
-        
-        /* 解析正確的 http 回傳結果，執行後續動作,
-        jobj Data 資料：mead, member, pict(會員照片檔名) */
+        // 解析資料
         let dictData = dictRS["data"]!["content"]!
         
         // 取得 MEAD DB jobj data,轉為 string 存檔
