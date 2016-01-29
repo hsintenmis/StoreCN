@@ -31,6 +31,7 @@ class MainMenu: UIViewController {
     
     // 其他參數設定
     var strToday = ""
+    var strTodayMsg = ""
     
     /**
      * View Load 程序
@@ -41,7 +42,12 @@ class MainMenu: UIViewController {
         // 固定初始參數
         mVCtrl = self
         dictPref = pubClass.getPrefData()
-
+    }
+    
+    /**
+     * View DidAppear 程序
+     */
+    override func viewWillAppear(animated: Bool) {
 
     }
     
@@ -49,20 +55,21 @@ class MainMenu: UIViewController {
      * View DidAppear 程序
      */
     override func viewDidAppear(animated: Bool) {
+        
+        self.pubClass.ReloadAppDelg()
+        dictPref = pubClass.getPrefData()
+        
         dispatch_async(dispatch_get_main_queue(), {
             // 連線取得資料
             self.StartHTTPConn()
         })
-        
-        self.pubClass.ReloadAppDelg()
-        dictPref = pubClass.getPrefData()
-        initViewField()
     }
     
     /**
      * 初始與設定 VCview 內的 field
      */
     func initViewField() {
+        labTodayMsg.text = strTodayMsg
     }
     
     /**
@@ -77,25 +84,13 @@ class MainMenu: UIViewController {
         dictParm["act"] = "homepage_remindall";
         
         // HTTP 開始連線
-        vcPopLoading = pubClass.getPopLoading(nil)
-        mVCtrl.presentViewController(vcPopLoading, animated: true, completion:{
-            self.pubClass.taskHTTPConn(ConnParm: dictParm, callBack: self.HttpResponChk)
-            
-            // 關閉 mAlertVC
-            self.vcPopLoading.dismissViewControllerAnimated(false, completion:{})
-        })
+        pubClass.HTTPConn(mVCtrl, ConnParm: dictParm, callBack: HttpResponChk)
     }
     
     /**
      * HTTP 連線後取得連線結果, 實作給 'pubClass.startHTTPConn()' 使用，callback function
      */
     func HttpResponChk(dictRS: Dictionary<String, AnyObject>) {
-        // 任何錯誤跳離
-        if (dictRS["result"] as! Bool != true) {
-            self.pubClass.popIsee(self.mVCtrl, Msg: dictRS["msg"] as! String)
-            return
-        }
-        
         /* 解析正確的 http 回傳結果，執行後續動作 */
         let dictData = (dictRS["data"]!["content"]!)!
         
@@ -121,9 +116,9 @@ class MainMenu: UIViewController {
         }
         
         // 產生'今日提醒文字'
-        var strTodayMsg = "";
-        strTodayMsg += "今日有\(aryTodayCourse.count)筆療程預約, \(aryExpire.count)未會員療程快到期, \(aryStock.count)項商品庫存不足."
-        //labTodayMsg.text = strTodayMsg
+        strTodayMsg = "今日有\(aryTodayCourse.count)筆療程預約, \(aryExpire.count)名會員療程快到期, \(aryStock.count)項商品庫存不足."
+        
+        initViewField()
     }
     
     /**

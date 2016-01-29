@@ -8,7 +8,7 @@ import Foundation
 /**
  * 本專案首頁，USER登入頁面
  */
-class MainLogin: UIViewController {
+class MainLogin: UIViewController, PubClassDelegate {
 
     // @IBOutlet
     @IBOutlet weak var edAcc: UITextField!
@@ -24,9 +24,6 @@ class MainLogin: UIViewController {
     
     var dictPref: Dictionary<String, AnyObject>!  // Prefer data
     
-    // 產生 UIAlertController (popWindow 資料傳送中)
-    var vcPopLoading: UIAlertController!
-    
     /**
      * View Load 程序
      */
@@ -35,8 +32,8 @@ class MainLogin: UIViewController {
         
         // 固定初始參數
         mVCtrl = self
+        pubClass.mDelege = self
         dictPref = pubClass.getPrefData()
-        vcPopLoading = pubClass.getPopLoading(nil)
     }
     
     /**
@@ -90,26 +87,34 @@ class MainLogin: UIViewController {
         //dictParm["page"] = "memberdata";
         //dictParm["act"] = "memberdata_login";
         
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:"downloadImage:", name: "HTTPRespon", object: nil)
-        
         // HTTP 開始連線
-        self.presentViewController(vcPopLoading, animated: true, completion:{
-            self.pubClass.taskHTTPConn(ConnParm: dictParm, callBack: self.HttpResponChk)
+        pubClass.HTTPConn(mVCtrl, ConnParm: dictParm)
+    }
+    
+    /**
+     * @mark: pubClass Delegate
+     * HTTP 連線後取得連線結果
+     */
+    func HttpResponChk(dictRS: Dictionary<String, AnyObject>, AlertVC vcPopLoading: UIAlertController) {
+        // 任何錯誤跳離
+        if (dictRS["result"] as! Bool != true) {
+            vcPopLoading.title = pubClass.getLang("sysprompt")
+            vcPopLoading.message = pubClass.getLang(dictRS["msg"] as? String)
+            vcPopLoading.addAction(UIAlertAction(title:pubClass.getLang("i_see"), style: UIAlertActionStyle.Default, handler:nil))
             
-            // 關閉 mAlertVC
-            self.vcPopLoading.dismissViewControllerAnimated(false, completion:{})
+            return
+        }
+        
+        // 關閉 'vcPopLoading'
+        vcPopLoading.dismissViewControllerAnimated(true, completion: {
+            self.analyHTTPRespon(dictRS)
         })
     }
     
     /**
-     * HTTP 連線後取得連線結果, 實作給 'pubClass.startHTTPConn()' 使用，callback function
+     * 解析 HTTP 連線結果，執行後續相關程序
      */
-    func HttpResponChk(dictRS: Dictionary<String, AnyObject>) {
-        // 註冊一個通知訊息
-        NSNotificationCenter.defaultCenter().postNotificationName("HTTPRespon", object: self, userInfo: nil)
-       
-        
+    private func analyHTTPRespon(dictRS: Dictionary<String, AnyObject>!) {
         // 任何錯誤跳離
         if (dictRS["result"] as! Bool != true) {
             self.pubClass.popIsee(self.mVCtrl, Msg: dictRS["msg"] as! String)
@@ -117,7 +122,7 @@ class MainLogin: UIViewController {
         }
         
         /* 解析正確的 http 回傳結果，執行後續動作,
-         jobj Data 資料：mead, member, pict(會員照片檔名) */
+        jobj Data 資料：mead, member, pict(會員照片檔名) */
         let dictData = dictRS["data"]!["content"]!
         
         // 取得 MEAD DB jobj data,轉為 string 存檔

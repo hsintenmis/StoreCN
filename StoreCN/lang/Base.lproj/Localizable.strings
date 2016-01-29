@@ -16,6 +16,7 @@
 "confirm_yes" = "是";
 "confirm_no" = "否";
 "cancel" = "取消";
+"err_login" = "登入失敗, 請重新登入!";
 
 "week_0" = "日";
 "week_1" = "一";

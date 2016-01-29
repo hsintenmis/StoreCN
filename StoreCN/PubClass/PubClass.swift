@@ -7,9 +7,19 @@ import Foundation
 import UIKit
 
 /**
+ * protocol (Abstract)
+ */
+protocol PubClassDelegate {
+    func HttpResponChk(dictRS: Dictionary<String, AnyObject>, AlertVC vcPopLoading: UIAlertController)
+}
+
+/**
 * 本專案所有的設定檔與公用 method
 */
 class PubClass {
+    // PubClassDelegate
+    var mDelege: PubClassDelegate?
+    
     // public
     /** 伺服器/網站 URL: http://pub.mysoqi.com/store_cn/001/ */
     let D_WEBURL = "http://pub.mysoqi.com/store_cn/001/"
@@ -196,11 +206,24 @@ class PubClass {
     }
     
     /**
-     * HTTP 連線, 使用 post 方式, 'callBack' 需要實作<BR>
-     * callBack 參數為 JSON data, UIAlertController
+     * HTTP 連線, 開啟 'PopLoading' AlertView
      */
-    func taskHTTPConn(ConnParm dictParm: Dictionary<String, String>!, callBack: (Dictionary<String, AnyObject>)->Void ) {
+    func HTTPConn(mVC: UIViewController, ConnParm dictParm: Dictionary<String, String>) {
+        let vcPopLoading = self.getPopLoading(nil)
+        mVC.presentViewController(vcPopLoading, animated: true, completion:{
+            self.taskHTTPConn(dictParm, AlertVC: vcPopLoading)
+        })
+    }
+    
+    func HTTPConn(mVC: UIViewController, ConnParm dictParm: Dictionary<String, String>, callBack: (Dictionary<String, AnyObject>)->Void) {
         
+        let vcPopLoading = self.getPopLoading(nil)
+        mVC.presentViewController(vcPopLoading, animated: true, completion:{
+            self.taskHTTPConn(dictParm, AlertVC: vcPopLoading, callBack: callBack)
+        })
+    }
+    
+    private func taskHTTPConn(dictParm: Dictionary<String, String>!, AlertVC vcPopLoading: UIAlertController, callBack: (Dictionary<String, AnyObject>)->Void) {
         // 將 dict 參數轉為 string
         var strConnParm: String = "";
         var loopi = 0
@@ -231,7 +254,65 @@ class PubClass {
                 dictRS = self.getHTTPJSONData(data!)
             }
             
-            callBack(dictRS)
+            // 任何錯誤跳離
+            if (dictRS["result"] as! Bool != true) {
+                vcPopLoading.title = self.getLang("sysprompt")
+                vcPopLoading.message = self.getLang(dictRS["msg"] as? String)
+                vcPopLoading.addAction(UIAlertAction(title:self.getLang("i_see"), style: UIAlertActionStyle.Default, handler:nil))
+                
+                return
+            }
+            
+            // 關閉 'vcPopLoading'
+            dispatch_async(dispatch_get_main_queue(), {
+                vcPopLoading.dismissViewControllerAnimated(true, completion: {
+                    callBack(dictRS)
+                })
+            })
+        }
+        
+        task.resume()
+    }
+    
+    /**
+     * HTTP 連線, 使用 post 方式, 產生 'task' 使用閉包
+     */
+    private func taskHTTPConn(dictParm: Dictionary<String, String>!, AlertVC vcPopLoading: UIAlertController) {
+        // 將 dict 參數轉為 string
+        var strConnParm: String = "";
+        var loopi = 0
+        
+        for (strKey, strVal) in dictParm {
+            strConnParm += "\(strKey)=\(strVal)"
+            loopi++
+            
+            if loopi != dictParm.count {
+                strConnParm += "&"
+            }
+        }
+        // 產生 http Request
+        let mRequest = NSMutableURLRequest(URL: NSURL(string: self.D_WEBURL)!)
+        mRequest.HTTPBody = strConnParm.dataUsingEncoding(NSUTF8StringEncoding)
+        mRequest.HTTPMethod = "POST"
+        mRequest.timeoutInterval = 60
+        mRequest.HTTPShouldHandleCookies = false
+        
+        // 產生 'task' 使用閉包
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(mRequest) {
+            data, response, error in
+            var dictRS = Dictionary<String, AnyObject>();
+            
+            if error != nil {
+                dictRS = self.getHTTPJSONData(nil)
+            } else {
+                dictRS = self.getHTTPJSONData(data!)
+            }
+            
+            // 通知子 child, HTTP 連線完成，由子child關閉 'vcPopLoading',
+            // 在 'vcPopLoading' 的 'completion' 執行後續程序
+            dispatch_async(dispatch_get_main_queue(), {
+                self.mDelege?.HttpResponChk(dictRS, AlertVC: vcPopLoading)
+            })
         }
         
         task.resume()
@@ -257,12 +338,12 @@ class PubClass {
             let jobjRoot = try NSJSONSerialization.JSONObjectWithData(mData!, options:NSJSONReadingOptions(rawValue: 0))
             
             guard let dictRespon = jobjRoot as? Dictionary<String, AnyObject> else {
-                dictRS["msg"] = "資料解析錯誤 (JSON data error)！"
+                dictRS["msg"] = "err_data"
                 return dictRS
             }
             
             if ( dictRespon["result"] as! Bool != true) {
-                dictRS["msg"] = "回傳結果失敗！"
+                dictRS["msg"] = "err_accpsd"
                 return dictRS
             }
             
@@ -273,8 +354,9 @@ class PubClass {
             
             return dictRS
         }
-        catch let errJson as NSError {
-            dictRS["msg"] = "資料解析錯誤!\n\(errJson)"
+        catch _ as NSError {
+            dictRS["msg"] = "err_data"
+            //print(err)
             return dictRS
         }
     }
