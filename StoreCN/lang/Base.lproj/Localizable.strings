@@ -1,6 +1,6 @@
-"version" = "version";
-"login" = "Login";
-"logout" = "Logout";
+"version" = "版本";
+"login" = "登入";
+"logout" = "登出";
 "login_acc" = "登入ID";
 "login_psd" = "登入密码";
 "datatranplzwait" = "资料传送中，请稍后...";
@@ -17,6 +17,12 @@
 "confirm_no" = "否";
 "cancel" = "取消";
 "err_login" = "登入失敗, 請重新登入!";
+"nomember" = "沒有會員!";
+"name_age" = "歲";
+"gender_M" = "男性";
+"gender_F" = "女性";
+"done" = "完成";
+
 
 "week_0" = "日";
 "week_1" = "一";
@@ -48,3 +54,21 @@
 "mm_10" = "十月";
 "mm_11" = "十一月";
 "mm_12" = "十二月";
+
+"FMT_todayinfo" = "今日有 %d筆療程預約, %d名會員療程快到期, %d項商品庫存不足.";
+
+"menu_member" = "會員管理";
+"menu_testing" = "健康檢測";
+"menu_servicemgr" = "服務管理";
+"menu_product" = "商品管理";
+"menu_staff" = "人力管理";
+"menu_message" = "信息管理";
+"menu_storesheet" = "店務分析";
+"menu_config" = "設定";
+
+"menu_course_list" = "療程管理";
+"menu_course_reservation" = "療程預約";
+"menu_course_sale" = "療程銷售";
+
+"member_nodataaddfirst" = "沒有會員, 請先新增會員!";
+

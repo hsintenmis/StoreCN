@@ -16,7 +16,7 @@ class MainLogin: UIViewController {
     @IBOutlet weak var swchSave: UISwitch!
     @IBOutlet weak var labVer: UILabel!
     
-    // public property
+    // common property
     var mVCtrl: UIViewController!
     let pubClass: PubClass = PubClass()
     let mJSONClass = JSONClass()

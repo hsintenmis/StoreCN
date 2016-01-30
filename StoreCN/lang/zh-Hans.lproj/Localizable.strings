@@ -18,6 +18,11 @@
 "cancel" = "取消";
 "err_login" = "登入失敗, 請重新登入!";
 "nomember" = "沒有會員!";
+"name_age" = "歲";
+"gender_M" = "男性";
+"gender_F" = "女性";
+"done" = "完成";
+
 
 "week_0" = "日";
 "week_1" = "一";
@@ -64,4 +69,6 @@
 "menu_course_list" = "療程管理";
 "menu_course_reservation" = "療程預約";
 "menu_course_sale" = "療程銷售";
+
+"member_nodataaddfirst" = "沒有會員, 請先新增會員!";
 

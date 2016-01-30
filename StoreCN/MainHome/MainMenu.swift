@@ -14,7 +14,7 @@ class MainMenu: UIViewController {
     @IBOutlet weak var labTodayMsg: UILabel!
     @IBOutlet weak var colviewMenu: UICollectionView!
 
-    // public property
+    // common property
     var mVCtrl: UIViewController!
     let pubClass = PubClass()
     let mJSONClass = JSONClass()
@@ -179,7 +179,12 @@ class MainMenu: UIViewController {
 
         // 直接跳轉 VC
         if (strItem == "member" || strItem == "testing") {
-            self.performSegueWithIdentifier(strItem, sender: nil)
+            var strIdentName = ""
+            if (strItem == "member") {
+                strIdentName = "member_list"
+            }
+            
+            self.performSegueWithIdentifier(strIdentName, sender: nil)
             return
         }
         

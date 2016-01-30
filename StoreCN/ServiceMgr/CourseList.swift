@@ -11,13 +11,14 @@ import Foundation
 class Courselist: UIViewController {
     
     // @IBOutlet
+    @IBOutlet weak var tableList: UITableView!
     
-    // public property
+    // common property
     var mVCtrl: UIViewController!
     let pubClass: PubClass = PubClass()
     var dictPref: Dictionary<String, AnyObject>!  // Prefer data
     
-    // HTTP 資料設定
+    // HTTP 回傳資料設定
     var aryCourseDB: Array<Dictionary<String, AnyObject>> = []
     var aryMember: Array<Dictionary<String, AnyObject>> = []
     var aryCourseData: Array<Dictionary<String, AnyObject>> = []
@@ -112,7 +113,52 @@ class Courselist: UIViewController {
             })
             return
         }
+        
+        // 本頁面資料重整
+        tableList.reloadData()
+    }
+    
+    /**
+     * #mark: UITableView Delegate
+     * 回傳指定的數量
+     */
+    func tableView(tableView: UITableView!, numberOfRowsInSection section:Int) -> Int {
+        return aryCourseData.count
+    }
+    
+    /**
+     * #mark: UITableView Delegate
+     * UITableView, Cell 內容
+     */
+    func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
+        if (aryCourseData.count < 1) {
+            return nil
+        }
+        
+        let mCell: CourseListCell = tableView.dequeueReusableCellWithIdentifier("cellCourseList", forIndexPath: indexPath) as! CourseListCell
+        let ditItem = aryCourseData[indexPath.row] as Dictionary<String, AnyObject>
+        
+        mCell.labName.text = ditItem["membername"] as? String
+        mCell.labInvo.text = ditItem["invo_id"] as? String
+        mCell.labCount.text = ditItem["usecount"] as? String
+        mCell.labCourse.text = ditItem["pdname"] as? String
+        
+        mCell.LabEdate.text = pubClass.formatDateWithStr(ditItem["end_date"] as! String, type: "8s")
+        mCell.labSdate.text = pubClass.formatDateWithStr(ditItem["sdate"] as! String, type: "8s")
 
+        return mCell
+    }
+    
+    /**
+     * #mark: UITableView Delegate
+     * UITableView, Cell 刪除，cell 向左滑動
+     */
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.Delete {
+            // 彈出 confirm 視窗, 點取 'OK' 執行實際刪除資料程序
+            
+            return
+        }
     }
     
     /**

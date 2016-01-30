@@ -101,8 +101,15 @@
 		D7037B2A1C58C726002A955E /* user_128.png in Resources */ = {isa = PBXBuildFile; fileRef = D7037AD71C58C726002A955E /* user_128.png */; };
 		D7037B2B1C58C726002A955E /* user_empty01.png in Resources */ = {isa = PBXBuildFile; fileRef = D7037AD81C58C726002A955E /* user_empty01.png */; };
 		D7037B2C1C58C726002A955E /* viewedocument_128.png in Resources */ = {isa = PBXBuildFile; fileRef = D7037AD91C58C726002A955E /* viewedocument_128.png */; };
+		D7150E3D1C5C4C8600C9FE8B /* CourseListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7150E3C1C5C4C8600C9FE8B /* CourseListCell.swift */; };
+		D7150E3F1C5C5B8E00C9FE8B /* MemberList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7150E3E1C5C5B8E00C9FE8B /* MemberList.swift */; };
+		D7150E411C5C5CA700C9FE8B /* MemberListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7150E401C5C5CA700C9FE8B /* MemberListCell.swift */; };
+		D7150E431C5C6E8000C9FE8B /* MemberAdEd.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7150E421C5C6E8000C9FE8B /* MemberAdEd.swift */; };
+		D74652071C5CA85900190EF6 /* PickerNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74652061C5CA85900190EF6 /* PickerNumber.swift */; };
 		D7496D1A1C5B343200B75D6A /* MainMenuColtViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7496D191C5B343200B75D6A /* MainMenuColtViewCell.swift */; };
 		D7496D261C5B58CF00B75D6A /* CourseList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7496D251C5B58CF00B75D6A /* CourseList.swift */; };
+		D7B29F791C5C712E0025C53A /* MemberAdEdContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B29F781C5C712E0025C53A /* MemberAdEdContainer.swift */; };
+		D7B29F7B1C5C913E0025C53A /* PickerDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B29F7A1C5C913E0025C53A /* PickerDate.swift */; };
 		D7FB953A1C59F17F00B48F57 /* FileMang.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FB95391C59F17F00B48F57 /* FileMang.swift */; };
 		D7FB953C1C59F58C00B48F57 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FB953B1C59F58C00B48F57 /* MainMenu.swift */; };
 /* End PBXBuildFile section */
@@ -206,8 +213,15 @@
 		D7037AD71C58C726002A955E /* user_128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user_128.png; sourceTree = "<group>"; };
 		D7037AD81C58C726002A955E /* user_empty01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user_empty01.png; sourceTree = "<group>"; };
 		D7037AD91C58C726002A955E /* viewedocument_128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = viewedocument_128.png; sourceTree = "<group>"; };
+		D7150E3C1C5C4C8600C9FE8B /* CourseListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CourseListCell.swift; path = ServiceMgr/CourseListCell.swift; sourceTree = "<group>"; };
+		D7150E3E1C5C5B8E00C9FE8B /* MemberList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberList.swift; path = Member/MemberList.swift; sourceTree = "<group>"; };
+		D7150E401C5C5CA700C9FE8B /* MemberListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberListCell.swift; path = Member/MemberListCell.swift; sourceTree = "<group>"; };
+		D7150E421C5C6E8000C9FE8B /* MemberAdEd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberAdEd.swift; path = Member/MemberAdEd.swift; sourceTree = "<group>"; };
+		D74652061C5CA85900190EF6 /* PickerNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PickerNumber.swift; path = PubClass/PickerNumber.swift; sourceTree = "<group>"; };
 		D7496D191C5B343200B75D6A /* MainMenuColtViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainMenuColtViewCell.swift; path = MainHome/MainMenuColtViewCell.swift; sourceTree = "<group>"; };
 		D7496D251C5B58CF00B75D6A /* CourseList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CourseList.swift; path = ServiceMgr/CourseList.swift; sourceTree = "<group>"; };
+		D7B29F781C5C712E0025C53A /* MemberAdEdContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberAdEdContainer.swift; path = Member/MemberAdEdContainer.swift; sourceTree = "<group>"; };
+		D7B29F7A1C5C913E0025C53A /* PickerDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerDate.swift; sourceTree = "<group>"; };
 		D7FB95391C59F17F00B48F57 /* FileMang.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FileMang.swift; path = PubClass/FileMang.swift; sourceTree = "<group>"; };
 		D7FB953B1C59F58C00B48F57 /* MainMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainMenu.swift; path = MainHome/MainMenu.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -280,6 +294,8 @@
 				D7037A701C58C03F002A955E /* JSONClass.swift */,
 				D7FB95391C59F17F00B48F57 /* FileMang.swift */,
 				D7037A711C58C03F002A955E /* NoDataView.swift */,
+				D7B29F7A1C5C913E0025C53A /* PickerDate.swift */,
+				D74652061C5CA85900190EF6 /* PickerNumber.swift */,
 			);
 			name = PubClass;
 			sourceTree = "<group>";
@@ -395,6 +411,10 @@
 		D7496D1B1C5B4D9700B75D6A /* Member */ = {
 			isa = PBXGroup;
 			children = (
+				D7150E3E1C5C5B8E00C9FE8B /* MemberList.swift */,
+				D7150E401C5C5CA700C9FE8B /* MemberListCell.swift */,
+				D7150E421C5C6E8000C9FE8B /* MemberAdEd.swift */,
+				D7B29F781C5C712E0025C53A /* MemberAdEdContainer.swift */,
 			);
 			name = Member;
 			sourceTree = "<group>";
@@ -410,6 +430,7 @@
 			isa = PBXGroup;
 			children = (
 				D7496D251C5B58CF00B75D6A /* CourseList.swift */,
+				D7150E3C1C5C4C8600C9FE8B /* CourseListCell.swift */,
 			);
 			name = ServiceMgr;
 			sourceTree = "<group>";
@@ -605,15 +626,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7150E3F1C5C5B8E00C9FE8B /* MemberList.swift in Sources */,
+				D7150E431C5C6E8000C9FE8B /* MemberAdEd.swift in Sources */,
+				D74652071C5CA85900190EF6 /* PickerNumber.swift in Sources */,
 				D7037A731C58C03F002A955E /* CutImage.swift in Sources */,
 				D7FB953C1C59F58C00B48F57 /* MainMenu.swift in Sources */,
 				D7037A751C58C03F002A955E /* ImageClass.swift in Sources */,
 				D7496D261C5B58CF00B75D6A /* CourseList.swift in Sources */,
+				D7150E411C5C5CA700C9FE8B /* MemberListCell.swift in Sources */,
 				D7037A771C58C03F002A955E /* NoDataView.swift in Sources */,
 				D7496D1A1C5B343200B75D6A /* MainMenuColtViewCell.swift in Sources */,
 				D7037A6A1C58BFB5002A955E /* MainLogin.swift in Sources */,
 				D7FB953A1C59F17F00B48F57 /* FileMang.swift in Sources */,
+				D7150E3D1C5C4C8600C9FE8B /* CourseListCell.swift in Sources */,
 				D7037A761C58C03F002A955E /* JSONClass.swift in Sources */,
+				D7B29F791C5C712E0025C53A /* MemberAdEdContainer.swift in Sources */,
+				D7B29F7B1C5C913E0025C53A /* PickerDate.swift in Sources */,
 				D7037A781C58C03F002A955E /* PubClass.swift in Sources */,
 				D7037A681C58BF32002A955E /* AppDelegate.swift in Sources */,
 			);
