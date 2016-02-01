@@ -45,10 +45,10 @@ class MemberAdEdContainer: UITableViewController, UITextFieldDelegate {
     private var aryTxtView: Array<UITextField> = []
     private var aryField: Array<String> = []
     
-    // 其他 class
-    private var mPickerDate: PickerDate!
+    // 點取欄位，彈出虛擬鍵盤視窗
+    private var mPickerBirth: PickerDate!
     private var mPickerHeigh: PickerNumber!
-     
+    private var mPickerWeight: PickerNumber!
     
     /**
     * View Load 程序
@@ -59,36 +59,12 @@ class MemberAdEdContainer: UITableViewController, UITextFieldDelegate {
         // 固定初始參數
         mVCtrl = self
         dictPref = pubClass.getPrefData()
-        
-        /* Picker 設定 */
-        // 生日欄位
-        let aryTxt = [pubClass.getLang("done"), pubClass.getLang("cancel")]
-        mPickerDate = PickerDate(uiField: txtBirth, aryStrTxt: aryTxt)
-        
-        // 身高欄位
-        mPickerHeigh = PickerNumber(uiField: txtHeigh, aryStrTxt: aryTxt, DefStrVal: "160")
-        mPickerHeigh.hasNumberPoint = true
-        var loopi = 0;
-        var aryTmp: Array<String> = []
-        for (loopi = 50; loopi <= 250; loopi++) {
-           aryTmp.append(String(loopi))
-        }
-        mPickerHeigh.aryLeftNumber = aryTmp
-        
-        aryTmp = []
-        for (loopi = 0; loopi <= 9; loopi++) {
-            aryTmp.append(String(loopi))
-        }
-        
-        mPickerHeigh.aryRightNumber = aryTmp
-        
     }
     
     /**
      * View DidAppear 程序
      */
     override func viewDidAppear(animated: Bool) {
-        
         dispatch_async(dispatch_get_main_queue(), {
             self.initViewField()
         })
@@ -114,11 +90,16 @@ class MemberAdEdContainer: UITableViewController, UITextFieldDelegate {
         txtPsd.delegate = self
         txtRePsd.delegate = self
         
-        // 設定 'edBirth' 欄位，彈出自訂的 '日期選擇' 視窗
-        mPickerDate.initDatePicker()
-        
         // 編輯模式特殊處理
         self.procEditMode()
+        
+        /* Picker 設定 */
+        // 生日欄位
+        mPickerBirth = PickerDate(withUIField: txtBirth, PubClass: pubClass, withDefMaxMin: ["19600101", pubClass.subStr(strToday, strFrom: 0, strEnd: 8), "19150101"], NavyBarTitle: pubClass.getLang("member_selectbirth"))
+        
+        // 身高/體重 欄位, 設定 'PickerNumber'
+        mPickerHeigh = PickerNumber(withUIField: txtHeigh, PubClass: pubClass, DefAryVal: ["160", ".", "0"], MinMaxAry: [["max":220, "min":60], ["max":1, "min":1], ["max":9, "min":0]])
+        mPickerWeight = PickerNumber(withUIField: txtWeight, PubClass: pubClass, DefAryVal: ["50", ".", "0"], MinMaxAry: [["max":180, "min":10], ["max":1, "min":1], ["max":9, "min":0]])
     }
     
     /**
@@ -126,8 +107,6 @@ class MemberAdEdContainer: UITableViewController, UITextFieldDelegate {
      */
     private func procEditMode() {
         if (strMode != "edit") {
-            // 生日初始預設值
-            mPickerDate.setDefVal()
             return
         }
         

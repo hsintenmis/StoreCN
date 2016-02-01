@@ -22,6 +22,7 @@
 "gender_M" = "男性";
 "gender_F" = "女性";
 "done" = "完成";
+"select_ok" = "確定";
 
 
 "week_0" = "日";
@@ -71,4 +72,5 @@
 "menu_course_sale" = "療程銷售";
 
 "member_nodataaddfirst" = "沒有會員, 請先新增會員!";
+"member_selectbirth" = "選擇生日";
 

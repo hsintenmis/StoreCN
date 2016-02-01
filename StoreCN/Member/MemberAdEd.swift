@@ -1,5 +1,5 @@
 //
-// ContainerView
+// with ContainerView
 //
 
 import UIKit
@@ -58,6 +58,7 @@ class MemberAdEd: UIViewController {
         if (strIdent == "containerMemberAdEd") {
             let mVC = segue.destinationViewController as! MemberAdEdContainer
             mVC.strToday = strToday
+            mVC.strMode = strMode
         }
         
         return
@@ -66,8 +67,8 @@ class MemberAdEd: UIViewController {
     /**
      * act, 點取 '儲存' button
      */
-    @IBAction func actAdd(sender: UIBarButtonItem) {
-        
+    @IBAction func actSave(sender: UIBarButtonItem) {
+        print(strMode)
     }
     
     @IBAction func actBack(sender: UIBarButtonItem) {
