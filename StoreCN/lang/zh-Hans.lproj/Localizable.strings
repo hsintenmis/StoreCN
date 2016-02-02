@@ -73,4 +73,10 @@
 
 "member_nodataaddfirst" = "沒有會員, 請先新增會員!";
 "member_selectbirth" = "選擇生日";
+"member_main_course" = "療程紀錄";
+"member_main_mead" = "能量檢測";
+"member_main_soqibed" = "SOQIBed";
+"member_main_purchase" = "購貨紀錄";
+"member_main_health" = "健康紀錄";
+
 

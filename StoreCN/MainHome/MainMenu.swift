@@ -89,8 +89,8 @@ class MainMenu: UIViewController {
         var dictParm = Dictionary<String, String>()
         dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
         dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
-        dictParm["page"] = "homepage";
-        dictParm["act"] = "homepage_remindall";
+        dictParm["page"] = "homepage"
+        dictParm["act"] = "homepage_remindall"
         
         // HTTP 開始連線
         pubClass.HTTPConn(mVCtrl, ConnParm: dictParm, callBack: HttpResponChk)

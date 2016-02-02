@@ -8,7 +8,7 @@ import Foundation
 /**
  * 會員列表 + 新增刪除
  */
-class MemberList: UIViewController, PubMemberListDelegate {
+class MemberList: UIViewController, PubMemberSelectDelegate {
     
     // @IBOutlet
     @IBOutlet weak var containerMemberList: UIView!
@@ -68,8 +68,8 @@ class MemberList: UIViewController, PubMemberListDelegate {
         var dictParm = Dictionary<String, String>()
         dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
         dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
-        dictParm["page"] = "member";
-        dictParm["act"] = "member_getdata";
+        dictParm["page"] = "member"
+        dictParm["act"] = "member_getdata"
         
         // HTTP 開始連線
         pubClass.HTTPConn(mVCtrl, ConnParm: dictParm, callBack: HttpResponChk)
@@ -106,23 +106,35 @@ class MemberList: UIViewController, PubMemberListDelegate {
         }
         
         // !! container 直接加入 'PubMemberList'
-        let mPubMemberList = storyboard!.instantiateViewControllerWithIdentifier("PubMemberList") as! PubMemberList
+        let mPubMemberSelect = storyboard!.instantiateViewControllerWithIdentifier("PubMemberList") as! PubMemberSelect
         
-        mPubMemberList.delegate = self
-        mPubMemberList.aryMember = aryMember
+        mPubMemberSelect.delegate = self
+        mPubMemberSelect.aryMember = aryMember
         
-        let mView = mPubMemberList.view
+        let mView = mPubMemberSelect.view
         mView.frame.size.height = containerMemberList.layer.frame.height
         
         self.containerMemberList.addSubview(mView)
-        self.navigationController?.pushViewController(mPubMemberList, animated: true)
+        self.navigationController?.pushViewController(mPubMemberSelect, animated: true)
     }
     
     /**
     * #mark: PubMemberListDelegate, 會員列表，點取會員執行相關程序
     */
-    func CellClick(MemberData dictData: Dictionary<String, AnyObject>) {
-        self.performSegueWithIdentifier("MemberData", sender: dictData)
+    func MemberSelected(MemberData dictData: Dictionary<String, AnyObject>) {
+        self.performSegueWithIdentifier("MemberMain", sender: dictData)
+    }
+    
+    /**
+     * #mark: UITableView Delegate
+     * UITableView, Cell 刪除，cell 向左滑動
+     */
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.Delete {
+            // 彈出 confirm 視窗, 點取 'OK' 執行實際刪除資料程序
+            
+            return
+        }
     }
     
     /**
@@ -131,12 +143,10 @@ class MemberList: UIViewController, PubMemberListDelegate {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let strIdent = segue.identifier
 
-        if (strIdent == "MemberData") {
-            /*
-            let mVC = segue.destinationViewController as! MemberAdEd
+        if (strIdent == "MemberMain") {
+            let mVC = segue.destinationViewController as! MemberMain
             mVC.strToday = strToday
-            mVC.strMode = "edit"
-            */
+            mVC.dictMember = sender as! Dictionary<String, AnyObject>
             
             return
         }

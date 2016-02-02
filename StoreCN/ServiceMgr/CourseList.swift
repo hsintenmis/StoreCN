@@ -135,16 +135,19 @@ class Courselist: UIViewController {
             return nil
         }
         
-        let mCell: CourseListCell = tableView.dequeueReusableCellWithIdentifier("cellCourseList", forIndexPath: indexPath) as! CourseListCell
         let ditItem = aryCourseData[indexPath.row] as Dictionary<String, AnyObject>
+        let mCell: CourseListCell = tableView.dequeueReusableCellWithIdentifier("cellCourseList", forIndexPath: indexPath) as! CourseListCell
         
+        mCell.initView(ditItem, PubClass: pubClass)
+        
+        /*
         mCell.labName.text = ditItem["membername"] as? String
         mCell.labInvo.text = ditItem["invo_id"] as? String
         mCell.labCount.text = ditItem["usecount"] as? String
         mCell.labCourse.text = ditItem["pdname"] as? String
-        
         mCell.LabEdate.text = pubClass.formatDateWithStr(ditItem["end_date"] as! String, type: "8s")
         mCell.labSdate.text = pubClass.formatDateWithStr(ditItem["sdate"] as! String, type: "8s")
+        */
 
         return mCell
     }

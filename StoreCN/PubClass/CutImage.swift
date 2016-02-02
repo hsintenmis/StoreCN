@@ -7,7 +7,7 @@ import Foundation
 import CoreGraphics
 
 /**
-* protocol (Abstract)
+* protocol
 */
 protocol ClipViewControllerDelegate {
     func ClipViewController(clipViewController: CutImage, FinishClipImage editImage: UIImage)

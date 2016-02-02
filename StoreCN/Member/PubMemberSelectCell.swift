@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 
-class PubMemberListCell: UITableViewCell {
+class PubMemberSelectCell: UITableViewCell {
 
     @IBOutlet weak var imgPict: UIImageView!
     @IBOutlet weak var labGender: UILabel!

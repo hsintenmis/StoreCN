@@ -2,24 +2,51 @@
 // TableView, UISearchBar, delegate 直接從 storyboard 設定
 //
 
-/**
- * protocol, PubMemberList Delegate
- */
-protocol PubMemberListDelegate {
-    /**
-    * Table Cell 點取，點取指定會員，實作點取後相關程序
-    */
-    func CellClick(MemberData dictData: Dictionary<String, AnyObject>)
-}
-
 import UIKit
 import Foundation
 
 /**
- * 會員列表 公用
+ * protocol, PubMemberList Delegate
  */
-class PubMemberList: UIViewController {
-    var delegate = PubMemberListDelegate?()
+protocol PubMemberSelectDelegate {
+    /**
+    * Table Cell 點取，點取指定會員，實作點取後相關程序
+    */
+    func MemberSelected(MemberData dictData: Dictionary<String, AnyObject>)
+}
+
+/**
+ * 顯示 URL 圖片, UIImageView extension
+ */
+extension UIImageView {
+    func downloadImageFrom(link link:String, contentMode: UIViewContentMode) {
+        NSURLSession.sharedSession().dataTaskWithURL( NSURL(string:link)!, completionHandler: {
+            (data, response, error) -> Void in
+            dispatch_async(dispatch_get_main_queue()) {
+                    self.contentMode =  contentMode
+                    if let data = data { self.image = UIImage(data: data) }
+                
+                var hasImg = false;
+                if let httpResponse = response as? NSHTTPURLResponse {
+                    if (Int(httpResponse.statusCode) == 200) {
+                        hasImg = true
+                    }
+                }
+                
+                if (!hasImg) {
+                   self.image = UIImage(named: "user_empty01.png")
+                }
+                
+            }
+        }).resume()
+    }
+}
+
+/**
+ * 會員選擇 公用 class
+ */
+class PubMemberSelect: UIViewController {
+    var delegate = PubMemberSelectDelegate?()
     
     // @IBOutlet
     @IBOutlet weak var tableData: UITableView!
@@ -85,36 +112,26 @@ class PubMemberList: UIViewController {
             return nil
         }
         
-        let mCell: PubMemberListCell = tableView.dequeueReusableCellWithIdentifier("cellPubMemberList", forIndexPath: indexPath) as! PubMemberListCell
+        let mCell: PubMemberSelectCell = tableView.dequeueReusableCellWithIdentifier("cellPubMemberList", forIndexPath: indexPath) as! PubMemberSelectCell
         
         let ditItem = aryNewMember[indexPath.row] as Dictionary<String, AnyObject>
         let strGender = pubClass.getLang("gender_" + (ditItem["gender"] as! String))
         let strAge = (ditItem["age"] as! String) + pubClass.getLang("name_age")
+        let strId = ditItem["memberid"] as! String
         
+        mCell.labId.text = strId
         mCell.labName.text = ditItem["membername"] as? String
-        mCell.labId.text = ditItem["memberid"] as? String
         mCell.labGender.text = strGender + " " + strAge
         mCell.labTel.text = ditItem["tel"] as? String
         
         mCell.labJoin.text = pubClass.formatDateWithStr(ditItem["sdate"] as! String, type: "8s")
         mCell.labBirth.text = pubClass.formatDateWithStr(ditItem["birth"] as! String, type: "8s")
         
+        // 圖片
+        let imgURL = pubClass.D_WEBURL + "upload/HP_" + strId + ".png"
+        mCell.imgPict.downloadImageFrom(link: imgURL, contentMode: UIViewContentMode.ScaleAspectFit)
+        
         return mCell
-    }
-    
-    /**
-     * #mark: UITableView Delegate
-     * UITableView, Cell 刪除，cell 向左滑動
-     */
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        
-        print(editingStyle)
-        
-        if editingStyle == UITableViewCellEditingStyle.Delete {
-            // 彈出 confirm 視窗, 點取 'OK' 執行實際刪除資料程序
-            
-            return
-        }
     }
     
     /**
@@ -122,7 +139,7 @@ class PubMemberList: UIViewController {
      * UITableView, Cell 點取
      */
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        delegate?.CellClick(MemberData: aryNewMember[indexPath.row])
+        delegate?.MemberSelected(MemberData: aryNewMember[indexPath.row])
     }
     
     /**
