@@ -24,6 +24,8 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
 
     // 其他參數設定
     private var strToday = ""
+    private var mMemberData: Dictionary<String, AnyObject> = [:]  // 選擇的會員
+    private var currIndexPath: NSIndexPath!  // 目前 TableView 的 IndexPath
     
     /**
      * View Load 程序
@@ -34,6 +36,8 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
         // 固定初始參數
         mVCtrl = self
         dictPref = pubClass.getPrefData()
+        
+        currIndexPath = NSIndexPath(forItem: 0, inSection: 0)
     }
     
     /**
@@ -44,8 +48,8 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
             return
         }
         
-        // HTTP 連線取得資料
-        StartHTTPConn()
+        // HTTP 連線取得資料, 全部會員列表資料
+        HHTPGetMemberList()
         
         dispatch_async(dispatch_get_main_queue(), {
             
@@ -61,9 +65,9 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
     }
     
     /**
-     * HTTP 連線取得資料
+     * HTTP 連線取得資料, 取得會員列表資料
      */
-    private func StartHTTPConn() {
+    private func HHTPGetMemberList() {
         // 連線 HTTP post/get 參數
         var dictParm = Dictionary<String, String>()
         dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
@@ -72,14 +76,14 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
         dictParm["act"] = "member_getdata"
         
         // HTTP 開始連線
-        pubClass.HTTPConn(mVCtrl, ConnParm: dictParm, callBack: HttpResponChk)
+        pubClass.HTTPConn(mVCtrl, ConnParm: dictParm, callBack: HTTPResponMemberList)
     }
     
     /**
-     * HTTP 連線後取得連線結果
+     * HTTP 連線後取得連線結果, 會員列表資料
      * 資料 key name：data, course, member 型態為 Array<Dictionary<String, AnyObject>>
      */
-    private func HttpResponChk(dictRS: Dictionary<String, AnyObject>) {
+    private func HTTPResponMemberList(dictRS: Dictionary<String, AnyObject>) {
         // 任何錯誤跳離
         if (dictRS["result"] as! Bool != true) {
             dispatch_async(dispatch_get_main_queue(), {
@@ -121,8 +125,36 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
     /**
     * #mark: PubMemberListDelegate, 會員列表，點取會員執行相關程序
     */
-    func MemberSelected(MemberData dictData: Dictionary<String, AnyObject>) {
-        self.performSegueWithIdentifier("MemberMain", sender: dictData)
+    func MemberSelected(MemberData dictData: Dictionary<String, AnyObject>, indexPath: NSIndexPath) {
+        currIndexPath = indexPath
+        mMemberData = dictData
+        
+        // HTTP 連線取得該會員全部資料(course, mead, soqibed, purchase)
+        var dictParm = Dictionary<String, String>()
+        dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
+        dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
+        dictParm["page"] = "memberdata"
+        dictParm["act"] = "memberdata_getdata"
+        dictParm["arg0"] = dictData["memberid"] as? String
+        
+        // HTTP 開始連線
+        pubClass.HTTPConn(mVCtrl, ConnParm: dictParm, callBack: {(dictRS: Dictionary<String, AnyObject>)->Void in
+            
+            // 任何錯誤顯示錯誤訊息
+            if (dictRS["result"] as! Bool != true) {
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.pubClass.popIsee(self.mVCtrl, Msg: self.pubClass.getLang(dictRS["msg"] as? String))
+                })
+                
+                return
+            }
+            
+            /* 解析正確的 http 回傳結果，執行後續動作 */
+            let dictData = (dictRS["data"]!["content"]!)!
+            
+            // 將整個回傳資料傳送下個頁面
+            self.performSegueWithIdentifier("MemberMain", sender: dictData)
+        })
     }
     
     /**
@@ -143,14 +175,17 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let strIdent = segue.identifier
 
+        // 會員主頁面
         if (strIdent == "MemberMain") {
             let mVC = segue.destinationViewController as! MemberMain
             mVC.strToday = strToday
-            mVC.dictMember = sender as! Dictionary<String, AnyObject>
+            mVC.dictMember = mMemberData
+            mVC.dictAllData = sender as! Dictionary<String, AnyObject>
             
             return
         }
         
+        // 新增會員
         if (strIdent == "MemberAdd") {
             let mVC = segue.destinationViewController as! MemberAdEd
             mVC.strToday = strToday

@@ -12,6 +12,7 @@ class MemberPageCourseList: UITableViewController {
     
     // @IBOutlet
     @IBOutlet weak var tableList: UITableView!
+    @IBOutlet weak var labNoData: UILabel!
     
     // common property
     var mVCtrl: UIViewController!
@@ -31,6 +32,12 @@ class MemberPageCourseList: UITableViewController {
         // 固定初始參數
         mVCtrl = self
         dictPref = pubClass.getPrefData()
+        
+        labNoData.alpha = 0.0
+        
+        // 療程 TableList Cell 直接調用 Nib 檔案, 需在本 class 指定 cell height
+        tableList.registerNib(UINib(nibName: "CourseListCell", bundle: nil), forCellReuseIdentifier: "cellCourseList")
+        self.tableView.rowHeight = 120.0
     }
     
     /**
@@ -38,7 +45,9 @@ class MemberPageCourseList: UITableViewController {
      */
     override func viewDidAppear(animated: Bool) {
         dispatch_async(dispatch_get_main_queue(), {
-            
+            if (self.aryCourseData.count < 1) {
+                self.labNoData.alpha = 1.0
+            }
         })
     }
     
@@ -60,17 +69,20 @@ class MemberPageCourseList: UITableViewController {
      * #mark: UITableView Delegate
      * UITableView, Cell 內容
      */
+
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if (aryCourseData.count < 1) {
             return UITableViewCell()
         }
-        
+            
         let ditItem = aryCourseData[indexPath.row] as Dictionary<String, AnyObject>
-        let mCell: CourseListCell = tableView.dequeueReusableCellWithIdentifier("cellCourseList", forIndexPath: indexPath) as! CourseListCell
+        let mCell = tableView.dequeueReusableCellWithIdentifier("cellCourseList", forIndexPath: indexPath) as! CourseListCell
         
         mCell.initView(ditItem, PubClass: pubClass)
-        
+            
         return mCell
     }
+
+    
 }
 

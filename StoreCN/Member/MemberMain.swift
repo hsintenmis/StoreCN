@@ -35,6 +35,7 @@ class MemberMain: UIViewController, MemberMainPagerDelegate {
     // public, parent 設定
     var strToday = ""
     var dictMember: Dictionary<String, AnyObject> = [:]
+    var dictAllData: Dictionary<String, AnyObject> = [:]  // 該會員全部相關資料
     
     // Container 的 VC, 從 'prepareForSegue' 實體化
     private var mMemberMainPager: MemberMainPager!
@@ -63,9 +64,6 @@ class MemberMain: UIViewController, MemberMainPagerDelegate {
      * View DidAppear 程序
      */
     override func viewDidAppear(animated: Bool) {
-        // HTTP 連線取得資料
-        StartHTTPConn()
-        
         dispatch_async(dispatch_get_main_queue(), {
             
         })
@@ -91,62 +89,6 @@ class MemberMain: UIViewController, MemberMainPagerDelegate {
         // 圖片
         let imgURL = pubClass.D_WEBURL + "upload/HP_" + strId + ".png"
         imgPict.downloadImageFrom(link: imgURL, contentMode: UIViewContentMode.ScaleAspectFit)
-    }
-    
-    /**
-     * HTTP 連線取得資料
-     */
-    private func StartHTTPConn() {
-        // 連線 HTTP post/get 參數
-        var dictParm = Dictionary<String, String>()
-        dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
-        dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
-        dictParm["page"] = "memberdata"
-        dictParm["act"] = "memberdata_getdata"
-        dictParm["arg0"] = dictMember["memberid"] as? String
-        
-        // HTTP 開始連線
-        pubClass.HTTPConn(mVCtrl, ConnParm: dictParm, callBack: HttpResponChk)
-    }
-    
-    /**
-     * HTTP 連線後取得連線結果
-     * 回傳以下：
-     *   資料: course, soqibed, mead, purchase
-     *   固定: datacourse, 療程資料庫
-     */
-    private func HttpResponChk(dictRS: Dictionary<String, AnyObject>) {
-        // 任何錯誤跳離
-        if (dictRS["result"] as! Bool != true) {
-            dispatch_async(dispatch_get_main_queue(), {
-                self.pubClass.popIsee(self.mVCtrl, Msg: self.pubClass.getLang(dictRS["msg"] as? String), withHandler: {
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                })
-            })
-            
-            return
-        }
-        
-        /* 解析正確的 http 回傳結果，執行後續動作 */
-        let dictData = (dictRS["data"]!["content"]!)!
-        strToday = dictData["today"] as! String
-        
-        // 設定各個 Pager Table 需要的 datasource 
-        var dictAllData: Dictionary<String, Array<Dictionary<String, AnyObject>>> = [:]
-        
-        for strDataName in aryMenuName {
-            if (strDataName == "health") {
-                continue
-            }
-            
-            if let tmpData = dictData[strDataName] as? Array<Dictionary<String, AnyObject>> {
-                dictAllData[strDataName] = tmpData
-            }
-        }
-        
-        // 手動執行
-        print("performSegueWithIdentifier")
-        self.performSegueWithIdentifier("MemberMainPager", sender: dictAllData)
     }
     
     /**
@@ -214,16 +156,14 @@ class MemberMain: UIViewController, MemberMainPagerDelegate {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let strIdentName = segue.identifier
         
-        // Container Pager
+        // Container Pager, 療程/Mead/Soqibed/購貨/健康 各個頁面
         if (strIdentName == "MemberMainPager") {
             let mVC = segue.destinationViewController as! MemberMainPager
-            
-            print("prepareForSegue")
             
             mMemberMainPager = mVC
             mMemberMainPager.delegateMemberMainPager = self
             mMemberMainPager.aryMenuName = aryMenuName
-            mMemberMainPager.dictAllData = sender as! Dictionary<String, Array<Dictionary<String, AnyObject>>>
+            mMemberMainPager.dictAllData = dictAllData
             
             return
         }

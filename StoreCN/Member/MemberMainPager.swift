@@ -20,16 +20,17 @@ class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIP
 
     var delegateMemberMainPager = MemberMainPagerDelegate?()
     
-    // 各個 pager 對應的代碼, parent 設定
+    // 各個 pager 對應的代碼, parent 設定, 對應 'aryVCIdent'
+    // 參考上層 ["course", "mead", "soqibed", "purchase", "health"]
     var aryMenuName: Array<String>!
     
     // 各個 Pager Table 需要的 datasource, parent 設定
-    var dictAllData: Dictionary<String, Array<Dictionary<String, AnyObject>>>!
+    var dictAllData: Dictionary<String, AnyObject>!
     
     // Pager 包含的 sub VC
     private let aryVCIdent = ["CourseList", "MeadList","SoqibedList","PurchaseList","Health"]  // Storyboard Identname
     
-    private var aryPages: Array<UIViewController> = []
+    private var aryPages: Array<UIViewController>!  // 全部 page 的 array
     private var indexPages = 0;  // 目前已滑動完成 page 的 position
     private var indexNextPages = 1;
     
@@ -40,14 +41,7 @@ class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIP
         self.delegate = self
         self.dataSource = self
         
-        // 各個 page 加入 aryPages
-        var mVC: UIViewController
- 
-        for strIdent in aryVCIdent {
-            mVC = storyboard!.instantiateViewControllerWithIdentifier("Member" + strIdent)
-            
-            aryPages.append(mVC)
-        }
+        self.makePages()
         
         // 初始與顯示第一個頁面
         self.moveToPage(0)
@@ -55,7 +49,38 @@ class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIP
     
     // viewDidAppear
     override func viewDidAppear(animated: Bool) {
-        print(dictAllData)
+        
+    }
+    
+    /**
+     * 產生各個 page 頁面，加到 'aryPages', 若無資料，產生'無資料' VC
+     */
+    private func makePages() {
+        aryPages = []
+        //let vcEmpty = storyboard?.instantiateViewControllerWithIdentifier("NodataView")
+        
+        // 各個 page 加入 aryPages
+        for (var i=0; i<aryMenuName.count; i++) {
+            let strMenuName = aryMenuName[i]
+            
+            switch (strMenuName) {
+            case "course":
+                let mVC: MemberPageCourseList = storyboard?.instantiateViewControllerWithIdentifier("Member" + aryVCIdent[i]) as! MemberPageCourseList
+                
+                if let tmpDict = dictAllData["course"] as? Array<Dictionary<String, AnyObject>> {
+                    mVC.aryCourseData = tmpDict
+                }
+                
+                aryPages.append(mVC)
+                
+                break
+            default:
+                let mVC = storyboard?.instantiateViewControllerWithIdentifier("Member" + aryVCIdent[i])
+                aryPages.append(mVC!)
+            }
+            
+            
+        }
     }
     
     /**
@@ -113,8 +138,7 @@ class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIP
      * page 總頁數
      */
     func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
-        
-        return (aryPages.count == 2) ? 0 : aryPages.count
+        return (aryPages.count == 5) ? 0 : aryPages.count
     }
     
     /**
@@ -122,7 +146,6 @@ class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIP
      * 回傳選擇頁面的 position
      */
     func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int {
-
         return self.indexPages
     }
     

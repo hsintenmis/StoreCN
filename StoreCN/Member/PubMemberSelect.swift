@@ -12,7 +12,7 @@ protocol PubMemberSelectDelegate {
     /**
     * Table Cell 點取，點取指定會員，實作點取後相關程序
     */
-    func MemberSelected(MemberData dictData: Dictionary<String, AnyObject>)
+    func MemberSelected(MemberData dictData: Dictionary<String, AnyObject>, indexPath: NSIndexPath)
 }
 
 /**
@@ -139,7 +139,7 @@ class PubMemberSelect: UIViewController {
      * UITableView, Cell 點取
      */
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        delegate?.MemberSelected(MemberData: aryNewMember[indexPath.row])
+        delegate?.MemberSelected(MemberData: aryNewMember[indexPath.row], indexPath: indexPath)
     }
     
     /**

@@ -35,6 +35,10 @@ class Courselist: UIViewController {
         // 固定初始參數
         mVCtrl = self
         dictPref = pubClass.getPrefData()
+        
+        // 療程 TableList Cell 直接調用 Nib 檔案, 需在本 class 指定 cell height
+        tableList.registerNib(UINib(nibName: "CourseListCell", bundle: nil), forCellReuseIdentifier: "cellCourseList")
+        self.tableView.rowHeight = 120.0
     }
     
     /**
@@ -136,18 +140,9 @@ class Courselist: UIViewController {
         }
         
         let ditItem = aryCourseData[indexPath.row] as Dictionary<String, AnyObject>
-        let mCell: CourseListCell = tableView.dequeueReusableCellWithIdentifier("cellCourseList", forIndexPath: indexPath) as! CourseListCell
+        let mCell = tableView.dequeueReusableCellWithIdentifier("cellCourseList", forIndexPath: indexPath) as! CourseListCell
         
         mCell.initView(ditItem, PubClass: pubClass)
-        
-        /*
-        mCell.labName.text = ditItem["membername"] as? String
-        mCell.labInvo.text = ditItem["invo_id"] as? String
-        mCell.labCount.text = ditItem["usecount"] as? String
-        mCell.labCourse.text = ditItem["pdname"] as? String
-        mCell.LabEdate.text = pubClass.formatDateWithStr(ditItem["end_date"] as! String, type: "8s")
-        mCell.labSdate.text = pubClass.formatDateWithStr(ditItem["sdate"] as! String, type: "8s")
-        */
 
         return mCell
     }
