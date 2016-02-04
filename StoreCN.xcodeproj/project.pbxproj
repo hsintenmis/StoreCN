@@ -101,6 +101,11 @@
 		D7037B2A1C58C726002A955E /* user_128.png in Resources */ = {isa = PBXBuildFile; fileRef = D7037AD71C58C726002A955E /* user_128.png */; };
 		D7037B2B1C58C726002A955E /* user_empty01.png in Resources */ = {isa = PBXBuildFile; fileRef = D7037AD81C58C726002A955E /* user_empty01.png */; };
 		D7037B2C1C58C726002A955E /* viewedocument_128.png in Resources */ = {isa = PBXBuildFile; fileRef = D7037AD91C58C726002A955E /* viewedocument_128.png */; };
+		D7072BA21C62F04D00A6DDF5 /* html in Resources */ = {isa = PBXBuildFile; fileRef = D7072BA11C62F04D00A6DDF5 /* html */; };
+		D7072BA81C62F21800A6DDF5 /* PubMeadDataSelect.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7072BA71C62F21800A6DDF5 /* PubMeadDataSelect.swift */; };
+		D7072BAA1C62F86F00A6DDF5 /* PubMeadDataSelectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7072BA91C62F86F00A6DDF5 /* PubMeadDataSelectCell.swift */; };
+		D7072BAC1C62FE9500A6DDF5 /* MemberPageMeadList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7072BAB1C62FE9500A6DDF5 /* MemberPageMeadList.swift */; };
+		D7072BAE1C634E8900A6DDF5 /* MemberPageSoqibedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7072BAD1C634E8900A6DDF5 /* MemberPageSoqibedList.swift */; };
 		D7134FF51C5EEAC00069ACF1 /* PubMemberSelect.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7134FF41C5EEAC00069ACF1 /* PubMemberSelect.swift */; };
 		D7134FF91C5F5A990069ACF1 /* MemberMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7134FF81C5F5A990069ACF1 /* MemberMain.swift */; };
 		D7150E3D1C5C4C8600C9FE8B /* CourseListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7150E3C1C5C4C8600C9FE8B /* CourseListCell.swift */; };
@@ -219,6 +224,11 @@
 		D7037AD71C58C726002A955E /* user_128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user_128.png; sourceTree = "<group>"; };
 		D7037AD81C58C726002A955E /* user_empty01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user_empty01.png; sourceTree = "<group>"; };
 		D7037AD91C58C726002A955E /* viewedocument_128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = viewedocument_128.png; sourceTree = "<group>"; };
+		D7072BA11C62F04D00A6DDF5 /* html */ = {isa = PBXFileReference; lastKnownFileType = folder; path = html; sourceTree = "<group>"; };
+		D7072BA71C62F21800A6DDF5 /* PubMeadDataSelect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubMeadDataSelect.swift; path = Testing/PubMeadDataSelect.swift; sourceTree = "<group>"; };
+		D7072BA91C62F86F00A6DDF5 /* PubMeadDataSelectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubMeadDataSelectCell.swift; path = Testing/PubMeadDataSelectCell.swift; sourceTree = "<group>"; };
+		D7072BAB1C62FE9500A6DDF5 /* MemberPageMeadList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberPageMeadList.swift; path = Member/MemberPageMeadList.swift; sourceTree = "<group>"; };
+		D7072BAD1C634E8900A6DDF5 /* MemberPageSoqibedList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberPageSoqibedList.swift; path = Member/MemberPageSoqibedList.swift; sourceTree = "<group>"; };
 		D7134FF41C5EEAC00069ACF1 /* PubMemberSelect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubMemberSelect.swift; path = Member/PubMemberSelect.swift; sourceTree = "<group>"; };
 		D7134FF81C5F5A990069ACF1 /* MemberMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberMain.swift; path = Member/MemberMain.swift; sourceTree = "<group>"; };
 		D7150E3C1C5C4C8600C9FE8B /* CourseListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CourseListCell.swift; path = ServiceMgr/CourseListCell.swift; sourceTree = "<group>"; };
@@ -283,6 +293,7 @@
 				D7037A861C58C726002A955E /* image */,
 				D7037A7B1C58C4DA002A955E /* lang */,
 				D7037A641C58BCB0002A955E /* SysFile */,
+				D7072BA11C62F04D00A6DDF5 /* html */,
 			);
 			path = StoreCN;
 			sourceTree = "<group>";
@@ -432,6 +443,8 @@
 				D7134FF41C5EEAC00069ACF1 /* PubMemberSelect.swift */,
 				D7150E401C5C5CA700C9FE8B /* PubMemberSelectCell.swift */,
 				D7EDE8871C608D3C00665542 /* MemberPageCourseList.swift */,
+				D7072BAB1C62FE9500A6DDF5 /* MemberPageMeadList.swift */,
+				D7072BAD1C634E8900A6DDF5 /* MemberPageSoqibedList.swift */,
 			);
 			name = Member;
 			sourceTree = "<group>";
@@ -439,6 +452,8 @@
 		D7496D1E1C5B4DCE00B75D6A /* Testing */ = {
 			isa = PBXGroup;
 			children = (
+				D7072BA71C62F21800A6DDF5 /* PubMeadDataSelect.swift */,
+				D7072BA91C62F86F00A6DDF5 /* PubMeadDataSelectCell.swift */,
 			);
 			name = Testing;
 			sourceTree = "<group>";
@@ -552,6 +567,7 @@
 				D7037A5A1C58BB8B002A955E /* Assets.xcassets in Resources */,
 				D7037B271C58C726002A955E /* stocksearch_128.png in Resources */,
 				D7037AF41C58C726002A955E /* del_128_001.png in Resources */,
+				D7072BA21C62F04D00A6DDF5 /* html in Resources */,
 				D7037B101C58C726002A955E /* menu_message_256.png in Resources */,
 				D7037AF31C58C726002A955E /* menu_member.png in Resources */,
 				D7037B131C58C726002A955E /* menubar01.9.png in Resources */,
@@ -649,6 +665,7 @@
 				D7150E431C5C6E8000C9FE8B /* MemberAdEd.swift in Sources */,
 				D74652071C5CA85900190EF6 /* PickerNumber.swift in Sources */,
 				D7037A731C58C03F002A955E /* CutImage.swift in Sources */,
+				D7072BAA1C62F86F00A6DDF5 /* PubMeadDataSelectCell.swift in Sources */,
 				D7FB953C1C59F58C00B48F57 /* MainMenu.swift in Sources */,
 				D7037A751C58C03F002A955E /* ImageClass.swift in Sources */,
 				D7496D261C5B58CF00B75D6A /* CourseList.swift in Sources */,
@@ -657,6 +674,7 @@
 				D7037A771C58C03F002A955E /* NoDataView.swift in Sources */,
 				D7496D1A1C5B343200B75D6A /* MainMenuColtViewCell.swift in Sources */,
 				D7037A6A1C58BFB5002A955E /* MainLogin.swift in Sources */,
+				D7072BA81C62F21800A6DDF5 /* PubMeadDataSelect.swift in Sources */,
 				D7FB953A1C59F17F00B48F57 /* FileMang.swift in Sources */,
 				D7134FF51C5EEAC00069ACF1 /* PubMemberSelect.swift in Sources */,
 				D7EDE8861C6081B800665542 /* MemberMainColtViewCell.swift in Sources */,
@@ -664,7 +682,9 @@
 				D7150E3D1C5C4C8600C9FE8B /* CourseListCell.swift in Sources */,
 				D7037A761C58C03F002A955E /* JSONClass.swift in Sources */,
 				D7B29F791C5C712E0025C53A /* MemberAdEdContainer.swift in Sources */,
+				D7072BAC1C62FE9500A6DDF5 /* MemberPageMeadList.swift in Sources */,
 				D7134FF91C5F5A990069ACF1 /* MemberMain.swift in Sources */,
+				D7072BAE1C634E8900A6DDF5 /* MemberPageSoqibedList.swift in Sources */,
 				D7B29F7B1C5C913E0025C53A /* PickerDate.swift in Sources */,
 				D7037A781C58C03F002A955E /* PubClass.swift in Sources */,
 				D7037A681C58BF32002A955E /* AppDelegate.swift in Sources */,

@@ -38,7 +38,7 @@ class Courselist: UIViewController {
         
         // 療程 TableList Cell 直接調用 Nib 檔案, 需在本 class 指定 cell height
         tableList.registerNib(UINib(nibName: "CourseListCell", bundle: nil), forCellReuseIdentifier: "cellCourseList")
-        self.tableView.rowHeight = 120.0
+        self.tableList.rowHeight = 120.0
     }
     
     /**

@@ -53,7 +53,7 @@ class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIP
     }
     
     /**
-     * 產生各個 page 頁面，加到 'aryPages', 若無資料，產生'無資料' VC
+     * 產生各個 page 頁面，加到 'aryPages'
      */
     private func makePages() {
         aryPages = []
@@ -64,11 +64,23 @@ class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIP
             let strMenuName = aryMenuName[i]
             
             switch (strMenuName) {
-            case "course":
+                
+            case "course":  // 療程資料 VC
                 let mVC: MemberPageCourseList = storyboard?.instantiateViewControllerWithIdentifier("Member" + aryVCIdent[i]) as! MemberPageCourseList
                 
                 if let tmpDict = dictAllData["course"] as? Array<Dictionary<String, AnyObject>> {
                     mVC.aryCourseData = tmpDict
+                }
+                
+                aryPages.append(mVC)
+                
+                break
+                
+            case "mead":  // Mead 資料 VC
+                let mVC: MemberPageMeadList = storyboard?.instantiateViewControllerWithIdentifier("Member" + aryVCIdent[i]) as! MemberPageMeadList
+                
+                if let tmpDict = dictAllData["mead"] as? Array<Dictionary<String, String>> {
+                    mVC.aryMeadData = tmpDict
                 }
                 
                 aryPages.append(mVC)
