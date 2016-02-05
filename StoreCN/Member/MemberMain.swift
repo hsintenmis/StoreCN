@@ -168,15 +168,17 @@ class MemberMain: UIViewController, MemberMainPagerDelegate {
             return
         }
         
-        return
-    }
-
-    
-    /**
-     * act, 點取 'XX' button
-     */
-    @IBAction func actAdd(sender: UIBarButtonItem) {
+        // 會員編輯 VC
+        if (strIdentName == "MemberEdit") {
+            let mVC = segue.destinationViewController as! MemberAdEd
+            mVC.strToday = strToday
+            mVC.strMode = "edit"
+            mVC.dictMember = dictMember
+            
+            return
+        }
         
+        return
     }
     
     /**

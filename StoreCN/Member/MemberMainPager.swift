@@ -66,7 +66,7 @@ class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIP
             switch (strMenuName) {
                 
             case "course":  // 療程資料 VC
-                let mVC: MemberPageCourseList = storyboard?.instantiateViewControllerWithIdentifier("Member" + aryVCIdent[i]) as! MemberPageCourseList
+                let mVC: PubCourseSelect = storyboard?.instantiateViewControllerWithIdentifier("PubCourseSelect") as! PubCourseSelect
                 
                 if let tmpDict = dictAllData["course"] as? Array<Dictionary<String, AnyObject>> {
                     mVC.aryCourseData = tmpDict
@@ -77,15 +77,38 @@ class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIP
                 break
                 
             case "mead":  // Mead 資料 VC
-                let mVC: MemberPageMeadList = storyboard?.instantiateViewControllerWithIdentifier("Member" + aryVCIdent[i]) as! MemberPageMeadList
+                let mVC: PubMeadDataSelect = storyboard?.instantiateViewControllerWithIdentifier("PubMeadDataList") as! PubMeadDataSelect
                 
-                if let tmpDict = dictAllData["mead"] as? Array<Dictionary<String, String>> {
+                if let tmpDict = dictAllData["mead"] as? Array<Dictionary<String, AnyObject>> {
                     mVC.aryMeadData = tmpDict
                 }
                 
                 aryPages.append(mVC)
                 
                 break
+                
+            case "soqibed":  // SoqiBed 資料 VC
+                let mVC: PubSoqibedSelect = storyboard?.instantiateViewControllerWithIdentifier("PubSoqibedSelect") as! PubSoqibedSelect
+                
+                if let tmpDict = dictAllData["soqibed"] as? Array<Dictionary<String, AnyObject>> {
+                    mVC.arySoqibedData = tmpDict
+                }
+                
+                aryPages.append(mVC)
+                
+                break
+                
+            case "purchase":  // 會員購貨資料 VC
+                let mVC: PubMemberPurchaseSelect = storyboard?.instantiateViewControllerWithIdentifier("PubMemberPurchaseSelect") as! PubMemberPurchaseSelect
+                
+                if let tmpDict = dictAllData["purchase"] as? Array<Dictionary<String, AnyObject>> {
+                    mVC.aryPurchaseData = tmpDict
+                }
+                
+                aryPages.append(mVC)
+                
+                break
+                
             default:
                 let mVC = storyboard?.instantiateViewControllerWithIdentifier("Member" + aryVCIdent[i])
                 aryPages.append(mVC!)

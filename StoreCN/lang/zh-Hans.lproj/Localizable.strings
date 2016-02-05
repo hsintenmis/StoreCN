@@ -24,7 +24,6 @@
 "done" = "完成";
 "select_ok" = "確定";
 
-
 "week_0" = "日";
 "week_1" = "一";
 "week_2" = "二";
@@ -79,4 +78,9 @@
 "member_main_purchase" = "購貨紀錄";
 "member_main_health" = "健康紀錄";
 
+"course_nodata" = "沒有療程資料";
+
+"soqibed_actdate" = "建立日期";
+"soqibed_usecount" = "使用次数";
+"soqibed_builddate" = "建立时间";
 

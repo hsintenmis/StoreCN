@@ -40,6 +40,7 @@ class MemberAdEdContainer: UITableViewController, UITextFieldDelegate {
     // public property, 上層 parent 設定
     var strToday: String!
     var strMode = "add"
+    var dictMember: Dictionary<String, AnyObject> = [:]
     
     // textView array 與 val 值對應的 array data
     private var aryTxtView: Array<UITextField> = []
@@ -50,6 +51,10 @@ class MemberAdEdContainer: UITableViewController, UITextFieldDelegate {
     private var mPickerHeigh: PickerNumber!
     private var mPickerWeight: PickerNumber!
     
+    // 其他參數
+    // Picker 需要的資料
+    private var dictPickParm: Dictionary<String, AnyObject> = [:]
+    
     /**
     * View Load 程序
     */
@@ -59,6 +64,18 @@ class MemberAdEdContainer: UITableViewController, UITextFieldDelegate {
         // 固定初始參數
         mVCtrl = self
         dictPref = pubClass.getPrefData()
+        
+        // Picker param 初始資料
+        dictPickParm["birth_def"] = "19600101"
+        dictPickParm["birth_min"] = "19150101"
+        
+        let intMaxYY = Int(pubClass.subStr(strToday, strFrom: 0, strEnd: 4))! - 10
+        dictPickParm["birth_max"] = String(intMaxYY) + pubClass.subStr(strToday, strFrom: 4, strEnd: 8)
+        
+        dictPickParm["H_def"] = ["160", ".", "0"]
+        dictPickParm["H_minmax"] = [["max":220, "min":60], ["max":1, "min":1], ["max":9, "min":0]]
+        dictPickParm["W_def"] = ["50", ".", "0"]
+        dictPickParm["W_minmax"] = [["max":180, "min":10], ["max":1, "min":1], ["max":9, "min":0]]
     }
     
     /**
@@ -91,26 +108,71 @@ class MemberAdEdContainer: UITableViewController, UITextFieldDelegate {
         txtRePsd.delegate = self
         
         // 編輯模式特殊處理
-        self.procEditMode()
+        if (strMode == "edit") {
+            self.procEditMode()
+        }
         
         /* Picker 設定 */
         // 生日欄位
-        mPickerBirth = PickerDate(withUIField: txtBirth, PubClass: pubClass, withDefMaxMin: ["19600101", pubClass.subStr(strToday, strFrom: 0, strEnd: 8), "19150101"], NavyBarTitle: pubClass.getLang("member_selectbirth"))
+        mPickerBirth = PickerDate(withUIField: txtBirth, PubClass: pubClass, withDefMaxMin: [dictPickParm["birth_def"] as! String, dictPickParm["birth_max"] as! String, dictPickParm["birth_min"] as! String], NavyBarTitle: pubClass.getLang("member_selectbirth"))
         
         // 身高/體重 欄位, 設定 'PickerNumber'
-        mPickerHeigh = PickerNumber(withUIField: txtHeigh, PubClass: pubClass, DefAryVal: ["160", ".", "0"], MinMaxAry: [["max":220, "min":60], ["max":1, "min":1], ["max":9, "min":0]])
-        mPickerWeight = PickerNumber(withUIField: txtWeight, PubClass: pubClass, DefAryVal: ["50", ".", "0"], MinMaxAry: [["max":180, "min":10], ["max":1, "min":1], ["max":9, "min":0]])
+        mPickerHeigh = PickerNumber(withUIField: txtHeigh, PubClass: pubClass, DefAryVal: dictPickParm["H_def"] as! Array<String>, MinMaxAry: dictPickParm["H_minmax"] as! Array<Dictionary<String, Int>>)
+        mPickerWeight = PickerNumber(withUIField: txtWeight, PubClass: pubClass, DefAryVal: dictPickParm["W_def"] as! Array<String>, MinMaxAry: dictPickParm["W_minmax"] as! Array<Dictionary<String, Int>>)
     }
     
     /**
      * 編輯模式特殊處理
      */
     private func procEditMode() {
-        if (strMode != "edit") {
-            return
+        // 編輯模式下, 設定欄位初始資料
+        edName.text = dictMember["membername"] as? String
+        labID.text = dictMember["memberid"] as? String
+        labSdate.text = pubClass.formatDateWithStr(dictMember["sdate"] as! String, type: 8)
+        
+        txtTEL.text = dictMember["tel"] as? String
+        txtCNID.text = dictMember["cid_cn"] as? String
+        txtWechat.text = dictMember["id_wechat"] as? String
+        txtQQ.text = dictMember["id_qq"] as? String
+        txtEmail.text = dictMember["email"] as? String
+        txtZip.text = dictMember["zip"] as? String
+        txtCity.text = dictMember["province"] as? String
+        txtAddr.text = dictMember["addr"] as? String
+        
+        /* Picker 設定 */
+        // 生日欄位
+        if let strBirth = dictMember["birth"] as? String {
+            dictPickParm["birth_def"] = pubClass.subStr(strBirth, strFrom: 0, strEnd: 8)
         }
         
-        // 編輯模式下, 設定欄位初始資料
+        // 身高/體重 欄位, 設定 'PickerNumber'
+        if let strHeight = dictMember["height"] as? String {
+            var strPointDigt = "0"
+            let aryDigt = strHeight.characters.split{$0 == "."}.map(String.init)
+            
+            if (aryDigt.count == 3) {
+                strPointDigt = aryDigt[2]
+            }
+            
+            let aryVal: Array<String> = [aryDigt[0], ".", strPointDigt]
+            dictPickParm["H_def"] = aryVal
+            txtHeigh.text = aryVal[0] + aryVal[1] + aryVal[2]
+        }
+        
+        if let strWeight = dictMember["weight"] as? String {
+            if (strWeight.characters.count > 0) {
+                var strPointDigt = "0"
+                let aryDigt = strWeight.characters.split{$0 == "."}.map(String.init)
+                
+                if (aryDigt.count == 3) {
+                    strPointDigt = aryDigt[2]
+                }
+
+                let aryVal: Array<String> = [aryDigt[0], ".", strPointDigt]
+                dictPickParm["W_def"] = aryVal
+                txtWeight.text = aryVal[0] + aryVal[1] + aryVal[2]
+            }
+        }
     }
     
     /**

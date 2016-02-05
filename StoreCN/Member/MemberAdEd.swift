@@ -21,6 +21,7 @@ class MemberAdEd: UIViewController {
     // public property, 上層 parent 設定
     var strToday: String!
     var strMode = "add"
+    var dictMember: Dictionary<String, AnyObject> = [:]
     
     /**
      * View Load 程序
@@ -59,6 +60,7 @@ class MemberAdEd: UIViewController {
             let mVC = segue.destinationViewController as! MemberAdEdContainer
             mVC.strToday = strToday
             mVC.strMode = strMode
+            mVC.dictMember = dictMember
         }
         
         return

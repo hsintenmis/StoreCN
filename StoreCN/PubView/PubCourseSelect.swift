@@ -6,20 +6,20 @@ import UIKit
 import Foundation
 
 /**
- * protocol, PubMemberList Delegate
+ * protocol, PubCourseSelect Delegate
  */
-protocol PubMeadDataSelectDelegate {
+protocol PubCourseDataSelectDelegate {
     /**
      * Table Cell 點取，點取指定資料，實作點取後相關程序
      */
-    func MeadDataSelected(MeadData dictData: Dictionary<String, String>, indexPath: NSIndexPath)
+    func CourseDataSelected(CourseData dictData: Dictionary<String, AnyObject>, indexPath: NSIndexPath)
 }
 
 /**
  * Mead 檢測資料選擇 公用 class
  */
-class PubMeadDataSelect: UITableViewController {
-    var delegate = PubMeadDataSelectDelegate?()
+class PubCourseSelect: UITableViewController {
+    var delegate = PubCourseDataSelectDelegate?()
     
     // @IBOutlet
     @IBOutlet weak var tableData: UITableView!
@@ -30,10 +30,10 @@ class PubMeadDataSelect: UITableViewController {
     let pubClass: PubClass = PubClass()
     
     // Table DataSource, Mead 全部的檢測資料, paent 設定
-    var aryMeadData: Array<Dictionary<String, String>> = []
+    var aryCourseData: Array<Dictionary<String, AnyObject>> = []
     
     // 其他參數設定
-    private var strToday = ""
+    var strToday = ""
     private var newIndexPath: NSIndexPath!
     
     /**
@@ -47,7 +47,7 @@ class PubMeadDataSelect: UITableViewController {
         newIndexPath = NSIndexPath(forRow: 0, inSection: 0)
         labNoData.alpha = 0.0
         
-        if (self.aryMeadData.count < 1) {
+        if (self.aryCourseData.count < 1) {
             self.labNoData.alpha = 1.0
         }
     }
@@ -57,7 +57,7 @@ class PubMeadDataSelect: UITableViewController {
      */
     override func viewDidAppear(animated: Bool) {
         dispatch_async(dispatch_get_main_queue(), {
-
+            
         })
     }
     
@@ -72,7 +72,7 @@ class PubMeadDataSelect: UITableViewController {
      * 回傳指定的數量
      */
     override func tableView(tableView: UITableView, numberOfRowsInSection section:Int) -> Int {
-        return aryMeadData.count
+        return aryCourseData.count
     }
     
     /**
@@ -80,12 +80,12 @@ class PubMeadDataSelect: UITableViewController {
      * UITableView, Cell 內容
      */
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if (aryMeadData.count < 1) {
+        if (aryCourseData.count < 1) {
             return UITableViewCell()
         }
         
-        let ditItem = aryMeadData[indexPath.row] as Dictionary<String, String>
-        let mCell = tableView.dequeueReusableCellWithIdentifier("cellPubMeadDataSelect", forIndexPath: indexPath) as! PubMeadDataSelectCell
+        let ditItem = aryCourseData[indexPath.row] as Dictionary<String, AnyObject>
+        let mCell = tableView.dequeueReusableCellWithIdentifier("cellPubCourseSelect", forIndexPath: indexPath) as! PubCourseSelectCell
         
         mCell.initView(ditItem, PubClass: pubClass)
         
@@ -97,7 +97,7 @@ class PubMeadDataSelect: UITableViewController {
      * UITableView, Cell 點取
      */
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        delegate?.MeadDataSelected(MeadData: aryMeadData[indexPath.row], indexPath: indexPath)
+        delegate?.CourseDataSelected(CourseData: aryCourseData[indexPath.row], indexPath: indexPath)
     }
     
 }

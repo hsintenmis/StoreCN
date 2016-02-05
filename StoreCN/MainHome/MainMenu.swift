@@ -33,6 +33,9 @@ class MainMenu: UIViewController {
     var strToday = ""
     var strTodayMsg = ""
     
+    // HTTP 連線參數設定
+    private var dictParm: Dictionary<String, String> = [:]
+    
     // 顏色
     private let dictColor = ["white":"FFFFFF", "red":"FFCCCC", "gray":"C0C0C0", "silver":"F0F0F0", "blue":"66CCFF", "black":"000000", "green":"99CC33"]
     
@@ -49,6 +52,10 @@ class MainMenu: UIViewController {
         // 固定初始參數
         mVCtrl = self
         dictPref = pubClass.getPrefData()
+        
+        // HTTP 連線參數設定
+        dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
+        dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
     }
     
     /**
@@ -86,14 +93,12 @@ class MainMenu: UIViewController {
      */
     private func StartHTTPConn() {
         // 連線 HTTP post/get 參數
-        var dictParm = Dictionary<String, String>()
-        dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
-        dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
-        dictParm["page"] = "homepage"
-        dictParm["act"] = "homepage_remindall"
+        var mParam = dictParm
+        mParam["page"] = "homepage"
+        mParam["act"] = "homepage_remindall"
         
         // HTTP 開始連線
-        pubClass.HTTPConn(mVCtrl, ConnParm: dictParm, callBack: HttpResponChk)
+        pubClass.HTTPConn(mVCtrl, ConnParm: mParam, callBack: HttpResponChk)
     }
     
     /**
@@ -114,14 +119,14 @@ class MainMenu: UIViewController {
         
         // 療程快到期資料
         var aryExpire: Array<Dictionary<String, AnyObject>> = []
-        if let aryData = dictData["course"] {
-            aryExpire = aryData as! Array<Dictionary<String, AnyObject>>
+        if let aryData = dictData["course"] as? Array<Dictionary<String, AnyObject>> {
+            aryExpire = aryData
         }
         
         // 庫存不足商品
         var aryStock: Array<Dictionary<String, AnyObject>> = []
-        if let aryData = dictData["stock"] {
-            aryStock = aryData as! Array<Dictionary<String, AnyObject>>
+        if let aryData = dictData["stock"] as? Array<Dictionary<String, AnyObject>> {
+            aryStock = aryData
         }
         
         // 產生'今日提醒文字'
@@ -217,7 +222,18 @@ class MainMenu: UIViewController {
         for strIdent in aryIdent {
             mAlert.addAction(UIAlertAction(title:pubClass.getLang("menu_" + strIdent), style: UIAlertActionStyle.Default, handler:{
                 (alert: UIAlertAction!)->Void in
-                    self.performSegueWithIdentifier(strIdent, sender: nil)
+                
+                /* 判斷是否需要 'prepareForSegue' */
+                var mParam = self.dictParm
+                
+                // 療程列表
+                if (strIdent == "course_list") {
+                    mParam["page"] = "cardmanage"
+                    mParam["act"] = "cardmanage_getdata"
+                    self.MenuItemSelect(strIdent, HTTPParam: mParam)
+                    
+                    return
+                }
             }))
         }
         
@@ -225,11 +241,44 @@ class MainMenu: UIViewController {
     }
     
     /**
+    * 主選單項目點取時，執行http連線取的資料，再傳入指定的VC
+    */
+    private func MenuItemSelect(strIdent: String!, HTTPParam mParam: Dictionary<String, String>!) {
+        // HTTP 開始連線
+        pubClass.HTTPConn(mVCtrl, ConnParm: mParam, callBack: {(dictRS: Dictionary<String, AnyObject>)->Void in
+            
+            // 任何錯誤顯示錯誤訊息
+            if (dictRS["result"] as! Bool != true) {
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.pubClass.popIsee(self.mVCtrl, Msg: self.pubClass.getLang(dictRS["msg"] as? String))
+                })
+                
+                return
+            }
+            
+            /* 解析正確的 http 回傳結果，執行後續動作 */
+            let dictData = dictRS["data"]!["content"] as! Dictionary<String, AnyObject>
+            self.strToday = dictData["today"] as! String
+            
+            // 將整個回傳資料傳送下個頁面
+            self.performSegueWithIdentifier(strIdent, sender: dictData)
+        })
+    }
+    
+    /**
      * Segue 跳轉頁面
      */
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let strIdent = segue.identifier
-        //print(strIdent)
+        
+        // 療程列表
+        if (strIdent == "course_list") {
+            let mVC = segue.destinationViewController as! Courselist
+            mVC.strToday = strToday
+            mVC.dictAllData = sender as! Dictionary<String, AnyObject>
+
+            return
+        }
         
         return
     }
