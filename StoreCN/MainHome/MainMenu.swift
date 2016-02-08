@@ -234,6 +234,15 @@ class MainMenu: UIViewController {
                     
                     return
                 }
+                
+                // 療程預約
+                if (strIdent == "course_reservation") {                    
+                    mParam["page"] = "course"
+                    mParam["act"] = "course_getdata"
+                    self.MenuItemSelect(strIdent, HTTPParam: mParam)
+                    
+                    return
+                }
             }))
         }
         
@@ -258,7 +267,12 @@ class MainMenu: UIViewController {
             
             /* 解析正確的 http 回傳結果，執行後續動作 */
             let dictData = dictRS["data"]!["content"] as! Dictionary<String, AnyObject>
-            self.strToday = dictData["today"] as! String
+            
+            if let today = dictData["today"] as? String {
+                if (today.characters.count == 14) {
+                    self.strToday = today
+                }
+            }
             
             // 將整個回傳資料傳送下個頁面
             self.performSegueWithIdentifier(strIdent, sender: dictData)
@@ -277,6 +291,15 @@ class MainMenu: UIViewController {
             mVC.strToday = strToday
             mVC.dictAllData = sender as! Dictionary<String, AnyObject>
 
+            return
+        }
+        
+        // 療程預約
+        if (strIdent == "course_reservation") {
+            let mVC = segue.destinationViewController as! CourseReserv
+            mVC.strToday = strToday
+            mVC.dictAllData = sender as! Dictionary<String, AnyObject>
+            
             return
         }
         

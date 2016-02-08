@@ -96,9 +96,6 @@ class MemberAdEdContainer: UITableViewController, UITextFieldDelegate {
         aryField = ["name", "tel","birth","height","weight","cid_cn","id_wechat","id_qq","email","zip","province","addr"]
         
         for(var loopi = 0; loopi < aryField.count; loopi++) {
-            // TODO 若為編輯模式，設定初始值
-            //aryTxtView[loopi].text = dictMember[aryField[loopi]]
-            
             // textView 的 delegate
             aryTxtView[loopi].delegate = self
         }
@@ -142,7 +139,9 @@ class MemberAdEdContainer: UITableViewController, UITextFieldDelegate {
         /* Picker 設定 */
         // 生日欄位
         if let strBirth = dictMember["birth"] as? String {
-            dictPickParm["birth_def"] = pubClass.subStr(strBirth, strFrom: 0, strEnd: 8)
+            let strYMDBirth = pubClass.subStr(strBirth, strFrom: 0, strEnd: 8)
+            dictPickParm["birth_def"] = strYMDBirth
+            txtBirth.text = pubClass.formatDateWithStr(strYMDBirth, type: 8)
         }
         
         // 身高/體重 欄位, 設定 'PickerNumber'
@@ -173,6 +172,8 @@ class MemberAdEdContainer: UITableViewController, UITextFieldDelegate {
                 txtWeight.text = aryVal[0] + aryVal[1] + aryVal[2]
             }
         }
+        
+        
     }
     
     /**

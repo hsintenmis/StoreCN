@@ -31,7 +31,7 @@ class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIP
     private let aryVCIdent = ["CourseList", "MeadList","SoqibedList","PurchaseList","Health"]  // Storyboard Identname
     
     private var aryPages: Array<UIViewController>!  // 全部 page 的 array
-    private var indexPages = 0;  // 目前已滑動完成 page 的 position
+    private var indexPages = -1;  // 目前已滑動完成 page 的 position
     private var indexNextPages = 1;
     
     // View DidLoad
@@ -123,9 +123,16 @@ class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIP
      * 根據代入的 position 滑動到指定的頁面
      */
     func moveToPage(position: Int) {
-        let mDirect = (position == 0) ? UIPageViewControllerNavigationDirection.Reverse : UIPageViewControllerNavigationDirection.Forward
+        var mDirect = UIPageViewControllerNavigationDirection.Forward
+        
+        if (indexPages > position) {
+            mDirect = UIPageViewControllerNavigationDirection.Reverse
+        }
+        
+        //let mDirect = (position == 0) ? UIPageViewControllerNavigationDirection.Reverse : UIPageViewControllerNavigationDirection.Forward
         
         setViewControllers([aryPages[position]], direction: mDirect, animated: true, completion: nil)
+        indexPages = position
     }
     
     /**
