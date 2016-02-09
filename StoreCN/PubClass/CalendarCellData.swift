@@ -32,7 +32,6 @@ class CalendarCellData {
     
     // 月曆相關參數設定
     private let aryFixWeek = ["Sun", "Mon","Tue","Wed","Thu","Fri","Sat"]
-    private var dictDataSource: Dictionary<String, AnyObject> = [:]
     
     // 系統 Calendar 參數設定
     let mCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
@@ -42,19 +41,24 @@ class CalendarCellData {
     /**
      * init
      */
-    init(DataSource datasource: Dictionary<String, AnyObject>?) {
+    init() {
         components = mCalendar!.components(NSCalendarUnit.Month, fromDate: mNSDate)
-        if let data = datasource {
-            dictDataSource = data
-        }
     }
     
     /**
      * 根據指定的 YYYYMM, 取得該月份全部的 block data
+     * @param Dictionary<String, AnyObject> : 指定月份個日期的資料，or nil
      */
-    func getAllData(dictYYMM: Dictionary<String, String> )->Array<Array<Dictionary<String, AnyObject>>> {
+    func getAllData(dictYYMM: Dictionary<String, String>, DataSource datasource: Dictionary<String, AnyObject>? )->Array<Array<Dictionary<String, AnyObject>>> {
         // 初始相關參數
         var aryAllBlock: Array<Array<Dictionary<String, AnyObject>>> = []
+        
+        //  各日期資料如: 'dd03' => ary or dict, 'dd10'...,  須注意前置碼 'dd'
+        var dictAllData: Dictionary<String, AnyObject> = [:]
+        
+        if let tmpData = datasource {
+            dictAllData = tmpData
+        }
         
         components.year = Int(dictYYMM["YY"]!)!
         components.month = Int(dictYYMM["MM"]!)!
@@ -81,10 +85,13 @@ class CalendarCellData {
         // 月曆 第一個 資料列
         var arySect: Array<Dictionary<String, AnyObject>> = []
         var dictBlock: Dictionary<String, AnyObject>
+        
+        var strDayKey = ""  // ex. 'dd01'
         var isStartSet = false  // 是否開始設定資料 flag
         
         for (var loopi = 0; loopi < 7; loopi++) {
             dictBlock = [:]
+            dictBlock["data"] = nil
             
             // 設定 block 從第幾個開始有資料
             if (firstWeekName == aryFixWeek[loopi] && !isStartSet) {
@@ -98,6 +105,13 @@ class CalendarCellData {
                 continue
             }
             
+            // 指定日期是否有資料
+            strDayKey = "dd" + String(currDay)
+            if let tmpData = dictAllData[strDayKey] {
+                dictBlock["data"] = tmpData
+            }
+            
+            // 其他欄位設定，dict data 加入 '列' array
             dictBlock["txtDay"] = String(currDay)
             currDay += 1
             arySect.append(dictBlock)
@@ -112,9 +126,16 @@ class CalendarCellData {
             // 指定的 sect 列, 設定「星期幾」的資料
             for (var loopi = 0; loopi < 7; loopi++) {
                 dictBlock = [:]
+                dictBlock["data"] = nil
                 
                 if (currDay <= lastMonthDay) {
                     dictBlock["txtDay"] = String(currDay)
+                    
+                    // 指定日期是否有資料
+                    strDayKey = "dd" + String(currDay)
+                    if let tmpData = dictAllData[strDayKey] {
+                        dictBlock["data"] = tmpData
+                    }
                 }
                 else {
                     dictBlock["txtDay"] = ""
