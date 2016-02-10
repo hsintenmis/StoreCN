@@ -21,6 +21,9 @@ class PubClass {
     let aryLangCode = ["Base", "zh-Hans"]  // 語系相關
     let filenameMEADDB = "meaddb.txt"  // MEAD DB 資料檔名稱
     
+    // 顏色
+    let dictColor = ["white":"FFFFFF", "red":"FFCCCC", "gray":"C0C0C0", "silver":"F0F0F0", "blue":"66CCFF", "black":"000000", "green":"99CC33"]
+    
     /**
     * init
     */

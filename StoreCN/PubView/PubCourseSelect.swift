@@ -16,7 +16,7 @@ protocol PubCourseDataSelectDelegate {
 }
 
 /**
- * Mead 檢測資料選擇 公用 class
+ * 療程DB 資料選擇 公用 class
  */
 class PubCourseSelect: UITableViewController {
     var delegate = PubCourseDataSelectDelegate?()

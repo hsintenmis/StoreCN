@@ -56,6 +56,7 @@
 "mm_12" = "十二月";
 
 "FMT_todayinfo" = "今日有 %d筆療程預約, %d名會員療程快到期, %d項商品庫存不足.";
+"FMT_MMDD" = "%d月%d日";
 
 "menu_member" = "會員管理";
 "menu_testing" = "健康檢測";
@@ -79,6 +80,9 @@
 "member_main_health" = "健康紀錄";
 
 "course_nodata" = "沒有療程資料";
+"course_nobuy" = "未購買療程";
+"course_alreadybuy" = "已購買療程";
+"course_finished" = "療程已完成";
 
 "soqibed_actdate" = "建立日期";
 "soqibed_usecount" = "使用次数";

@@ -12,9 +12,10 @@ class CourseReserv: UIViewController {
     
     // @IBOutlet
     @IBOutlet weak var coltviewCalendar: UICollectionView!
-    
+    @IBOutlet weak var tableReserv: UITableView!
     @IBOutlet weak var labMM: UILabel!
     @IBOutlet weak var labYY: UILabel!
+    @IBOutlet weak var labMMDD: UILabel!
     
     // common property
     private let pubClass: PubClass = PubClass()
@@ -28,6 +29,7 @@ class CourseReserv: UIViewController {
     private var aryReservData: Array<Dictionary<String, AnyObject>>!
     private var aryMember: Array<Dictionary<String, AnyObject>>?
     private var aryCourse: Array<Dictionary<String, AnyObject>>!
+    private var aryReservDataDay: Array<Dictionary<String, AnyObject>> = [] // 當日預約資料 array
     
     // 其他參數設定
     private var mCalendarCellData = CalendarCellData()
@@ -41,13 +43,14 @@ class CourseReserv: UIViewController {
     private var lastYYMM = "202512"
     
     // 顏色
-    private let dictColor = ["white":"FFFFFF", "red":"FFCCCC", "gray":"C0C0C0", "silver":"F0F0F0", "blue":"66CCFF", "black":"000000", "green":"99CC33"]
-    
+    private var dictColor: Dictionary<String, String>!
     /**
     * View Load 程序
     */
     override func viewDidLoad() {
+        // 固定初始參數
         super.viewDidLoad()
+        dictColor = pubClass.dictColor
         
         // 檢查是否有會員
         if let tmpData = dictAllData["member"] as? Array<Dictionary<String, AnyObject>> {
@@ -94,12 +97,28 @@ class CourseReserv: UIViewController {
      * 初始與設定 VCview 內的 field
      */
     func initViewField() {
+        // 取得指定月份預約資料
+        let dictReservMM = aryReservData[positionReservData]["dd_data"] as? Dictionary<String, AnyObject>
+        
         // 設定 calendar data
-        aryBlockData = mCalendarCellData.getAllData(currYYMM, DataSource: aryReservData[positionReservData]["dd_data"] as? Dictionary<String, AnyObject>)
+        aryBlockData = mCalendarCellData.getAllData(currYYMM, DataSource: dictReservMM)
         coltviewCalendar.reloadData()
         
         labYY.text = currYYMM["YY"]
         labMM.text = pubClass.getLang("mm_" + currYYMM["MM"]!)
+        labMMDD.text = String(format: pubClass.getLang("FMT_MMDD"), Int(currYYMM["MM"]!)!, Int(currYYMM["DD"]!)!)
+        
+        // 設定 tableview, 當日預約資料列表
+        aryReservDataDay = []
+        
+        let strKey = "dd" + String(format: "%d", Int(currYYMM["DD"]!)!)
+        if ((dictReservMM) != nil) {
+            if let tmpAry = dictReservMM![strKey] as? Array<Dictionary<String, AnyObject>> {
+                aryReservDataDay = tmpAry
+            }
+        }
+
+        tableReserv.reloadData()
     }
     
     /**
@@ -155,12 +174,63 @@ class CourseReserv: UIViewController {
     }
     
     /**
+    * #mark: CollectionView delegate
+    * CollectionView, 點取 Cell
+    */
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        // 取得點取的 txtDate 是否有文字, ex. '23'
+        let dictBlock: Dictionary<String, AnyObject> = aryBlockData[indexPath.section][indexPath.row]
+        let strDay = dictBlock["txtDay"] as! String
+        
+        if (strDay == "") {
+            return
+        }
+        
+        currYYMM["DD"] = String(format: "%02d", Int(strDay)!)
+        
+        self.initViewField()
+    }
+    
+    /**
      * #mark: CollectionView delegate
      * CollectionView, Cell width
      */
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
 
         return CGSize(width: (collectionView.bounds.size.width/7) - 1.0, height: (collectionView.bounds.size.height/6) - 0.5)
+    }
+    
+    /**
+     * #mark: UITableView Delegate
+     * 當日預約資料: 回傳指定的數量
+     */
+    func tableView(tableView: UITableView, numberOfRowsInSection section:Int) -> Int {
+        return aryReservDataDay.count
+    }
+    
+    /**
+     * #mark: UITableView Delegate
+     * 當日預約資料: UITableView, Cell 內容
+     */
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if (aryReservDataDay.count < 1) {
+            return UITableViewCell()
+        }
+        
+        let ditItem = aryReservDataDay[indexPath.row] as Dictionary<String, AnyObject>
+        let mCell = tableView.dequeueReusableCellWithIdentifier("cellReservList", forIndexPath: indexPath) as! ReservListCell
+        
+        mCell.initView(ditItem, PubClass: pubClass)
+        
+        return mCell
+    }
+    
+    /**
+     * #mark: UITableView Delegate
+     * 當日預約資料: UITableView, Cell 點取
+     */
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
     }
     
     /**
@@ -213,6 +283,13 @@ class CourseReserv: UIViewController {
         positionReservData = positionToday
         
         self.initViewField()
+    }
+    
+    /**
+     * act, 點取 '新增預約' button
+     */
+    @IBAction func actAddReserv(sender: UIButton) {
+        
     }
 
     /**
