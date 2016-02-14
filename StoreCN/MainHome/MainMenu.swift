@@ -243,6 +243,15 @@ class MainMenu: UIViewController {
                     
                     return
                 }
+                
+                // 療程銷售
+                if (strIdent == "course_sale") {
+                    mParam["page"] = "coursesale"
+                    mParam["act"] = "coursesale_getdata"
+                    self.MenuItemSelect(strIdent, HTTPParam: mParam)
+                    
+                    return
+                }
             }))
         }
         
@@ -297,6 +306,15 @@ class MainMenu: UIViewController {
         // 療程預約
         if (strIdent == "course_reservation") {
             let mVC = segue.destinationViewController as! CourseReserv
+            mVC.strToday = strToday
+            mVC.dictAllData = sender as! Dictionary<String, AnyObject>
+            
+            return
+        }
+        
+        // 療程銷售
+        if (strIdent == "course_sale") {
+            let mVC = segue.destinationViewController as! CourseSale
             mVC.strToday = strToday
             mVC.dictAllData = sender as! Dictionary<String, AnyObject>
             

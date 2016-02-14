@@ -5,6 +5,9 @@
 import Foundation
 import UIKit
 
+/**
+* 療程預約列表， cell 內容
+*/
 class ReservListCell: UITableViewCell {
     @IBOutlet weak var labTime: UILabel!
     @IBOutlet weak var labName: UILabel!
