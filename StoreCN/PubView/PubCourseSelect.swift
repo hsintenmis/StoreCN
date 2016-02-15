@@ -29,7 +29,7 @@ class PubCourseSelect: UITableViewController {
     var mVCtrl: UIViewController!
     let pubClass: PubClass = PubClass()
     
-    // Table DataSource, Mead 全部的檢測資料, paent 設定
+    // Table DataSource, 會員以購買的療程訂單資料, parent 設定
     var aryCourseData: Array<Dictionary<String, AnyObject>> = []
     
     // 其他參數設定

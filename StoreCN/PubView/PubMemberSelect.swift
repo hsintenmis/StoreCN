@@ -159,6 +159,7 @@ class PubMemberSelect: UIViewController {
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         searchActive = false;
+        searchBar.resignFirstResponder()
     }
     
     /**

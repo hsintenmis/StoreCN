@@ -6,7 +6,7 @@ import UIKit
 import Foundation
 
 /**
- * 療程銷售
+ *  主選單服務管理 - 療程銷售
  */
 class CourseSale: UIViewController {
     
@@ -50,6 +50,19 @@ class CourseSale: UIViewController {
             
             return
         }
+        
+        // !! container 直接加入 ViewControler
+        mPubCourseSaleAdEd = storyboard?.instantiateViewControllerWithIdentifier("PubCourseSaleAdEd") as! PubCourseSaleAdEd
+        
+        mPubCourseSaleAdEd.strToday = strToday
+        mPubCourseSaleAdEd.aryCourseDB = aryCourseDB
+        mPubCourseSaleAdEd.aryMember = aryMember
+        
+        let mView = mPubCourseSaleAdEd.view
+        mView.frame.size.height = contviewTable.layer.frame.height
+        mView.frame.size.width = contviewTable.layer.frame.width
+        
+        contviewTable.addSubview(mView)
     }
     
     /**
@@ -64,29 +77,7 @@ class CourseSale: UIViewController {
     /**
      * 初始與設定 VCview 內的 field
      */
-    func initViewField() {
-    }
-    
-    /**
-     * Segue 跳轉頁面
-     */
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let strIdent = segue.identifier
-
-        if (strIdent == "PubCourseSaleAdd") {
-            /*
-            mPubCourseSaleAdEd = segue.destinationViewController as! PubCourseSaleAdEd
-            mPubCourseSaleAdEd.strToday = strToday
-            mPubCourseSaleAdEd.aryCourseDB = aryCourseDB
-            mPubCourseSaleAdEd.aryMember = aryMember
-            */
-            
-            let mVC = segue.destinationViewController as! PubCourseSaleAdEd
-            mVC.strToday = strToday
-            mVC.aryCourseDB = aryCourseDB
-            mVC.aryMember = aryMember
-            
-        }
+    private func initViewField() {
     }
     
     /**
