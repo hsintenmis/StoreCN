@@ -89,3 +89,18 @@
 "soqibed_usecount" = "使用次数";
 "soqibed_builddate" = "建立时间";
 
+"bodypoint_0" = "心包经";
+"bodypoint_1" = "肺经";
+"bodypoint_2" = "心经";
+"bodypoint_3" = "大肠经";
+"bodypoint_4" = "三焦经";
+"bodypoint_5" = "小肠经";
+"bodypoint_6" = "肝经";
+"bodypoint_7" = "肾经";
+"bodypoint_8" = "脾经";
+"bodypoint_9" = "胆经";
+"bodypoint_10" = "胃经";
+"bodypoint_11" = "膀胱经";
+"bodypoint_12" = "任咏";
+"bodypoint_13" = "督咏";
+
