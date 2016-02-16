@@ -8,44 +8,46 @@ import Foundation
 /**
  * 療程銷售 資料新增/編輯 公用 class
  */
-class PubCourseSaleAdEd: UITableViewController {
+class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate {
     
     // @IBOutlet
     @IBOutlet var tableList: UITableView!
+    @IBOutlet var swchSoqbed: [UISegmentedControl]!  // switch group
+    
+    @IBOutlet weak var edExpire: UITextField!
+    @IBOutlet weak var edFee: UITextField!
     @IBOutlet weak var swchCardType: UISegmentedControl!
-    
     @IBOutlet weak var swchActSoqibed: UISwitch!
-    
     @IBOutlet weak var stepCardType: UIStepper!
     @IBOutlet weak var labCardTypeCount: UILabel!
-    
     @IBOutlet weak var labMember: UILabel!
     @IBOutlet weak var labCourseName: UILabel!
-    @IBOutlet weak var labExpire: UILabel!
-    @IBOutlet weak var labFee: UILabel!
-    
     @IBOutlet weak var labInvoId: UILabel!
     @IBOutlet weak var labSdate: UILabel!
-    
     @IBOutlet weak var txtSugst: UITextView!
     @IBOutlet weak var txtStepPd: UITextView!
-    
-    @IBOutlet var swchSoqbed: [UISegmentedControl]!  // switch group
-    @IBOutlet weak var edSoqibedS00: UITextField!
+
+    @IBOutlet weak var labS00: UILabel!
+    @IBOutlet weak var sliderS00: UISlider!
     
     // common property
     let pubClass: PubClass = PubClass()
     
-    // soqibed H01..., 遠紅外線設備代碼
+    // soqibed H01..., 遠紅外線/搖擺機 設備代碼
     let aryHotDevCode = ["H00","H01","H02","H10","H11","H12"]
-    let aryHotDevMinVal = [0, 15, 30, 45, 60]
+    let aryHotDevMinsVal = [0, 15, 30, 45, 60]
+    let aryS00DevMinsVal = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 30]
     
-    // 公用參數設定
+    // 由parent設定參數
     var strMode = "add"
     var strToday = ""
     var aryCourseDB: Array<Dictionary<String, AnyObject>> = []
     var aryMember: Array<Dictionary<String, AnyObject>> = []
     var dictData: Dictionary<String, AnyObject> = [:]
+    
+    // 點取欄位，彈出虛擬鍵盤視窗
+    private var mPickerExpire: PickerDate!
+    private var mPickerS00: PickerNumber!
     
     /**
      * View Load 程序
@@ -54,7 +56,20 @@ class PubCourseSaleAdEd: UITableViewController {
         super.viewDidLoad()
         
         // 固定初始參數
-
+        edFee.delegate = self
+        
+        /* Picker 設定 */
+        // 到期日欄位
+        var dictPickParm: Dictionary<String, AnyObject> = [:]
+        dictPickParm["expire_def"] = "20160101"
+        dictPickParm["expire_min"] = "20150101"
+        dictPickParm["expire_max"] = "20251231"
+        
+        mPickerExpire = PickerDate(withUIField: edExpire, PubClass: pubClass, withDefMaxMin: [dictPickParm["expire_def"] as! String, dictPickParm["expire_max"] as! String, dictPickParm["expire_min"] as! String], NavyBarTitle: pubClass.getLang("course_expiredate"))
+        
+        // 設備 S00, 設定分鐘數
+        sliderS00.maximumValue = Float(aryS00DevMinsVal.count - 1)
+        sliderS00.minimumValue = 0
     }
     
     /**
@@ -82,6 +97,14 @@ class PubCourseSaleAdEd: UITableViewController {
     }
     
     /**
+    * #mark: UITextFieldDelegate, 點取 'return'
+    */
+    func textFieldShouldReturn(textField:UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true;
+    }
+    
+    /**
      * public, child class 調用, 
      * 選擇建議工程後，soqibed模式/疗程步骤与产品使用 變動
      */
@@ -90,7 +113,7 @@ class PubCourseSaleAdEd: UITableViewController {
         // 建議工程名稱, 疗程步骤与产品使用
         labCourseName.text = dictData["name"] as? String
         txtStepPd.text = dictData["steppd"] as? String
-        edSoqibedS00.text = dictData["S00"] as? String
+        labS00.text = dictData["S00"] as? String
         
         // soqibed 模式，數值變動, UISegmentedControl
         for swchDev in swchSoqbed {
@@ -101,11 +124,20 @@ class PubCourseSaleAdEd: UITableViewController {
             // 取得數值後，根據對應順序設定到 UISegmentedControl
             let intVal = Int(dictData[strKey] as! String)
             
-            for (loopi = 0; loopi < aryHotDevMinVal.count; loopi++) {
-                if (intVal == aryHotDevMinVal[loopi]) {
+            for (loopi = 0; loopi < aryHotDevMinsVal.count; loopi++) {
+                if (intVal == aryHotDevMinsVal[loopi]) {
                     swchDev.selectedSegmentIndex = loopi
                     break
                 }
+            }
+        }
+        
+        //  soqibed 模式, S00 slider 變動
+        for (loopi = 0; loopi < aryS00DevMinsVal.count; loopi++) {
+            let intVal = Int(dictData["S00"] as! String)
+            if (intVal == aryS00DevMinsVal[loopi]) {
+                sliderS00.value = Float(loopi)
+                break
             }
         }
         
@@ -121,7 +153,7 @@ class PubCourseSaleAdEd: UITableViewController {
         let strIdent = tableView.cellForRowAtIndexPath(indexPath)?.reuseIdentifier
         
         // 會員選擇
-        if (strIdent == "cellCoursSaleMemberSel") {
+        if (strIdent == "cellCourseSaleMemberSel") {
             self.performSegueWithIdentifier("CourseSaleMemberSel", sender: nil)
             return
         }
@@ -134,7 +166,7 @@ class PubCourseSaleAdEd: UITableViewController {
         
         // 療程建議說明
         if (strIdent == "cellCoursSaleSugst") {
-            self.performSegueWithIdentifier("CoursSaleSugst", sender: nil)
+            self.performSegueWithIdentifier("CourseSaleSugst", sender: nil)
             return
         }
     }
@@ -147,7 +179,7 @@ class PubCourseSaleAdEd: UITableViewController {
         
         // 會員選擇
         if (strIdent == "CourseSaleMemberSel") {
-            let mVC = segue.destinationViewController as! CoursSaleMemberSel
+            let mVC = segue.destinationViewController as! CourseSaleMemberSel
             mVC.parentClass = self
             mVC.strToday = strToday
             mVC.aryMember = aryMember
@@ -166,12 +198,20 @@ class PubCourseSaleAdEd: UITableViewController {
         }
         
         // 療程建議說明
-        if (strIdent == "CoursSaleSugst") {
-            let mVC = segue.destinationViewController as! CoursSaleSugst
+        if (strIdent == "CourseSaleSugst") {
+            let mVC = segue.destinationViewController as! CourseSaleSugst
             mVC.parentClass = self
             
             return
         }
+    }
+    
+    /**
+     * act, Slider, S00 分鐘數變動
+     */
+    @IBAction func actS00(sender: UISlider) {
+        let currentValue = aryS00DevMinsVal[Int(sender.value)]
+        labS00.text = "\(currentValue)"
     }
     
     /**

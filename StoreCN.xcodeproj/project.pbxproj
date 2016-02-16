@@ -115,8 +115,8 @@
 		D7496D1A1C5B343200B75D6A /* MainMenuColtViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7496D191C5B343200B75D6A /* MainMenuColtViewCell.swift */; };
 		D7496D261C5B58CF00B75D6A /* CourseList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7496D251C5B58CF00B75D6A /* CourseList.swift */; };
 		D7B29F791C5C712E0025C53A /* MemberAdEdContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B29F781C5C712E0025C53A /* MemberAdEdContainer.swift */; };
-		D7BAA5F91C7184380006E187 /* CoursSaleSugst.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7BAA5F81C7184380006E187 /* CoursSaleSugst.swift */; };
-		D7BAA5FB1C718A1D0006E187 /* CoursSaleMemberSel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7BAA5FA1C718A1D0006E187 /* CoursSaleMemberSel.swift */; };
+		D7BAA5F91C7184380006E187 /* CourseSaleSugst.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7BAA5F81C7184380006E187 /* CourseSaleSugst.swift */; };
+		D7BAA5FB1C718A1D0006E187 /* CourseSaleMemberSel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7BAA5FA1C718A1D0006E187 /* CourseSaleMemberSel.swift */; };
 		D7BAA5FD1C71A71B0006E187 /* CourseSaleCourseSel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7BAA5FC1C71A71B0006E187 /* CourseSaleCourseSel.swift */; };
 		D7BB2AD01C646DC800624E08 /* PubSoqibedSelect.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7BB2ACF1C646DC800624E08 /* PubSoqibedSelect.swift */; };
 		D7BB2AD31C6477F800624E08 /* PubMemberPurchaseSelect.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7BB2AD21C6477F800624E08 /* PubMemberPurchaseSelect.swift */; };
@@ -247,8 +247,8 @@
 		D7496D191C5B343200B75D6A /* MainMenuColtViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainMenuColtViewCell.swift; path = MainHome/MainMenuColtViewCell.swift; sourceTree = "<group>"; };
 		D7496D251C5B58CF00B75D6A /* CourseList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CourseList.swift; path = ServiceMgr/CourseList.swift; sourceTree = "<group>"; };
 		D7B29F781C5C712E0025C53A /* MemberAdEdContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberAdEdContainer.swift; path = Member/MemberAdEdContainer.swift; sourceTree = "<group>"; };
-		D7BAA5F81C7184380006E187 /* CoursSaleSugst.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoursSaleSugst.swift; path = PubView/CoursSaleSugst.swift; sourceTree = "<group>"; };
-		D7BAA5FA1C718A1D0006E187 /* CoursSaleMemberSel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoursSaleMemberSel.swift; path = PubView/CoursSaleMemberSel.swift; sourceTree = "<group>"; };
+		D7BAA5F81C7184380006E187 /* CourseSaleSugst.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CourseSaleSugst.swift; path = PubView/CourseSaleSugst.swift; sourceTree = "<group>"; };
+		D7BAA5FA1C718A1D0006E187 /* CourseSaleMemberSel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CourseSaleMemberSel.swift; path = PubView/CourseSaleMemberSel.swift; sourceTree = "<group>"; };
 		D7BAA5FC1C71A71B0006E187 /* CourseSaleCourseSel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CourseSaleCourseSel.swift; path = PubView/CourseSaleCourseSel.swift; sourceTree = "<group>"; };
 		D7BB2ACF1C646DC800624E08 /* PubSoqibedSelect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubSoqibedSelect.swift; path = PubView/PubSoqibedSelect.swift; sourceTree = "<group>"; };
 		D7BB2AD21C6477F800624E08 /* PubMemberPurchaseSelect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubMemberPurchaseSelect.swift; path = PubView/PubMemberPurchaseSelect.swift; sourceTree = "<group>"; };
@@ -299,6 +299,7 @@
 				D7037A6B1C58C008002A955E /* Main.storyboard */,
 				D7037A661C58BCE2002A955E /* MainHome */,
 				D7496D1F1C5B4DD600B75D6A /* ServiceMgr */,
+				D70CD93C1C72CB24008E79E1 /* CourseSale */,
 				D7496D1E1C5B4DCE00B75D6A /* Testing */,
 				D7496D1B1C5B4D9700B75D6A /* Member */,
 				D7496D201C5B4DE900B75D6A /* Product */,
@@ -450,6 +451,13 @@
 			path = image;
 			sourceTree = "<group>";
 		};
+		D70CD93C1C72CB24008E79E1 /* CourseSale */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = CourseSale;
+			sourceTree = "<group>";
+		};
 		D7496D1B1C5B4D9700B75D6A /* Member */ = {
 			isa = PBXGroup;
 			children = (
@@ -530,8 +538,8 @@
 				D7BB2AE21C64799D00624E08 /* PubMemberPurchaseSelectCell.swift */,
 				42E21F101C68826500B85EA9 /* PubCalendarCell.swift */,
 				42D6B7061C70CFFA003B4FD4 /* PubCourseSaleAdEd.swift */,
-				D7BAA5F81C7184380006E187 /* CoursSaleSugst.swift */,
-				D7BAA5FA1C718A1D0006E187 /* CoursSaleMemberSel.swift */,
+				D7BAA5F81C7184380006E187 /* CourseSaleSugst.swift */,
+				D7BAA5FA1C718A1D0006E187 /* CourseSaleMemberSel.swift */,
 				D7BAA5FC1C71A71B0006E187 /* CourseSaleCourseSel.swift */,
 			);
 			name = PubView;
@@ -702,7 +710,7 @@
 				42D6B7051C70C4CC003B4FD4 /* CourseSale.swift in Sources */,
 				D7037A731C58C03F002A955E /* CutImage.swift in Sources */,
 				D7BB2ADF1C64788700624E08 /* PubMeadDataSelectCell.swift in Sources */,
-				D7BAA5F91C7184380006E187 /* CoursSaleSugst.swift in Sources */,
+				D7BAA5F91C7184380006E187 /* CourseSaleSugst.swift in Sources */,
 				42E21F0F1C68825200B85EA9 /* PickerDate.swift in Sources */,
 				D7FB953C1C59F58C00B48F57 /* MainMenu.swift in Sources */,
 				D7037A751C58C03F002A955E /* ImageClass.swift in Sources */,
@@ -726,7 +734,7 @@
 				D7B29F791C5C712E0025C53A /* MemberAdEdContainer.swift in Sources */,
 				D7134FF91C5F5A990069ACF1 /* MemberMain.swift in Sources */,
 				D7BB2AE11C64788700624E08 /* PubMemberSelectCell.swift in Sources */,
-				D7BAA5FB1C718A1D0006E187 /* CoursSaleMemberSel.swift in Sources */,
+				D7BAA5FB1C718A1D0006E187 /* CourseSaleMemberSel.swift in Sources */,
 				D7037A781C58C03F002A955E /* PubClass.swift in Sources */,
 				D7BB2ADC1C64788700624E08 /* PubCourseSelect.swift in Sources */,
 				D7037A681C58BF32002A955E /* AppDelegate.swift in Sources */,

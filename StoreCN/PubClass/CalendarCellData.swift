@@ -22,7 +22,7 @@ import Foundation
 */
 class CalendarCellData {
     // 固定參數
-    let intTimeZone: Int = 8
+    let intTimeZone: Int = 8 // 時區 +8
     
     // common property
     private var pubClass = PubClass()

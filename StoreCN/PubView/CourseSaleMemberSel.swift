@@ -8,7 +8,7 @@ import Foundation
 /**
  * 療程銷售 新增編輯, 會員選擇，從 'PubCourseSaleAdEd' 導入
  */
-class CoursSaleMemberSel: UIViewController, PubMemberSelectDelegate {
+class CourseSaleMemberSel: UIViewController, PubMemberSelectDelegate {
     
     // @IBOutlet
     @IBOutlet weak var contviewTable: UIView!

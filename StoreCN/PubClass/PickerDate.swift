@@ -50,7 +50,7 @@ class PickerDate {
         dateFmtYMD.dateStyle = NSDateFormatterStyle.MediumStyle
         dateFmtYMD.timeStyle = NSDateFormatterStyle.NoStyle
         dateFmtYMD.dateFormat = "yyyyMMdd"
-        dateFmtYMD.timeZone = NSTimeZone(abbreviation: "UTC");
+        //dateFmtYMD.timeZone = NSTimeZone(abbreviation: "UTC");
         
         datePickerView.minimumDate = dateFmtYMD.dateFromString(minDate)!
         datePickerView.maximumDate = dateFmtYMD.dateFromString(maxDate)!
@@ -82,7 +82,7 @@ class PickerDate {
     
     /**
      * 鍵盤輸入視窗的 'navybar' 設定
-     * 生日欄位 點取彈出 資料輸入視窗 (虛擬鍵盤), 'InputView' 的頂端顯示 'navyBar'
+     * 日期欄位 點取彈出 資料輸入視窗 (虛擬鍵盤), 'InputView' 的頂端顯示 'navyBar'
      */
     private func initKBBar(strTitle: String) {
         let toolBar = UIToolbar()
@@ -135,12 +135,12 @@ class PickerDate {
      *   forControlEvents: UIControlEvents.ValueChanged)
      */
     @objc private func PKDateChang(sender:UIDatePicker) {
-        // edBirth 顯示文字
+        // ed/txt Field 欄位 顯示文字
         dispatch_async(dispatch_get_main_queue(), {
             self.mPickField.text = self.pubClass.formatDateWithStr(self.dateFmtYMD.stringFromDate(sender.date), type: 8)
         })
         
-        // 設定 strBirth value
+        // 設定 strDate value
         strCurrDate = dateFmtYMD.stringFromDate(sender.date)
     }
 }

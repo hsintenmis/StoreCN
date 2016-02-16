@@ -8,7 +8,7 @@ import Foundation
 /**
  * 療程銷售 新增編輯, 療程建議說明，從 'PubCourseSaleAdEd' 導入
  */
-class CoursSaleSugst: UIViewController {
+class CourseSaleSugst: UIViewController {
     
     // @IBOutlet
     
