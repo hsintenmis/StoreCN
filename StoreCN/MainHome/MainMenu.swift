@@ -201,6 +201,12 @@ class MainMenu: UIViewController {
         case "servicemgr":
             mAlert = resetAlertVC(mAlert, withAryIdent: ["course_list", "course_reservation", "course_sale"])
             break
+            
+            // 商品管理
+        case "product":
+            mAlert = resetAlertVC(mAlert, withAryIdent: ["product_sale", "product_purchase", "product_stock", "product_purchaselist"])
+            break
+            
         default:
             break
         }
@@ -248,6 +254,15 @@ class MainMenu: UIViewController {
                 if (strIdent == "course_sale") {
                     mParam["page"] = "coursesale"
                     mParam["act"] = "coursesale_getdata"
+                    self.MenuItemSelect(strIdent, HTTPParam: mParam)
+                    
+                    return
+                }
+                
+                // 商品入庫
+                if (strIdent == "product_purchase") {
+                    mParam["page"] = "purchase"
+                    mParam["act"] = "purchase_getdata"
                     self.MenuItemSelect(strIdent, HTTPParam: mParam)
                     
                     return
@@ -315,6 +330,15 @@ class MainMenu: UIViewController {
         // 療程銷售
         if (strIdent == "course_sale") {
             let mVC = segue.destinationViewController as! CourseSale
+            mVC.strToday = strToday
+            mVC.dictAllData = sender as! Dictionary<String, AnyObject>
+            
+            return
+        }
+        
+        // 商品入庫
+        if (strIdent == "product_purchase") {
+            let mVC = segue.destinationViewController as! Purchase
             mVC.strToday = strToday
             mVC.dictAllData = sender as! Dictionary<String, AnyObject>
             

@@ -71,6 +71,11 @@
 "menu_course_reservation" = "療程預約";
 "menu_course_sale" = "療程銷售";
 
+"menu_product_sale" = "商品銷貨";
+"menu_product_purchase" = "商品入庫";
+"menu_product_stock" = "商品庫存";
+"menu_product_purchaselist" = "進出貨列表";
+
 "member_nodataaddfirst" = "沒有會員, 請先新增會員!";
 "member_selectbirth" = "選擇生日";
 "member_main_course" = "療程紀錄";

@@ -84,7 +84,7 @@ class CourseSale: UIViewController {
      * act, 點取 '儲存' button
      */
     @IBAction func actSave(sender: UIBarButtonItem) {
-        print(mPubCourseSaleAdEd.getData())
+        mPubCourseSaleAdEd.saveData()
     }
     
     /**

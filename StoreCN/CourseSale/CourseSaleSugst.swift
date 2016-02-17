@@ -12,12 +12,14 @@ class CourseSaleSugst: UIViewController, SugstChildPageDelegate {
     
     // @IBOutlet
     @IBOutlet weak var contviewPage: UIView!
+    @IBOutlet weak var txtSugst: UITextView!
     
     // common property
     let pubClass: PubClass = PubClass()
     
     // 其他參數設定
     var parentClass: PubCourseSaleAdEd!
+    var dictSugstTxt: Dictionary<String, String> = [:]
 
     // ContainerView 相關參數
     private var dictChildVC: Dictionary<String, UITableViewController> = [:]
@@ -34,18 +36,24 @@ class CourseSaleSugst: UIViewController, SugstChildPageDelegate {
         super.viewDidLoad()
         
         // 固定初始參數
+        for strKey in aryBtnIdent {
+            dictSugstTxt[strKey] = ""
+        }
+        
+        // textView 外觀樣式
+        txtSugst.layer.cornerRadius = 5
+        txtSugst.layer.borderWidth = 1
+        txtSugst.layer.borderColor = (pubClass.ColorHEX(pubClass.dictColor["gray"]!)).CGColor
+        txtSugst.layer.backgroundColor = (pubClass.ColorHEX(pubClass.dictColor["white"]!)).CGColor
     }
     
     /**
      * View DidAppear 程序
      */
-    override func viewDidAppear(animated: Bool) {
-        
+    override func viewDidAppear(animated: Bool) {        
         dispatch_async(dispatch_get_main_queue(), {
             
-
         })
-        
     }
     
     /**
@@ -121,7 +129,17 @@ class CourseSaleSugst: UIViewController, SugstChildPageDelegate {
      * #mark: SugstChildPageDelegate, ContainerPage 子頁面點取 'submit' button
      */
     func SubPageSubmitClick(TxtMsg: String, IdentName: String) {
-        print("\(IdentName): \(TxtMsg)")
+        // 取得 page 傳回文字重新覆蓋 array, 重新顯示 TextView 文字
+        dictSugstTxt[IdentName] = TxtMsg
+        var strMsg = ""
+        
+        for strKey in aryBtnIdent {
+            if (dictSugstTxt[strKey]?.characters.count > 0 ) {
+                strMsg += dictSugstTxt[strKey]! + "\n\n"
+            }
+        }
+        
+        txtSugst.text = strMsg
     }
     
     /**
@@ -135,14 +153,14 @@ class CourseSaleSugst: UIViewController, SugstChildPageDelegate {
      * act, 點取 '取消' button
      */
     @IBAction func actCancel(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismissViewControllerAnimated(true, completion: {})
     }
     
     /**
      * act, 點取 '完成' button
      */
     @IBAction func actDone(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismissViewControllerAnimated(true, completion: {self.parentClass.setCourseSugstTxt(self.txtSugst.text)})
     }
 
 }

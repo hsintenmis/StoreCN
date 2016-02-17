@@ -116,6 +116,7 @@
 		D7134FF91C5F5A990069ACF1 /* MemberMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7134FF81C5F5A990069ACF1 /* MemberMain.swift */; };
 		D7150E3F1C5C5B8E00C9FE8B /* MemberList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7150E3E1C5C5B8E00C9FE8B /* MemberList.swift */; };
 		D7150E431C5C6E8000C9FE8B /* MemberAdEd.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7150E421C5C6E8000C9FE8B /* MemberAdEd.swift */; };
+		D720FBA11C7458F000AE640C /* Purchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D720FBA01C7458F000AE640C /* Purchase.swift */; };
 		D74652071C5CA85900190EF6 /* PickerNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74652061C5CA85900190EF6 /* PickerNumber.swift */; };
 		D7496D1A1C5B343200B75D6A /* MainMenuColtViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7496D191C5B343200B75D6A /* MainMenuColtViewCell.swift */; };
 		D7496D261C5B58CF00B75D6A /* CourseList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7496D251C5B58CF00B75D6A /* CourseList.swift */; };
@@ -250,6 +251,7 @@
 		D7134FF81C5F5A990069ACF1 /* MemberMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberMain.swift; path = Member/MemberMain.swift; sourceTree = "<group>"; };
 		D7150E3E1C5C5B8E00C9FE8B /* MemberList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberList.swift; path = Member/MemberList.swift; sourceTree = "<group>"; };
 		D7150E421C5C6E8000C9FE8B /* MemberAdEd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberAdEd.swift; path = Member/MemberAdEd.swift; sourceTree = "<group>"; };
+		D720FBA01C7458F000AE640C /* Purchase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Purchase.swift; path = Product/Purchase.swift; sourceTree = "<group>"; };
 		D74652061C5CA85900190EF6 /* PickerNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PickerNumber.swift; path = PubClass/PickerNumber.swift; sourceTree = "<group>"; };
 		D7496D191C5B343200B75D6A /* MainMenuColtViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainMenuColtViewCell.swift; path = MainHome/MainMenuColtViewCell.swift; sourceTree = "<group>"; };
 		D7496D251C5B58CF00B75D6A /* CourseList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CourseList.swift; path = ServiceMgr/CourseList.swift; sourceTree = "<group>"; };
@@ -502,6 +504,7 @@
 		D7496D201C5B4DE900B75D6A /* Product */ = {
 			isa = PBXGroup;
 			children = (
+				D720FBA01C7458F000AE640C /* Purchase.swift */,
 			);
 			name = Product;
 			sourceTree = "<group>";
@@ -743,6 +746,7 @@
 				D7B29F791C5C712E0025C53A /* MemberAdEdContainer.swift in Sources */,
 				D7134FF91C5F5A990069ACF1 /* MemberMain.swift in Sources */,
 				D7BB2AE11C64788700624E08 /* PubMemberSelectCell.swift in Sources */,
+				D720FBA11C7458F000AE640C /* Purchase.swift in Sources */,
 				D7037A781C58C03F002A955E /* PubClass.swift in Sources */,
 				D7BB2ADC1C64788700624E08 /* PubCourseSelect.swift in Sources */,
 				D7037A681C58BF32002A955E /* AppDelegate.swift in Sources */,

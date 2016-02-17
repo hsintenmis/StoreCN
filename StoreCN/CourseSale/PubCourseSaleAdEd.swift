@@ -6,7 +6,7 @@ import UIKit
 import Foundation
 
 /**
- * 療程銷售 資料新增/編輯 公用 class
+ * 療程銷售 資料新增/編輯 資料上傳, 公用 class
  */
 class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate {
     
@@ -29,6 +29,7 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate {
 
     @IBOutlet weak var labS00: UILabel!
     @IBOutlet weak var sliderS00: UISlider!
+    @IBOutlet weak var labTypeUnit: UILabel!
     
     // common property
     let pubClass: PubClass = PubClass()
@@ -70,6 +71,17 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate {
         // 設備 S00, 設定分鐘數
         sliderS00.maximumValue = Float(aryS00DevMinsVal.count - 1)
         sliderS00.minimumValue = 0
+        
+        // textView 外觀樣式
+        txtSugst.layer.cornerRadius = 5
+        txtSugst.layer.borderWidth = 1
+        txtSugst.layer.borderColor = (pubClass.ColorHEX(pubClass.dictColor["gray"]!)).CGColor
+        txtSugst.layer.backgroundColor = (pubClass.ColorHEX(pubClass.dictColor["white"]!)).CGColor
+        
+        txtStepPd.layer.cornerRadius = 5
+        txtStepPd.layer.borderWidth = 1
+        txtStepPd.layer.borderColor = (pubClass.ColorHEX(pubClass.dictColor["gray"]!)).CGColor
+        txtStepPd.layer.backgroundColor = (pubClass.ColorHEX(pubClass.dictColor["white"]!)).CGColor
     }
     
     /**
@@ -94,6 +106,13 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate {
     func selectMember(dictMember: Dictionary<String, AnyObject>) {
         labMember.text = dictMember["membername"] as? String
         dictData["member"] = dictMember
+    }
+    
+    /**
+     * public, child class 調用, 設定'療程建議說明' textView 文字資料
+     */
+    func setCourseSugstTxt(strTxt: String) {
+        txtSugst.text = strTxt
     }
     
     /**
@@ -207,6 +226,13 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate {
     }
     
     /**
+     * act, Segmented, 包卡包月 change
+     */
+    @IBAction func actCardType(sender: UISegmentedControl) {
+        labTypeUnit.text = (sender.selectedSegmentIndex == 0) ? "次" : "个月"
+    }
+    
+    /**
      * act, Slider, S00 分鐘數變動
      */
     @IBAction func actS00(sender: UISlider) {
@@ -215,10 +241,10 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate {
     }
     
     /**
-     * 回傳本頁面全部欄位資料
+     * 本頁面全部欄位資料上傳儲存
      */
-    func getData()->Dictionary<String, AnyObject> {
-        dictData["type"] = "add"
+    func saveData()->Dictionary<String, AnyObject> {
+        // 欄位值檢查
         
         return dictData
     }

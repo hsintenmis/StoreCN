@@ -23,20 +23,34 @@ class SugstChildPage: UITableViewController {
     
     // @IBOutlet
     @IBOutlet weak var tableData: UITableView!
-    
-    @IBOutlet weak var swch01: UISwitch!
-    @IBOutlet weak var swch02: UISegmentedControl!
-    @IBOutlet weak var swch03: UISegmentedControl!
-    
-    @IBOutlet weak var swch11: UISegmentedControl!
     @IBOutlet weak var coltviewPoint: UICollectionView!
     
+    @IBOutlet weak var swchEpower: UISwitch!
+    @IBOutlet weak var swchHot: UISwitch!
+    @IBOutlet weak var swchSun: UISwitch!
+    @IBOutlet weak var swchEre: UISwitch!
+    
+    @IBOutlet weak var segm0Epower: UISegmentedControl!
+    @IBOutlet weak var segm1Epower: UISegmentedControl!
+    @IBOutlet weak var segm0Hot: UISegmentedControl!
+    @IBOutlet weak var segm1Hot: UISegmentedControl!
+    @IBOutlet weak var segm0Sun: UISegmentedControl!
+    @IBOutlet weak var segm0Ere: UISegmentedControl!
+    
+    @IBOutlet weak var labHot: UILabel!
+    @IBOutlet weak var labSun: UILabel!
+    @IBOutlet weak var edSun: UITextField!
+    @IBOutlet weak var edEre: UITextField!
     
     // common property
     let pubClass: PubClass = PubClass()
     
     // 其他參數設定
     var strToday = ""
+    
+    // 目前 VC 的 'restorationIdentifier'
+    // SugstEpower, SugstHot, SugstSun, SugstEre
+    var strCurrIdent = "SugstEpower"
     
     // collectionView 參數
     private var aryColviewBol: Array<Bool> = []
@@ -60,7 +74,14 @@ class SugstChildPage: UITableViewController {
      * View DidAppear 程序
      */
     override func viewWillAppear(animated: Bool) {
-        coltviewPoint.alpha = 0.0
+        strCurrIdent = self.restorationIdentifier!
+        
+        // 设置监听键盘事件函数
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        
+        if (strCurrIdent == "SugstEpower") {
+            coltviewPoint.alpha = 0.0
+        }
     }
     
     /**
@@ -76,8 +97,37 @@ class SugstChildPage: UITableViewController {
      * 初始與設定 VCview 內的 field
      */
     func initViewField() {
-        coltviewPoint.reloadData()
-        coltviewPoint.alpha = 1.0
+        if (strCurrIdent == "SugstEpower") {
+            coltviewPoint.reloadData()
+            coltviewPoint.alpha = 1.0
+        }
+    }
+    
+    /**
+     * #mark: UITextFieldDelegate, 點取 'return'
+     */
+    func textFieldShouldReturn(textField:UITextField) -> Bool {
+        textField.resignFirstResponder()
+        
+        let width = self.view.frame.size.width;
+        let height = self.view.frame.size.height;
+        let rect = CGRectMake(0.0, 0.0, width,height);
+        self.view.frame = rect
+        
+        return true;
+    }
+    
+    /**
+     * NSNotificationCenter
+     * #mark: 鍵盤: 处理弹出事件
+     */
+    func keyboardWillShow(notification:NSNotification) {
+        if let _ = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+            let width = self.view.frame.size.width;
+            let height = self.view.frame.size.height;
+            let rect = CGRectMake(0.0, -160, width, height);
+            self.view.frame = rect
+        }
     }
     
     /**
@@ -137,30 +187,131 @@ class SugstChildPage: UITableViewController {
         return CGSize(width: (collectionView.bounds.size.width/3) - 15, height: 30)
     }
 
+    /**
+     * act Silder group, 次數改變
+     */
+    @IBAction func actSilderGroupt(sender: UISlider) {
+        let strIdent = sender.restorationIdentifier
+        
+        if (strIdent == "sliderSugstHot") {
+            labHot.text = String(Int(sender.value))
+        }
+        else if (strIdent == "sliderSugstSun") {
+            labSun.text = String(Int(sender.value))
+        }
+    }
     
     /**
     * act button group, 確認送出
     */
     @IBAction func actgrpSubmit(sender: UIButton) {
-        let strBtnIdent = sender.restorationIdentifier
-        let strKey = strBtnIdent!.stringByReplacingOccurrencesOfString("submit", withString: "", range: nil)
+        let strIdent = sender.restorationIdentifier
+        let strKey = strIdent!.stringByReplacingOccurrencesOfString("submit", withString: "", range: nil)
         
         var strMsg = ""
         
-        if (strBtnIdent == "submitSugstEpower") {
-            strMsg = "\(swch01.selected)"
+        if (strIdent == "submitSugstEpower") {
+            strMsg = getStrEpower()
         }
-        else if (strBtnIdent == "submitSugstHot") {
-            strMsg = "\(swch11.selectedSegmentIndex)"
+        else if (strIdent == "submitSugstHot") {
+            strMsg = getStrHot()
         }
-        else if (strBtnIdent == "submitSugstSun") {
-            strMsg = strKey
+        else if (strIdent == "submitSugstSun") {
+            strMsg = getStrSun()
         }
-        else if (strBtnIdent == "submitSugstEre") {
-            strMsg = "number 4"
+        else if (strIdent == "submitSugstEre") {
+            strMsg = getStrEre()
         }
         
         delegate?.SubPageSubmitClick(strMsg, IdentName: strKey)
+    }
+    
+    /**
+    * 產生對應設備建議文字, E-Power
+    */
+    private func getStrEpower() -> String!{
+        var strMsg = "[電能 E-power]\n"
+        
+        if (!swchEpower.on) {
+            return ""
+        }
+        
+        // segm0Epower, segm1Epower
+        var aryTimeMsg = ["30分", "60分", "180分"]
+        strMsg += "使用时间:" + aryTimeMsg[segm0Epower.selectedSegmentIndex] + ", "
+        
+        var aryGearMsg = ["一档", "二档", "三档"]
+        strMsg += "使用档位:" + aryGearMsg[segm1Epower.selectedSegmentIndex]
+        
+        // collectionView 產生文字
+        var strPointMsg = "\n经络疏通重点: "
+        var isPointMsg = false
+        for (var loopi = 0; loopi < aryColviewBol.count; loopi++) {
+            if (aryColviewBol[loopi]) {
+                strPointMsg += pubClass.getLang("bodypoint_" + String(loopi)) + " "
+                isPointMsg = true
+            }
+        }
+        
+        if (isPointMsg) {
+            strMsg += strPointMsg
+        }
+        
+        return strMsg
+    }
+    
+    /**
+     * 產生對應設備建議文字, HotHouse
+     */
+    private func getStrHot() -> String!{
+        var strMsg = "[远红外线仪]\n"
+        
+        if (!swchHot.on) {
+            return ""
+        }
+        
+        strMsg += "使用时间:"
+        var aryTimeMsg = ["0分", "10分", "20分", "30分"]
+        strMsg += "正面" + aryTimeMsg[segm0Hot.selectedSegmentIndex] + ", "
+        strMsg += "背面" + aryTimeMsg[segm1Hot.selectedSegmentIndex] + ", "
+        strMsg += labHot.text! + "次/天"
+        
+        return strMsg
+    }
+    
+    /**
+     * 產生對應設備建議文字, Sun
+     */
+    private func getStrSun() -> String!{
+        var strMsg = "[摆动理疗仪]\n"
+        
+        if (!swchSun.on) {
+            return ""
+        }
+        
+        var aryTimeMsg = ["3分", "5分", "15分", "30分"]
+        strMsg += "使用时间:" + aryTimeMsg[segm0Sun.selectedSegmentIndex] + ", "
+        strMsg += labSun.text! + "次/天" + ", "
+        strMsg += "姿势:" + edSun.text!
+        
+        return strMsg
+    }
+    
+    /**
+     * 產生對應設備建議文字, Ere
+     */
+    private func getStrEre() -> String!{
+        var strMsg = "[活力能量仪]\n"
+        
+        if (!swchEre.on) {
+            return ""
+        }
+        
+        var aryTimeMsg = ["10分", "20分", "30分"]
+        strMsg += "使用时间:" + aryTimeMsg[segm0Ere.selectedSegmentIndex] + ", "
+        strMsg += "重点部位:" + edEre.text!
+        
+        return strMsg
     }
     
 }
