@@ -109,3 +109,8 @@
 "bodypoint_12" = "任咏";
 "bodypoint_13" = "督咏";
 
+"peoduct_ptype_S" = "器材類";
+"peoduct_ptype_C" = "美容保養品";
+"peoduct_ptype_N" = "健康食品類";
+"peoduct_selectqty" = "選擇數量";
+

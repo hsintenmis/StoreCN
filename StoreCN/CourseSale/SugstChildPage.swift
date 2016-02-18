@@ -75,13 +75,12 @@ class SugstChildPage: UITableViewController {
      */
     override func viewWillAppear(animated: Bool) {
         strCurrIdent = self.restorationIdentifier!
-        
-        // 设置监听键盘事件函数
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        
         if (strCurrIdent == "SugstEpower") {
             coltviewPoint.alpha = 0.0
         }
+        
+        // 设置监听键盘事件函数
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
     }
     
     /**

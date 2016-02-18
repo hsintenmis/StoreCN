@@ -9,7 +9,7 @@ import Foundation
  * 商品管理選單
  * 進貨新增頁面 (店家進貨)
  */
-class Purchase: UIViewController {
+class Purchase: UIViewController, PurchasePdSeltDelegate {
     
     // @IBOutlet
     
@@ -36,25 +36,7 @@ class Purchase: UIViewController {
         dictPref = pubClass.getPrefData()
         
         // 重設商品分類 array data
-        let aryAllPd = dictAllData["data"] as! Array<Dictionary<String, String>>
-
-        var aryPd_S: Array<Dictionary<String, String>> = []
-        var aryPd_C: Array<Dictionary<String, String>> = []
-        var aryPd_N: Array<Dictionary<String, String>> = []
-        for dictPd in aryAllPd {
-            let strType: String! = dictPd["ptype"]
-            if (strType == "S") {
-                aryPd_S.append(dictPd)
-            } else if(strType == "C") {
-                aryPd_C.append(dictPd)
-            } else {
-                aryPd_N.append(dictPd)
-            }
-        }
-        
-        dictCategoryPd["S"] = aryPd_S
-        dictCategoryPd["C"] = aryPd_C
-        dictCategoryPd["N"] = aryPd_N
+        initAllPd()
     }
     
     /**
@@ -67,10 +49,73 @@ class Purchase: UIViewController {
     }
     
     /**
+    * 重設商品分類 array data
+    */
+    private func initAllPd() {
+        dictCategoryPd = [:]
+        let aryAllPd = dictAllData["data"] as! Array<Dictionary<String, String>>
+        
+        var aryPd_S: Array<Dictionary<String, String>> = []
+        var aryPd_C: Array<Dictionary<String, String>> = []
+        var aryPd_N: Array<Dictionary<String, String>> = []
+        var dictNewPd: Dictionary<String, String>
+        
+        for dictPd in aryAllPd {
+            let strType: String! = dictPd["ptype"]
+            dictNewPd = dictPd
+            
+            // 新增欄位, qtySel, qtyOrg
+            dictNewPd["qtySel"] = "0"
+            dictNewPd["qtyOrg"] = "0"
+            
+            if (strType == "S") {
+                aryPd_S.append(dictNewPd)
+            } else if(strType == "C") {
+                aryPd_C.append(dictNewPd)
+            } else {
+                aryPd_N.append(dictNewPd)
+            }
+        }
+        
+        dictCategoryPd["S"] = aryPd_S
+        dictCategoryPd["C"] = aryPd_C
+        dictCategoryPd["N"] = aryPd_N
+    }
+    
+    /**
      * 初始與設定 VCview 內的 field
      */
     private func initViewField() {
 
+    }
+    
+    /**
+     * #mark: PurchasePdSeltDelegate
+     * 商品選擇頁面，點取'完成'
+     */
+    func PdSeltPageDone(PdAllData dictData: Dictionary<String, Array<Dictionary<String, String>>>) {
+        
+    }
+    
+    /**
+     * Segue 跳轉頁面
+     */
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let strIdent = segue.identifier
+        
+        // 商品選擇頁面
+        if (strIdent == "PurchasePdSelt") {
+            let mVC = segue.destinationViewController as! PurchasePdSelt
+            mVC.strToday = strToday
+            mVC.dictCategoryPd = sender as! Dictionary<String, Array<Dictionary<String, String>>>
+        }
+    }
+    
+    /**
+     * act, 點取 '選擇商品' button
+     */
+    @IBAction func actPdSelt(sender: UIBarButtonItem) {
+        self.performSegueWithIdentifier("PurchasePdSelt", sender: dictCategoryPd)
     }
     
     /**
