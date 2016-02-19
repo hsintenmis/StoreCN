@@ -798,6 +798,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <state key="normal" title="清空商品"/>
+                                <connections>
+                                    <action selector="actEmpty:" destination="Yfo-28-90H" eventType="touchUpInside" id="O86-E1-Uig"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="商品列表" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s9K-HS-G5h">
                                 <rect key="frame" x="132" y="79" width="56" height="14"/>
@@ -910,6 +913,9 @@
                                 <color key="textColor" red="0.18823529410000001" green="0.18823529410000001" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Yfo-28-90H" id="Svg-kJ-jJM"/>
+                                </connections>
                             </textField>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="diB-20-A3V">
                                 <rect key="frame" x="-2" y="524" width="324" height="44"/>
@@ -935,6 +941,9 @@
                                 <color key="textColor" red="0.56470588239999997" green="0.56470588239999997" blue="0.56470588239999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Yfo-28-90H" id="EmK-7v-bXW"/>
+                                </connections>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -978,6 +987,9 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="edMemo" destination="lYl-N6-dBI" id="uiv-Xd-eva"/>
+                        <outlet property="edRealPrice" destination="VHs-1h-ylX" id="QyO-lG-nH6"/>
+                        <outlet property="labTotPrice" destination="Agv-RM-IXV" id="Kxx-W5-ZaS"/>
                         <segue destination="ZbW-NV-pf0" kind="show" identifier="PurchasePdSelt" id="ZkG-Xb-bbk"/>
                     </connections>
                 </viewController>
@@ -997,14 +1009,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Lkr-CF-kUV" userLabel="vrEdView">
-                                <rect key="frame" x="147" y="269" width="25" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="ZbW-NV-pf0" id="1Vm-pF-iae"/>
-                                </connections>
-                            </textField>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eV8-Z0-Ybn">
                                 <rect key="frame" x="-2" y="20" width="324" height="44"/>
                                 <constraints>
@@ -1153,16 +1157,24 @@
                                     <outlet property="delegate" destination="ZbW-NV-pf0" id="90L-aY-lQM"/>
                                 </connections>
                             </tableView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Lkr-CF-kUV" userLabel="vrEdView">
+                                <rect key="frame" x="147" y="269" width="25" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="ZbW-NV-pf0" id="1Vm-pF-iae"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Lkr-CF-kUV" firstAttribute="centerX" secondItem="As4-HD-0wF" secondAttribute="centerX" id="Ats-w9-QqY"/>
-                            <constraint firstItem="PQL-6M-qXw" firstAttribute="trailing" secondItem="eV8-Z0-Ybn" secondAttribute="trailing" id="CuA-Ke-6fU"/>
-                            <constraint firstItem="PQL-6M-qXw" firstAttribute="leading" secondItem="eV8-Z0-Ybn" secondAttribute="leading" id="Lhd-Js-waC"/>
+                            <constraint firstItem="PQL-6M-qXw" firstAttribute="leading" secondItem="As4-HD-0wF" secondAttribute="leadingMargin" constant="-18" id="FKT-7P-vpc"/>
                             <constraint firstItem="eV8-Z0-Ybn" firstAttribute="top" secondItem="Rrq-fc-caP" secondAttribute="bottom" id="Q9u-Uq-NzE"/>
                             <constraint firstItem="eV8-Z0-Ybn" firstAttribute="leading" secondItem="As4-HD-0wF" secondAttribute="leadingMargin" constant="-18" id="RvQ-7F-cyO"/>
-                            <constraint firstItem="PQL-6M-qXw" firstAttribute="top" secondItem="eV8-Z0-Ybn" secondAttribute="bottom" id="YnY-YX-0ZL"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="PQL-6M-qXw" secondAttribute="trailing" constant="-18" id="cob-4d-Cko"/>
                             <constraint firstAttribute="trailingMargin" secondItem="eV8-Z0-Ybn" secondAttribute="trailing" constant="-18" id="f4c-m9-dnm"/>
+                            <constraint firstItem="PQL-6M-qXw" firstAttribute="top" secondItem="Rrq-fc-caP" secondAttribute="bottom" constant="44" id="fTx-b7-Tc9"/>
                             <constraint firstItem="57N-yx-okS" firstAttribute="top" secondItem="PQL-6M-qXw" secondAttribute="bottom" id="r0C-5m-fBw"/>
                             <constraint firstItem="Lkr-CF-kUV" firstAttribute="centerY" secondItem="As4-HD-0wF" secondAttribute="centerY" id="uAc-fA-q48"/>
                         </constraints>

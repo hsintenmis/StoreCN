@@ -27,7 +27,7 @@ class PurchasePdSelt: UIViewController, PickerQtyDelegate {
     
     // @IBOutlet
     @IBOutlet weak var tableData: UITableView!
-    @IBOutlet weak var edQty: UITextField!
+    @IBOutlet weak var edQty: UITextField!  // 虛擬的輸入框
     
     // common property
     let pubClass: PubClass = PubClass()
@@ -36,6 +36,10 @@ class PurchasePdSelt: UIViewController, PickerQtyDelegate {
     // public, 從 parent 設定
     var strToday = ""
     var dictCategoryPd: Dictionary<String, Array<Dictionary<String, String>>> = [:] // 已經分類完成的商品
+    
+    // 其他 property
+    private var tableW: CGFloat = 0.0
+    private var tableH: CGFloat = 0.0
 
     /**
     * View Load 程序
@@ -43,12 +47,15 @@ class PurchasePdSelt: UIViewController, PickerQtyDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // 设置监听键盘事件函数
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        
         // 固定初始參數
         edQty.alpha = 0.0
         
         //tableData.layer.frame.size.height
         
-        mPickerQty = PickerQty(parentView: self.view, tableView: tableData, edView: edQty, DefVal: 5, MinMaxAry: [0, 99], NavyBarTitle: pubClass.getLang("peoduct_selectqty"))
+        mPickerQty = PickerQty(edView: edQty, DefVal: 5, MinMaxAry: [0, 99], NavyBarTitle: pubClass.getLang("peoduct_selectqty"))
         
         mPickerQty.delegate = self
     }
@@ -58,7 +65,10 @@ class PurchasePdSelt: UIViewController, PickerQtyDelegate {
      */
     override func viewDidAppear(animated: Bool) {
         dispatch_async(dispatch_get_main_queue(), {
-            
+            if (self.tableW <= 0.0) {
+                self.tableW = self.tableData.frame.size.width
+                self.tableH = self.tableData.frame.size.height
+            }
         })
     }
     
@@ -128,22 +138,39 @@ class PurchasePdSelt: UIViewController, PickerQtyDelegate {
         let aryPd = dictCategoryPd[strKey]!
         let dictPd = aryPd[indexPath.row]
         
+        edQty.becomeFirstResponder()
+        
         mPickerQty.ShowQtyView(DefaultVal: Int(dictPd["qtySel"]!)!, tableIndexPath: indexPath)
     }
     
     /**
      * #mark: PickerQtyDelegate
-     * 點取 '完成' 回傳選擇的 qty
+     * '數量鍵盤' 點取 '完成' 回傳選擇的 qty
      */
     func QtySelecteDone(SelectQty: Int) {
+        QtySelecteCancel()
+        
         print(SelectQty)
     }
-     
+    
+    /**
+     * #mark: PickerQtyDelegate
+     * '數量鍵盤' 點取 '取消'
+     */
+    func QtySelecteCancel() {
+        edQty.resignFirstResponder()
+        let rect = CGRectMake(0.0, 0.0, tableW, tableH);
+        
+        tableData.frame = rect
+    }
+    
     /**
      * act, 點取 '取消' button
      */
     @IBAction func actCancel(sender: UIBarButtonItem) {
         self.dismissViewControllerAnimated(true, completion: nil)
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     /**
@@ -154,6 +181,37 @@ class PurchasePdSelt: UIViewController, PickerQtyDelegate {
             self.delegate?.PdSeltPageDone(PdAllData: self.dictCategoryPd)
         })
     }
+    
+    /**
+     * NSNotificationCenter
+     * #mark: 鍵盤: 处理弹出事件
+     */
+    func keyboardWillShow(notification:NSNotification) {
+        if let _ = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+
+            let rect = CGRectMake(0.0, -210.0, tableW, tableH)
+            
+            /*
+            let heightPKView = mPKView.frame.size.height
+            let tableHight = mParentTableView.contentSize.height
+            mParentTableView.contentSize.height = tableHight - heightPKView
+            */
+            
+            /*
+            let offset = CGPointMake(0,
+            (mParentTableView.contentSize.height - mParentTableView.frame.size.height))
+            mParentTableView.setContentOffset(offset, animated: true)
+            */
+            
+            /*
+            mParentTableView.reloadData()
+            mParentTableView.selectRowAtIndexPath(currIndexPath, animated: true, scrollPosition: UITableViewScrollPosition.None)
+            */
+            
+            tableData.frame = rect
+        }
+    }
+
     
 }
 

@@ -10,9 +10,10 @@ import UIKit
  */
 protocol PickerQtyDelegate {
     /**
-     * Pickr view, 點取 '完成'時， parent class 執行相關動作
+     * Pickr view, 點取 '完成' / '取消'時， parent class 執行相關動作
      */
     func QtySelecteDone(SelectQty: Int)
+    func QtySelecteCancel()
 }
 
 /**
@@ -30,8 +31,6 @@ class PickerQty: NSObject, UIPickerViewDelegate, UIPickerViewDataSource {
     private var mPKView = UIPickerView()
     
     // 參數設定
-    private var mParentView: UIView!
-    private var mParentTableView: UITableView!
     private var currIndexPath: NSIndexPath?
     
     private var mTxtField: UITextField!
@@ -40,16 +39,11 @@ class PickerQty: NSObject, UIPickerViewDelegate, UIPickerViewDataSource {
     /**
     * PickerNumber init<br>
     */
-    init(parentView: UIView, tableView: UITableView, edView: UITextField, DefVal val: Int!, MinMaxAry aryMaxMin: Array<Int>!, NavyBarTitle strTitle: String!) {
+    init(edView: UITextField, DefVal val: Int!, MinMaxAry aryMaxMin: Array<Int>!, NavyBarTitle strTitle: String!) {
         super.init()
-        
-        // 设置监听键盘事件函数
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
 
         // 參數設定
         mPKView.delegate = self
-        mParentView = parentView
-        mParentTableView = tableView
         mTxtField = edView
         
         // 設定每個 Picker row 的 array data
@@ -67,8 +61,10 @@ class PickerQty: NSObject, UIPickerViewDelegate, UIPickerViewDataSource {
     */
     func ShowQtyView(DefaultVal val: Int, tableIndexPath: NSIndexPath) {
         mPKView.selectRow(val, inComponent: 0, animated: false)
+        
+        print(mPKView.frame.size.height)
+        
         currIndexPath = tableIndexPath
-        mTxtField.becomeFirstResponder()
     }
     
     /**
@@ -140,14 +136,7 @@ class PickerQty: NSObject, UIPickerViewDelegate, UIPickerViewDataSource {
     /**
      * Picker 點取　'done'
      */
-    @objc private func SelectDone() {
-        mTxtField.resignFirstResponder()
-        
-        let width = mParentView.frame.size.width;
-        let height = mParentView.frame.size.height;
-        let rect = CGRectMake(0.0, 0.0, width, height);
-        mParentView.frame = rect
-        
+    @objc private func SelectDone() {        
         delegate?.QtySelecteDone(mPKView.selectedRowInComponent(0))
     }
     
@@ -155,45 +144,7 @@ class PickerQty: NSObject, UIPickerViewDelegate, UIPickerViewDataSource {
      * Picker 點取　'cancel'
      */
     @objc private func SelectCancel() {
-        mTxtField.resignFirstResponder()
-        
-        let width = mParentView.frame.size.width;
-        let height = mParentView.frame.size.height;
-        let rect = CGRectMake(0.0, 0.0, width, height);
-        
-        mParentView.frame = rect
+        delegate?.QtySelecteCancel()
     }
-    
-    /**
-     * NSNotificationCenter
-     * #mark: 鍵盤: 处理弹出事件
-     */
-    func keyboardWillShow(notification:NSNotification) {
-        if let _ = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
-            
-            let heightPKView = mPKView.frame.size.height
-            let width = mParentView.frame.size.width;
-            let height = mParentView.frame.size.height;
-            let rect = CGRectMake(0.0, -(heightPKView), width, height);
-            
-            /*
-            let tableHight = mParentTableView.contentSize.height
-            mParentTableView.contentSize.height = tableHight - heightPKView
-            */
-            
-            /*
-            let offset = CGPointMake(0,
-                (mParentTableView.contentSize.height - mParentTableView.frame.size.height))
-            mParentTableView.setContentOffset(offset, animated: true)
-            */
-            
-            /*
-            mParentTableView.reloadData()
-            mParentTableView.selectRowAtIndexPath(currIndexPath, animated: true, scrollPosition: UITableViewScrollPosition.None)
-            */
-            
-            mParentView.frame = rect
-        }
-    }
-    
+        
 }

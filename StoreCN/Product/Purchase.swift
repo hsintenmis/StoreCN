@@ -12,6 +12,9 @@ import Foundation
 class Purchase: UIViewController, PurchasePdSeltDelegate {
     
     // @IBOutlet
+    @IBOutlet weak var labTotPrice: UILabel!
+    @IBOutlet weak var edRealPrice: UITextField!
+    @IBOutlet weak var edMemo: UITextField!
     
     // common property
     let pubClass: PubClass = PubClass()
@@ -109,6 +112,12 @@ class Purchase: UIViewController, PurchasePdSeltDelegate {
             mVC.strToday = strToday
             mVC.dictCategoryPd = sender as! Dictionary<String, Array<Dictionary<String, String>>>
         }
+    }
+    
+    /**
+     * act, 點取 '清空商品' button
+     */
+    @IBAction func actEmpty(sender: UIButton) {
     }
     
     /**
