@@ -26,7 +26,7 @@ class Purchase: UIViewController, PurchasePdSeltDelegate {
     var dictAllData: Dictionary<String, AnyObject> = [:]
     
     // 商品資料設定
-    private let aryPdType = ["S", "C", "N"] // 商品分類
+    private var aryPdType: Array<String>! // 商品分類
     private var dictCategoryPd: Dictionary<String, Array<Dictionary<String, String>>> = [:] // 已經分類完成的商品
     
     /**
@@ -37,6 +37,7 @@ class Purchase: UIViewController, PurchasePdSeltDelegate {
         
         // 固定初始參數
         dictPref = pubClass.getPrefData()
+        aryPdType = pubClass.aryProductType
         
         // 重設商品分類 array data
         initAllPd()

@@ -16,13 +16,13 @@
 "confirm_yes" = "是";
 "confirm_no" = "否";
 "cancel" = "取消";
-"err_login" = "登入失敗, 請重新登入!";
-"nomember" = "沒有會員!";
-"name_age" = "歲";
+"err_login" = "登入失败, 请重新登入!";
+"nomember" = "没有会员!";
+"name_age" = "岁";
 "gender_M" = "男性";
 "gender_F" = "女性";
 "done" = "完成";
-"select_ok" = "確定";
+"select_ok" = "确定";
 
 "week_0" = "日";
 "week_1" = "一";
@@ -55,40 +55,40 @@
 "mm_11" = "十一月";
 "mm_12" = "十二月";
 
-"FMT_todayinfo" = "今日有 %d筆療程預約, %d名會員療程快到期, %d項商品庫存不足.";
+"FMT_todayinfo" = "今日有 %d笔疗程预约, %d名会员疗程快到期, %d项商品库存不足.";
 "FMT_MMDD" = "%d月%d日";
 
-"menu_member" = "會員管理";
-"menu_testing" = "健康檢測";
-"menu_servicemgr" = "服務管理";
+"menu_member" = "会员管理";
+"menu_testing" = "健康检测";
+"menu_servicemgr" = "服务管理";
 "menu_product" = "商品管理";
 "menu_staff" = "人力管理";
 "menu_message" = "信息管理";
-"menu_storesheet" = "店務分析";
-"menu_config" = "設定";
+"menu_storesheet" = "店务分析";
+"menu_config" = "设定";
 
-"menu_course_list" = "療程管理";
-"menu_course_reservation" = "療程預約";
-"menu_course_sale" = "療程銷售";
+"menu_course_list" = "疗程管理";
+"menu_course_reservation" = "疗程预约";
+"menu_course_sale" = "疗程销售";
 
-"menu_product_sale" = "商品銷貨";
-"menu_product_purchase" = "商品入庫";
-"menu_product_stock" = "商品庫存";
-"menu_product_purchaselist" = "進出貨列表";
+"menu_product_sale" = "商品销货";
+"menu_product_purchase" = "商品入库";
+"menu_product_stock" = "商品库存";
+"menu_product_purchaselist" = "进出货列表";
 
-"member_nodataaddfirst" = "沒有會員, 請先新增會員!";
-"member_selectbirth" = "選擇生日";
-"member_main_course" = "療程紀錄";
-"member_main_mead" = "能量檢測";
+"member_nodataaddfirst" = "没有会员, 请先新增会员!";
+"member_selectbirth" = "选择生日";
+"member_main_course" = "疗程纪录";
+"member_main_mead" = "能量检测";
 "member_main_soqibed" = "SOQIBed";
-"member_main_purchase" = "購貨紀錄";
-"member_main_health" = "健康紀錄";
+"member_main_purchase" = "购货纪录";
+"member_main_health" = "健康纪录";
 
-"course_nodata" = "沒有療程資料";
-"course_nobuy" = "未購買療程";
-"course_alreadybuy" = "已購買療程";
-"course_finished" = "療程已完成";
-"course_expiredate" = "療程到期日";
+"course_nodata" = "没有疗程资料";
+"course_nobuy" = "未购买疗程";
+"course_alreadybuy" = "已购买疗程";
+"course_finished" = "疗程已完成";
+"course_expiredate" = "疗程到期日";
 
 "soqibed_actdate" = "建立日期";
 "soqibed_usecount" = "使用次数";
@@ -109,8 +109,8 @@
 "bodypoint_12" = "任咏";
 "bodypoint_13" = "督咏";
 
-"peoduct_ptype_S" = "器材類";
-"peoduct_ptype_C" = "美容保養品";
-"peoduct_ptype_N" = "健康食品類";
-"peoduct_selectqty" = "選擇數量";
+"product_ptype_S" = "器材类";
+"product_ptype_C" = "美容保养品";
+"product_ptype_N" = "健康食品类";
+"product_selectqty" = "选择数量";
 

@@ -18,28 +18,25 @@ protocol PurchasePdSeltDelegate {
 /**
  * 商品選擇，從進貨新增頁面轉入 (店家進貨)
  */
-class PurchasePdSelt: UIViewController, PickerQtyDelegate {
+class PurchasePdSelt: UIViewController, PurchasePdSeltCellDelegate {
     // protocol delegate
     var delegate = PurchasePdSeltDelegate?()
     
-    // 商品分類
-    private let aryPdType = ["S", "C", "N"]
-    
     // @IBOutlet
     @IBOutlet weak var tableData: UITableView!
-    @IBOutlet weak var edQty: UITextField!  // 虛擬的輸入框
+    @IBOutlet weak var labAmount: UILabel!
     
     // common property
     let pubClass: PubClass = PubClass()
-    var mPickerQty: PickerQty!
     
     // public, 從 parent 設定
     var strToday = ""
     var dictCategoryPd: Dictionary<String, Array<Dictionary<String, String>>> = [:] // 已經分類完成的商品
     
     // 其他 property
-    private var tableW: CGFloat = 0.0
-    private var tableH: CGFloat = 0.0
+    private var aryPdType: Array<String>! // 商品分類
+    private var keyboardHeight: CGFloat = 0.0
+    private var currIndexPath: NSIndexPath?
 
     /**
     * View Load 程序
@@ -50,14 +47,7 @@ class PurchasePdSelt: UIViewController, PickerQtyDelegate {
         // 设置监听键盘事件函数
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         
-        // 固定初始參數
-        edQty.alpha = 0.0
-        
-        //tableData.layer.frame.size.height
-        
-        mPickerQty = PickerQty(edView: edQty, DefVal: 5, MinMaxAry: [0, 99], NavyBarTitle: pubClass.getLang("peoduct_selectqty"))
-        
-        mPickerQty.delegate = self
+        aryPdType = pubClass.aryProductType
     }
     
     /**
@@ -65,10 +55,7 @@ class PurchasePdSelt: UIViewController, PickerQtyDelegate {
      */
     override func viewDidAppear(animated: Bool) {
         dispatch_async(dispatch_get_main_queue(), {
-            if (self.tableW <= 0.0) {
-                self.tableW = self.tableData.frame.size.width
-                self.tableH = self.tableData.frame.size.height
-            }
+
         })
     }
     
@@ -84,7 +71,7 @@ class PurchasePdSelt: UIViewController, PickerQtyDelegate {
      * Section 標題
      */
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return pubClass.getLang("peoduct_ptype_" + aryPdType[section])
+        return pubClass.getLang("product_ptype_" + aryPdType[section])
     }
     
     /**
@@ -122,7 +109,13 @@ class PurchasePdSelt: UIViewController, PickerQtyDelegate {
         let ditItem = aryPd[indexPath.row] as Dictionary<String, AnyObject>
         let mCell = tableView.dequeueReusableCellWithIdentifier("cellPurchasePdSelt", forIndexPath: indexPath) as! PurchasePdSeltCell
         
-        mCell.initView(ditItem, PubClass: pubClass)
+        // 取得虛擬鍵盤高度
+        if (keyboardHeight <= 0) {
+            keyboardHeight = mCell.kbHeight
+        }
+        
+        mCell.delegate = self
+        mCell.initView(ditItem)
         
         return mCell
     }
@@ -132,38 +125,75 @@ class PurchasePdSelt: UIViewController, PickerQtyDelegate {
      * UITableView, Cell 點取
      */
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        currIndexPath = indexPath
         
-        // 取得指定 section 的 array data
-        let strKey = aryPdType[indexPath.section]
-        let aryPd = dictCategoryPd[strKey]!
-        let dictPd = aryPd[indexPath.row]
-        
+        // 取得 cell EditField
+        let edQty = (tableView.cellForRowAtIndexPath(indexPath) as! PurchasePdSeltCell).edQty
         edQty.becomeFirstResponder()
-        
-        mPickerQty.ShowQtyView(DefaultVal: Int(dictPd["qtySel"]!)!, tableIndexPath: indexPath)
     }
     
     /**
-     * #mark: PickerQtyDelegate
-     * '數量鍵盤' 點取 '完成' 回傳選擇的 qty
+     * #mark: PurchasePdSeltCellDelegate
+     * '數量鍵盤' 點取 '完成' 回傳選擇的 qty, 執行相關程序
      */
     func QtySelecteDone(SelectQty: Int) {
         QtySelecteCancel()
         
-        print(SelectQty)
+        // 設定 'dictCategoryPd' 指定商品的 '選擇數量'
+        let strPType = aryPdType[currIndexPath!.section]
+        let position = currIndexPath!.row
+        dictCategoryPd[strPType]![position]["qtySel"] = String(SelectQty)
+        
+        // Cell 相關欄位資料更新
+        let ditItem = dictCategoryPd[strPType]![position] as Dictionary<String, AnyObject>
+        let intPrice = Int(ditItem["price"] as! String)!
+        let intQty = Int(ditItem["qtySel"] as! String)!
+        let totPrice = intPrice * intQty
+        
+        let mCell = tableData.cellForRowAtIndexPath(currIndexPath!) as! PurchasePdSeltCell
+        mCell.labPrice.text = String(intPrice)
+        mCell.labQty.text = String(intQty)
+        mCell.labTot.text = String(totPrice)
+        
+        // 顏色,樣式 相關設定
+        let mColor =  (Int(ditItem["qtySel"] as! String) > 0) ? pubClass.ColorHEX(pubClass.dictColor["RedDark"]!) : pubClass.ColorHEX(pubClass.dictColor["gray"]!)
+        mCell.labQty.textColor = mColor
+        mCell.labTot.textColor = mColor
+        
+        // 總金額修改
+        var intAmount = 0
+        for strPType in aryPdType {
+            let aryPd = dictCategoryPd[strPType]!
+            for dictPd in aryPd {
+                let intQty = Int(dictPd["qtySel"]!)
+                if (intQty > 0) {
+                    intAmount += intQty! * Int(dictPd["price"]!)!
+                }
+            }
+        }
+        
+        labAmount.text = String(intAmount)
     }
     
     /**
-     * #mark: PickerQtyDelegate
+     * #mark: PurchasePdSeltCellDelegate
      * '數量鍵盤' 點取 '取消'
      */
     func QtySelecteCancel() {
-        edQty.resignFirstResponder()
-        let rect = CGRectMake(0.0, 0.0, tableW, tableH);
-        
-        tableData.frame = rect
+        let width = self.view.frame.width
+        let height = self.view.frame.height
+        let rect = CGRectMake(0.0, 0.0, width, height)
+        self.view.frame = rect
     }
     
+    /**
+     * act, 點取 '商品分類' UISegmentedControl
+     */
+    @IBAction func actPdType(sender: UISegmentedControl) {
+        let mIndexPath = NSIndexPath(forRow: 0, inSection: sender.selectedSegmentIndex)
+        tableData.scrollToRowAtIndexPath(mIndexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+    }
+
     /**
      * act, 點取 '取消' button
      */
@@ -189,26 +219,10 @@ class PurchasePdSelt: UIViewController, PickerQtyDelegate {
     func keyboardWillShow(notification:NSNotification) {
         if let _ = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
 
-            let rect = CGRectMake(0.0, -210.0, tableW, tableH)
-            
-            /*
-            let heightPKView = mPKView.frame.size.height
-            let tableHight = mParentTableView.contentSize.height
-            mParentTableView.contentSize.height = tableHight - heightPKView
-            */
-            
-            /*
-            let offset = CGPointMake(0,
-            (mParentTableView.contentSize.height - mParentTableView.frame.size.height))
-            mParentTableView.setContentOffset(offset, animated: true)
-            */
-            
-            /*
-            mParentTableView.reloadData()
-            mParentTableView.selectRowAtIndexPath(currIndexPath, animated: true, scrollPosition: UITableViewScrollPosition.None)
-            */
-            
-            tableData.frame = rect
+            let width = self.view.frame.width
+            let height = self.view.frame.height
+            let rect = CGRectMake(0.0, -(keyboardHeight), width, height)
+            self.view.frame = rect
         }
     }
 
