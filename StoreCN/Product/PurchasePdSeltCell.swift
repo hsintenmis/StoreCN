@@ -75,7 +75,7 @@ class PurchasePdSeltCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDat
         labTot.text = String(totPrice)
         
         // 顏色,樣式 相關設定
-        let mColor =  (Int(ditItem["qtySel"] as! String) > 0) ? pubClass.ColorHEX(pubClass.dictColor["RedDark"]!) : pubClass.ColorHEX(pubClass.dictColor["gray"]!)
+        let mColor =  (Int(ditItem["qtySel"] as! String) > 0) ? pubClass.ColorHEX(pubClass.dictColor["BlueDark"]!) : pubClass.ColorHEX(pubClass.dictColor["gray"]!)
         labQty.textColor = mColor
         labTot .textColor = mColor
     }

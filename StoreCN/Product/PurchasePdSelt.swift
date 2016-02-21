@@ -12,7 +12,7 @@ protocol PurchasePdSeltDelegate {
     /**
      * 本頁面點取'完成'btn, 回傳已變動的全部商品 array data
      */
-    func PdSeltPageDone(PdAllData dictData: Dictionary<String, Array<Dictionary<String, String>>>)
+    func PdSeltPageDone(PdAllData: Dictionary<String, Array<Dictionary<String, String>>>)
 }
 
 /**
@@ -48,6 +48,9 @@ class PurchasePdSelt: UIViewController, PurchasePdSeltCellDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         
         aryPdType = pubClass.aryProductType
+        
+        // 計算總金額
+        labAmount.text = String(self.calTotAmount())
     }
     
     /**
@@ -151,28 +154,16 @@ class PurchasePdSelt: UIViewController, PurchasePdSeltCellDelegate {
         let totPrice = intPrice * intQty
         
         let mCell = tableData.cellForRowAtIndexPath(currIndexPath!) as! PurchasePdSeltCell
-        mCell.labPrice.text = String(intPrice)
         mCell.labQty.text = String(intQty)
         mCell.labTot.text = String(totPrice)
         
         // 顏色,樣式 相關設定
-        let mColor =  (Int(ditItem["qtySel"] as! String) > 0) ? pubClass.ColorHEX(pubClass.dictColor["RedDark"]!) : pubClass.ColorHEX(pubClass.dictColor["gray"]!)
+        let mColor =  (Int(ditItem["qtySel"] as! String) > 0) ? pubClass.ColorHEX(pubClass.dictColor["BlueDark"]!) : pubClass.ColorHEX(pubClass.dictColor["gray"]!)
         mCell.labQty.textColor = mColor
         mCell.labTot.textColor = mColor
         
         // 總金額修改
-        var intAmount = 0
-        for strPType in aryPdType {
-            let aryPd = dictCategoryPd[strPType]!
-            for dictPd in aryPd {
-                let intQty = Int(dictPd["qtySel"]!)
-                if (intQty > 0) {
-                    intAmount += intQty! * Int(dictPd["price"]!)!
-                }
-            }
-        }
-        
-        labAmount.text = String(intAmount)
+        labAmount.text = String(self.calTotAmount())
     }
     
     /**
@@ -184,6 +175,24 @@ class PurchasePdSelt: UIViewController, PurchasePdSeltCellDelegate {
         let height = self.view.frame.height
         let rect = CGRectMake(0.0, 0.0, width, height)
         self.view.frame = rect
+    }
+    
+    /**
+    * 計算選擇商品的金額加總
+    */
+    private func calTotAmount() -> Int {
+        var intAmount = 0
+        for strPType in aryPdType {
+            let aryPd = dictCategoryPd[strPType]!
+            for dictPd in aryPd {
+                let intQty = Int(dictPd["qtySel"]!)
+                if (intQty > 0) {
+                    intAmount += intQty! * Int(dictPd["price"]!)!
+                }
+            }
+        }
+        
+        return intAmount
     }
     
     /**
@@ -207,8 +216,10 @@ class PurchasePdSelt: UIViewController, PurchasePdSeltCellDelegate {
      * act, 點取 '完成' button
      */
     @IBAction func actDone(sender: UIBarButtonItem) {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+        
         self.dismissViewControllerAnimated(true, completion: {
-            self.delegate?.PdSeltPageDone(PdAllData: self.dictCategoryPd)
+            self.delegate?.PdSeltPageDone(self.dictCategoryPd)
         })
     }
     
@@ -219,6 +230,8 @@ class PurchasePdSelt: UIViewController, PurchasePdSeltCellDelegate {
     func keyboardWillShow(notification:NSNotification) {
         if let _ = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
 
+            //print("PdSelt: \(keyboardSize.height)")
+            
             let width = self.view.frame.width
             let height = self.view.frame.height
             let rect = CGRectMake(0.0, -(keyboardHeight), width, height)
