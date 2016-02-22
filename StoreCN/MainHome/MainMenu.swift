@@ -15,7 +15,7 @@ class MainMenu: UIViewController {
     @IBOutlet weak var colviewMenu: UICollectionView!
 
     // common property
-    var mVCtrl: UIViewController!
+    //var mVCtrl: UIViewController!
     let pubClass = PubClass()
     let mJSONClass = JSONClass()
     let mFileMang = FileMang()
@@ -50,7 +50,7 @@ class MainMenu: UIViewController {
         super.viewDidLoad()
         
         // 固定初始參數
-        mVCtrl = self
+        //mVCtrl = self
         dictPref = pubClass.getPrefData()
         
         // HTTP 連線參數設定
@@ -98,7 +98,7 @@ class MainMenu: UIViewController {
         mParam["act"] = "homepage_remindall"
         
         // HTTP 開始連線
-        pubClass.HTTPConn(mVCtrl, ConnParm: mParam, callBack: HttpResponChk)
+        pubClass.HTTPConn(self, ConnParm: mParam, callBack: HttpResponChk)
     }
     
     /**
@@ -214,7 +214,7 @@ class MainMenu: UIViewController {
         mAlert.addAction(UIAlertAction(title:pubClass.getLang("cancel"), style: UIAlertActionStyle.Destructive, handler:nil))
         
         dispatch_async(dispatch_get_main_queue(), {
-            self.mVCtrl.presentViewController(mAlert, animated: true, completion: nil)
+            self.presentViewController(mAlert, animated: true, completion: nil)
         })
     }
     
@@ -267,6 +267,15 @@ class MainMenu: UIViewController {
                     
                     return
                 }
+                
+                // 商品銷售
+                if (strIdent == "product_sale") {
+                    mParam["page"] = "sale"
+                    mParam["act"] = "sale_getdata"
+                    self.MenuItemSelect(strIdent, HTTPParam: mParam)
+                    
+                    return
+                }
             }))
         }
         
@@ -278,12 +287,12 @@ class MainMenu: UIViewController {
     */
     private func MenuItemSelect(strIdent: String!, HTTPParam mParam: Dictionary<String, String>!) {
         // HTTP 開始連線
-        pubClass.HTTPConn(mVCtrl, ConnParm: mParam, callBack: {(dictRS: Dictionary<String, AnyObject>)->Void in
+        pubClass.HTTPConn(self, ConnParm: mParam, callBack: {(dictRS: Dictionary<String, AnyObject>)->Void in
             
             // 任何錯誤顯示錯誤訊息
             if (dictRS["result"] as! Bool != true) {
                 dispatch_async(dispatch_get_main_queue(), {
-                    self.pubClass.popIsee(self.mVCtrl, Msg: self.pubClass.getLang(dictRS["msg"] as? String))
+                    self.pubClass.popIsee(self, Msg: self.pubClass.getLang(dictRS["msg"] as? String))
                 })
                 
                 return
@@ -339,6 +348,15 @@ class MainMenu: UIViewController {
         // 商品入庫
         if (strIdent == "product_purchase") {
             let mVC = segue.destinationViewController as! Purchase
+            mVC.strToday = strToday
+            mVC.dictAllData = sender as! Dictionary<String, AnyObject>
+            
+            return
+        }
+        
+        // 商品銷售
+        if (strIdent == "product_sale") {
+            let mVC = segue.destinationViewController as! Sale
             mVC.strToday = strToday
             mVC.dictAllData = sender as! Dictionary<String, AnyObject>
             

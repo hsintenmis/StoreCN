@@ -14,7 +14,6 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
     @IBOutlet weak var containerMemberList: UIView!
     
     // common property
-    var mVCtrl: UIViewController!
     let pubClass: PubClass = PubClass()
     var dictPref: Dictionary<String, AnyObject>!  // Prefer data
     var reloadMemberList = true
@@ -25,7 +24,7 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
     // 其他參數設定
     private var strToday = ""
     private var mMemberData: Dictionary<String, AnyObject> = [:]  // 選擇的會員
-    private var currIndexPath: NSIndexPath!  // 目前 TableView 的 IndexPath
+    private var currIndexPath: NSIndexPath?  // 目前 TableView 的 IndexPath
     
     /**
      * View Load 程序
@@ -34,10 +33,7 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
         super.viewDidLoad()
         
         // 固定初始參數
-        mVCtrl = self
         dictPref = pubClass.getPrefData()
-        
-        currIndexPath = NSIndexPath(forItem: 0, inSection: 0)
     }
     
     /**
@@ -76,7 +72,7 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
         dictParm["act"] = "member_getdata"
         
         // HTTP 開始連線
-        pubClass.HTTPConn(mVCtrl, ConnParm: dictParm, callBack: HTTPResponMemberList)
+        pubClass.HTTPConn(self, ConnParm: dictParm, callBack: HTTPResponMemberList)
     }
     
     /**
@@ -87,7 +83,7 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
         // 任何錯誤跳離
         if (dictRS["result"] as! Bool != true) {
             dispatch_async(dispatch_get_main_queue(), {
-                self.pubClass.popIsee(self.mVCtrl, Msg: self.pubClass.getLang(dictRS["msg"] as? String), withHandler: {
+                self.pubClass.popIsee(self, Msg: self.pubClass.getLang(dictRS["msg"] as? String), withHandler: {
                     self.dismissViewControllerAnimated(true, completion: nil)
                 })
             })
@@ -104,7 +100,7 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
         if let tmpData = dictData["data"] as? Array<Dictionary<String, AnyObject>> {
             aryMember = tmpData
         } else {
-            pubClass.popIsee(mVCtrl, Msg: pubClass.getLang("member_nodataaddfirst"))
+            pubClass.popIsee(self, Msg: pubClass.getLang("member_nodataaddfirst"))
             
             return
         }
@@ -114,6 +110,7 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
         
         mPubMemberSelect.delegate = self
         mPubMemberSelect.aryMember = aryMember
+        //mPubMemberSelect.currIndexPath = currIndexPath
         
         let mView = mPubMemberSelect.view
         mView.frame.size.height = containerMemberList.layer.frame.height
@@ -138,12 +135,12 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
         dictParm["arg0"] = dictData["memberid"] as? String
         
         // HTTP 開始連線
-        pubClass.HTTPConn(mVCtrl, ConnParm: dictParm, callBack: {(dictRS: Dictionary<String, AnyObject>)->Void in
+        pubClass.HTTPConn(self, ConnParm: dictParm, callBack: {(dictRS: Dictionary<String, AnyObject>)->Void in
             
             // 任何錯誤顯示錯誤訊息
             if (dictRS["result"] as! Bool != true) {
                 dispatch_async(dispatch_get_main_queue(), {
-                    self.pubClass.popIsee(self.mVCtrl, Msg: self.pubClass.getLang(dictRS["msg"] as? String))
+                    self.pubClass.popIsee(self, Msg: self.pubClass.getLang(dictRS["msg"] as? String))
                 })
                 
                 return

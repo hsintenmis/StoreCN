@@ -6,16 +6,16 @@ import UIKit
 import Foundation
 
 /**
- * 商品管理選單
- * 進貨新增頁面 (店家進貨)
+ * 商品管理選單, 銷貨
  */
-class Purchase: UIViewController, PurchasePdSeltDelegate, PurchasePdSeltCellDelegate, UITextFieldDelegate {
+class Sale: UIViewController, SalePdSeltDelegate, SalePdSeltCellDelegate, PdSaleMemberSelDelegate, UITextFieldDelegate {
     
     // @IBOutlet
     @IBOutlet weak var tableData: UITableView!
     @IBOutlet weak var labTotPrice: UILabel!
     @IBOutlet weak var edRealPrice: UITextField!
     @IBOutlet weak var edMemo: UITextField!
+    @IBOutlet weak var labMemberName: UILabel!
     
     // common property
     let pubClass: PubClass = PubClass()
@@ -31,6 +31,9 @@ class Purchase: UIViewController, PurchasePdSeltDelegate, PurchasePdSeltCellDele
     private var aryCart: Array<Dictionary<String, String>> = []
     
     // 其他 property
+    private var aryMember: Array<Dictionary<String, AnyObject>> = [] // 會員 array data
+    private var indexPathMember: NSIndexPath?
+    
     private var keyboardHeightQty: CGFloat = 0.0  // 自訂的選擇數量鍵盤高度
     private var currIndexPath: NSIndexPath?
     
@@ -44,8 +47,28 @@ class Purchase: UIViewController, PurchasePdSeltDelegate, PurchasePdSeltCellDele
         dictPref = pubClass.getPrefData()
         aryPdType = pubClass.aryProductType
         
-        // 重設商品分類 array data
-        initAllPd()
+        // 檢查資料
+        var strErr = ""
+        if let _ = dictAllData["pd"] as? Array<Dictionary<String, AnyObject>> {
+            // 重設商品分類 array data
+            initAllPd()
+        } else {
+            strErr = pubClass.getLang("product_nodatapurchasefirst")
+        }
+        
+        if let tmpMember = dictAllData["member"] as? Array<Dictionary<String, AnyObject>> {
+            aryMember = tmpMember
+        } else {
+            strErr = pubClass.getLang("member_nodataaddfirst")
+        }
+        
+        if (strErr != "") {
+            pubClass.popIsee(self, Msg: strErr, withHandler: {
+                self.dismissViewControllerAnimated(true, completion: {})
+            })
+            
+            return
+        }
     }
     
     /**
@@ -69,16 +92,16 @@ class Purchase: UIViewController, PurchasePdSeltDelegate, PurchasePdSeltCellDele
      * View DidAppear 程序
      */
     override func viewWillDisappear(animated: Bool) {
-        // 註銷鍵盤監聽
+        // 註銷銷鍵盤監聽
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     /**
-    * 重設商品分類 array data
-    */
+     * 重設商品分類 array data
+     */
     private func initAllPd() {
         dictCategoryPd = [:]
-        let aryAllPd = dictAllData["data"] as! Array<Dictionary<String, String>>
+        let aryAllPd = dictAllData["pd"] as! Array<Dictionary<String, String>>
         
         var aryPd_S: Array<Dictionary<String, String>> = []
         var aryPd_C: Array<Dictionary<String, String>> = []
@@ -111,7 +134,7 @@ class Purchase: UIViewController, PurchasePdSeltDelegate, PurchasePdSeltCellDele
      * 初始與設定 VCview 內的 field
      */
     private func initViewField() {
-
+        
     }
     
     /**
@@ -141,7 +164,7 @@ class Purchase: UIViewController, PurchasePdSeltDelegate, PurchasePdSeltCellDele
         
         // 產生 Item data
         let ditItem = aryCart[indexPath.row] as Dictionary<String, String>
-        let mCell = tableView.dequeueReusableCellWithIdentifier("cellPurchasePdSeltCart", forIndexPath: indexPath) as! PurchasePdSeltCell
+        let mCell = tableView.dequeueReusableCellWithIdentifier("cellSalePdSeltCart", forIndexPath: indexPath) as! SalePdSeltCell
         
         // 取得虛擬鍵盤高度
         if (keyboardHeightQty <= 0) {
@@ -162,12 +185,12 @@ class Purchase: UIViewController, PurchasePdSeltDelegate, PurchasePdSeltCellDele
         currIndexPath = indexPath
         
         // 取得 cell EditField
-        let edQty = (tableView.cellForRowAtIndexPath(indexPath) as! PurchasePdSeltCell).edQty
+        let edQty = (tableView.cellForRowAtIndexPath(indexPath) as! SalePdSeltCell).edQty
         edQty.becomeFirstResponder()
     }
     
     /**
-     * #mark: PurchasePdSeltCellDelegate
+     * #mark: SalePdSeltCellDelegate
      * '數量鍵盤' 點取 '完成' 回傳選擇的 qty, 執行相關程序
      */
     func QtySelecteDone(SelectQty: Int) {
@@ -177,7 +200,7 @@ class Purchase: UIViewController, PurchasePdSeltDelegate, PurchasePdSeltCellDele
         let dictPd = aryCart[currIndexPath!.row]
         let strPType = dictPd["ptype"]!
         let position = Int(dictPd["position"]!)
-
+        
         // 更新 'dictCategoryPd' 指定商品數量
         dictCategoryPd[strPType]![position!]["qtySel"] = String(SelectQty)
         
@@ -191,7 +214,7 @@ class Purchase: UIViewController, PurchasePdSeltDelegate, PurchasePdSeltCellDele
     }
     
     /**
-     * #mark: PurchasePdSeltCellDelegate
+     * #mark: SalePdSeltCellDelegate
      * '數量鍵盤' 點取 '取消'
      */
     func QtySelecteCancel() {
@@ -199,14 +222,15 @@ class Purchase: UIViewController, PurchasePdSeltDelegate, PurchasePdSeltCellDele
     }
     
     /**
-     * #mark: PurchasePdSeltDelegate
+     * #mark: SalePdSeltDelegate
      * 商品選擇頁面，點取'完成'
      */
     func PdSeltPageDone(PdAllData: Dictionary<String, Array<Dictionary<String, String>>>) {
+        
         // 重新產生 '購物車' list array
         dictCategoryPd = PdAllData
         resetCartData()
-
+        
         tableData.reloadData()
     }
     
@@ -239,17 +263,36 @@ class Purchase: UIViewController, PurchasePdSeltDelegate, PurchasePdSeltCellDele
     }
     
     /**
+     * #mark: SalePdSeltDelegate
+     * 會員選擇頁面，點取'會員 Item'
+     */
+    func MemberSeltPageDone(MemberData: Dictionary<String, AnyObject>, MemberindexPath indexPath: NSIndexPath) {
+        indexPathMember = indexPath
+        
+        print(MemberData)
+    }
+    
+    /**
      * Segue 跳轉頁面
      */
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let strIdent = segue.identifier
         
         // 商品選擇頁面
-        if (strIdent == "PurchasePdSelt") {
-            let mVC = segue.destinationViewController as! PurchasePdSelt
+        if (strIdent == "SalePdSelt") {
+            let mVC = segue.destinationViewController as! SalePdSelt
             mVC.delegate = self
             mVC.strToday = strToday
             mVC.dictCategoryPd = sender as! Dictionary<String, Array<Dictionary<String, String>>>
+        }
+        
+        // 會員選擇頁面
+        if (strIdent == "PdSaleMemberSel") {
+            let mVC = segue.destinationViewController as! PdSaleMemberSel
+            mVC.delegate = self
+            mVC.strToday = strToday
+            mVC.indexPathMember = indexPathMember
+            mVC.aryMember = sender as! Array<Dictionary<String, AnyObject>>
         }
     }
     
@@ -266,7 +309,14 @@ class Purchase: UIViewController, PurchasePdSeltDelegate, PurchasePdSeltCellDele
      * act, 點取 '選擇商品' button, 跳轉'選擇商品'頁面
      */
     @IBAction func actPdSelt(sender: UIBarButtonItem) {
-        self.performSegueWithIdentifier("PurchasePdSelt", sender: dictCategoryPd)
+        self.performSegueWithIdentifier("SalePdSelt", sender: dictCategoryPd)
+    }
+    
+    /**
+     * act, 點取 '選擇會員 button, 跳轉'選擇會員'頁面
+     */
+    @IBAction func actMemberSelt(sender: UIBarButtonItem) {
+        self.performSegueWithIdentifier("PdSaleMemberSel", sender: aryMember)
     }
     
     /**
@@ -315,8 +365,8 @@ class Purchase: UIViewController, PurchasePdSeltDelegate, PurchasePdSeltCellDele
     }
     
     /**
-    * 關閉鍵盤, View 設定回原位置
-    */
+     * 關閉鍵盤, View 設定回原位置
+     */
     private func keyboardClose() {
         let width = self.view.frame.width
         let height = self.view.frame.height

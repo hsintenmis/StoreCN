@@ -117,6 +117,10 @@
 		D7150E3F1C5C5B8E00C9FE8B /* MemberList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7150E3E1C5C5B8E00C9FE8B /* MemberList.swift */; };
 		D7150E431C5C6E8000C9FE8B /* MemberAdEd.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7150E421C5C6E8000C9FE8B /* MemberAdEd.swift */; };
 		D720FBA11C7458F000AE640C /* Purchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D720FBA01C7458F000AE640C /* Purchase.swift */; };
+		D72F26431C7AA60100717394 /* Sale.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72F26421C7AA60100717394 /* Sale.swift */; };
+		D72F26451C7AA61900717394 /* SalePdSelt.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72F26441C7AA61900717394 /* SalePdSelt.swift */; };
+		D72F26471C7AA63A00717394 /* SalePdSeltCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72F26461C7AA63A00717394 /* SalePdSeltCell.swift */; };
+		D72F26491C7ABD3300717394 /* PdSaleMemberSel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72F26481C7ABD3300717394 /* PdSaleMemberSel.swift */; };
 		D74652071C5CA85900190EF6 /* PickerNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74652061C5CA85900190EF6 /* PickerNumber.swift */; };
 		D7496D1A1C5B343200B75D6A /* MainMenuColtViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7496D191C5B343200B75D6A /* MainMenuColtViewCell.swift */; };
 		D7496D261C5B58CF00B75D6A /* CourseList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7496D251C5B58CF00B75D6A /* CourseList.swift */; };
@@ -254,6 +258,10 @@
 		D7150E3E1C5C5B8E00C9FE8B /* MemberList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberList.swift; path = Member/MemberList.swift; sourceTree = "<group>"; };
 		D7150E421C5C6E8000C9FE8B /* MemberAdEd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberAdEd.swift; path = Member/MemberAdEd.swift; sourceTree = "<group>"; };
 		D720FBA01C7458F000AE640C /* Purchase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Purchase.swift; path = Product/Purchase.swift; sourceTree = "<group>"; };
+		D72F26421C7AA60100717394 /* Sale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Sale.swift; path = Product/Sale.swift; sourceTree = "<group>"; };
+		D72F26441C7AA61900717394 /* SalePdSelt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SalePdSelt.swift; path = Product/SalePdSelt.swift; sourceTree = "<group>"; };
+		D72F26461C7AA63A00717394 /* SalePdSeltCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SalePdSeltCell.swift; path = Product/SalePdSeltCell.swift; sourceTree = "<group>"; };
+		D72F26481C7ABD3300717394 /* PdSaleMemberSel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PdSaleMemberSel.swift; path = Product/PdSaleMemberSel.swift; sourceTree = "<group>"; };
 		D74652061C5CA85900190EF6 /* PickerNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PickerNumber.swift; path = PubClass/PickerNumber.swift; sourceTree = "<group>"; };
 		D7496D191C5B343200B75D6A /* MainMenuColtViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainMenuColtViewCell.swift; path = MainHome/MainMenuColtViewCell.swift; sourceTree = "<group>"; };
 		D7496D251C5B58CF00B75D6A /* CourseList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CourseList.swift; path = ServiceMgr/CourseList.swift; sourceTree = "<group>"; };
@@ -511,6 +519,10 @@
 				D720FBA01C7458F000AE640C /* Purchase.swift */,
 				D7F45F421C75733400735D09 /* PurchasePdSelt.swift */,
 				D7F45F441C75752A00735D09 /* PurchasePdSeltCell.swift */,
+				D72F26421C7AA60100717394 /* Sale.swift */,
+				D72F26441C7AA61900717394 /* SalePdSelt.swift */,
+				D72F26461C7AA63A00717394 /* SalePdSeltCell.swift */,
+				D72F26481C7ABD3300717394 /* PdSaleMemberSel.swift */,
 			);
 			name = Product;
 			sourceTree = "<group>";
@@ -735,9 +747,11 @@
 				D70CD9451C72CBF8008E79E1 /* CourseSaleSugst.swift in Sources */,
 				D70CD94A1C731DF5008E79E1 /* SugstChildColtCell.swift in Sources */,
 				42E21F111C68826500B85EA9 /* PubCalendarCell.swift in Sources */,
+				D72F26491C7ABD3300717394 /* PdSaleMemberSel.swift in Sources */,
 				D70CD9461C72CBF8008E79E1 /* PubCourseSaleAdEd.swift in Sources */,
 				D70CD9441C72CBF8008E79E1 /* CourseSaleMemberSel.swift in Sources */,
 				D7BB2AD31C6477F800624E08 /* PubMemberPurchaseSelect.swift in Sources */,
+				D72F26451C7AA61900717394 /* SalePdSelt.swift in Sources */,
 				D7BB2ADE1C64788700624E08 /* PubMeadDataSelect.swift in Sources */,
 				D7F45F431C75733400735D09 /* PurchasePdSelt.swift in Sources */,
 				D7BB2ADD1C64788700624E08 /* PubCourseSelectCell.swift in Sources */,
@@ -758,6 +772,8 @@
 				D7037A781C58C03F002A955E /* PubClass.swift in Sources */,
 				D7BB2ADC1C64788700624E08 /* PubCourseSelect.swift in Sources */,
 				D7037A681C58BF32002A955E /* AppDelegate.swift in Sources */,
+				D72F26431C7AA60100717394 /* Sale.swift in Sources */,
+				D72F26471C7AA63A00717394 /* SalePdSeltCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

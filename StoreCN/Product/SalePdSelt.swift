@@ -6,9 +6,9 @@ import UIKit
 import Foundation
 
 /**
- * protocol, PurchasePdSelt Delegate
+ * protocol, SalePdSelt Delegate
  */
-protocol PurchasePdSeltDelegate {
+protocol SalePdSeltDelegate {
     /**
      * 本頁面點取'完成'btn, 回傳已變動的全部商品 array data
      */
@@ -16,11 +16,11 @@ protocol PurchasePdSeltDelegate {
 }
 
 /**
- * 商品選擇，從進貨新增頁面轉入 (店家進貨)
+ * 商品選擇，從 [商品銷售] 頁面轉入
  */
-class PurchasePdSelt: UIViewController, PurchasePdSeltCellDelegate {
+class SalePdSelt: UIViewController, SalePdSeltCellDelegate {
     // protocol delegate
-    var delegate = PurchasePdSeltDelegate?()
+    var delegate = SalePdSeltDelegate?()
     
     // @IBOutlet
     @IBOutlet weak var tableData: UITableView!
@@ -37,10 +37,10 @@ class PurchasePdSelt: UIViewController, PurchasePdSeltCellDelegate {
     private var aryPdType: Array<String>! // 商品分類
     private var keyboardHeight: CGFloat = 0.0
     private var currIndexPath: NSIndexPath?
-
+    
     /**
-    * View Load 程序
-    */
+     * View Load 程序
+     */
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -63,7 +63,7 @@ class PurchasePdSelt: UIViewController, PurchasePdSeltCellDelegate {
      */
     override func viewDidAppear(animated: Bool) {
         dispatch_async(dispatch_get_main_queue(), {
-
+            
         })
     }
     
@@ -120,10 +120,10 @@ class PurchasePdSelt: UIViewController, PurchasePdSeltCellDelegate {
         if (aryPd.count < 1) {
             return UITableViewCell()
         }
-
+        
         // 產生 Item data
         let ditItem = aryPd[indexPath.row] as Dictionary<String, AnyObject>
-        let mCell = tableView.dequeueReusableCellWithIdentifier("cellPurchasePdSelt", forIndexPath: indexPath) as! PurchasePdSeltCell
+        let mCell = tableView.dequeueReusableCellWithIdentifier("cellSalePdSelt", forIndexPath: indexPath) as! SalePdSeltCell
         
         // 取得虛擬鍵盤高度
         if (keyboardHeight <= 0) {
@@ -144,12 +144,12 @@ class PurchasePdSelt: UIViewController, PurchasePdSeltCellDelegate {
         currIndexPath = indexPath
         
         // 取得 cell EditField
-        let edQty = (tableView.cellForRowAtIndexPath(indexPath) as! PurchasePdSeltCell).edQty
+        let edQty = (tableView.cellForRowAtIndexPath(indexPath) as! SalePdSeltCell).edQty
         edQty.becomeFirstResponder()
     }
     
     /**
-     * #mark: PurchasePdSeltCellDelegate
+     * #mark: SalePdSeltCellDelegate
      * '數量鍵盤' 點取 '完成' 回傳選擇的 qty, 執行相關程序
      */
     func QtySelecteDone(SelectQty: Int) {
@@ -166,7 +166,7 @@ class PurchasePdSelt: UIViewController, PurchasePdSeltCellDelegate {
         let intQty = Int(ditItem["qtySel"] as! String)!
         let totPrice = intPrice * intQty
         
-        let mCell = tableData.cellForRowAtIndexPath(currIndexPath!) as! PurchasePdSeltCell
+        let mCell = tableData.cellForRowAtIndexPath(currIndexPath!) as! SalePdSeltCell
         mCell.labQty.text = String(intQty)
         mCell.labTot.text = String(totPrice)
         
@@ -180,7 +180,7 @@ class PurchasePdSelt: UIViewController, PurchasePdSeltCellDelegate {
     }
     
     /**
-     * #mark: PurchasePdSeltCellDelegate
+     * #mark: SalePdSeltCellDelegate
      * '數量鍵盤' 點取 '取消'
      */
     func QtySelecteCancel() {
@@ -191,8 +191,8 @@ class PurchasePdSelt: UIViewController, PurchasePdSeltCellDelegate {
     }
     
     /**
-    * 計算選擇商品的金額加總
-    */
+     * 計算選擇商品的金額加總
+     */
     private func calTotAmount() -> Int {
         var intAmount = 0
         for strPType in aryPdType {
@@ -215,7 +215,7 @@ class PurchasePdSelt: UIViewController, PurchasePdSeltCellDelegate {
         let mIndexPath = NSIndexPath(forRow: 0, inSection: sender.selectedSegmentIndex)
         tableData.scrollToRowAtIndexPath(mIndexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
     }
-
+    
     /**
      * act, 點取 '取消' button
      */
@@ -238,7 +238,7 @@ class PurchasePdSelt: UIViewController, PurchasePdSeltCellDelegate {
      */
     func keyboardWillShow(notification:NSNotification) {
         if let _ = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
-
+            
             //print("PdSelt: \(keyboardSize.height)")
             
             let width = self.view.frame.width
@@ -247,7 +247,7 @@ class PurchasePdSelt: UIViewController, PurchasePdSeltCellDelegate {
             self.view.frame = rect
         }
     }
-
+    
     
 }
 

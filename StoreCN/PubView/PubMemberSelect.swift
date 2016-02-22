@@ -10,8 +10,8 @@ import Foundation
  */
 protocol PubMemberSelectDelegate {
     /**
-    * Table Cell 點取，點取指定會員，實作點取後相關程序
-    */
+     * Table Cell 點取，點取指定會員，實作點取後相關程序
+     */
     func MemberSelected(MemberData dictData: Dictionary<String, AnyObject>, indexPath: NSIndexPath)
 }
 
@@ -23,8 +23,8 @@ extension UIImageView {
         NSURLSession.sharedSession().dataTaskWithURL( NSURL(string:link)!, completionHandler: {
             (data, response, error) -> Void in
             dispatch_async(dispatch_get_main_queue()) {
-                    self.contentMode =  contentMode
-                    if let data = data { self.image = UIImage(data: data) }
+                self.contentMode =  contentMode
+                if let data = data { self.image = UIImage(data: data) }
                 
                 var hasImg = false;
                 if let httpResponse = response as? NSHTTPURLResponse {
@@ -34,7 +34,7 @@ extension UIImageView {
                 }
                 
                 if (!hasImg) {
-                   self.image = UIImage(named: "user_empty01.png")
+                    self.image = UIImage(named: "user_empty01.png")
                 }
                 
             }
@@ -65,7 +65,6 @@ class PubMemberSelect: UIViewController {
     
     // 其他參數設定
     private var strToday = ""
-    private var newIndexPath: NSIndexPath!
     
     /**
      * View Load 程序
@@ -75,7 +74,6 @@ class PubMemberSelect: UIViewController {
         
         // 固定初始參數
         mVCtrl = self
-        newIndexPath = NSIndexPath(forRow: 0, inSection: 0)
         
         aryNewMember = aryMember
     }
@@ -92,7 +90,7 @@ class PubMemberSelect: UIViewController {
     /**
      * 初始與設定 VCview 內的 field
      */
-    func initViewField() {
+    private func initViewField() {
     }
     
     /**
@@ -207,4 +205,3 @@ class PubMemberSelect: UIViewController {
     }
     
 }
-
