@@ -32,7 +32,7 @@ class Sale: UIViewController, SalePdSeltDelegate, SalePdSeltCellDelegate, PdSale
     
     // 其他 property
     private var aryMember: Array<Dictionary<String, AnyObject>> = [] // 會員 array data
-    private var indexPathMember: NSIndexPath?
+    private var indexPathMember: NSIndexPath?  // 以選擇的會員 indexpath
     
     private var keyboardHeightQty: CGFloat = 0.0  // 自訂的選擇數量鍵盤高度
     private var currIndexPath: NSIndexPath?
@@ -263,13 +263,12 @@ class Sale: UIViewController, SalePdSeltDelegate, SalePdSeltCellDelegate, PdSale
     }
     
     /**
-     * #mark: SalePdSeltDelegate
+     * #mark: PdSaleMemberSelDelegate
      * 會員選擇頁面，點取'會員 Item'
      */
-    func MemberSeltPageDone(MemberData: Dictionary<String, AnyObject>, MemberindexPath indexPath: NSIndexPath) {
-        indexPathMember = indexPath
-        
-        print(MemberData)
+    func MemberSeltPageDone(MemberData: Dictionary<String, AnyObject>, MemberindexPath: NSIndexPath) {
+        indexPathMember = MemberindexPath
+        labMemberName.text = MemberData["membername"] as? String
     }
     
     /**
@@ -291,7 +290,7 @@ class Sale: UIViewController, SalePdSeltDelegate, SalePdSeltCellDelegate, PdSale
             let mVC = segue.destinationViewController as! PdSaleMemberSel
             mVC.delegate = self
             mVC.strToday = strToday
-            mVC.indexPathMember = indexPathMember
+            mVC.currIndexPath = indexPathMember
             mVC.aryMember = sender as! Array<Dictionary<String, AnyObject>>
         }
     }

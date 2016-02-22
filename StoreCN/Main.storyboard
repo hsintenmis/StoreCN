@@ -3691,14 +3691,14 @@
                                 </connections>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="140" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="crh-Sh-6DJ">
-                                <rect key="frame" x="6" y="44" width="308" height="514"/>
+                                <rect key="frame" x="-2" y="44" width="324" height="524"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cellPubMemberList" rowHeight="145" id="hbG-qr-y29" customClass="PubMemberSelectCell" customModule="StoreCN" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="1" width="308" height="145"/>
+                                        <rect key="frame" x="0.0" y="1" width="324" height="145"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hbG-qr-y29" id="m1i-4H-1GO">
-                                            <rect key="frame" x="0.0" y="0.0" width="308" height="144"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="324" height="144"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user_empty01.png" translatesAutoresizingMaskIntoConstraints="NO" id="Pe2-Pb-dLW" userLabel="ImgPict">
@@ -3708,7 +3708,7 @@
                                                         <constraint firstAttribute="height" constant="72" id="c4b-KF-4uE"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="陳先生" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dyg-E3-iXm" userLabel="labName">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="陳先生" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dyg-E3-iXm" userLabel="labName">
                                                     <rect key="frame" x="120" y="23" width="170" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="Tf2-JP-LDr"/>
@@ -3845,13 +3845,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Feu-3t-szY" firstAttribute="top" secondItem="crh-Sh-6DJ" secondAttribute="bottom" constant="10" id="42C-Rw-XDs"/>
+                            <constraint firstItem="Feu-3t-szY" firstAttribute="top" secondItem="crh-Sh-6DJ" secondAttribute="bottom" id="42C-Rw-XDs"/>
                             <constraint firstAttribute="trailingMargin" secondItem="bSw-h7-IHh" secondAttribute="trailing" constant="-10" id="9OR-66-du6"/>
                             <constraint firstItem="crh-Sh-6DJ" firstAttribute="top" secondItem="bSw-h7-IHh" secondAttribute="bottom" id="H7E-2u-MhE"/>
-                            <constraint firstItem="crh-Sh-6DJ" firstAttribute="leading" secondItem="vXM-AJ-x86" secondAttribute="leadingMargin" constant="-10" id="dzQ-iN-fDY"/>
+                            <constraint firstItem="crh-Sh-6DJ" firstAttribute="leading" secondItem="vXM-AJ-x86" secondAttribute="leadingMargin" constant="-18" id="dzQ-iN-fDY"/>
                             <constraint firstItem="bSw-h7-IHh" firstAttribute="leading" secondItem="vXM-AJ-x86" secondAttribute="leadingMargin" constant="-10" id="hqK-Q4-hzH"/>
                             <constraint firstItem="bSw-h7-IHh" firstAttribute="top" secondItem="9R8-tN-ce3" secondAttribute="bottom" id="vJh-ww-8uj"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="crh-Sh-6DJ" secondAttribute="trailing" constant="-10" id="yrc-eH-Ne3"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="crh-Sh-6DJ" secondAttribute="trailing" constant="-18" id="yrc-eH-Ne3"/>
                         </constraints>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>

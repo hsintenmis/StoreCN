@@ -27,10 +27,13 @@ class PdSaleMemberSel: UIViewController, PubMemberSelectDelegate {
     // common property
     let pubClass: PubClass = PubClass()
     
-    // 其他參數設定, 上層 parent 設定
+    // public, parent 設定
     var strToday = ""
-    var indexPathMember: NSIndexPath?
+    var currIndexPath: NSIndexPath? // 已選擇的會員
     var aryMember: Array<Dictionary<String, AnyObject>> = [] // 全部的會員
+    
+    // 會員選擇公用 class
+    private var mPubMemberSelect: PubMemberSelect!
     
     /**
     * View Load 程序
@@ -40,7 +43,11 @@ class PdSaleMemberSel: UIViewController, PubMemberSelectDelegate {
         
         // 固定初始參數
         
-
+        // 初始會員選擇公用 class
+        mPubMemberSelect = storyboard!.instantiateViewControllerWithIdentifier("PubMemberList") as! PubMemberSelect
+        mPubMemberSelect.delegate = self
+        mPubMemberSelect.aryMember = aryMember
+        mPubMemberSelect.currIndexPath = currIndexPath
     }
     
     /**
@@ -48,41 +55,15 @@ class PdSaleMemberSel: UIViewController, PubMemberSelectDelegate {
      */
     override func viewDidAppear(animated: Bool) {
         // !! container 直接加入 'PubMemberList'
-        let mPubMemberSelect = storyboard!.instantiateViewControllerWithIdentifier("PubMemberList") as! PubMemberSelect
-        
-        mPubMemberSelect.delegate = self
-        mPubMemberSelect.aryMember = aryMember
-        //mPubMemberSelect.currIndexPath = indexPathMember
-        
-        let mView = mPubMemberSelect.view
-        mView.frame.size.height = contviewTable.layer.frame.height
+        let mView = self.mPubMemberSelect.view
+        mView.frame.size.height = self.contviewTable.layer.frame.height
         
         self.contviewTable.addSubview(mView)
-        self.navigationController?.pushViewController(mPubMemberSelect, animated: true)
-
+        self.navigationController?.pushViewController(self.mPubMemberSelect, animated: true)
+        
         dispatch_async(dispatch_get_main_queue(), {
-            
+
         })
-    }
-    
-    /**
-     * View DidAppear 程序
-     */
-    override func viewWillAppear(animated: Bool) {
-        // !! container 直接加入 'PubMemberList'
-        /*
-        let mPubMemberSelect = storyboard!.instantiateViewControllerWithIdentifier("PubMemberList") as! PubMemberSelect
-        
-        mPubMemberSelect.delegate = self
-        mPubMemberSelect.aryMember = aryMember
-        mPubMemberSelect.currIndexPath = indexPathMember
-        
-        let mView = mPubMemberSelect.view
-        mView.frame.size.height = contviewTable.layer.frame.height
-        
-        self.contviewTable.addSubview(mView)
-        self.navigationController?.pushViewController(mPubMemberSelect, animated: true)
-        */
     }
     
     /**
@@ -92,10 +73,13 @@ class PdSaleMemberSel: UIViewController, PubMemberSelectDelegate {
     }
     
     /**
-     * #mark: PubMemberListDelegate, 會員列表，點取會員執行相關程序
+     * #mark: PubMemberListDelegate, 會員列表，點取會員後跳離本頁面， parent 執行相關程序
      */
     func MemberSelected(MemberData dictData: Dictionary<String, AnyObject>, indexPath: NSIndexPath) {
-        delegate?.MemberSeltPageDone(dictData, MemberindexPath: indexPath)
+        self.dismissViewControllerAnimated(true, completion: {
+            self.delegate?.MemberSeltPageDone(dictData, MemberindexPath: indexPath)
+            }
+        )
     }
     
     /**

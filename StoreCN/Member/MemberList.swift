@@ -26,6 +26,9 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
     private var mMemberData: Dictionary<String, AnyObject> = [:]  // 選擇的會員
     private var currIndexPath: NSIndexPath?  // 目前 TableView 的 IndexPath
     
+    // 會員選擇公用 class
+    private var mPubMemberSelect: PubMemberSelect!
+    
     /**
      * View Load 程序
      */
@@ -34,6 +37,10 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
         
         // 固定初始參數
         dictPref = pubClass.getPrefData()
+        
+        // 初始會員選擇公用 class
+        mPubMemberSelect = storyboard!.instantiateViewControllerWithIdentifier("PubMemberList") as! PubMemberSelect
+        mPubMemberSelect.delegate = self
     }
     
     /**
@@ -45,7 +52,7 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
         }
         
         // HTTP 連線取得資料, 全部會員列表資料
-        HHTPGetMemberList()
+        HTTPGetMemberList()
         
         dispatch_async(dispatch_get_main_queue(), {
             
@@ -63,7 +70,7 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
     /**
      * HTTP 連線取得資料, 取得會員列表資料
      */
-    private func HHTPGetMemberList() {
+    private func HTTPGetMemberList() {
         // 連線 HTTP post/get 參數
         var dictParm = Dictionary<String, String>()
         dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
@@ -106,15 +113,11 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
         }
         
         // !! container 直接加入 'PubMemberList'
-        let mPubMemberSelect = storyboard!.instantiateViewControllerWithIdentifier("PubMemberList") as! PubMemberSelect
-        
-        mPubMemberSelect.delegate = self
         mPubMemberSelect.aryMember = aryMember
-        //mPubMemberSelect.currIndexPath = currIndexPath
+        mPubMemberSelect.currIndexPath = currIndexPath
         
         let mView = mPubMemberSelect.view
         mView.frame.size.height = containerMemberList.layer.frame.height
-        
         self.containerMemberList.addSubview(mView)
         self.navigationController?.pushViewController(mPubMemberSelect, animated: true)
     }
@@ -171,7 +174,7 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
      */
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let strIdent = segue.identifier
-
+        
         // 會員主頁面
         if (strIdent == "MemberMain") {
             let mVC = segue.destinationViewController as! MemberMain

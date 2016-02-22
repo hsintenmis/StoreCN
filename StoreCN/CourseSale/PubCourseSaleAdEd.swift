@@ -8,7 +8,7 @@ import Foundation
 /**
  * 療程銷售 資料新增/編輯 資料上傳, 公用 class
  */
-class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate {
+class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, CourseSaleMemberSelDelegate {
     
     // @IBOutlet
     @IBOutlet var tableList: UITableView!
@@ -49,6 +49,9 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate {
     // 點取欄位，彈出虛擬鍵盤視窗
     private var mPickerExpire: PickerDate!
     private var mPickerS00: PickerNumber!
+    
+    // 其他參數設定
+    private var indexPathMember: NSIndexPath?
     
     /**
      * View Load 程序
@@ -98,14 +101,6 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate {
      */
     private func initViewField() {
         
-    }
-    
-    /**
-     * public, child class 調用, 設定'訂購人'資料，
-     */
-    func selectMember(dictMember: Dictionary<String, AnyObject>) {
-        labMember.text = dictMember["membername"] as? String
-        dictData["member"] = dictMember
     }
     
     /**
@@ -191,6 +186,15 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate {
     }
     
     /**
+    * #mark: CourseSaleMemberSelDelegate, 會員列表，點取會員執行相關程序
+    */
+    func MemberSeltPageDone(MemberData: Dictionary<String, AnyObject>, MemberindexPath: NSIndexPath) {
+        labMember.text = MemberData["membername"] as? String
+        dictData["member"] = MemberData
+        indexPathMember = MemberindexPath
+    }
+    
+    /**
      * Segue 跳轉頁面
      */
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -199,14 +203,15 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate {
         // 會員選擇
         if (strIdent == "CourseSaleMemberSel") {
             let mVC = segue.destinationViewController as! CourseSaleMemberSel
-            mVC.parentClass = self
+            mVC.delegate = self
             mVC.strToday = strToday
             mVC.aryMember = aryMember
+            mVC.currIndexPath = indexPathMember
             
             return
         }
         
-        // 療程DB list 選擇
+        // 療程 DB list 選擇
         if (strIdent == "CourseSaleCourseSel") {
             let mVC = segue.destinationViewController as! CourseSaleCourseSel
             mVC.parentClass = self

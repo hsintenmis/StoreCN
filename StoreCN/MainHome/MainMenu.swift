@@ -211,7 +211,7 @@ class MainMenu: UIViewController {
             break
         }
         
-        mAlert.addAction(UIAlertAction(title:pubClass.getLang("cancel"), style: UIAlertActionStyle.Destructive, handler:nil))
+        mAlert.addAction(UIAlertAction(title: pubClass.getLang("cancel"), style: UIAlertActionStyle.Destructive, handler:nil))
         
         dispatch_async(dispatch_get_main_queue(), {
             self.presentViewController(mAlert, animated: true, completion: nil)

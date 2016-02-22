@@ -5,6 +5,9 @@
 import Foundation
 import UIKit
 
+/**
+*  會員購貨資料 Table Cell 設定
+*/
 class PubMemberPurchaseSelectCell: UITableViewCell {
     @IBOutlet weak var labSdate: UILabel!
     @IBOutlet weak var labId: UILabel!

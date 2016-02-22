@@ -125,7 +125,7 @@ class PubClass {
     /**
      * [我知道了] 彈出視窗
      */
-    func popIsee(mVCtrl: UIViewController, var Title strTitle: String? = nil, Msg strMsg: String!) {
+    func popIsee(mVC: UIViewController, var Title strTitle: String? = nil, Msg strMsg: String!) {
         if strTitle == nil {
             strTitle = getLang("sysprompt")
         }
@@ -135,14 +135,14 @@ class PubClass {
         mAlert.addAction(UIAlertAction(title:getLang("i_see"), style: UIAlertActionStyle.Default, handler:nil))
         
         dispatch_async(dispatch_get_main_queue(), {
-            mVCtrl.presentViewController(mAlert, animated: true, completion: nil)
+            mVC.presentViewController(mAlert, animated: true, completion: nil)
         })
     }
     
     /**
      * [我知道了] 彈出視窗, with 'handler'
      */
-    func popIsee(mVCtrl: UIViewController, var Title strTitle: String? = nil, Msg strMsg: String!, withHandler mHandler:()->Void) {
+    func popIsee(mVC: UIViewController, var Title strTitle: String? = nil, Msg strMsg: String!, withHandler mHandler:()->Void) {
         if strTitle == nil {
             strTitle = getLang("sysprompt")
         }
@@ -154,7 +154,7 @@ class PubClass {
         ))
         
         dispatch_async(dispatch_get_main_queue(), {
-            mVCtrl.presentViewController(mAlert, animated: true, completion: nil)
+            mVC.presentViewController(mAlert, animated: true, completion: nil)
         })
     }
     
@@ -164,7 +164,7 @@ class PubClass {
      * @param aryMsg: ex. ary[0]=title, ary[1]=msg
      * @param withHandlerYes, withHandlerNo: 點取 Y,N 執行程序
      */
-    func popConfirm(mVCtrl: UIViewController, aryMsg: Array<String>!, withHandlerYes mHandlerYes:()->Void, withHandlerNo mHandlerNo:()->Void) {
+    func popConfirm(mVC: UIViewController, aryMsg: Array<String>!, withHandlerYes mHandlerYes:()->Void, withHandlerNo mHandlerNo:()->Void) {
         let strTitle = (aryMsg[0] == "") ? getLang("sysprompt") : aryMsg[0]
         let mAlert = UIAlertController(title: strTitle, message: aryMsg[1], preferredStyle:UIAlertControllerStyle.Alert)
         
@@ -181,7 +181,7 @@ class PubClass {
         }))
         
         dispatch_async(dispatch_get_main_queue(), {
-            mVCtrl.presentViewController(mAlert, animated: true, completion: nil)
+            mVC.presentViewController(mAlert, animated: true, completion: nil)
         })
     }
     

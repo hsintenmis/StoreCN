@@ -53,11 +53,12 @@ class PubMemberSelect: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     
     // common property
-    var mVCtrl: UIViewController!
+    var mVC: UIViewController!
     let pubClass: PubClass = PubClass()
     
-    // Table DataSource, 會員全部資料
+    // Table DataSource, 會員全部資料, parent 設定
     var aryMember: Array<Dictionary<String, AnyObject>> = []
+    var currIndexPath: NSIndexPath?
     
     // SearchBar 相關
     private var searchActive : Bool = false
@@ -73,7 +74,12 @@ class PubMemberSelect: UIViewController {
         super.viewDidLoad()
         
         // 固定初始參數
-        mVCtrl = self
+        //mVC = self
+        
+        // 加入原始的 position
+        for (var i=0; i < aryMember.count; i++) {
+            aryMember[i]["position"] = i
+        }
         
         aryNewMember = aryMember
     }
@@ -81,10 +87,24 @@ class PubMemberSelect: UIViewController {
     /**
      * View DidAppear 程序
      */
-    override func viewDidAppear(animated: Bool) {
+    override func viewWillAppear(animated: Bool) {
+        if let tmpIndexPath = currIndexPath {
+            tableData.reloadData()
+            tableData.selectRowAtIndexPath(tmpIndexPath, animated: false, scrollPosition: UITableViewScrollPosition.Middle)
+        }
+        
         dispatch_async(dispatch_get_main_queue(), {
             
         })
+    }
+    
+    /**
+     * View Will Disappear 程序
+     */
+    override func viewWillDisappear(animated: Bool) {
+        searchBar.text = ""
+        searchActive = false;
+        aryNewMember = aryMember
     }
     
     /**
@@ -137,7 +157,13 @@ class PubMemberSelect: UIViewController {
      * UITableView, Cell 點取
      */
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        delegate?.MemberSelected(MemberData: aryNewMember[indexPath.row], indexPath: indexPath)
+        // 取得正確的 indexPath
+        let mRow = aryNewMember[indexPath.row]["position"] as! Int
+        let mIndexPath = NSIndexPath(forRow: mRow, inSection: 0)
+        
+        currIndexPath = mIndexPath
+        
+        delegate?.MemberSelected(MemberData: aryNewMember[indexPath.row], indexPath: mIndexPath)
     }
     
     /**
