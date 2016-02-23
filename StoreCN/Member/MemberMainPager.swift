@@ -113,8 +113,6 @@ class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIP
                 let mVC = storyboard?.instantiateViewControllerWithIdentifier("Member" + aryVCIdent[i])
                 aryPages.append(mVC!)
             }
-            
-            
         }
     }
     

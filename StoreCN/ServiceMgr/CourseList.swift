@@ -14,7 +14,6 @@ class Courselist: UIViewController, PubCourseDataSelectDelegate {
     @IBOutlet weak var contviewList: UIView!
     
     // common property
-    var mVCtrl: UIViewController!
     let pubClass: PubClass = PubClass()
     
     // public, 本頁面需要的全部資料, parent 設定
@@ -28,7 +27,10 @@ class Courselist: UIViewController, PubCourseDataSelectDelegate {
     
     // 其他參數設定
     private var mCourseData: Dictionary<String, AnyObject> = [:]  // 選擇的療程
-    private var currIndexPath: NSIndexPath!  // 目前 TableView 的 IndexPath
+    private var currIndexPath: NSIndexPath?  // 目前 TableView 的 IndexPath
+    
+    // 已購買的療程選擇, 公用 class
+    private var mPubCourseSelect: PubCourseSelect!
     
     /**
     * View Load 程序
@@ -37,8 +39,6 @@ class Courselist: UIViewController, PubCourseDataSelectDelegate {
         super.viewDidLoad()
         
         // 固定初始參數
-        mVCtrl = self
-        currIndexPath = NSIndexPath(forItem: 0, inSection: 0)
         
         // 檢查資料
         aryCourseDB = dictAllData["course"] as! Array<Dictionary<String, AnyObject>>
@@ -53,12 +53,18 @@ class Courselist: UIViewController, PubCourseDataSelectDelegate {
         
         // 檢查是否有資料
         if (aryMember.count < 1) {
-            pubClass.popIsee(mVCtrl, Msg: pubClass.getLang("member_nodataaddfirst"), withHandler: {
+            pubClass.popIsee(self, Msg: pubClass.getLang("member_nodataaddfirst"), withHandler: {
                 self.dismissViewControllerAnimated(true, completion: {})
             })
             
             return
         }
+        
+        // 初始, 已購買的療程選擇, 公用 class
+        mPubCourseSelect = storyboard!.instantiateViewControllerWithIdentifier("PubCourseSelect") as! PubCourseSelect
+        mPubCourseSelect.delegate = self
+        mPubCourseSelect.aryCourseData = aryCourseData
+        mPubCourseSelect.currIndexPath = currIndexPath
     }
     
     /**
@@ -72,14 +78,8 @@ class Courselist: UIViewController, PubCourseDataSelectDelegate {
      */
     override func viewDidAppear(animated: Bool) {
         // !! container 直接加入 'PubMemberList'
-        let mPubCourseSelect = storyboard!.instantiateViewControllerWithIdentifier("PubCourseSelect") as! PubCourseSelect
-        
-        mPubCourseSelect.delegate = self
-        mPubCourseSelect.aryCourseData = aryCourseData
-        
         let mView = mPubCourseSelect.view
         mView.frame.size.height = contviewList.layer.frame.height
-        
         self.contviewList.addSubview(mView)
         self.navigationController?.pushViewController(mPubCourseSelect, animated: true)
         

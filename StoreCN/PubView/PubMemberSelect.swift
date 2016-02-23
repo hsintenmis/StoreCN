@@ -85,7 +85,7 @@ class PubMemberSelect: UIViewController {
     }
     
     /**
-     * View DidAppear 程序
+     * View WiiAppear 程序
      */
     override func viewWillAppear(animated: Bool) {
         if let tmpIndexPath = currIndexPath {

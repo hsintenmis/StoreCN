@@ -70,7 +70,7 @@ class Purchase: UIViewController, PurchasePdSeltDelegate, PurchasePdSeltCellDele
      */
     override func viewWillDisappear(animated: Bool) {
         // 註銷鍵盤監聽
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
     }
     
     /**

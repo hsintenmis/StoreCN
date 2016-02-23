@@ -276,6 +276,15 @@ class MainMenu: UIViewController {
                     
                     return
                 }
+                
+                // 商品銷售
+                if (strIdent == "product_stock") {
+                    mParam["page"] = "stock"
+                    mParam["act"] = "stock_getdata"
+                    self.MenuItemSelect(strIdent, HTTPParam: mParam)
+                    
+                    return
+                }
             }))
         }
         
@@ -357,6 +366,15 @@ class MainMenu: UIViewController {
         // 商品銷售
         if (strIdent == "product_sale") {
             let mVC = segue.destinationViewController as! Sale
+            mVC.strToday = strToday
+            mVC.dictAllData = sender as! Dictionary<String, AnyObject>
+            
+            return
+        }
+        
+        // 商品庫存
+        if (strIdent == "product_stock") {
+            let mVC = segue.destinationViewController as! Stock
             mVC.strToday = strToday
             mVC.dictAllData = sender as! Dictionary<String, AnyObject>
             

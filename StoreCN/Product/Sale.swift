@@ -283,6 +283,8 @@ class Sale: UIViewController, SalePdSeltDelegate, SalePdSeltCellDelegate, PdSale
             mVC.delegate = self
             mVC.strToday = strToday
             mVC.dictCategoryPd = sender as! Dictionary<String, Array<Dictionary<String, String>>>
+            
+            return
         }
         
         // 會員選擇頁面
@@ -292,6 +294,8 @@ class Sale: UIViewController, SalePdSeltDelegate, SalePdSeltCellDelegate, PdSale
             mVC.strToday = strToday
             mVC.currIndexPath = indexPathMember
             mVC.aryMember = sender as! Array<Dictionary<String, AnyObject>>
+            
+            return
         }
     }
     

@@ -58,6 +58,15 @@ class MainLogin: UIViewController {
     }
     
     /**
+     * viewWill Disappear 程序
+     */
+    override func viewWillDisappear(animated: Bool) {
+        // 註銷监听键盘事件函数
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    /**
      * 初始與設定 VCview 內的 field
      */
     func initViewField() {

@@ -26,15 +26,14 @@ class PubCourseSelect: UITableViewController {
     @IBOutlet weak var labNoData: UILabel!
     
     // common property
-    var mVCtrl: UIViewController!
     let pubClass: PubClass = PubClass()
     
-    // Table DataSource, 會員以購買的療程訂單資料, parent 設定
+    // parent 設定, 會員已購買的療程訂單資料,
     var aryCourseData: Array<Dictionary<String, AnyObject>> = []
+    var strToday = ""
+    var currIndexPath: NSIndexPath?
     
     // 其他參數設定
-    var strToday = ""
-    private var newIndexPath: NSIndexPath!
     
     /**
      * View Load 程序
@@ -43,8 +42,6 @@ class PubCourseSelect: UITableViewController {
         super.viewDidLoad()
         
         // 固定初始參數
-        mVCtrl = self
-        newIndexPath = NSIndexPath(forRow: 0, inSection: 0)
         labNoData.alpha = 0.0
         
         if (self.aryCourseData.count < 1) {
@@ -53,9 +50,14 @@ class PubCourseSelect: UITableViewController {
     }
     
     /**
-     * View DidAppear 程序
+     * View WiiAppear 程序
      */
-    override func viewDidAppear(animated: Bool) {
+    override func viewWillAppear(animated: Bool) {
+        if let tmpIndexPath = currIndexPath {
+            tableData.reloadData()
+            tableData.selectRowAtIndexPath(tmpIndexPath, animated: false, scrollPosition: UITableViewScrollPosition.Middle)
+        }
+        
         dispatch_async(dispatch_get_main_queue(), {
             
         })
