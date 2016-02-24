@@ -6,15 +6,18 @@ import UIKit
 import Foundation
 
 /**
- * !TODO! table cell 點取有權限
- *
- * 商品管理 - 進貨列表
+ * 商品管理 - 進貨退回，新增一筆退貨單資料
  */
-class PurchaseList: UIViewController {
+class PurchaseReturnAdd: UIViewController {
     
     // @IBOutlet
     @IBOutlet weak var tableData: UITableView!
-    
+    @IBOutlet weak var labSdate: UILabel!
+    @IBOutlet weak var labHteid: UILabel!
+    @IBOutlet weak var labAmount: UILabel!
+    @IBOutlet weak var edRDate: UITextField!
+    @IBOutlet weak var edCustPrice: UITextField!
+
     // common property
     let pubClass: PubClass = PubClass()
     
@@ -23,7 +26,7 @@ class PurchaseList: UIViewController {
     var dictAllData: Dictionary<String, AnyObject> = [:]
     
     // table data 設定
-    private var aryDatat: Array<Dictionary<String, AnyObject>> = []
+    private var aryPd: Array<Dictionary<String, AnyObject>> = []
     
     // 其他參數設定
     
@@ -32,22 +35,7 @@ class PurchaseList: UIViewController {
     */
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // 固定初始參數
-        
-        // 檢查資料
-        if let tmpData = dictAllData["data"] as? Array<Dictionary<String, AnyObject>> {
-            aryDatat = tmpData
-        }
-        
-        // 檢查是否有資料
-        if (aryDatat.count < 1) {
-            pubClass.popIsee(self, Msg: pubClass.getLang("nodata"), withHandler: {
-                self.dismissViewControllerAnimated(true, completion: {})
-            })
-            
-            return
-        }
+
     }
     
     /**
@@ -78,7 +66,7 @@ class PurchaseList: UIViewController {
      * 回傳指定 section 的數量
      */
     func tableView(tableView: UITableView, numberOfRowsInSection section:Int) -> Int {
-        return aryDatat.count
+        return aryPd.count
     }
     
     /**
@@ -86,13 +74,13 @@ class PurchaseList: UIViewController {
      * UITableView, Cell 內容
      */
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if (aryDatat.count < 1) {
+        if (aryPd.count < 1) {
             return UITableViewCell()
         }
         
         // 產生 Item data
-        let ditItem = aryDatat[indexPath.row] as Dictionary<String, AnyObject>
-        let mCell = tableView.dequeueReusableCellWithIdentifier("cellPurchaseList", forIndexPath: indexPath) as! PurchaseListCell
+        let ditItem = aryPd[indexPath.row] as Dictionary<String, AnyObject>
+        let mCell = tableView.dequeueReusableCellWithIdentifier("cellStock", forIndexPath: indexPath) as! StockCell
         
         mCell.initView(ditItem, PubClass: pubClass)
         
@@ -104,7 +92,7 @@ class PurchaseList: UIViewController {
      * UITableView, Cell 點取
      */
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.performSegueWithIdentifier("PurchaseListDetail", sender: aryDatat[indexPath.row])
+        self.performSegueWithIdentifier("StockHistory", sender: aryPd[indexPath.row])
     }
     
     /**
@@ -113,17 +101,17 @@ class PurchaseList: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let strIdent = segue.identifier
         
-        // 進貨明細主頁面
-        if (strIdent == "PurchaseListDetail") {
-            let mVC = segue.destinationViewController as! PurchaseListDetail
-            mVC.dictAllData = sender as! Dictionary<String, AnyObject>
-            
-            return
-        }
     }
     
     /**
-     * act, 點取 '主選單' button
+     * act, 點取 '確定' button
+     */
+    @IBAction func actSave(sender: UIBarButtonItem) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    /**
+     * act, 點取 '返回' button
      */
     @IBAction func actHome(sender: UIBarButtonItem) {
         self.dismissViewControllerAnimated(true, completion: nil)
