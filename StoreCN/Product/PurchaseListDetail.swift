@@ -6,7 +6,7 @@ import UIKit
 import Foundation
 
 /**
- * 商品管理 - 進貨明細
+ * 商品管理 - 進貨明細主頁面
  */
 class PurchaseListDetail: UIViewController {
     
@@ -55,7 +55,7 @@ class PurchaseListDetail: UIViewController {
         mAlert = UIAlertController(title: pubClass.getLang(""), message: nil, preferredStyle:UIAlertControllerStyle.ActionSheet)
         
         // 設定選單項目, 對應 ident string
-        let aryIdent = ["purchase_edit", "purchase_returnadd", "purchase_returnlist"]
+        let aryIdent = ["purchase_detailedit", "purchase_returnadd", "purchase_returnlist"]
         
         // loop 子選單 ident name, 重新產生 UIAlertController
         for strIdent in aryIdent {
@@ -71,22 +71,16 @@ class PurchaseListDetail: UIViewController {
     }
     
     /**
-     * act, 點取 '功能' button
-     */
-    @IBAction func actOption(sender: UIBarButtonItem) {
-        self.presentViewController(mAlert, animated: true, completion: nil)
-    }
-    
-    /**
      * Segue 跳轉頁面
      */
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let strIdent = segue.identifier
         
         // 編輯
-        if (strIdent == "purchase_edit") {
-            let mVC = segue.destinationViewController as! PurchaseListDetail
-            mVC.dictAllData = sender as! Dictionary<String, AnyObject>
+        if (strIdent == "purchase_detailedit") {
+            let mVC = segue.destinationViewController as! PurchaseDetailEdit
+            mVC.dictAllData = dictAllData
+            mVC.strToday = strToday
             
             return
         }
@@ -94,7 +88,8 @@ class PurchaseListDetail: UIViewController {
         // 新增退貨
         if (strIdent == "purchase_returnadd") {
             let mVC = segue.destinationViewController as! PurchaseReturnAdd
-            //mVC.dictAllData = sender as! Dictionary<String, AnyObject>
+            mVC.dictAllData = dictAllData
+            mVC.strToday = strToday
             
             return
         }
@@ -102,10 +97,18 @@ class PurchaseListDetail: UIViewController {
         // 退貨明細
         if (strIdent == "purchase_returnlist") {
             let mVC = segue.destinationViewController as! PurchaseListDetail
-            mVC.dictAllData = sender as! Dictionary<String, AnyObject>
+            mVC.dictAllData = dictAllData
+            mVC.strToday = strToday
             
             return
         }
+    }
+    
+    /**
+     * act, 點取 '功能' button
+     */
+    @IBAction func actOption(sender: UIBarButtonItem) {
+        self.presentViewController(mAlert, animated: true, completion: nil)
     }
     
     /**

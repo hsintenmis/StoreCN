@@ -117,6 +117,7 @@ class PurchaseList: UIViewController {
         if (strIdent == "PurchaseListDetail") {
             let mVC = segue.destinationViewController as! PurchaseListDetail
             mVC.dictAllData = sender as! Dictionary<String, AnyObject>
+            mVC.strToday = strToday
             
             return
         }

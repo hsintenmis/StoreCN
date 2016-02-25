@@ -146,6 +146,8 @@
 		D7EDE8861C6081B800665542 /* MemberMainColtViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EDE8851C6081B800665542 /* MemberMainColtViewCell.swift */; };
 		D7F45F431C75733400735D09 /* PurchasePdSelt.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F45F421C75733400735D09 /* PurchasePdSelt.swift */; };
 		D7F45F451C75752A00735D09 /* PurchasePdSeltCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F45F441C75752A00735D09 /* PurchasePdSeltCell.swift */; };
+		D7F8BCEB1C7ED4390059E6E5 /* PurchaseDetailEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F8BCEA1C7ED4390059E6E5 /* PurchaseDetailEdit.swift */; };
+		D7F8BCED1C7ED6C70059E6E5 /* PurchaseDetailEditContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F8BCEC1C7ED6C70059E6E5 /* PurchaseDetailEditContainer.swift */; };
 		D7FB953A1C59F17F00B48F57 /* FileMang.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FB95391C59F17F00B48F57 /* FileMang.swift */; };
 		D7FB953C1C59F58C00B48F57 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FB953B1C59F58C00B48F57 /* MainMenu.swift */; };
 /* End PBXBuildFile section */
@@ -295,6 +297,8 @@
 		D7EDE8851C6081B800665542 /* MemberMainColtViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberMainColtViewCell.swift; path = Member/MemberMainColtViewCell.swift; sourceTree = "<group>"; };
 		D7F45F421C75733400735D09 /* PurchasePdSelt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchasePdSelt.swift; path = Product/PurchasePdSelt.swift; sourceTree = "<group>"; };
 		D7F45F441C75752A00735D09 /* PurchasePdSeltCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchasePdSeltCell.swift; path = Product/PurchasePdSeltCell.swift; sourceTree = "<group>"; };
+		D7F8BCEA1C7ED4390059E6E5 /* PurchaseDetailEdit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchaseDetailEdit.swift; path = Product/PurchaseDetailEdit.swift; sourceTree = "<group>"; };
+		D7F8BCEC1C7ED6C70059E6E5 /* PurchaseDetailEditContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchaseDetailEditContainer.swift; path = Product/PurchaseDetailEditContainer.swift; sourceTree = "<group>"; };
 		D7FB95391C59F17F00B48F57 /* FileMang.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FileMang.swift; path = PubClass/FileMang.swift; sourceTree = "<group>"; };
 		D7FB953B1C59F58C00B48F57 /* MainMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainMenu.swift; path = MainHome/MainMenu.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -547,6 +551,8 @@
 				D70854461C7D622500861694 /* PurchaseListCell.swift */,
 				D70854481C7D69C400861694 /* PurchaseListDetail.swift */,
 				D708544A1C7DA3D600861694 /* PurchaseReturnAdd.swift */,
+				D7F8BCEA1C7ED4390059E6E5 /* PurchaseDetailEdit.swift */,
+				D7F8BCEC1C7ED6C70059E6E5 /* PurchaseDetailEditContainer.swift */,
 			);
 			name = Product;
 			sourceTree = "<group>";
@@ -769,6 +775,7 @@
 				D7496D261C5B58CF00B75D6A /* CourseList.swift in Sources */,
 				42E21F0B1C68800500B85EA9 /* CourseReserv.swift in Sources */,
 				D71DFD0C1C7C20180024BB59 /* StockCell.swift in Sources */,
+				D7F8BCED1C7ED6C70059E6E5 /* PurchaseDetailEditContainer.swift in Sources */,
 				D7037A771C58C03F002A955E /* NoDataView.swift in Sources */,
 				D71DFD081C7C0EB40024BB59 /* Stock.swift in Sources */,
 				D7496D1A1C5B343200B75D6A /* MainMenuColtViewCell.swift in Sources */,
@@ -805,6 +812,7 @@
 				D7BB2ADC1C64788700624E08 /* PubCourseSelect.swift in Sources */,
 				D7037A681C58BF32002A955E /* AppDelegate.swift in Sources */,
 				D72F26431C7AA60100717394 /* Sale.swift in Sources */,
+				D7F8BCEB1C7ED4390059E6E5 /* PurchaseDetailEdit.swift in Sources */,
 				D72F26471C7AA63A00717394 /* SalePdSeltCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
