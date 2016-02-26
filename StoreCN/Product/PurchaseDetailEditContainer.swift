@@ -6,35 +6,25 @@ import UIKit
 import Foundation
 
 /**
- * protocol, PubCourseSelect Delegate
- */
-protocol PurchaseDetailEditContainerDelegate {
-    /**
-     * 本頁面資料
-     */
-    func ContainerPageDataChange()
-}
-
-/**
- * 會員 新增/編輯
+ * 進貨明細 編輯, 日期/總金額/備註
  */
 class PurchaseDetailEditContainer: UITableViewController, UITextFieldDelegate, UITextViewDelegate {
     
     // @IBOutlet
     @IBOutlet var tableList: UITableView!
 
+    @IBOutlet weak var labPrice: UILabel!
     @IBOutlet weak var edDate: UITextField!
-    @IBOutlet weak var edInvoId: UITextField!
+    @IBOutlet weak var edHTInvoId: UITextField!
     @IBOutlet weak var txtMemo: UITextView!
-    @IBOutlet weak var edPrice: UITextField!
     @IBOutlet weak var edPriceCust: UITextField!
-    
     @IBOutlet weak var btnCloseKB: UIButton!
     
     // common property
     let pubClass: PubClass = PubClass()
     
     // public property, 上層 parent 設定
+    var vcParent: PurchaseDetailEdit!
     var strToday: String!
     var dictAllData: Dictionary<String, AnyObject> = [:]
     
@@ -76,9 +66,9 @@ class PurchaseDetailEditContainer: UITableViewController, UITextFieldDelegate, U
     }
     
     /**
-     * View DidAppear 程序
+     * View WillAppear 程序
      */
-    override func viewDidAppear(animated: Bool) {
+    override func viewWillAppear(animated: Bool) {
         initDatePicker()
         initViewField()
         
@@ -92,9 +82,9 @@ class PurchaseDetailEditContainer: UITableViewController, UITextFieldDelegate, U
      */
     private func initViewField() {
         edDate.text = self.pubClass.formatDateWithStr(defDate, type: 14)
-        edInvoId.text = dictAllData["hte_id"] as? String
+        edHTInvoId.text = dictAllData["hte_id"] as? String
         txtMemo.text = dictAllData["memo"] as? String
-        edPrice.text = dictAllData["price"] as? String
+        labPrice.text = dictAllData["price"] as? String
         edPriceCust.text = dictAllData["custprice"] as? String
     }
     
@@ -212,10 +202,60 @@ class PurchaseDetailEditContainer: UITableViewController, UITextFieldDelegate, U
         return true
     }
     
+    /**
+     * #mark: UITextFieldDelegate
+     * 虛擬鍵盤: 點取 edText 開始輸入字元
+     */
     func textViewDidBeginEditing(textView: UITextView) {
         if (textView == txtMemo) {
             btnCloseKB.alpha = 1.0
         }
+    }
+    
+    /**
+     * #mark: PurchaseDetailEditDelegate
+     * 取得 child ContainerView 頁面輸入的資料並回傳
+     */
+    func getContainerPageData1() -> Dictionary<String, AnyObject>? {
+        var dictData: Dictionary<String, AnyObject> = [:]
+        
+        // 檢查輸入資料
+        var errMsg = ""
+        var strPriceCust = dictAllData["custprice"] as! String
+        
+        // 進貨實際金額
+        errMsg = pubClass.getLang("product_purchasepricecusterr")
+        if let intTmp = Int(edPriceCust.text!) {
+            let strTmp = String(intTmp)
+            if (strTmp.characters.count < 8) {
+                strPriceCust = strTmp
+                errMsg = ""
+            }
+        }
+        
+        // 顯示錯誤訊息, 回傳 nil
+        if (errMsg != "") {
+            pubClass.popIsee(self, Msg: errMsg)
+            
+            return nil
+        }
+        
+        var strMemo = ""
+        if let strTmp = txtMemo.text {
+            if (strTmp.characters.count > 0) {
+                strMemo = strTmp.stringByReplacingOccurrencesOfString("\n", withString: "", range: nil)
+                strMemo = strMemo.stringByReplacingOccurrencesOfString("\n", withString: "", range: nil)
+            }
+        }
+        
+        // 設定回傳資料
+        dictData["invo_id"] = dictAllData["id"] as! String
+        dictData["custprice"] = strPriceCust
+        dictData["hte_id"] = edHTInvoId.text
+        dictData["memo"] = strMemo
+        dictData["sdate"] = strCurrDate
+        
+        return dictData
     }
     
     /**

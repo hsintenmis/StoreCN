@@ -118,8 +118,9 @@
 "product_ptype_N" = "健康食品类";
 "product_selectqty" = "选择数量";
 "product_nodatapurchasefirst" = "沒有商品資料，請先進貨並入庫!";
-"product_purchase_detailedit" = "進貨明细编辑";
+"product_purchase_detailedit" = "编辑(總金額/日期/備註)";
 "product_purchase_returnadd" = "新增退货";
-"product_purchase_returnlist" = "退货明细";
+"product_purchase_returnlist" = "退货列表";
 "product_selpurchasedate" = "選擇進貨日期";
+"product_purchasepricecusterr" = "進貨實際金額錯誤!";
 

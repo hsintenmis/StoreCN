@@ -20,6 +20,9 @@ class PurchaseDetailEdit: UIViewController {
     var strToday: String!
     var dictAllData: Dictionary<String, AnyObject> = [:]
     
+    // container page VC
+    var vcChilePage: PurchaseDetailEditContainer?
+    
     /**
      * View Load 程序
      */
@@ -49,9 +52,9 @@ class PurchaseDetailEdit: UIViewController {
         let strIdent = segue.identifier
         
         if (strIdent == "containerPurchaseDetailEdit") {
-            let mVC = segue.destinationViewController as! PurchaseDetailEditContainer
-            mVC.strToday = strToday
-            mVC.dictAllData = dictAllData
+            vcChilePage = segue.destinationViewController as? PurchaseDetailEditContainer
+            vcChilePage!.strToday = strToday
+            vcChilePage!.dictAllData = dictAllData
         }
         
         return
@@ -61,7 +64,14 @@ class PurchaseDetailEdit: UIViewController {
      * act, 點取 '儲存' button
      */
     @IBAction func actSave(sender: UIBarButtonItem) {
+        let dictData = vcChilePage!.getContainerPageData1()
         
+        if (dictData == nil) {
+            return
+        }
+        
+        // TODO, HTTP 連線資料儲存
+        print(dictData)
     }
     
     @IBAction func actBack(sender: UIBarButtonItem) {

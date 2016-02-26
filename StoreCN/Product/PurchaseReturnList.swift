@@ -6,47 +6,45 @@ import UIKit
 import Foundation
 
 /**
- * !TODO! table cell 點取有權限
- *
- * 商品管理 - 進貨列表
+ * 商品管理 - 進貨退回列表
  */
-class PurchaseList: UIViewController {
+class PurchaseReturnList: UIViewController {
     
     // @IBOutlet
     @IBOutlet weak var tableData: UITableView!
+    @IBOutlet weak var labPrice: UILabel!
+    @IBOutlet weak var labPriceCust: UILabel!
     
     // common property
     let pubClass: PubClass = PubClass()
     
     // public, 本頁面需要的全部資料, parent 設定
     var strToday = ""
-    var dictAllData: Dictionary<String, AnyObject> = [:]
+    var dictAllData: Dictionary<String, AnyObject>!
     
     // table data 設定
-    private var aryData: Array<Dictionary<String, AnyObject>> = []
+    private var aryData: Array<Dictionary<String, AnyObject>>! // 退貨資料 array
     
-    // 其他參數設定
+    // 原始進貨商品 dict 資料，用於計算最大退貨量, 'pdid' => qty dict data
+    private var dictPurchasePd: Dictionary<String, Dictionary<String, AnyObject>> = [:]
     
     /**
     * View Load 程序
     */
     override func viewDidLoad() {
         super.viewDidLoad()
+        aryData = dictAllData["return"] as! Array<Dictionary<String, AnyObject>>
         
-        // 固定初始參數
-        
-        // 檢查資料
-        if let tmpData = dictAllData["data"] as? Array<Dictionary<String, AnyObject>> {
-            aryData = tmpData
-        }
-        
-        // 檢查是否有資料
-        if (aryData.count < 1) {
-            pubClass.popIsee(self, Msg: pubClass.getLang("nodata"), withHandler: {
-                self.dismissViewControllerAnimated(true, completion: {})
-            })
+        // 產生原始進貨商品 dict 資料，用於計算最大退貨量
+        for dictTmp in dictAllData["pd"] as! Array<Dictionary<String, AnyObject>> {
+            let pdid = dictTmp["pdid"] as! String
+            var dictPdAddData: Dictionary<String, AnyObject> = [:]
             
-            return
+            dictPdAddData["qty"] = dictTmp["pdid"] as! String
+            dictPdAddData["totRQty"] = dictTmp["totRQty"] as! String
+            dictPdAddData["maxqty"] = dictTmp["maxqty"] as! String
+            
+            dictPurchasePd[pdid] = dictPdAddData
         }
     }
     
@@ -57,12 +55,11 @@ class PurchaseList: UIViewController {
     }
     
     /**
-     * View DidAppear 程序
+     * View WillAppear 程序
      */
-    override func viewDidAppear(animated: Bool) {
-        dispatch_async(dispatch_get_main_queue(), {
-            
-        })
+    override func viewWillAppear(animated: Bool) {
+        labPrice.text = dictAllData["returnprice"] as? String
+        labPriceCust.text = dictAllData["returnpricecust"] as? String
     }
     
     /**
@@ -92,7 +89,7 @@ class PurchaseList: UIViewController {
         
         // 產生 Item data
         let ditItem = aryData[indexPath.row] as Dictionary<String, AnyObject>
-        let mCell = tableView.dequeueReusableCellWithIdentifier("cellPurchaseList", forIndexPath: indexPath) as! PurchaseListCell
+        let mCell = tableView.dequeueReusableCellWithIdentifier("cellPurchaseReturnList", forIndexPath: indexPath) as! PurchaseReturnListCell
         
         mCell.initView(ditItem, PubClass: pubClass)
         
@@ -104,7 +101,7 @@ class PurchaseList: UIViewController {
      * UITableView, Cell 點取
      */
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.performSegueWithIdentifier("PurchaseListDetail", sender: aryData[indexPath.row])
+        self.performSegueWithIdentifier("PurchaseReturnEdit", sender: aryData[indexPath.row])
     }
     
     /**
@@ -114,17 +111,18 @@ class PurchaseList: UIViewController {
         let strIdent = segue.identifier
         
         // 進貨明細主頁面
-        if (strIdent == "PurchaseListDetail") {
-            let mVC = segue.destinationViewController as! PurchaseListDetail
-            mVC.dictAllData = sender as! Dictionary<String, AnyObject>
+        if (strIdent == "PurchaseReturnEdit") {
+            let mVC = segue.destinationViewController as! PurchaseReturnEdit
+            mVC.dictReturn = sender as! Dictionary<String, AnyObject>
             mVC.strToday = strToday
+            mVC.dictPurchasePd = dictPurchasePd
             
             return
         }
     }
     
     /**
-     * act, 點取 '主選單' button
+     * act, 點取 '返回' button
      */
     @IBAction func actHome(sender: UIBarButtonItem) {
         self.dismissViewControllerAnimated(true, completion: nil)

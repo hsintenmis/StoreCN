@@ -52,10 +52,13 @@ class PurchaseListDetail: UIViewController {
      */
     private func setAlertVC() {
         // 彈出 ActionSheet 子選單, 提供：編輯 / 新增退貨 / 退貨明細
-        mAlert = UIAlertController(title: pubClass.getLang(""), message: nil, preferredStyle:UIAlertControllerStyle.ActionSheet)
+        mAlert = UIAlertController(title: nil, message: nil, preferredStyle:UIAlertControllerStyle.ActionSheet)
         
         // 設定選單項目, 對應 ident string
-        let aryIdent = ["purchase_detailedit", "purchase_returnadd", "purchase_returnlist"]
+        var aryIdent = ["purchase_detailedit", "purchase_returnadd"]
+        if let _ = dictAllData["return"] as? Array<AnyObject> {
+            aryIdent.append("purchase_returnlist")
+        }
         
         // loop 子選單 ident name, 重新產生 UIAlertController
         for strIdent in aryIdent {
@@ -96,7 +99,7 @@ class PurchaseListDetail: UIViewController {
         
         // 退貨明細
         if (strIdent == "purchase_returnlist") {
-            let mVC = segue.destinationViewController as! PurchaseListDetail
+            let mVC = segue.destinationViewController as! PurchaseReturnList
             mVC.dictAllData = dictAllData
             mVC.strToday = strToday
             

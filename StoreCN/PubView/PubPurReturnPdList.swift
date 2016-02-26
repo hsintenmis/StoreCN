@@ -1,0 +1,94 @@
+//
+// UITableViewController, data value change
+//
+
+import UIKit
+import Foundation
+
+/**
+ * protocol, PubPurReturnPdList Delegate
+ */
+protocol PubPurReturnPdListDelegate {
+    /**
+     * Table Cell 的 editView 商品數量改變
+     */
+    func PdQtyChange(dictData: Dictionary<String, AnyObject>, indexPath: NSIndexPath)
+}
+
+/**
+ * 進貨退回，指定日期(退貨單號)的退貨商品列表，公用 class
+ */
+class PubPurReturnPdList: UITableViewController, PubPurReturnPdListCellDelegate {
+    var delegate = PubPurReturnPdListDelegate?()
+    
+    // @IBOutlet
+    @IBOutlet weak var tableData: UITableView!
+    
+    // common property
+    let pubClass: PubClass = PubClass()
+    
+    // parent 設定, 指定日期的退貨資料 array data
+    var aryData: Array<Dictionary<String, AnyObject>>!
+    var strToday = ""
+    
+    // 其他參數設定
+    
+    /**
+    * View Load 程序
+    */
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    /**
+     * #mark: UITableView Delegate
+     * Section 的數量
+     */
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    /**
+     * #mark: UITableView Delegate
+     * 回傳 section 指定的數量
+     */
+    override func tableView(tableView: UITableView, numberOfRowsInSection section:Int) -> Int {
+        return aryData.count
+    }
+    
+    /**
+     * #mark: UITableView Delegate
+     * UITableView, Cell 內容
+     */
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if (aryData.count < 1) {
+            return UITableViewCell()
+        }
+        
+        let ditItem = aryData[indexPath.row] as Dictionary<String, AnyObject>
+        let mCell = tableView.dequeueReusableCellWithIdentifier("cellPubPurReturnPdList", forIndexPath: indexPath) as! PubPurReturnPdListCell
+        
+        mCell.delegate = self
+        mCell.initView(ditItem, forIndexPath: indexPath)
+        
+        return mCell
+    }
+    
+    /**
+     * #mark: PubPurReturnPdListCell Delegate
+     * 數量選擇確認
+     */
+    func QtySelecteDone(SelectQty: Int) {
+        
+    }
+    
+    /**
+     * #mark: PubPurReturnPdListCell Delegate
+     * 數量選擇取消
+     */
+    func QtySelecteCancel() {
+        
+    }
+    
+}
+
