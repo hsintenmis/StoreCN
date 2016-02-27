@@ -6,41 +6,37 @@ import Foundation
 import UIKit
 
 /**
- * protocol, PubPurReturnPdListCell Delegate
+ * protocol, PurchaseListDetailCell Delegate
  */
-protocol PubPurReturnPdListCellDelegate {
+protocol PurchaseListDetailCellDelegate {
     /**
      * Pickr view, 點取 '完成' / '取消'時， parent class 執行相關動作
      */
-    func QtySelecteDone(SelectQty: Int, indexPath: NSIndexPath)
+    func QtySelecteDone(SelectQty: Int)
     func QtySelecteCancel()
 }
 
 /**
- * 商品選擇 TableView Cell，從進貨新增頁面轉入
+ * 進貨商品列表數量選擇，從 [進貨明細] 頁面轉入
  */
-class PubPurReturnPdListCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSource {
-    
-    // Delegate, public property
-    var delegate = PubPurReturnPdListCellDelegate?()
-    var kbHeight: CGFloat!
-    
+class PurchaseListDetailCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSource {
     @IBOutlet weak var labName: UILabel!
     @IBOutlet weak var labId: UILabel!
     @IBOutlet weak var labPrice: UILabel!
     @IBOutlet weak var labQty: UILabel!
     @IBOutlet weak var labTot: UILabel!
     @IBOutlet weak var edQty: UITextField!
+    @IBOutlet weak var labReturn: UILabel!
+    
+    // Delegate, public property
+    var delegate = PurchaseListDetailCellDelegate?()
+    var kbHeight: CGFloat!
     
     // Picker 設定
     private var pubClass = PubClass()
     private var mPKView = UIPickerView()
     private var aryRowVal: Array<String> = []  // Picker 的資料
-    private var aryMaxMin = [0, 99] // 數量選擇，最小/最大 值
-    
-    // 其他設定
-    private var intPrice = 0  // 商品單價
-    private var currIndexPath: NSIndexPath!
+    private var aryMaxMin = [1, 99] // 數量選擇，最小/最大 值
     
     /**
     * Cell Load
@@ -48,40 +44,43 @@ class PubPurReturnPdListCell: UITableViewCell, UIPickerViewDelegate, UIPickerVie
     override func awakeFromNib() {
         super.awakeFromNib()
         mPKView.delegate = self
-    }
-    
-    /**
-     * 初始與設定 Cell
-     */
-    func initView(ditItem: Dictionary<String, AnyObject>!, forIndexPath indexPath: NSIndexPath) {
         
-        currIndexPath = indexPath
-        
-        // 設定每個 Picker row 的 array data, TODO 'maxRQty'
-        aryMaxMin[1] = Int(ditItem["maxqty"] as! String)!
+        // 設定每個 Picker row 的 array data
         for (var i = aryMaxMin[0]; i <= aryMaxMin[1]; i++) {
             aryRowVal.append(String(i))
         }
         
         // 設定 'mPickField' 點取彈出 '鍵盤視窗'
+        edQty.alpha = 0.0
         edQty.inputView = mPKView
         initKBBar(pubClass.getLang("product_selectqty"))
-        
+    }
+    
+    /**
+     * 初始與設定 Cell
+     */
+    func initView(ditItem: Dictionary<String, AnyObject>!) {
         // 設定 picker 預設選擇的數量
-        mPKView.selectRow(Int(ditItem["selQty"] as! String)!, inComponent: 0, animated: false)
+        mPKView.selectRow(Int(ditItem["qty"] as! String)! - 1, inComponent: 0, animated: true)
         
         // field 設定
         labName.text = ditItem["pdname"] as? String
         labId.text = ditItem["pdid"] as? String
         
-        intPrice = Int(ditItem["price"] as! String)!
-        let intQty = Int(ditItem["selQty"] as! String)!
+        let intPrice = Int(ditItem["price"] as! String)!
+        let intQty = Int(ditItem["qty"] as! String)!
         let totPrice = intPrice * intQty
+        let intRQty = Int(ditItem["totRQty"] as! String)!
         
         labPrice.text = String(intPrice)
-        labQty.text = String(aryMaxMin[1])
+        labQty.text = String(intQty)
         labTot.text = String(totPrice)
-        edQty.text = String(intQty)
+        
+        if (intRQty > 0) {
+            labReturn.text = String(format: pubClass.getLang("FMT_alreadyrqty"), String(intRQty))
+        } else {
+            labReturn.alpha = 0.0
+        }
     }
     
     /**
@@ -157,13 +156,8 @@ class PubPurReturnPdListCell: UITableViewCell, UIPickerViewDelegate, UIPickerVie
     @objc private func SelectDone() {
         edQty.resignFirstResponder()
         
-        // filed value 重新設定
-        let intQty = Int(aryRowVal[mPKView.selectedRowInComponent(0)])!
-        edQty.text = String(intQty)
-        labTot.text = String(intQty * intPrice)
-        
-        // delegate 設定
-        delegate?.QtySelecteDone(Int(aryRowVal[mPKView.selectedRowInComponent(0)])!,  indexPath: currIndexPath)
+        // 取得實際選取的 value
+        delegate?.QtySelecteDone(Int(aryRowVal[mPKView.selectedRowInComponent(0)])!)
     }
     
     /**

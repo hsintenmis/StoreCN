@@ -78,16 +78,7 @@ class Sale: UIViewController, SalePdSeltDelegate, SalePdSeltCellDelegate, PdSale
         // 设置监听键盘事件函数
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
     }
-    
-    /**
-     * View DidAppear 程序
-     */
-    override func viewDidAppear(animated: Bool) {
-        dispatch_async(dispatch_get_main_queue(), {
-            
-        })
-    }
-    
+
     /**
      * View DidAppear 程序
      */

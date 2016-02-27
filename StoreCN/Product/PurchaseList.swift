@@ -26,15 +26,36 @@ class PurchaseList: UIViewController {
     private var aryData: Array<Dictionary<String, AnyObject>> = []
     
     // 其他參數設定
+    private var currIndexPath: NSIndexPath!
+    var needReload = false
     
     /**
     * View Load 程序
     */
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // 固定初始參數
-        
+        self.chkHaveData()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        if (needReload) {
+            reConnHTTP()
+        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        if (needReload) {
+            tableData.reloadData()
+            tableData.selectRowAtIndexPath(currIndexPath, animated: true, scrollPosition: UITableViewScrollPosition.None)
+            
+            needReload = false
+        }
+    }
+    
+    /**
+    * 檢查是否有資料
+    */
+    private func chkHaveData() {
         // 檢查資料
         if let tmpData = dictAllData["data"] as? Array<Dictionary<String, AnyObject>> {
             aryData = tmpData
@@ -51,17 +72,39 @@ class PurchaseList: UIViewController {
     }
     
     /**
-     * 初始與設定 VCview 內的 field
+     * HTTP 重新連線取得資料
      */
-    private func initViewField() {
-    }
-    
-    /**
-     * View DidAppear 程序
-     */
-    override func viewDidAppear(animated: Bool) {
-        dispatch_async(dispatch_get_main_queue(), {
+    private func reConnHTTP() {
+        // Request 參數設定
+        var mParam: Dictionary<String, String> = [:]
+        mParam["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
+        mParam["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
+        mParam["page"] = "purchase"
+        mParam["act"] = "purchase_listdata"
+        
+        // HTTP 開始連線
+        pubClass.HTTPConn(self, ConnParm: mParam, callBack: {(dictRS: Dictionary<String, AnyObject>)->Void in
             
+            // 任何錯誤顯示錯誤訊息
+            if (dictRS["result"] as! Bool != true) {
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.pubClass.popIsee(self, Msg: self.pubClass.getLang(dictRS["msg"] as? String))
+                })
+                
+                return
+            }
+            
+            /* 解析正確的 http 回傳結果，執行後續動作 */
+            let dictData = dictRS["data"]!["content"] as! Dictionary<String, AnyObject>
+            
+            if let today = dictData["today"] as? String {
+                if (today.characters.count == 14) {
+                    self.strToday = today
+                }
+            }
+            
+            self.dictAllData = dictData
+            self.chkHaveData()
         })
     }
     
@@ -104,6 +147,8 @@ class PurchaseList: UIViewController {
      * UITableView, Cell 點取
      */
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        currIndexPath = indexPath
+        
         self.performSegueWithIdentifier("PurchaseListDetail", sender: aryData[indexPath.row])
     }
     
@@ -118,6 +163,7 @@ class PurchaseList: UIViewController {
             let mVC = segue.destinationViewController as! PurchaseListDetail
             mVC.dictAllData = sender as! Dictionary<String, AnyObject>
             mVC.strToday = strToday
+            mVC.parentVC = self
             
             return
         }

@@ -12,7 +12,7 @@ protocol PubPurReturnPdListDelegate {
     /**
      * Table Cell 的 editView 商品數量改變
      */
-    func PdQtyChange(dictData: Dictionary<String, AnyObject>, indexPath: NSIndexPath)
+    func PdQtyChange(SelectQty: Int, indexPath: NSIndexPath)
 }
 
 /**
@@ -78,8 +78,9 @@ class PubPurReturnPdList: UITableViewController, PubPurReturnPdListCellDelegate 
      * #mark: PubPurReturnPdListCell Delegate
      * 數量選擇確認
      */
-    func QtySelecteDone(SelectQty: Int) {
-        
+    func QtySelecteDone(SelectQty: Int, indexPath: NSIndexPath) {
+        aryData[indexPath.row]["selQty"] = String(SelectQty)
+        delegate?.PdQtyChange(SelectQty, indexPath: indexPath)
     }
     
     /**

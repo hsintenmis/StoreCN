@@ -23,8 +23,9 @@
 "gender_F" = "女性";
 "done" = "完成";
 "select_ok" = "确定";
-
+"systemwarring" = "系统警告";
 "pricemaxovermsg" = "金額超過系統限制";
+"selectdate" = "選擇日期";
 
 "week_0" = "日";
 "week_1" = "一";
@@ -61,6 +62,7 @@
 "FMT_MMDD" = "%d月%d日";
 "FMT_MTInvoId" = "美利销货单号: %@";
 "FMT_returnmsg" = "退货金额: %@, 实际退货金额: %@";
+"FMT_alreadyrqty" = "已退货数量: %@";
 
 "menu_member" = "会员管理";
 "menu_testing" = "健康检测";
@@ -123,4 +125,10 @@
 "product_purchase_returnlist" = "退货列表";
 "product_selpurchasedate" = "選擇進貨日期";
 "product_purchasepricecusterr" = "進貨實際金額錯誤!";
+"product_qtyreturneditto0msg" = "无法修改数量！\n请先将该商品的退货数量设定为 0 !";
 
+"purchase_pruchaseqtyeditmsg" = "进货数量修改，将会影响以下资料：\n1. 该商品的库存数量\n2. 进货总金额\n3. 实际进货金额";
+"purchase_noreturnpdselmsg" = "請選擇退貨商品與退貨數量!";
+"product_selreturndate" = "選擇退貨日期";
+"product_returnpricecusterr" = "退貨實際金額錯誤!";
+"purchase_mksurepurchasereturnmsg" = "确定退货?!请再次确认退货资料是否正确!";

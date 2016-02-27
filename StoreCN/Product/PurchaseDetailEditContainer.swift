@@ -28,9 +28,6 @@ class PurchaseDetailEditContainer: UITableViewController, UITextFieldDelegate, U
     var strToday: String!
     var dictAllData: Dictionary<String, AnyObject> = [:]
     
-    // 日期預設值，最大/最小
-
-    
     // UIDatePicker 設定
     private var defDate:String!
     private var maxDate: String!
@@ -40,9 +37,6 @@ class PurchaseDetailEditContainer: UITableViewController, UITextFieldDelegate, U
     // 根據local顯示可閱讀的日期, ex. 2015年1月1日 13:59
     private let dateFmtYMD: NSDateFormatter = NSDateFormatter()
     private var strCurrDate: String!  // 取得目前選擇的日期，轉為 12碼 string
-    
-    // 其他參數
-
     
     /**
      * View Load 程序
@@ -184,7 +178,6 @@ class PurchaseDetailEditContainer: UITableViewController, UITextFieldDelegate, U
         })
     }
 
-    
     /**
      * 編輯模式特殊處理
      */

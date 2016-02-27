@@ -110,7 +110,7 @@ class PurchaseReturnList: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let strIdent = segue.identifier
         
-        // 進貨明細主頁面
+        // 進貨退回，編輯退貨項目與相關資料
         if (strIdent == "PurchaseReturnEdit") {
             let mVC = segue.destinationViewController as! PurchaseReturnEdit
             mVC.dictReturn = sender as! Dictionary<String, AnyObject>

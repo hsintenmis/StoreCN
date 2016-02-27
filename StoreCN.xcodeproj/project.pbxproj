@@ -125,6 +125,7 @@
 		D71DFD101C7C397A0024BB59 /* StockHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71DFD0F1C7C397A0024BB59 /* StockHistoryCell.swift */; };
 		D71DFD121C7C53A10024BB59 /* PurchaseList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71DFD111C7C53A10024BB59 /* PurchaseList.swift */; };
 		D720FBA11C7458F000AE640C /* Purchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D720FBA01C7458F000AE640C /* Purchase.swift */; };
+		D728A26C1C8138B100B93B38 /* PurchaseListDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D728A26B1C8138B100B93B38 /* PurchaseListDetailCell.swift */; };
 		D72F26431C7AA60100717394 /* Sale.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72F26421C7AA60100717394 /* Sale.swift */; };
 		D72F26451C7AA61900717394 /* SalePdSelt.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72F26441C7AA61900717394 /* SalePdSelt.swift */; };
 		D72F26471C7AA63A00717394 /* SalePdSeltCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72F26461C7AA63A00717394 /* SalePdSeltCell.swift */; };
@@ -281,6 +282,7 @@
 		D71DFD0F1C7C397A0024BB59 /* StockHistoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StockHistoryCell.swift; path = Product/StockHistoryCell.swift; sourceTree = "<group>"; };
 		D71DFD111C7C53A10024BB59 /* PurchaseList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchaseList.swift; path = Product/PurchaseList.swift; sourceTree = "<group>"; };
 		D720FBA01C7458F000AE640C /* Purchase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Purchase.swift; path = Product/Purchase.swift; sourceTree = "<group>"; };
+		D728A26B1C8138B100B93B38 /* PurchaseListDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchaseListDetailCell.swift; path = Product/PurchaseListDetailCell.swift; sourceTree = "<group>"; };
 		D72F26421C7AA60100717394 /* Sale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Sale.swift; path = Product/Sale.swift; sourceTree = "<group>"; };
 		D72F26441C7AA61900717394 /* SalePdSelt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SalePdSelt.swift; path = Product/SalePdSelt.swift; sourceTree = "<group>"; };
 		D72F26461C7AA63A00717394 /* SalePdSeltCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SalePdSeltCell.swift; path = Product/SalePdSeltCell.swift; sourceTree = "<group>"; };
@@ -560,6 +562,7 @@
 				D71DFD111C7C53A10024BB59 /* PurchaseList.swift */,
 				D70854461C7D622500861694 /* PurchaseListCell.swift */,
 				D70854481C7D69C400861694 /* PurchaseListDetail.swift */,
+				D728A26B1C8138B100B93B38 /* PurchaseListDetailCell.swift */,
 				D708544A1C7DA3D600861694 /* PurchaseReturnAdd.swift */,
 				D7F8BCEA1C7ED4390059E6E5 /* PurchaseDetailEdit.swift */,
 				D7F8BCEC1C7ED6C70059E6E5 /* PurchaseDetailEditContainer.swift */,
@@ -814,6 +817,7 @@
 				D7BB2ADD1C64788700624E08 /* PubCourseSelectCell.swift in Sources */,
 				D7037A6A1C58BFB5002A955E /* MainLogin.swift in Sources */,
 				D7FB953A1C59F17F00B48F57 /* FileMang.swift in Sources */,
+				D728A26C1C8138B100B93B38 /* PurchaseListDetailCell.swift in Sources */,
 				D7BB2AE01C64788700624E08 /* PubMemberSelect.swift in Sources */,
 				D7F45F451C75752A00735D09 /* PurchasePdSeltCell.swift in Sources */,
 				D70CD9431C72CBF8008E79E1 /* CourseSaleCourseSel.swift in Sources */,
