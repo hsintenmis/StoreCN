@@ -9,6 +9,8 @@ import Foundation
  * 商品管理 - 進貨退回，新增一筆退貨單資料
  */
 class PurchaseReturnAdd: UIViewController, PubPurReturnPdListDelegate {
+    // Delegate
+    var delegate = PubClassDelegate?()
     
     // @IBOutlet
     @IBOutlet weak var labSdate: UILabel!
@@ -53,7 +55,7 @@ class PurchaseReturnAdd: UIViewController, PubPurReturnPdListDelegate {
         
         // Picker data 參數
         datePickerView = UIDatePicker()
-        minDate = pubClass.subStr(dictAllData["sdate"] as! String, strFrom: 0, strEnd: 8) + "0001"
+        minDate = pubClass.subStr(dictAllData["sdate"] as! String, strFrom: 0, strEnd: 10) + "59"
         maxDate = pubClass.subStr(strToday, strFrom: 0, strEnd: 8) + "2359"
         defDate = maxDate
         strCurrDate = defDate
@@ -252,10 +254,10 @@ class PurchaseReturnAdd: UIViewController, PubPurReturnPdListDelegate {
             return
         }
         
-        // 退貨實際金額
+        // 檢查實際退貨金額
         if let intTmp = Int(edCustPrice.text!) {
             let strTmp = String(intTmp)
-            if (strTmp.characters.count < 8) {
+            if (strTmp.characters.count <= 8) {
                 edCustPrice.text = strTmp
             }
         } else {
@@ -266,6 +268,8 @@ class PurchaseReturnAdd: UIViewController, PubPurReturnPdListDelegate {
         
         // 產生 http post data, http 連線儲存後跳離
         var dictParm: Dictionary<String, String> = [:]
+        dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
+        dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
         dictParm["page"] = "purchase"
         dictParm["act"] = "purchase_returnaddsave"
         
@@ -280,7 +284,6 @@ class PurchaseReturnAdd: UIViewController, PubPurReturnPdListDelegate {
                 NSJSONSerialization.dataWithJSONObject(dictArg0, options: NSJSONWritingOptions(rawValue: 0))
             let jsonString = NSString(data: jobjData, encoding: NSUTF8StringEncoding)! as String
             
-            print(jsonString)
             dictParm["arg0"] = jsonString
         } catch {
             pubClass.popIsee(self, Msg: pubClass.getLang("err_data"))
@@ -299,6 +302,7 @@ class PurchaseReturnAdd: UIViewController, PubPurReturnPdListDelegate {
         // 回傳後跳離, 通知 parent 資料 reload
         let strMsg = (dictRS["result"] as! Bool != true) ? pubClass.getLang("err_trylatermsg") : pubClass.getLang("datasavecompleted")
         
+        delegate?.PageNeedReload(true)
         pubClass.popIsee(self, Msg: strMsg, withHandler: {self.dismissViewControllerAnimated(true, completion: nil)})
     }
     

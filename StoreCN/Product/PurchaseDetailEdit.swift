@@ -9,6 +9,8 @@ import Foundation
  * 商品管理 - 進貨明細編輯
  */
 class PurchaseDetailEdit: UIViewController {
+    // Delegate
+    var delegate = PubClassDelegate?()
     
     // @IBOutlet
     @IBOutlet weak var containView: UIView!
@@ -64,14 +66,44 @@ class PurchaseDetailEdit: UIViewController {
      * act, 點取 '儲存' button
      */
     @IBAction func actSave(sender: UIBarButtonItem) {
-        let dictData = vcChilePage!.getContainerPageData1()
+        let dictData = vcChilePage!.getContainerPageDatai1()
         
         if (dictData == nil) {
             return
         }
         
-        // TODO, HTTP 連線資料儲存
-        print(dictData)
+        // 產生 http post data, http 連線儲存後跳離
+        var dictParm: Dictionary<String, String> = [:]
+        dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
+        dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
+        dictParm["page"] = "purchase"
+        dictParm["act"] = "purchase_editsave"
+        
+        do {
+            let tmpDictData = try
+                NSJSONSerialization.dataWithJSONObject(dictData!, options: NSJSONWritingOptions(rawValue: 0))
+            let jsonString = NSString(data: tmpDictData, encoding: NSUTF8StringEncoding)! as String
+            
+            dictParm["arg0"] = jsonString
+        } catch {
+            pubClass.popIsee(self, Msg: pubClass.getLang("err_data"))
+            
+            return
+        }
+        
+        // HTTP 開始連線
+        pubClass.popConfirm(self, aryMsg: ["", pubClass.getLang("datasendplzconfirmmsg")], withHandlerYes: {self.pubClass.HTTPConn(self, ConnParm: dictParm, callBack: self.HttpSaveResponChk)}, withHandlerNo: { return })
+    }
+    
+    /**
+     * HTTP 連線後取得連線結果
+     */
+    private func HttpSaveResponChk(dictRS: Dictionary<String, AnyObject>) {
+        // 回傳後跳離, 通知 parent 資料 reload
+        let strMsg = (dictRS["result"] as! Bool != true) ? pubClass.getLang("err_trylatermsg") : pubClass.getLang("datasavecompleted")
+        
+        delegate?.PageNeedReload(true)
+        pubClass.popIsee(self, Msg: strMsg, withHandler: {self.dismissViewControllerAnimated(true, completion: nil)})
     }
     
     @IBAction func actBack(sender: UIBarButtonItem) {

@@ -26,6 +26,7 @@
 "systemwarring" = "系统警告";
 "pricemaxovermsg" = "金額超過系統限制";
 "selectdate" = "選擇日期";
+"datasendplzconfirmmsg" = "資料即將送出!\n請再次確認輸入料是否正確?!";
 
 "week_0" = "日";
 "week_1" = "一";
@@ -76,7 +77,6 @@
 "menu_course_list" = "疗程管理";
 "menu_course_reservation" = "疗程预约";
 "menu_course_sale" = "疗程销售";
-
 "menu_product_sale" = "商品销货";
 "menu_product_purchase" = "商品入库";
 "menu_product_stock" = "商品库存";
@@ -123,12 +123,13 @@
 "product_purchase_detailedit" = "编辑(總金額/日期/備註)";
 "product_purchase_returnadd" = "新增退货";
 "product_purchase_returnlist" = "退货列表";
+"product_purchase_returndetail" = "退货明細";
 "product_selpurchasedate" = "選擇進貨日期";
 "product_purchasepricecusterr" = "進貨實際金額錯誤!";
-"product_qtyreturneditto0msg" = "无法修改数量！\n请先将该商品的退货数量设定为 0 !";
+"product_qtyreturneditto0msg" = "无法修改進貨数量！\n有退貨的商品不能修改進貨數量!";
 
 "purchase_pruchaseqtyeditmsg" = "进货数量修改，将会影响以下资料：\n1. 该商品的库存数量\n2. 进货总金额\n3. 实际进货金额";
 "purchase_noreturnpdselmsg" = "請選擇退貨商品與退貨數量!";
 "product_selreturndate" = "選擇退貨日期";
 "product_returnpricecusterr" = "退貨實際金額錯誤!";
-"purchase_mksurepurchasereturnmsg" = "确定退货?!请再次确认退货资料是否正确!";
+"purchase_mksurepurchasereturnmsg" = "确定退货?!\n请再次确认退货资料是否正确!";

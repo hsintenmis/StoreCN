@@ -177,13 +177,6 @@ class PurchaseDetailEditContainer: UITableViewController, UITextFieldDelegate, U
             self.edDate.text = self.pubClass.formatDateWithStr(self.dateFmtYMD.stringFromDate(self.datePickerView.date), type: 14)
         })
     }
-
-    /**
-     * 編輯模式特殊處理
-     */
-    private func procEditMode() {
-        
-    }
     
     /**
      * #mark: UITextFieldDelegate
@@ -209,7 +202,7 @@ class PurchaseDetailEditContainer: UITableViewController, UITextFieldDelegate, U
      * #mark: PurchaseDetailEditDelegate
      * 取得 child ContainerView 頁面輸入的資料並回傳
      */
-    func getContainerPageData1() -> Dictionary<String, AnyObject>? {
+    func getContainerPageDatai1()-> Dictionary<String, AnyObject>? {
         var dictData: Dictionary<String, AnyObject> = [:]
         
         // 檢查輸入資料

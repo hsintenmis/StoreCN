@@ -70,7 +70,7 @@ class MemberAdEdContainer: UITableViewController, UITextFieldDelegate {
         dictPickParm["birth_min"] = "19150101"
         
         let intMaxYY = Int(pubClass.subStr(strToday, strFrom: 0, strEnd: 4))! - 10
-        dictPickParm["birth_max"] = String(intMaxYY) + pubClass.subStr(strToday, strFrom: 4, strEnd: 8)
+        dictPickParm["birth_max"] = String(intMaxYY) + "1231"
         
         dictPickParm["H_def"] = ["160", ".", "0"]
         dictPickParm["H_minmax"] = [["max":220, "min":60], ["max":1, "min":1], ["max":9, "min":0]]

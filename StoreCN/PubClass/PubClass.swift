@@ -7,6 +7,16 @@ import Foundation
 import UIKit
 
 /**
+ * protocol, PubClass Delegate
+ */
+protocol PubClassDelegate {
+    /**
+     * 設定上層 class page 是否需要 reload
+     */
+    func PageNeedReload(needReload: Bool)
+}
+
+/**
 * 本專案所有的設定檔與公用 method
 */
 class PubClass {

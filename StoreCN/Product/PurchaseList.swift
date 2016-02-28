@@ -1,5 +1,5 @@
 //
-// TableView
+// TableView, PurchaseListDetailDelegate
 //
 
 import UIKit
@@ -10,7 +10,7 @@ import Foundation
  *
  * 商品管理 - 進貨列表
  */
-class PurchaseList: UIViewController {
+class PurchaseList: UIViewController, PubClassDelegate {
     
     // @IBOutlet
     @IBOutlet weak var tableData: UITableView!
@@ -26,29 +26,24 @@ class PurchaseList: UIViewController {
     private var aryData: Array<Dictionary<String, AnyObject>> = []
     
     // 其他參數設定
-    private var currIndexPath: NSIndexPath!
-    var needReload = false
+    private var currIndexPath: NSIndexPath?
+    private var bolReload = true // 頁面是否需要 http reload
     
     /**
     * View Load 程序
     */
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.chkHaveData()
+        //self.chkHaveData()
     }
     
     override func viewWillAppear(animated: Bool) {
-        if (needReload) {
-            reConnHTTP()
-        }
     }
     
     override func viewDidAppear(animated: Bool) {
-        if (needReload) {
-            tableData.reloadData()
-            tableData.selectRowAtIndexPath(currIndexPath, animated: true, scrollPosition: UITableViewScrollPosition.None)
-            
-            needReload = false
+        if (bolReload) {
+            reConnHTTP()
+            bolReload = false
         }
     }
     
@@ -69,6 +64,12 @@ class PurchaseList: UIViewController {
             
             return
         }
+        
+        // tableview reload
+        tableData.reloadData()
+        if let tmpIndexPath = currIndexPath {
+            tableData.selectRowAtIndexPath(tmpIndexPath, animated: true, scrollPosition: UITableViewScrollPosition.None)
+        }
     }
     
     /**
@@ -87,8 +88,13 @@ class PurchaseList: UIViewController {
             
             // 任何錯誤顯示錯誤訊息
             if (dictRS["result"] as! Bool != true) {
+                var errMsg = self.pubClass.getLang("nodata")
+                if let tmpStr: String = dictRS["msg"] as? String {
+                    errMsg = self.pubClass.getLang(tmpStr)
+                }
+                
                 dispatch_async(dispatch_get_main_queue(), {
-                    self.pubClass.popIsee(self, Msg: self.pubClass.getLang(dictRS["msg"] as? String))
+                    self.pubClass.popIsee(self, Msg: errMsg, withHandler: {self.dismissViewControllerAnimated(true, completion: {})})
                 })
                 
                 return
@@ -153,6 +159,14 @@ class PurchaseList: UIViewController {
     }
     
     /**
+     * #mark: PurchaseListDetailDelegate Delegate
+     * 設定上層 class page 是否需要 reload
+     */
+    func PageNeedReload(needReload: Bool) {
+        bolReload = needReload
+    }
+    
+    /**
      * Segue 跳轉頁面
      */
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -163,7 +177,7 @@ class PurchaseList: UIViewController {
             let mVC = segue.destinationViewController as! PurchaseListDetail
             mVC.dictAllData = sender as! Dictionary<String, AnyObject>
             mVC.strToday = strToday
-            mVC.parentVC = self
+            mVC.delegate = self
             
             return
         }

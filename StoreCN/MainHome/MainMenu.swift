@@ -288,10 +288,13 @@ class MainMenu: UIViewController {
                 
                 // 商品進貨列表
                 if (strIdent == "product_purchaselist") {
+                    /*
                     mParam["page"] = "purchase"
                     mParam["act"] = "purchase_listdata"
                     self.MenuItemSelect(strIdent, HTTPParam: mParam)
+                    */
                     
+                    self.performSegueWithIdentifier(strIdent, sender: nil)
                     return
                 }
             }))
@@ -391,6 +394,7 @@ class MainMenu: UIViewController {
         }
         
         // 商品進貨列表
+        /*
         if (strIdent == "product_purchaselist") {
             let mVC = segue.destinationViewController as! PurchaseList
             mVC.strToday = strToday
@@ -398,6 +402,7 @@ class MainMenu: UIViewController {
             
             return
         }
+        */
         
         return
     }

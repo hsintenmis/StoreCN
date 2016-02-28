@@ -24,7 +24,7 @@ class PickerDate {
     private var pubClass: PubClass!
     private var mPickField: UITextField!
     private let dateFmtYMD: NSDateFormatter!  // 根據local顯示可閱讀的日期, ex. 2015年1月1日
-    private let datePickerView: UIDatePicker = UIDatePicker()
+    private var datePickerView: UIDatePicker!
     private var strCurrDate = ""  // 取得目前選擇的日期，轉為 8碼 string
     
     /**
@@ -39,19 +39,20 @@ class PickerDate {
         defDate = aryDefineDate[0]
         maxDate = aryDefineDate[1]
         minDate = aryDefineDate[2]
-        
+
         /**
          * UIDatePicker 初始設定
          * "dd-MM-yyyy HH:mm:ss"
          */
-        // 設定日期顯示樣式
+        // 初始與設定日期顯示樣式
+        datePickerView = UIDatePicker()
         datePickerView.datePickerMode = UIDatePickerMode.Date
         
         dateFmtYMD.dateStyle = NSDateFormatterStyle.MediumStyle
         dateFmtYMD.timeStyle = NSDateFormatterStyle.NoStyle
         dateFmtYMD.dateFormat = "yyyyMMdd"
         //dateFmtYMD.timeZone = NSTimeZone(abbreviation: "UTC");
-        
+
         datePickerView.minimumDate = dateFmtYMD.dateFromString(minDate)!
         datePickerView.maximumDate = dateFmtYMD.dateFromString(maxDate)!
         

@@ -8,7 +8,9 @@ import Foundation
 /**
  * 商品管理 - 進貨明細主頁面
  */
-class PurchaseListDetail: UIViewController, PurchaseListDetailCellDelegate {
+class PurchaseListDetail: UIViewController, PurchaseListDetailCellDelegate, PubClassDelegate {
+    // Delegate
+    var delegate = PubClassDelegate?()
     
     // @IBOutlet
     @IBOutlet weak var tableData: UITableView!
@@ -30,6 +32,7 @@ class PurchaseListDetail: UIViewController, PurchaseListDetailCellDelegate {
     private var aryPd: Array<Dictionary<String, AnyObject>>!
     private var mAlert: UIAlertController!  // alertView 功能選單
     private var keyboardHeightQty: CGFloat = 0.0  // 自訂的選擇數量鍵盤高度
+    private var bolReload = false // top parent 頁面是否需要 http reload
     
     /**
     * View Load 程序
@@ -60,6 +63,13 @@ class PurchaseListDetail: UIViewController, PurchaseListDetailCellDelegate {
      * View WillAppear 程序
      */
     override func viewWillAppear(animated: Bool) {
+        // 子頁面有資料變動，本頁面結束設定 parent class reload
+        if (bolReload) {
+            self.view.alpha = 0.6
+            delegate?.PageNeedReload(true)
+            self.dismissViewControllerAnimated(false, completion: {})
+        }
+        
         // 设置监听键盘事件函数
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
     }
@@ -109,6 +119,16 @@ class PurchaseListDetail: UIViewController, PurchaseListDetailCellDelegate {
         mCell.delegate = self
         mCell.initView(ditItem)
         
+        // 有退貨數量不能點取
+        let dictPd = aryPd[indexPath.row]
+        
+        if (dictPd["totRQty"] as! String != "0") {
+            mCell.userInteractionEnabled = false
+        }
+        else {
+            mCell.userInteractionEnabled = true
+        }
+        
         return mCell
     }
     
@@ -117,12 +137,16 @@ class PurchaseListDetail: UIViewController, PurchaseListDetailCellDelegate {
      * UITableView, Cell 點取, 彈出數量選擇鍵盤
      */
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.keyboardClose()
+        
         // 有退貨數量不執行
-        let dictPd = aryPd[indexPath.row] 
+        /*
+        let dictPd = aryPd[indexPath.row]
         if (dictPd["totRQty"] as! String != "0") {
             pubClass.popIsee(self, Msg: pubClass.getLang("product_qtyreturneditto0msg"))
             return
         }
+        */
         
         // 取得 cell EditField
         let edQty = (tableView.cellForRowAtIndexPath(indexPath) as! PurchaseListDetailCell).edQty
@@ -154,6 +178,14 @@ class PurchaseListDetail: UIViewController, PurchaseListDetailCellDelegate {
      */
     func QtySelecteCancel() {
         self.keyboardClose()
+    }
+    
+    /**
+     * #mark: PurchaseDetailEditDelegate Delegate
+     * 設定 top parent class page 是否需要 reload
+     */
+    func PageNeedReload(needReload: Bool) {
+        bolReload = needReload
     }
     
     /**
@@ -193,6 +225,7 @@ class PurchaseListDetail: UIViewController, PurchaseListDetailCellDelegate {
             let mVC = segue.destinationViewController as! PurchaseDetailEdit
             mVC.dictAllData = dictAllData
             mVC.strToday = strToday
+            mVC.delegate = self
             
             return
         }
@@ -202,6 +235,7 @@ class PurchaseListDetail: UIViewController, PurchaseListDetailCellDelegate {
             let mVC = segue.destinationViewController as! PurchaseReturnAdd
             mVC.dictAllData = dictAllData
             mVC.strToday = strToday
+            mVC.delegate = self
             
             return
         }
@@ -227,7 +261,6 @@ class PurchaseListDetail: UIViewController, PurchaseListDetailCellDelegate {
      * act, 點取 '返回' button
      */
     @IBAction func actHome(sender: UIBarButtonItem) {
-        self.parentVC.needReload = true
         self.dismissViewControllerAnimated(true, completion: {})
     }
     

@@ -1533,8 +1533,8 @@
                                 <color key="textColor" red="0.18823529410000001" green="0.18823529410000001" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(点取商品项目可以修改数量)" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w0x-Th-BVn">
-                                <rect key="frame" x="189" y="158" width="128" height="10"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="点取商品修改进货数量, 有退货的商品不能修改进货数量!" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w0x-Th-BVn">
+                                <rect key="frame" x="67" y="158" width="250" height="10"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="10" id="DBb-h8-RFl"/>
                                 </constraints>
@@ -6908,7 +6908,7 @@
                                         <barButtonItem key="rightBarButtonItem" id="gXE-07-5JT">
                                             <string key="title">储存
 </string>
-                                            <color key="tintColor" red="0.80000000000000004" green="1" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="tintColor" red="1" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>
                                                 <action selector="actSave:" destination="0El-d8-zex" id="BLC-U0-BuH"/>
                                             </connections>
