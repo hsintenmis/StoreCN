@@ -12,6 +12,7 @@
 		42E21F111C68826500B85EA9 /* PubCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E21F101C68826500B85EA9 /* PubCalendarCell.swift */; };
 		42E21F131C68E6F500B85EA9 /* CalendarCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E21F121C68E6F500B85EA9 /* CalendarCellData.swift */; };
 		42F6E3651C6B86AE00C9BB94 /* ReservListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F6E3641C6B86AE00C9BB94 /* ReservListCell.swift */; };
+		42FD09E11C841E0D00ADAD4C /* PickerDateTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FD09E01C841E0D00ADAD4C /* PickerDateTime.swift */; };
 		D7037A5A1C58BB8B002A955E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7037A591C58BB8B002A955E /* Assets.xcassets */; };
 		D7037A681C58BF32002A955E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7037A671C58BF32002A955E /* AppDelegate.swift */; };
 		D7037A6A1C58BFB5002A955E /* MainLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7037A691C58BFB5002A955E /* MainLogin.swift */; };
@@ -164,6 +165,7 @@
 		42E21F101C68826500B85EA9 /* PubCalendarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubCalendarCell.swift; path = PubView/PubCalendarCell.swift; sourceTree = "<group>"; };
 		42E21F121C68E6F500B85EA9 /* CalendarCellData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarCellData.swift; path = PubClass/CalendarCellData.swift; sourceTree = "<group>"; };
 		42F6E3641C6B86AE00C9BB94 /* ReservListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReservListCell.swift; path = ServiceMgr/ReservListCell.swift; sourceTree = "<group>"; };
+		42FD09E01C841E0D00ADAD4C /* PickerDateTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PickerDateTime.swift; path = PubClass/PickerDateTime.swift; sourceTree = "<group>"; };
 		D7037A4F1C58BB8B002A955E /* StoreCN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StoreCN.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7037A591C58BB8B002A955E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D7037A671C58BF32002A955E /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = SysFile/AppDelegate.swift; sourceTree = "<group>"; };
@@ -387,6 +389,7 @@
 				D7FB95391C59F17F00B48F57 /* FileMang.swift */,
 				D7037A711C58C03F002A955E /* NoDataView.swift */,
 				42E21F0E1C68825200B85EA9 /* PickerDate.swift */,
+				42FD09E01C841E0D00ADAD4C /* PickerDateTime.swift */,
 				D74652061C5CA85900190EF6 /* PickerNumber.swift */,
 				42E21F121C68E6F500B85EA9 /* CalendarCellData.swift */,
 			);
@@ -782,6 +785,7 @@
 				42F6E3651C6B86AE00C9BB94 /* ReservListCell.swift in Sources */,
 				D7150E431C5C6E8000C9FE8B /* MemberAdEd.swift in Sources */,
 				D7BB2AE31C64799D00624E08 /* PubMemberPurchaseSelectCell.swift in Sources */,
+				42FD09E11C841E0D00ADAD4C /* PickerDateTime.swift in Sources */,
 				D74652071C5CA85900190EF6 /* PickerNumber.swift in Sources */,
 				D7645BE41C801FA900507072 /* PurchaseReturnEdit.swift in Sources */,
 				D70CD9421C72CBF8008E79E1 /* CourseSale.swift in Sources */,

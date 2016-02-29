@@ -117,13 +117,9 @@ class PurchaseReturnAdd: UIViewController, PubPurReturnPdListDelegate {
         datePickerView.minimumDate = dateFmtYMD.dateFromString(minDate)!
         datePickerView.maximumDate = dateFmtYMD.dateFromString(maxDate)!
         
-        // 設定 datePick value change 要執行的程序
-        //datePickerView.addTarget(self, action: Selector("datePickerValueChanged:"), forControlEvents: UIControlEvents.ValueChanged)
-        
         // 設定預設值
         let mDate = dateFmtYMD.dateFromString(defDate)!
         datePickerView.setDate(mDate, animated: false)
-        
         
         // 設定 edDate 輸入鍵盤，樣式
         edRDate.inputView = datePickerView
