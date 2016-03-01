@@ -60,6 +60,8 @@ class PickerDateTime {
         * UIDatePicker 初始設定
         * "dd-MM-yyyy HH:mm:ss"
         */
+        datePickerView = UIDatePicker()
+        
         // 設定日期顯示樣式
         datePickerView.datePickerMode = UIDatePickerMode.DateAndTime
         dateFmtYMD.dateStyle = NSDateFormatterStyle.MediumStyle
@@ -74,6 +76,7 @@ class PickerDateTime {
         // 設定預設值
         let mDate = dateFmtYMD.dateFromString(defDate)!
         datePickerView.setDate(mDate, animated: false)
+        mPickField.text = self.pubClass.formatDateWithStr(self.dateFmtYMD.stringFromDate(self.datePickerView.date), type: 14)
         
         // 設定 edDate 輸入鍵盤，樣式
         mField.inputView = datePickerView

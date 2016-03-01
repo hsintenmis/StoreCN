@@ -8,7 +8,7 @@ import Foundation
 /**
  * 商品管理 - 進貨退回，編輯退貨項目與相關資料
  */
-class PurchaseReturnEdit: UIViewController, PubPurReturnPdListDelegate {
+class PurchaseReturnEdit: UIViewController, PubPurReturnPdListDelegate , PickerDateTimeDelegate {
     // @IBOutlet
     @IBOutlet weak var labAmount: UILabel!
     @IBOutlet weak var edRDate: UITextField!
@@ -25,9 +25,12 @@ class PurchaseReturnEdit: UIViewController, PubPurReturnPdListDelegate {
     var strToday: String!
     var dictReturn: Dictionary<String, AnyObject>!
     var dictPurchasePd: Dictionary<String, AnyObject>!
+    var purchaseDate: String!  // 進貨日期
     
     // 其他參數
     private var aryReturnPd: Array<Dictionary<String, AnyObject>>!  // 退貨商品 array
+    private var mPicker: PickerDateTime!
+    private var strCurrDate: String!  // 目前選擇的退貨日期
     
     /**
      * View Load 程序
@@ -51,6 +54,16 @@ class PurchaseReturnEdit: UIViewController, PubPurReturnPdListDelegate {
             aryReturnPd[i]["maxqty"] = String(intMax)
             aryReturnPd[i]["totRQty"] = String(intReturn)
         }
+        
+        /* 初始與設定 日期時間 picker */
+        // Picker data 參數
+        let minDate = pubClass.subStr(purchaseDate, strFrom: 0, strEnd: 10) + "59"
+        let maxDate = pubClass.subStr(strToday, strFrom: 0, strEnd: 12)
+        let defDate = maxDate
+        strCurrDate = defDate
+        
+        mPicker = PickerDateTime.init(withUIField: edRDate, withDefMaxMin: [defDate, maxDate, minDate], NavyBarTitle: pubClass.getLang("selectdate"))
+        mPicker.delegate = self
         
         // field 設定
         btnDelAll.alpha = 0.0
@@ -95,7 +108,15 @@ class PurchaseReturnEdit: UIViewController, PubPurReturnPdListDelegate {
      */
     func PdQtyChange(SelectQty: Int, indexPath: NSIndexPath) {
 
-
+    }
+    
+    /**
+     * #mark: PubPurReturnPdListDelegate
+     * 退貨日期選擇，本頁面 strCurrDate 重新設定
+     */
+    func doneSelectDateTime(strDateTime: String) {
+        strCurrDate = strDateTime
+        print(strCurrDate)
     }
     
     /**

@@ -116,6 +116,7 @@ class PurchaseReturnList: UIViewController {
             mVC.dictReturn = sender as! Dictionary<String, AnyObject>
             mVC.strToday = strToday
             mVC.dictPurchasePd = dictPurchasePd
+            mVC.purchaseDate = dictAllData["sdate"] as! String
             
             return
         }
