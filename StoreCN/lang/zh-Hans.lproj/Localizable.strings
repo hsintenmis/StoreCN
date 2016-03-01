@@ -133,3 +133,7 @@
 "product_selreturndate" = "選擇退貨日期";
 "product_returnpricecusterr" = "退貨實際金額錯誤!";
 "purchase_mksurepurchasereturnmsg" = "确定退货?!\n请再次确认退货资料是否正确!";
+"purchase_returndelmsg" = "确定本次退货全部取消?!\n退货取消将会影响商品的库存!";
+"purchase_returndatadelcomplete" = "退货资料移除完成!";
+
+

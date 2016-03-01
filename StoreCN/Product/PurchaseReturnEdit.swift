@@ -9,12 +9,16 @@ import Foundation
  * 商品管理 - 進貨退回，編輯退貨項目與相關資料
  */
 class PurchaseReturnEdit: UIViewController, PubPurReturnPdListDelegate , PickerDateTimeDelegate {
+    // Delegate
+    var delegate = PubClassDelegate?()
+    
     // @IBOutlet
     @IBOutlet weak var labAmount: UILabel!
     @IBOutlet weak var edRDate: UITextField!
     @IBOutlet weak var edCustPrice: UITextField!
     @IBOutlet weak var swchDelAll: UISwitch!
     @IBOutlet weak var btnDelAll: UIButton!
+    @IBOutlet weak var btnSave: UIBarButtonItem!
 
     @IBOutlet weak var containView: UIView!
     
@@ -23,13 +27,13 @@ class PurchaseReturnEdit: UIViewController, PubPurReturnPdListDelegate , PickerD
     
     // public property, 上層 parent 設定
     var strToday: String!
-    var dictReturn: Dictionary<String, AnyObject>!
-    var dictPurchasePd: Dictionary<String, AnyObject>!
+    var dictReturn: Dictionary<String, AnyObject>!  // 退貨單資料
+    var dictPurchasePd: Dictionary<String, AnyObject>!  // 進貨商品資料
     var purchaseDate: String!  // 進貨日期
     
     // 其他參數
     private var aryReturnPd: Array<Dictionary<String, AnyObject>>!  // 退貨商品 array
-    private var mPicker: PickerDateTime!
+    private var mPicker: PickerDateTime!  // datetime Picker
     private var strCurrDate: String!  // 目前選擇的退貨日期
     
     /**
@@ -58,8 +62,8 @@ class PurchaseReturnEdit: UIViewController, PubPurReturnPdListDelegate , PickerD
         /* 初始與設定 日期時間 picker */
         // Picker data 參數
         let minDate = pubClass.subStr(purchaseDate, strFrom: 0, strEnd: 10) + "59"
-        let maxDate = pubClass.subStr(strToday, strFrom: 0, strEnd: 12)
-        let defDate = maxDate
+        let maxDate = pubClass.subStr(strToday, strFrom: 0, strEnd: 10) + "59"
+        let defDate = pubClass.subStr(strToday, strFrom: 0, strEnd: 12)
         strCurrDate = defDate
         
         mPicker = PickerDateTime.init(withUIField: edRDate, withDefMaxMin: [defDate, maxDate, minDate], NavyBarTitle: pubClass.getLang("selectdate"))
@@ -107,7 +111,15 @@ class PurchaseReturnEdit: UIViewController, PubPurReturnPdListDelegate , PickerD
      * 退貨商品數量改變，本頁面相關資料變動
      */
     func PdQtyChange(SelectQty: Int, indexPath: NSIndexPath) {
-
+        aryReturnPd[indexPath.row]["selQty"] = String(SelectQty)
+        
+        var tot = 0
+        for dictPd in aryReturnPd {
+            tot += Int(dictPd["price"] as! String)! * Int(dictPd["selQty"] as! String)!
+        }
+        
+        labAmount.text = String(tot)
+        edCustPrice.text = String(tot)
     }
     
     /**
@@ -116,7 +128,6 @@ class PurchaseReturnEdit: UIViewController, PubPurReturnPdListDelegate , PickerD
      */
     func doneSelectDateTime(strDateTime: String) {
         strCurrDate = strDateTime
-        print(strCurrDate)
     }
     
     /**
@@ -124,12 +135,34 @@ class PurchaseReturnEdit: UIViewController, PubPurReturnPdListDelegate , PickerD
      */
     @IBAction func actSwchDelAll(sender: UISwitch) {
         btnDelAll.alpha = (sender.on) ? 1.0 : 0.0
+        btnSave.enabled = (sender.on) ? false: true
     }
     
     /**
      * act, 點取 '確定' button, 退貨全部取消
      */
     @IBAction func actDelAll(sender: UIButton) {
+        // 產生 http post data, http 連線儲存後跳離
+        var dictParm: Dictionary<String, String> = [:]
+        dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
+        dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
+        dictParm["page"] = "purchase"
+        dictParm["act"] = "purchase_returndel"
+        dictParm["arg0"] = dictReturn["id"] as? String
+        
+        // HTTP 開始連線
+        pubClass.popConfirm(self, aryMsg: [pubClass.getLang("systemwarring"), pubClass.getLang("purchase_returndelmsg")], withHandlerYes: {self.pubClass.HTTPConn(self, ConnParm: dictParm, callBack: self.HttpSaveResponChk)}, withHandlerNo: {return})
+    }
+    
+    /**
+     * HTTP 連線後取得連線結果
+     */
+    private func HttpSaveResponChk(dictRS: Dictionary<String, AnyObject>) {
+        // 回傳後跳離, 通知 parent 資料 reload
+        let strMsg = (dictRS["result"] as! Bool != true) ? pubClass.getLang("err_trylatermsg") : pubClass.getLang("purchase_returndatadelcomplete")
+        
+        delegate?.PageNeedReload(true)
+        pubClass.popIsee(self, Msg: strMsg, withHandler: {self.dismissViewControllerAnimated(true, completion: nil)})
     }
     
     /**

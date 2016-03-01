@@ -9,6 +9,8 @@ import Foundation
  * 商品管理 - 進貨退回列表
  */
 class PurchaseReturnList: UIViewController {
+    // Delegate
+    var delegate = PubClassDelegate?()
     
     // @IBOutlet
     @IBOutlet weak var tableData: UITableView!
@@ -23,16 +25,21 @@ class PurchaseReturnList: UIViewController {
     var dictAllData: Dictionary<String, AnyObject>!
     
     // table data 設定
-    private var aryData: Array<Dictionary<String, AnyObject>>! // 退貨資料 array
+    private var aryData: Array<Dictionary<String, AnyObject>>! // 退貨單資料 array
     
     // 原始進貨商品 dict 資料，用於計算最大退貨量, 'pdid' => qty dict data
     private var dictPurchasePd: Dictionary<String, Dictionary<String, AnyObject>> = [:]
+    
+    // 其他參數
+    private var bolReload = false // top parent 頁面是否需要 http reload
     
     /**
     * View Load 程序
     */
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // 退貨單資料料
         aryData = dictAllData["return"] as! Array<Dictionary<String, AnyObject>>
         
         // 產生原始進貨商品 dict 資料，用於計算最大退貨量
@@ -49,15 +56,16 @@ class PurchaseReturnList: UIViewController {
     }
     
     /**
-     * 初始與設定 VCview 內的 field
-     */
-    private func initViewField() {
-    }
-    
-    /**
      * View WillAppear 程序
      */
     override func viewWillAppear(animated: Bool) {
+        // 子頁面有資料變動，本頁面結束設定 parent class reload
+        if (bolReload) {
+            self.view.alpha = 0.6
+            delegate?.PageNeedReload(true)
+            self.dismissViewControllerAnimated(false, completion: {})
+        }
+        
         labPrice.text = dictAllData["returnprice"] as? String
         labPriceCust.text = dictAllData["returnpricecust"] as? String
     }

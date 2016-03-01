@@ -7733,6 +7733,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="btnDelAll" destination="8KX-rd-tR0" id="S0D-BL-Ung"/>
+                        <outlet property="btnSave" destination="efj-rz-OYb" id="LCy-6R-RvR"/>
                         <outlet property="containView" destination="fGK-47-ywk" id="Ufd-pd-Pcj"/>
                         <outlet property="edCustPrice" destination="Sjw-tn-okb" id="C8j-yu-HjD"/>
                         <outlet property="edRDate" destination="bUW-lW-71B" id="ZZL-GT-LUE"/>

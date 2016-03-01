@@ -8,7 +8,7 @@ import Foundation
 /**
  * 商品管理 - 進貨退回，新增一筆退貨單資料
  */
-class PurchaseReturnAdd: UIViewController, PubPurReturnPdListDelegate {
+class PurchaseReturnAdd: UIViewController, PubPurReturnPdListDelegate, PickerDateTimeDelegate {
     // Delegate
     var delegate = PubClassDelegate?()
     
@@ -30,16 +30,8 @@ class PurchaseReturnAdd: UIViewController, PubPurReturnPdListDelegate {
     
     // 其他參數
     private var aryReturnPd: Array<Dictionary<String, AnyObject>>!  // 退貨商品 array
-    
-    // UIDatePicker 設定
-    private var defDate:String!
-    private var maxDate: String!
-    private var minDate: String!
-    private var datePickerView: UIDatePicker!
-    
-    // 根據local顯示可閱讀的日期, ex. 2015年1月1日 13:59
-    private let dateFmtYMD: NSDateFormatter = NSDateFormatter()
-    private var strCurrDate: String!  // 取得目前選擇的日期，轉為 12碼 string
+    private var mPicker: PickerDateTime!  // datetime Picker
+    private var strCurrDate: String!  // 目前選擇的退貨日期
     
     /**
     * View Load 程序
@@ -53,24 +45,22 @@ class PurchaseReturnAdd: UIViewController, PubPurReturnPdListDelegate {
             aryReturnPd[i]["selQty"] = "0"
         }
         
+        /* 初始與設定 日期時間 picker */
         // Picker data 參數
-        datePickerView = UIDatePicker()
-        minDate = pubClass.subStr(dictAllData["sdate"] as! String, strFrom: 0, strEnd: 10) + "59"
-        maxDate = pubClass.subStr(strToday, strFrom: 0, strEnd: 8) + "2359"
-        defDate = maxDate
+        let minDate = pubClass.subStr(dictAllData["sdate"] as! String, strFrom: 0, strEnd: 10) + "59"
+        let maxDate = pubClass.subStr(strToday, strFrom: 0, strEnd: 10) + "59"
+        let defDate = pubClass.subStr(strToday, strFrom: 0, strEnd: 12)
         strCurrDate = defDate
+        
+        mPicker = PickerDateTime.init(withUIField: edRDate, withDefMaxMin: [defDate, maxDate, minDate], NavyBarTitle: pubClass.getLang("selectdate"))
+        mPicker.delegate = self
     }
     
     /**
      * View WillAppear 程序
      */
     override func viewWillAppear(animated: Bool) {
-        initDatePicker()
         initViewField()
-        
-        dispatch_async(dispatch_get_main_queue(), {
-            
-        })
     }
     
     /**
@@ -100,99 +90,7 @@ class PurchaseReturnAdd: UIViewController, PubPurReturnPdListDelegate {
         labHteid.text = dictAllData["hte_id"] as? String
         edRDate.text = pubClass.formatDateWithStr(strToday, type: 14)
     }
-    
-    /**
-     * UIDatePicker 初始設定
-     * "dd-MM-yyyy HH:mm:ss"
-     */
-    private func initDatePicker() {
-        // 設定日期顯示樣式
-        datePickerView.datePickerMode = UIDatePickerMode.DateAndTime
-        dateFmtYMD.dateStyle = NSDateFormatterStyle.MediumStyle
-        dateFmtYMD.timeStyle = NSDateFormatterStyle.MediumStyle
         
-        dateFmtYMD.dateFormat = "yyyyMMddHHmm"
-        //dateFmtYMD.timeZone = NSTimeZone(abbreviation: "UTC");
-        
-        datePickerView.minimumDate = dateFmtYMD.dateFromString(minDate)!
-        datePickerView.maximumDate = dateFmtYMD.dateFromString(maxDate)!
-        
-        // 設定預設值
-        let mDate = dateFmtYMD.dateFromString(defDate)!
-        datePickerView.setDate(mDate, animated: false)
-        
-        // 設定 edDate 輸入鍵盤，樣式
-        edRDate.inputView = datePickerView
-        self.initKBBar(pubClass.getLang("product_selreturndate"))
-        
-        // 設定 datePicker value change
-        datePickerView.addTarget(self, action: Selector("datePickerValueChanged:"), forControlEvents: UIControlEvents.ValueChanged)
-    }
-    
-    /**
-     * 鍵盤輸入視窗的 'navybar' 設定
-     * 日期欄位 點取彈出 資料輸入視窗 (虛擬鍵盤), 'InputView' 的頂端顯示 'navyBar'
-     */
-    private func initKBBar(strTitle: String) {
-        let toolBar = UIToolbar()
-        toolBar.barStyle = UIBarStyle.Default
-        toolBar.translucent = true  // 半透明
-        //toolBar.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)  // 文字顏色
-        toolBar.sizeToFit()
-        
-        let doneButton = UIBarButtonItem(title: pubClass.getLang("select_ok"), style: UIBarButtonItemStyle.Plain, target: self, action: "PKDateDone")
-        
-        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-        
-        // 自訂一個 label 作為 NavyBar 的 Title
-        let labTitle = UILabel(frame: CGRect(x: 0, y: 0, width: 200.0, height: 14.0))
-        labTitle.text = strTitle
-        //labTitle.font = UIFont(name: "System", size: 14)
-        labTitle.textAlignment = NSTextAlignment.Center
-        let titleButton = UIBarButtonItem(customView: labTitle)
-        
-        let cancelButton = UIBarButtonItem(title: pubClass.getLang("cancel"), style: UIBarButtonItemStyle.Plain, target: self, action: "PKDateCancel")
-        
-        toolBar.setItems([cancelButton, spaceButton, titleButton, spaceButton, doneButton], animated: false)
-        toolBar.userInteractionEnabled = true
-        
-        edRDate.inputAccessoryView = toolBar
-    }
-
-    /**
-     * DatePicker 點取　'done', 欄位值改變, @objc 注意用法
-     */
-    @objc private func PKDateDone() {
-        edRDate.resignFirstResponder()
-        
-        dispatch_async(dispatch_get_main_queue(), {
-            self.edRDate.text = self.pubClass.formatDateWithStr(self.dateFmtYMD.stringFromDate(self.datePickerView.date), type: 14)
-        })
-        
-        // 設定 strDate value
-        strCurrDate = dateFmtYMD.stringFromDate(self.datePickerView.date)
-    }
-    
-    /**
-     * DatePicker 點取　'cancel'
-     */
-    func PKDateCancel() {
-        dispatch_async(dispatch_get_main_queue(), {
-            self.edRDate.text = self.pubClass.formatDateWithStr(self.strCurrDate, type: 14)
-        })
-        
-        edRDate.resignFirstResponder()
-    }
-    
-    /**
-     * DatePicker Value change
-     */
-    @objc private func datePickerValueChanged(sender:UIDatePicker) {
-        dispatch_async(dispatch_get_main_queue(), {
-            self.edRDate.text = self.pubClass.formatDateWithStr(self.dateFmtYMD.stringFromDate(self.datePickerView.date), type: 14)
-        })
-    }
-    
     /**
      * #mark: UITextFieldDelegate
      * 虛擬鍵盤: 'Return' key 型態與動作
@@ -219,6 +117,14 @@ class PurchaseReturnAdd: UIViewController, PubPurReturnPdListDelegate {
 
         labAmount.text = String(intTot)
         edCustPrice.text = String(intTot)
+    }
+    
+    /**
+     * #mark: PubPurReturnPdListDelegate
+     * 退貨日期選擇，本頁面 strCurrDate 重新設定
+     */
+    func doneSelectDateTime(strDateTime: String) {
+        strCurrDate = strDateTime
     }
     
     /**
