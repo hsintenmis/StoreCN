@@ -117,6 +117,10 @@
 		D70CD9461C72CBF8008E79E1 /* PubCourseSaleAdEd.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70CD9411C72CBF8008E79E1 /* PubCourseSaleAdEd.swift */; };
 		D70CD9481C72CC42008E79E1 /* SugstChildPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70CD9471C72CC42008E79E1 /* SugstChildPage.swift */; };
 		D70CD94A1C731DF5008E79E1 /* SugstChildColtCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70CD9491C731DF5008E79E1 /* SugstChildColtCell.swift */; };
+		D70FCC251C86CCD80035D1B6 /* StaffList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70FCC241C86CCD80035D1B6 /* StaffList.swift */; };
+		D70FCC271C86CF1D0035D1B6 /* StaffAdEd.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70FCC261C86CF1D0035D1B6 /* StaffAdEd.swift */; };
+		D70FCC291C86D4140035D1B6 /* StaffListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70FCC281C86D4140035D1B6 /* StaffListCell.swift */; };
+		D70FCC2B1C86E8DF0035D1B6 /* StaffAdEdContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70FCC2A1C86E8DF0035D1B6 /* StaffAdEdContainer.swift */; };
 		D7134FF91C5F5A990069ACF1 /* MemberMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7134FF81C5F5A990069ACF1 /* MemberMain.swift */; };
 		D7150E3F1C5C5B8E00C9FE8B /* MemberList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7150E3E1C5C5B8E00C9FE8B /* MemberList.swift */; };
 		D7150E431C5C6E8000C9FE8B /* MemberAdEd.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7150E421C5C6E8000C9FE8B /* MemberAdEd.swift */; };
@@ -275,6 +279,10 @@
 		D70CD9411C72CBF8008E79E1 /* PubCourseSaleAdEd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubCourseSaleAdEd.swift; path = CourseSale/PubCourseSaleAdEd.swift; sourceTree = "<group>"; };
 		D70CD9471C72CC42008E79E1 /* SugstChildPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SugstChildPage.swift; path = CourseSale/SugstChildPage.swift; sourceTree = "<group>"; };
 		D70CD9491C731DF5008E79E1 /* SugstChildColtCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SugstChildColtCell.swift; path = CourseSale/SugstChildColtCell.swift; sourceTree = "<group>"; };
+		D70FCC241C86CCD80035D1B6 /* StaffList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StaffList.swift; path = Staff/StaffList.swift; sourceTree = "<group>"; };
+		D70FCC261C86CF1D0035D1B6 /* StaffAdEd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StaffAdEd.swift; path = Staff/StaffAdEd.swift; sourceTree = "<group>"; };
+		D70FCC281C86D4140035D1B6 /* StaffListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StaffListCell.swift; path = Staff/StaffListCell.swift; sourceTree = "<group>"; };
+		D70FCC2A1C86E8DF0035D1B6 /* StaffAdEdContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StaffAdEdContainer.swift; path = Staff/StaffAdEdContainer.swift; sourceTree = "<group>"; };
 		D7134FF81C5F5A990069ACF1 /* MemberMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberMain.swift; path = Member/MemberMain.swift; sourceTree = "<group>"; };
 		D7150E3E1C5C5B8E00C9FE8B /* MemberList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberList.swift; path = Member/MemberList.swift; sourceTree = "<group>"; };
 		D7150E421C5C6E8000C9FE8B /* MemberAdEd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberAdEd.swift; path = Member/MemberAdEd.swift; sourceTree = "<group>"; };
@@ -579,6 +587,10 @@
 		D7496D211C5B4DF600B75D6A /* Staff */ = {
 			isa = PBXGroup;
 			children = (
+				D70FCC241C86CCD80035D1B6 /* StaffList.swift */,
+				D70FCC281C86D4140035D1B6 /* StaffListCell.swift */,
+				D70FCC261C86CF1D0035D1B6 /* StaffAdEd.swift */,
+				D70FCC2A1C86E8DF0035D1B6 /* StaffAdEdContainer.swift */,
 			);
 			name = Staff;
 			sourceTree = "<group>";
@@ -789,12 +801,14 @@
 				D74652071C5CA85900190EF6 /* PickerNumber.swift in Sources */,
 				D7645BE41C801FA900507072 /* PurchaseReturnEdit.swift in Sources */,
 				D70CD9421C72CBF8008E79E1 /* CourseSale.swift in Sources */,
+				D70FCC291C86D4140035D1B6 /* StaffListCell.swift in Sources */,
 				D7037A731C58C03F002A955E /* CutImage.swift in Sources */,
 				D7BB2ADF1C64788700624E08 /* PubMeadDataSelectCell.swift in Sources */,
 				42E21F0F1C68825200B85EA9 /* PickerDate.swift in Sources */,
 				D7645BE01C80068400507072 /* PurchaseReturnList.swift in Sources */,
 				D7645BE21C80074500507072 /* PurchaseReturnListCell.swift in Sources */,
 				D7FB953C1C59F58C00B48F57 /* MainMenu.swift in Sources */,
+				D70FCC271C86CF1D0035D1B6 /* StaffAdEd.swift in Sources */,
 				D70854471C7D622500861694 /* PurchaseListCell.swift in Sources */,
 				D7037A751C58C03F002A955E /* ImageClass.swift in Sources */,
 				D7496D261C5B58CF00B75D6A /* CourseList.swift in Sources */,
@@ -829,6 +843,7 @@
 				D70CD9481C72CC42008E79E1 /* SugstChildPage.swift in Sources */,
 				D7EDE8841C60733200665542 /* MemberMainPager.swift in Sources */,
 				D7BB2AD01C646DC800624E08 /* PubSoqibedSelect.swift in Sources */,
+				D70FCC2B1C86E8DF0035D1B6 /* StaffAdEdContainer.swift in Sources */,
 				D7037A761C58C03F002A955E /* JSONClass.swift in Sources */,
 				D7B29F791C5C712E0025C53A /* MemberAdEdContainer.swift in Sources */,
 				D7134FF91C5F5A990069ACF1 /* MemberMain.swift in Sources */,
@@ -837,6 +852,7 @@
 				D720FBA11C7458F000AE640C /* Purchase.swift in Sources */,
 				D70854491C7D69C400861694 /* PurchaseListDetail.swift in Sources */,
 				D7037A781C58C03F002A955E /* PubClass.swift in Sources */,
+				D70FCC251C86CCD80035D1B6 /* StaffList.swift in Sources */,
 				D7BB2ADC1C64788700624E08 /* PubCourseSelect.swift in Sources */,
 				D7037A681C58BF32002A955E /* AppDelegate.swift in Sources */,
 				D72F26431C7AA60100717394 /* Sale.swift in Sources */,

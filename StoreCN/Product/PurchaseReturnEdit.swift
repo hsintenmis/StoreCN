@@ -71,6 +71,8 @@ class PurchaseReturnEdit: UIViewController, PubPurReturnPdListDelegate , PickerD
         
         // field 設定
         btnDelAll.alpha = 0.0
+        labAmount.text = dictReturn["price"] as? String
+        edCustPrice.text = dictReturn["custprice"] as? String
     }
     
     /**

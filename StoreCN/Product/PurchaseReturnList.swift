@@ -8,7 +8,7 @@ import Foundation
 /**
  * 商品管理 - 進貨退回列表
  */
-class PurchaseReturnList: UIViewController {
+class PurchaseReturnList: UIViewController, PubClassDelegate {
     // Delegate
     var delegate = PubClassDelegate?()
     
@@ -113,6 +113,14 @@ class PurchaseReturnList: UIViewController {
     }
     
     /**
+     * #mark: PurchaseDetailEditDelegate Delegate
+     * 設定 top parent class page 是否需要 reload
+     */
+    func PageNeedReload(needReload: Bool) {
+        bolReload = needReload
+    }
+    
+    /**
      * Segue 跳轉頁面
      */
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -125,6 +133,7 @@ class PurchaseReturnList: UIViewController {
             mVC.strToday = strToday
             mVC.dictPurchasePd = dictPurchasePd
             mVC.purchaseDate = dictAllData["sdate"] as! String
+            mVC.delegate = self
             
             return
         }

@@ -1,25 +1,22 @@
 //
-// TableView, PurchaseListDetailDelegate
+// TableView
 //
 
 import UIKit
 import Foundation
 
 /**
- * !TODO! table cell 點取有權限
- *
- * 商品管理 - 進貨列表
+ * 營養師列表
  */
-class PurchaseList: UIViewController, PubClassDelegate {
+class StaffList: UIViewController {
     
     // @IBOutlet
     @IBOutlet weak var tableData: UITableView!
     
     // common property
-    let pubClass: PubClass = PubClass()
+    var pubClass: PubClass!
     
     // public, 本頁面需要的全部資料, parent 設定
-    var strToday = ""
     var dictAllData: Dictionary<String, AnyObject> = [:]
     
     // table data 設定
@@ -34,7 +31,11 @@ class PurchaseList: UIViewController, PubClassDelegate {
     */
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.chkHaveData()
+        pubClass = PubClass()
+        
+        // TableCell autoheight
+        tableData.estimatedRowHeight = 100.0
+        tableData.rowHeight = UITableViewAutomaticDimension
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -48,21 +49,16 @@ class PurchaseList: UIViewController, PubClassDelegate {
     }
     
     /**
-    * 檢查是否有資料
-    */
+     * 檢查是否有資料
+     */
     private func chkHaveData() {
-        // 檢查資料
-        if let tmpData = dictAllData["data"] as? Array<Dictionary<String, AnyObject>> {
-            aryData = tmpData
+        // 檢查是否有資料
+        if let aryTmp = dictAllData["data"] as? Array<Dictionary<String, AnyObject>> {
+            aryData = aryTmp
         }
         
-        // 檢查是否有資料
         if (aryData.count < 1) {
-            pubClass.popIsee(self, Msg: pubClass.getLang("nodata"), withHandler: {
-                self.dismissViewControllerAnimated(true, completion: {})
-            })
-            
-            return
+            pubClass.popIsee(self, Msg: pubClass.getLang("staff_nodataaddmsg"))
         }
         
         // tableview reload
@@ -80,15 +76,15 @@ class PurchaseList: UIViewController, PubClassDelegate {
         var mParam: Dictionary<String, String> = [:]
         mParam["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
         mParam["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
-        mParam["page"] = "purchase"
-        mParam["act"] = "purchase_listdata"
+        mParam["page"] = "staff"
+        mParam["act"] = "staff_getdata"
         
         // HTTP 開始連線
         pubClass.HTTPConn(self, ConnParm: mParam, callBack: {(dictRS: Dictionary<String, AnyObject>)->Void in
             
-            // 任何錯誤顯示錯誤訊息
+            // 任何錯誤跳離
             if (dictRS["result"] as! Bool != true) {
-                var errMsg = self.pubClass.getLang("nodata")
+                var errMsg = self.pubClass.getLang("err_trylatermsg")
                 if let tmpStr: String = dictRS["msg"] as? String {
                     errMsg = self.pubClass.getLang(tmpStr)
                 }
@@ -102,13 +98,6 @@ class PurchaseList: UIViewController, PubClassDelegate {
             
             /* 解析正確的 http 回傳結果，執行後續動作 */
             let dictData = dictRS["data"]!["content"] as! Dictionary<String, AnyObject>
-            
-            if let today = dictData["today"] as? String {
-                if (today.characters.count == 14) {
-                    self.strToday = today
-                }
-            }
-            
             self.dictAllData = dictData
             self.chkHaveData()
         })
@@ -141,7 +130,7 @@ class PurchaseList: UIViewController, PubClassDelegate {
         
         // 產生 Item data
         let ditItem = aryData[indexPath.row] as Dictionary<String, AnyObject>
-        let mCell = tableView.dequeueReusableCellWithIdentifier("cellPurchaseList", forIndexPath: indexPath) as! PurchaseListCell
+        let mCell = tableView.dequeueReusableCellWithIdentifier("cellStaffList", forIndexPath: indexPath) as! StaffListCell
         
         mCell.initView(ditItem, PubClass: pubClass)
         
@@ -155,7 +144,7 @@ class PurchaseList: UIViewController, PubClassDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         currIndexPath = indexPath
         
-        self.performSegueWithIdentifier("PurchaseListDetail", sender: aryData[indexPath.row])
+        self.performSegueWithIdentifier("StaffAdEd", sender: aryData[indexPath.row])
     }
     
     /**
@@ -165,16 +154,9 @@ class PurchaseList: UIViewController, PubClassDelegate {
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == UITableViewCellEditingStyle.Delete {
             
-            // 有退貨資料不能刪除
-            if let _ = self.aryData[indexPath.row]["return"] as? Array<AnyObject> {
-                self.pubClass.popIsee(self, Msg: self.pubClass.getLang("purchasee_cantdelpurchasemsg"))
-                
-                return
-            }
-            
             // 彈出 confirm 視窗, 點取 'OK' 執行實際刪除資料程序
             pubClass.popConfirm(self, aryMsg: [self.pubClass.getLang("systemwarring"), self.pubClass.getLang("purchase_delwarringmsg")], withHandlerYes: {
-
+                
                 // 產生 http post data, http 連線儲存後跳離
                 var dictParm: Dictionary<String, String> = [:]
                 dictParm["acc"] = self.pubClass.getAppDelgVal("V_USRACC") as? String
@@ -214,30 +196,28 @@ class PurchaseList: UIViewController, PubClassDelegate {
         }
     }
     
-    
     /**
-     * #mark: PurchaseListDetailDelegate Delegate
-     * 設定上層 class page 是否需要 reload
+     * #mark: UITableView Delegate
+     * Section 標題
      */
-    func PageNeedReload(needReload: Bool) {
-        bolReload = needReload
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return pubClass.getLang("staff_totnums") + ": " + String(aryData.count)
     }
     
     /**
      * Segue 跳轉頁面
      */
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let strIdent = segue.identifier
+        //let strIdent = segue.identifier
         
-        // 進貨明細主頁面
-        if (strIdent == "PurchaseListDetail") {
-            let mVC = segue.destinationViewController as! PurchaseListDetail
-            mVC.dictAllData = sender as! Dictionary<String, AnyObject>
-            mVC.strToday = strToday
-            mVC.delegate = self
-            
-            return
-        }
+        // 編輯頁面
+    }
+    
+    /**
+     * act, 點取 '新增' button
+     */
+    @IBAction func actAdd(sender: UIBarButtonItem) {
+        
     }
     
     /**

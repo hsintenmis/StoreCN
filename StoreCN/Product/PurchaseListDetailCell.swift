@@ -12,7 +12,7 @@ protocol PurchaseListDetailCellDelegate {
     /**
      * Pickr view, 點取 '完成' / '取消'時， parent class 執行相關動作
      */
-    func QtySelecteDone(SelectQty: Int)
+    func QtySelecteDone(SelectQty: Int, indexpath: NSIndexPath)
     func QtySelecteCancel()
 }
 
@@ -38,6 +38,9 @@ class PurchaseListDetailCell: UITableViewCell, UIPickerViewDelegate, UIPickerVie
     private var aryRowVal: Array<String> = []  // Picker 的資料
     private var aryMaxMin = [1, 99] // 數量選擇，最小/最大 值
     
+    // 其他設定
+    private var currIndexPath: NSIndexPath!
+    
     /**
     * Cell Load
     */
@@ -59,7 +62,9 @@ class PurchaseListDetailCell: UITableViewCell, UIPickerViewDelegate, UIPickerVie
     /**
      * 初始與設定 Cell
      */
-    func initView(ditItem: Dictionary<String, AnyObject>!) {
+    func initView(ditItem: Dictionary<String, AnyObject>!, indexpath: NSIndexPath) {
+        currIndexPath = indexpath
+        
         // 設定 picker 預設選擇的數量
         mPKView.selectRow(Int(ditItem["qty"] as! String)! - 1, inComponent: 0, animated: true)
         
@@ -157,7 +162,7 @@ class PurchaseListDetailCell: UITableViewCell, UIPickerViewDelegate, UIPickerVie
         edQty.resignFirstResponder()
         
         // 取得實際選取的 value
-        delegate?.QtySelecteDone(Int(aryRowVal[mPKView.selectedRowInComponent(0)])!)
+        delegate?.QtySelecteDone(Int(aryRowVal[mPKView.selectedRowInComponent(0)])!, indexpath: currIndexPath)
     }
     
     /**

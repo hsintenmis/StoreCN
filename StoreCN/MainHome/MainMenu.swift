@@ -20,8 +20,6 @@ class MainMenu: UIViewController {
     let mJSONClass = JSONClass()
     let mFileMang = FileMang()
     
-    var dictPref: Dictionary<String, AnyObject>!  // Prefer data
-    
     // parent Segue 設定
     var aryMember: Array<Dictionary<String, String>> = []
     var aryPict: Dictionary<String, String> = [:]
@@ -32,6 +30,7 @@ class MainMenu: UIViewController {
     // 其他參數設定
     var strToday = ""
     var strTodayMsg = ""
+    private var currMenuIndexPath: NSIndexPath?
     
     // HTTP 連線參數設定
     private var dictParm: Dictionary<String, String> = [:]
@@ -49,20 +48,16 @@ class MainMenu: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 固定初始參數
-        //mVCtrl = self
-        dictPref = pubClass.getPrefData()
-        
         // HTTP 連線參數設定
         dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
         dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
     }
     
     /**
-     * View DidAppear 程序
+     * View Disappear 程序
      */
-    override func viewWillAppear(animated: Bool) {
-
+    override func viewWillDisappear(animated: Bool) {
+        currMenuIndexPath = nil
     }
     
     /**
@@ -70,7 +65,7 @@ class MainMenu: UIViewController {
      */
     override func viewDidAppear(animated: Bool) {
         self.pubClass.ReloadAppDelg()
-        dictPref = pubClass.getPrefData()
+        colviewMenu.reloadData()
         
         dispatch_async(dispatch_get_main_queue(), {
             // 連線取得資料
@@ -161,14 +156,14 @@ class MainMenu: UIViewController {
         mCell.imgPict.image = UIImage(named: "menu_" + aryMenuName[position])
         
         // 樣式/外觀/顏色
-        /*
+        mCell.layer.borderWidth = 2
         mCell.layer.cornerRadius = 5
-        mCell.layer.borderWidth = 1
-        mCell.layer.borderColor = pubClass.ColorHEX(dictColor["gray"]).CGColor
-        */
         
-        //var strColor = "gray"
-        //mCell.backgroundColor = pubClass.ColorHEX(dictColor[strColor])
+        if (indexPath == currMenuIndexPath) {
+            mCell.layer.borderColor = pubClass.ColorHEX(pubClass.dictColor["red"]).CGColor
+        } else {
+            mCell.layer.borderColor = pubClass.ColorHEX(pubClass.dictColor["white"]).CGColor
+        }
         
         return mCell
     }
@@ -178,7 +173,9 @@ class MainMenu: UIViewController {
      * 點取主選單項目
      */
     func collectionView(collectionView: UICollectionView!, didSelectItemAtIndexPath indexPath: NSIndexPath!) {
-
+        currMenuIndexPath = indexPath
+        colviewMenu.reloadData()
+        
         let position = indexPath.row
         let strItem = aryMenuName[position]
 
@@ -207,6 +204,11 @@ class MainMenu: UIViewController {
             mAlert = resetAlertVC(mAlert, withAryIdent: ["product_sale", "product_purchase", "product_stock", "product_purchaselist"])
             break
             
+            // 人力管理
+        case "staff":
+            mAlert = resetAlertVC(mAlert, withAryIdent: ["staff_employee", "staff_upgrade"])
+            break
+
         default:
             break
         }
@@ -286,15 +288,15 @@ class MainMenu: UIViewController {
                     return
                 }
                 
-                // 商品進貨列表
+                // 商品進貨列表, HTTP 連線取得資料直接由 child 'PurchaseList' 處理
                 if (strIdent == "product_purchaselist") {
-                    /*
-                    mParam["page"] = "purchase"
-                    mParam["act"] = "purchase_listdata"
-                    self.MenuItemSelect(strIdent, HTTPParam: mParam)
-                    */
-                    
                     self.performSegueWithIdentifier(strIdent, sender: nil)
+                    return
+                }
+                
+                // 營養師列表, HTTP 連線取得資料直接由 child 'PurchaseList' 處理
+                if (strIdent == "staff_employee") {
+                    self.performSegueWithIdentifier("StaffList", sender: nil)
                     return
                 }
             }))
@@ -393,17 +395,6 @@ class MainMenu: UIViewController {
             return
         }
         
-        // 商品進貨列表
-        /*
-        if (strIdent == "product_purchaselist") {
-            let mVC = segue.destinationViewController as! PurchaseList
-            mVC.strToday = strToday
-            mVC.dictAllData = sender as! Dictionary<String, AnyObject>
-            
-            return
-        }
-        */
-        
         return
     }
     
@@ -424,7 +415,6 @@ class MainMenu: UIViewController {
         })
         
         self.pubClass.ReloadAppDelg()
-        dictPref = pubClass.getPrefData()
         initViewField()
     }
     

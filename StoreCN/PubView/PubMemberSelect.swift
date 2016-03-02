@@ -115,6 +115,14 @@ class PubMemberSelect: UIViewController {
     
     /**
      * #mark: UITableView Delegate
+     * Section 的數量
+     */
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    /**
+     * #mark: UITableView Delegate
      * 回傳指定的數量
      */
     func tableView(tableView: UITableView!, numberOfRowsInSection section:Int) -> Int {

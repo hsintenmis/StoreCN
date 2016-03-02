@@ -117,7 +117,7 @@ class PurchaseListDetail: UIViewController, PurchaseListDetailCellDelegate, PubC
         }
         
         mCell.delegate = self
-        mCell.initView(ditItem)
+        mCell.initView(ditItem, indexpath: indexPath)
         
         // 有退貨數量不能點取
         let dictPd = aryPd[indexPath.row]
@@ -155,21 +155,48 @@ class PurchaseListDetail: UIViewController, PurchaseListDetailCellDelegate, PubC
     
     /**
      * #mark: PurchaseListDetailCellDelegate
-     * '數量鍵盤' 點取 '完成' 回傳選擇的 qty, 執行相關程序
+     * 進貨商品數量 '數量鍵盤'點取完成，回傳選擇的 qty, 執行相關程序
      */
-    func QtySelecteDone(SelectQty: Int) {
+    func QtySelecteDone(SelectQty: Int, indexpath: NSIndexPath) {
         self.keyboardClose()
         
         // 彈出警告視窗，確認後執行 http 儲存，本頁面結束
-        let aryMsg = [pubClass.getLang("systemwarring"), pubClass.getLang("purchase_pruchaseqtyeditmsg")]
-        pubClass.popConfirm(self, aryMsg: aryMsg, withHandlerYes: {self.HTTPDataSave()}, withHandlerNo: {})
+        var dictParm: Dictionary<String, String> = [:]
+        dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
+        dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
+        dictParm["page"] = "purchase"
+        dictParm["act"] = "purchase_qtysave"
+        
+        var dictArg0: Dictionary<String, AnyObject> = [:]
+        dictArg0["pdid"] = aryPd[indexpath.row]["pdid"] as! String
+        dictArg0["qty"] = String(SelectQty)
+        dictArg0["invo_id"] = dictAllData["id"] as? String
+        
+        do {
+            let jobjData = try
+                NSJSONSerialization.dataWithJSONObject(dictArg0, options: NSJSONWritingOptions(rawValue: 0))
+            let jsonString = NSString(data: jobjData, encoding: NSUTF8StringEncoding)! as String
+            
+            dictParm["arg0"] = jsonString
+        } catch {
+            pubClass.popIsee(self, Msg: pubClass.getLang("err_data"))
+            
+            return
+        }
+        
+        // HTTP 開始連線
+        pubClass.popConfirm(self, aryMsg: [pubClass.getLang("systemwarring"), pubClass.getLang("purchase_pruchaseqtyeditmsg")], withHandlerYes: {self.pubClass.HTTPConn(self, ConnParm: dictParm, callBack: self.HttpQtySaveResponChk)}, withHandlerNo: {return})
     }
     
     /**
-     * 資料儲存, http 連線，完成後結束本頁面
+     * 商品進貨數量改變，HTTP 連線後取得連線結果
      */
-    private func HTTPDataSave() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    private func HttpQtySaveResponChk(dictRS: Dictionary<String, AnyObject>) {
+        // 回傳後跳離, 通知 parent 資料 reload
+        let strMsg = (dictRS["result"] as! Bool != true) ? pubClass.getLang("err_trylatermsg") : pubClass.getLang("datasavecompleted")
+        
+        delegate?.PageNeedReload(true)
+        pubClass.popIsee(self, Msg: strMsg, withHandler: {self.dismissViewControllerAnimated(true, completion: nil)})
     }
     
     /**
@@ -245,6 +272,7 @@ class PurchaseListDetail: UIViewController, PurchaseListDetailCellDelegate, PubC
             let mVC = segue.destinationViewController as! PurchaseReturnList
             mVC.dictAllData = dictAllData
             mVC.strToday = strToday
+            mVC.delegate = self
             
             return
         }
