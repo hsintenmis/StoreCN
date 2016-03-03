@@ -47,6 +47,7 @@ class PubPurReturnPdListCell: UITableViewCell, UIPickerViewDelegate, UIPickerVie
     */
     override func awakeFromNib() {
         super.awakeFromNib()
+        aryRowVal = []
         mPKView.delegate = self
     }
     
@@ -163,7 +164,7 @@ class PubPurReturnPdListCell: UITableViewCell, UIPickerViewDelegate, UIPickerVie
         labTot.text = String(intQty * intPrice)
         
         // delegate 設定
-        delegate?.QtySelecteDone(Int(aryRowVal[mPKView.selectedRowInComponent(0)])!,  indexPath: currIndexPath)
+        delegate?.QtySelecteDone(Int(aryRowVal[mPKView.selectedRowInComponent(0)])!, indexPath: currIndexPath)
     }
     
     /**

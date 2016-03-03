@@ -206,7 +206,7 @@ class MainMenu: UIViewController {
             
             // 人力管理
         case "staff":
-            mAlert = resetAlertVC(mAlert, withAryIdent: ["staff_employee", "staff_upgrade"])
+            mAlert = resetAlertVC(mAlert, withAryIdent: ["staff_employee", "staff_benefit"])
             break
 
         default:
@@ -297,6 +297,12 @@ class MainMenu: UIViewController {
                 // 營養師列表, HTTP 連線取得資料直接由 child 'PurchaseList' 處理
                 if (strIdent == "staff_employee") {
                     self.performSegueWithIdentifier("StaffList", sender: nil)
+                    return
+                }
+                
+                // 營養師列表, HTTP 連線取得資料直接由 child 'PurchaseList' 處理
+                if (strIdent == "staff_benefit") {
+                    self.performSegueWithIdentifier("StaffBenefit", sender: nil)
                     return
                 }
             }))

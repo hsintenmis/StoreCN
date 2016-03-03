@@ -131,6 +131,10 @@
 		D71DFD121C7C53A10024BB59 /* PurchaseList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71DFD111C7C53A10024BB59 /* PurchaseList.swift */; };
 		D720FBA11C7458F000AE640C /* Purchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D720FBA01C7458F000AE640C /* Purchase.swift */; };
 		D728A26C1C8138B100B93B38 /* PurchaseListDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D728A26B1C8138B100B93B38 /* PurchaseListDetailCell.swift */; };
+		D72BA3311C8813450028898D /* StaffBenefit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72BA3301C8813450028898D /* StaffBenefit.swift */; };
+		D72BA3331C8814FA0028898D /* StaffBenefitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72BA3321C8814FA0028898D /* StaffBenefitCell.swift */; };
+		D72BA3351C8819500028898D /* StaffBenefitColtViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72BA3341C8819500028898D /* StaffBenefitColtViewCell.swift */; };
+		D72BA3371C882EE80028898D /* StaffBenefitDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72BA3361C882EE80028898D /* StaffBenefitDetail.swift */; };
 		D72F26431C7AA60100717394 /* Sale.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72F26421C7AA60100717394 /* Sale.swift */; };
 		D72F26451C7AA61900717394 /* SalePdSelt.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72F26441C7AA61900717394 /* SalePdSelt.swift */; };
 		D72F26471C7AA63A00717394 /* SalePdSeltCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72F26461C7AA63A00717394 /* SalePdSeltCell.swift */; };
@@ -293,6 +297,10 @@
 		D71DFD111C7C53A10024BB59 /* PurchaseList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchaseList.swift; path = Product/PurchaseList.swift; sourceTree = "<group>"; };
 		D720FBA01C7458F000AE640C /* Purchase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Purchase.swift; path = Product/Purchase.swift; sourceTree = "<group>"; };
 		D728A26B1C8138B100B93B38 /* PurchaseListDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchaseListDetailCell.swift; path = Product/PurchaseListDetailCell.swift; sourceTree = "<group>"; };
+		D72BA3301C8813450028898D /* StaffBenefit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StaffBenefit.swift; path = Staff/StaffBenefit.swift; sourceTree = "<group>"; };
+		D72BA3321C8814FA0028898D /* StaffBenefitCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StaffBenefitCell.swift; path = Staff/StaffBenefitCell.swift; sourceTree = "<group>"; };
+		D72BA3341C8819500028898D /* StaffBenefitColtViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StaffBenefitColtViewCell.swift; path = Staff/StaffBenefitColtViewCell.swift; sourceTree = "<group>"; };
+		D72BA3361C882EE80028898D /* StaffBenefitDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StaffBenefitDetail.swift; path = Staff/StaffBenefitDetail.swift; sourceTree = "<group>"; };
 		D72F26421C7AA60100717394 /* Sale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Sale.swift; path = Product/Sale.swift; sourceTree = "<group>"; };
 		D72F26441C7AA61900717394 /* SalePdSelt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SalePdSelt.swift; path = Product/SalePdSelt.swift; sourceTree = "<group>"; };
 		D72F26461C7AA63A00717394 /* SalePdSeltCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SalePdSeltCell.swift; path = Product/SalePdSeltCell.swift; sourceTree = "<group>"; };
@@ -591,6 +599,10 @@
 				D70FCC281C86D4140035D1B6 /* StaffListCell.swift */,
 				D70FCC261C86CF1D0035D1B6 /* StaffAdEd.swift */,
 				D70FCC2A1C86E8DF0035D1B6 /* StaffAdEdContainer.swift */,
+				D72BA3301C8813450028898D /* StaffBenefit.swift */,
+				D72BA3321C8814FA0028898D /* StaffBenefitCell.swift */,
+				D72BA3341C8819500028898D /* StaffBenefitColtViewCell.swift */,
+				D72BA3361C882EE80028898D /* StaffBenefitDetail.swift */,
 			);
 			name = Staff;
 			sourceTree = "<group>";
@@ -793,6 +805,7 @@
 			files = (
 				D7150E3F1C5C5B8E00C9FE8B /* MemberList.swift in Sources */,
 				D71DFD0E1C7C39630024BB59 /* StockHistory.swift in Sources */,
+				D72BA3311C8813450028898D /* StaffBenefit.swift in Sources */,
 				42E21F131C68E6F500B85EA9 /* CalendarCellData.swift in Sources */,
 				42F6E3651C6B86AE00C9BB94 /* ReservListCell.swift in Sources */,
 				D7150E431C5C6E8000C9FE8B /* MemberAdEd.swift in Sources */,
@@ -811,7 +824,9 @@
 				D70FCC271C86CF1D0035D1B6 /* StaffAdEd.swift in Sources */,
 				D70854471C7D622500861694 /* PurchaseListCell.swift in Sources */,
 				D7037A751C58C03F002A955E /* ImageClass.swift in Sources */,
+				D72BA3331C8814FA0028898D /* StaffBenefitCell.swift in Sources */,
 				D7496D261C5B58CF00B75D6A /* CourseList.swift in Sources */,
+				D72BA3351C8819500028898D /* StaffBenefitColtViewCell.swift in Sources */,
 				42E21F0B1C68800500B85EA9 /* CourseReserv.swift in Sources */,
 				D71DFD0C1C7C20180024BB59 /* StockCell.swift in Sources */,
 				D7F8BCED1C7ED6C70059E6E5 /* PurchaseDetailEditContainer.swift in Sources */,
@@ -838,6 +853,7 @@
 				D728A26C1C8138B100B93B38 /* PurchaseListDetailCell.swift in Sources */,
 				D7BB2AE01C64788700624E08 /* PubMemberSelect.swift in Sources */,
 				D7F45F451C75752A00735D09 /* PurchasePdSeltCell.swift in Sources */,
+				D72BA3371C882EE80028898D /* StaffBenefitDetail.swift in Sources */,
 				D70CD9431C72CBF8008E79E1 /* CourseSaleCourseSel.swift in Sources */,
 				D7EDE8861C6081B800665542 /* MemberMainColtViewCell.swift in Sources */,
 				D70CD9481C72CC42008E79E1 /* SugstChildPage.swift in Sources */,

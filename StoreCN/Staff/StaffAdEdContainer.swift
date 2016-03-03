@@ -20,6 +20,7 @@ class StaffAdEdContainer: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var txtPsd: UITextField!
     @IBOutlet weak var txtRePsd: UITextField!
     
+    @IBOutlet weak var swchGender: UISegmentedControl!
     @IBOutlet weak var txtTEL: UITextField!
     @IBOutlet weak var txtBirth: UITextField!
     @IBOutlet weak var txtHeigh: UITextField!
@@ -34,12 +35,11 @@ class StaffAdEdContainer: UITableViewController, UITextFieldDelegate {
     
     // common property
     var mVCtrl: UIViewController!
-    let pubClass: PubClass = PubClass()
+    var pubClass: PubClass!
     var dictPref: Dictionary<String, AnyObject>!  // Prefer data
     
     // public property, 上層 parent 設定
-    var strToday: String!
-    var strMode = "add"
+    var strMode: String!
     var dictMember: Dictionary<String, AnyObject> = [:]
     
     // textView array 與 val 值對應的 array data
@@ -54,6 +54,7 @@ class StaffAdEdContainer: UITableViewController, UITextFieldDelegate {
     // 其他參數
     // Picker 需要的資料
     private var dictPickParm: Dictionary<String, AnyObject> = [:]
+    private var strToday: String!
     
     /**
      * View Load 程序
@@ -63,8 +64,10 @@ class StaffAdEdContainer: UITableViewController, UITextFieldDelegate {
         
         // 固定初始參數
         mVCtrl = self
+        pubClass = PubClass()
         dictPref = pubClass.getPrefData()
-        
+        strToday = pubClass.getDevToday()
+
         // Picker param 初始資料
         dictPickParm["birth_def"] = "19600101"
         dictPickParm["birth_min"] = "19150101"
@@ -123,9 +126,9 @@ class StaffAdEdContainer: UITableViewController, UITextFieldDelegate {
      */
     private func procEditMode() {
         // 編輯模式下, 設定欄位初始資料
-        edName.text = dictMember["membername"] as? String
-        labID.text = dictMember["memberid"] as? String
-        labSdate.text = pubClass.formatDateWithStr(dictMember["sdate"] as! String, type: 8)
+        edName.text = dictMember["usrname"] as? String
+        labID.text = dictMember["id"] as? String
+        labSdate.text = pubClass.formatDateWithStr(dictMember["sdate"] as! String, type: "8s")
         
         txtTEL.text = dictMember["tel"] as? String
         txtCNID.text = dictMember["cid_cn"] as? String
@@ -135,6 +138,9 @@ class StaffAdEdContainer: UITableViewController, UITextFieldDelegate {
         txtZip.text = dictMember["zip"] as? String
         txtCity.text = dictMember["province"] as? String
         txtAddr.text = dictMember["addr"] as? String
+        
+        let strGender = dictMember["gender"] as! String
+        swchGender.selectedSegmentIndex = (strGender == "M") ? 0 : 1
         
         /* Picker 設定 */
         // 生日欄位
@@ -146,20 +152,22 @@ class StaffAdEdContainer: UITableViewController, UITextFieldDelegate {
         
         // 身高/體重 欄位, 設定 'PickerNumber'
         if let strHeight = dictMember["height"] as? String {
-            var strPointDigt = "0"
-            let aryDigt = strHeight.characters.split{$0 == "."}.map(String.init)
-            
-            if (aryDigt.count == 3) {
-                strPointDigt = aryDigt[2]
+            if (strHeight.characters.count > 1) {
+                var strPointDigt = "0"
+                let aryDigt = strHeight.characters.split{$0 == "."}.map(String.init)
+                
+                if (aryDigt.count == 3) {
+                    strPointDigt = aryDigt[2]
+                }
+                
+                let aryVal: Array<String> = [aryDigt[0], ".", strPointDigt]
+                dictPickParm["H_def"] = aryVal
+                txtHeigh.text = aryVal[0] + aryVal[1] + aryVal[2]
             }
-            
-            let aryVal: Array<String> = [aryDigt[0], ".", strPointDigt]
-            dictPickParm["H_def"] = aryVal
-            txtHeigh.text = aryVal[0] + aryVal[1] + aryVal[2]
         }
         
         if let strWeight = dictMember["weight"] as? String {
-            if (strWeight.characters.count > 0) {
+            if (strWeight.characters.count > 1) {
                 var strPointDigt = "0"
                 let aryDigt = strWeight.characters.split{$0 == "."}.map(String.init)
                 
@@ -172,8 +180,6 @@ class StaffAdEdContainer: UITableViewController, UITextFieldDelegate {
                 txtWeight.text = aryVal[0] + aryVal[1] + aryVal[2]
             }
         }
-        
-        
     }
     
     /**
@@ -202,6 +208,15 @@ class StaffAdEdContainer: UITableViewController, UITextFieldDelegate {
         aryTxtView[currIndex + 1].becomeFirstResponder()
         
         return true
+    }
+    
+    /**
+    * 取得本頁面欄位資料, parent 調用
+    */
+    func getPageData()->Dictionary<String, String>! {
+        var dictRS: Dictionary<String, String> = [:]
+        
+        return dictRS
     }
     
 }

@@ -14,7 +14,7 @@ class StaffList: UIViewController {
     @IBOutlet weak var tableData: UITableView!
     
     // common property
-    var pubClass: PubClass!
+    private var pubClass: PubClass!
     
     // public, 本頁面需要的全部資料, parent 設定
     var dictAllData: Dictionary<String, AnyObject> = [:]
@@ -25,6 +25,7 @@ class StaffList: UIViewController {
     // 其他參數設定
     private var currIndexPath: NSIndexPath?
     private var bolReload = true // 頁面是否需要 http reload
+    private var strMode = "add"  // 編輯/新增 模式
     
     /**
     * View Load 程序
@@ -36,9 +37,6 @@ class StaffList: UIViewController {
         // TableCell autoheight
         tableData.estimatedRowHeight = 100.0
         tableData.rowHeight = UITableViewAutomaticDimension
-    }
-    
-    override func viewWillAppear(animated: Bool) {
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -143,6 +141,7 @@ class StaffList: UIViewController {
      */
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         currIndexPath = indexPath
+        strMode = "edit"
         
         self.performSegueWithIdentifier("StaffAdEd", sender: aryData[indexPath.row])
     }
@@ -208,16 +207,17 @@ class StaffList: UIViewController {
      * Segue 跳轉頁面
      */
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        //let strIdent = segue.identifier
-        
-        // 編輯頁面
+        let mVC = segue.destinationViewController as! StaffAdEd
+        mVC.strMode = strMode
+        mVC.dictMember = sender as! Dictionary<String, AnyObject>
     }
     
     /**
      * act, 點取 '新增' button
      */
     @IBAction func actAdd(sender: UIBarButtonItem) {
-        
+        strMode = "add"
+        self.performSegueWithIdentifier("StaffAdEd", sender: [:])
     }
     
     /**

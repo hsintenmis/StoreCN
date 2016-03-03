@@ -6,17 +6,22 @@ import UIKit
 import Foundation
 
 /**
- * 會員 新增/編輯
+ * 員工資料 新增/編輯
  */
 class StaffAdEd: UIViewController {
-    
     // @IBOutlet
     @IBOutlet weak var containView: UIView!
     
     // common property
-    var pubClass: PubClass!
-    var dictPref: Dictionary<String, AnyObject>!  // Prefer data
+    private var pubClass: PubClass!
     
+    // public, parent 設定
+    var strMode: String = "add"
+    var dictMember: Dictionary<String, AnyObject> = [:]
+    
+    // user 資料編輯頁面 calss
+    private var mStaffAdEdContainer: StaffAdEdContainer!
+
     /**
      * View Load 程序
      */
@@ -29,13 +34,9 @@ class StaffAdEd: UIViewController {
      * Segue 跳轉頁面
      */
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let strIdent = segue.identifier
-        
-        /*
-        if (strIdent == "containerStaffAdEd") {
-            let mVC = segue.destinationViewController as! StaffAdEdContainer
-        }
-        */
+        mStaffAdEdContainer = segue.destinationViewController as! StaffAdEdContainer
+        mStaffAdEdContainer.strMode = strMode
+        mStaffAdEdContainer.dictMember = dictMember
         
         return
     }
@@ -44,6 +45,7 @@ class StaffAdEd: UIViewController {
      * act, 點取 '儲存' button
      */
     @IBAction func actSave(sender: UIBarButtonItem) {
+        print(mStaffAdEdContainer.getPageData())
     }
     
     /**

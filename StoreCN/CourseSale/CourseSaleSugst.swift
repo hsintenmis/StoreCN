@@ -91,7 +91,7 @@ class CourseSaleSugst: UIViewController, SugstChildPageDelegate {
     /**
      * ContainerView 新舊頁面轉換
      */
-    func cycleFromViewController(oldViewController: UIViewController, toViewController newViewController: UIViewController) {
+    private func cycleFromViewController(oldViewController: UIViewController, toViewController newViewController: UIViewController) {
         
         oldViewController.willMoveToParentViewController(nil)
         self.addChildViewController(newViewController)
