@@ -159,6 +159,12 @@
 		D7BB2AE31C64799D00624E08 /* PubMemberPurchaseSelectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7BB2AE21C64799D00624E08 /* PubMemberPurchaseSelectCell.swift */; };
 		D7EDE8841C60733200665542 /* MemberMainPager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EDE8831C60733200665542 /* MemberMainPager.swift */; };
 		D7EDE8861C6081B800665542 /* MemberMainColtViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EDE8851C6081B800665542 /* MemberMainColtViewCell.swift */; };
+		D7F0921E1C891900005D8C96 /* StaffBenefitDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F0921D1C891900005D8C96 /* StaffBenefitDetailCell.swift */; };
+		D7F092201C895E07005D8C96 /* CustomUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F0921F1C895E07005D8C96 /* CustomUITextField.swift */; };
+		D7F092221C896C72005D8C96 /* HealthWitnessList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F092211C896C72005D8C96 /* HealthWitnessList.swift */; };
+		D7F092241C896CAE005D8C96 /* MsgList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F092231C896CAE005D8C96 /* MsgList.swift */; };
+		D7F092261C89782E005D8C96 /* HealthWitnessListColtViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F092251C89782E005D8C96 /* HealthWitnessListColtViewCell.swift */; };
+		D7F092281C898D6E005D8C96 /* HealthWitnessDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F092271C898D6E005D8C96 /* HealthWitnessDetail.swift */; };
 		D7F45F431C75733400735D09 /* PurchasePdSelt.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F45F421C75733400735D09 /* PurchasePdSelt.swift */; };
 		D7F45F451C75752A00735D09 /* PurchasePdSeltCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F45F441C75752A00735D09 /* PurchasePdSeltCell.swift */; };
 		D7F8BCEB1C7ED4390059E6E5 /* PurchaseDetailEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F8BCEA1C7ED4390059E6E5 /* PurchaseDetailEdit.swift */; };
@@ -325,6 +331,12 @@
 		D7BB2AE21C64799D00624E08 /* PubMemberPurchaseSelectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubMemberPurchaseSelectCell.swift; path = PubView/PubMemberPurchaseSelectCell.swift; sourceTree = "<group>"; };
 		D7EDE8831C60733200665542 /* MemberMainPager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberMainPager.swift; path = Member/MemberMainPager.swift; sourceTree = "<group>"; };
 		D7EDE8851C6081B800665542 /* MemberMainColtViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberMainColtViewCell.swift; path = Member/MemberMainColtViewCell.swift; sourceTree = "<group>"; };
+		D7F0921D1C891900005D8C96 /* StaffBenefitDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StaffBenefitDetailCell.swift; path = Staff/StaffBenefitDetailCell.swift; sourceTree = "<group>"; };
+		D7F0921F1C895E07005D8C96 /* CustomUITextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomUITextField.swift; path = PubClass/CustomUITextField.swift; sourceTree = "<group>"; };
+		D7F092211C896C72005D8C96 /* HealthWitnessList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HealthWitnessList.swift; path = Message/HealthWitnessList.swift; sourceTree = "<group>"; };
+		D7F092231C896CAE005D8C96 /* MsgList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MsgList.swift; path = Message/MsgList.swift; sourceTree = "<group>"; };
+		D7F092251C89782E005D8C96 /* HealthWitnessListColtViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HealthWitnessListColtViewCell.swift; path = Message/HealthWitnessListColtViewCell.swift; sourceTree = "<group>"; };
+		D7F092271C898D6E005D8C96 /* HealthWitnessDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HealthWitnessDetail.swift; path = Message/HealthWitnessDetail.swift; sourceTree = "<group>"; };
 		D7F45F421C75733400735D09 /* PurchasePdSelt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchasePdSelt.swift; path = Product/PurchasePdSelt.swift; sourceTree = "<group>"; };
 		D7F45F441C75752A00735D09 /* PurchasePdSeltCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchasePdSeltCell.swift; path = Product/PurchasePdSeltCell.swift; sourceTree = "<group>"; };
 		D7F8BCEA1C7ED4390059E6E5 /* PurchaseDetailEdit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchaseDetailEdit.swift; path = Product/PurchaseDetailEdit.swift; sourceTree = "<group>"; };
@@ -408,6 +420,7 @@
 				42FD09E01C841E0D00ADAD4C /* PickerDateTime.swift */,
 				D74652061C5CA85900190EF6 /* PickerNumber.swift */,
 				42E21F121C68E6F500B85EA9 /* CalendarCellData.swift */,
+				D7F0921F1C895E07005D8C96 /* CustomUITextField.swift */,
 			);
 			name = PubClass;
 			sourceTree = "<group>";
@@ -603,6 +616,7 @@
 				D72BA3321C8814FA0028898D /* StaffBenefitCell.swift */,
 				D72BA3341C8819500028898D /* StaffBenefitColtViewCell.swift */,
 				D72BA3361C882EE80028898D /* StaffBenefitDetail.swift */,
+				D7F0921D1C891900005D8C96 /* StaffBenefitDetailCell.swift */,
 			);
 			name = Staff;
 			sourceTree = "<group>";
@@ -610,6 +624,10 @@
 		D7496D221C5B4DFF00B75D6A /* Message */ = {
 			isa = PBXGroup;
 			children = (
+				D7F092211C896C72005D8C96 /* HealthWitnessList.swift */,
+				D7F092251C89782E005D8C96 /* HealthWitnessListColtViewCell.swift */,
+				D7F092231C896CAE005D8C96 /* MsgList.swift */,
+				D7F092271C898D6E005D8C96 /* HealthWitnessDetail.swift */,
 			);
 			name = Message;
 			sourceTree = "<group>";
@@ -814,7 +832,10 @@
 				D74652071C5CA85900190EF6 /* PickerNumber.swift in Sources */,
 				D7645BE41C801FA900507072 /* PurchaseReturnEdit.swift in Sources */,
 				D70CD9421C72CBF8008E79E1 /* CourseSale.swift in Sources */,
+				D7F092281C898D6E005D8C96 /* HealthWitnessDetail.swift in Sources */,
+				D7F0921E1C891900005D8C96 /* StaffBenefitDetailCell.swift in Sources */,
 				D70FCC291C86D4140035D1B6 /* StaffListCell.swift in Sources */,
+				D7F092201C895E07005D8C96 /* CustomUITextField.swift in Sources */,
 				D7037A731C58C03F002A955E /* CutImage.swift in Sources */,
 				D7BB2ADF1C64788700624E08 /* PubMeadDataSelectCell.swift in Sources */,
 				42E21F0F1C68825200B85EA9 /* PickerDate.swift in Sources */,
@@ -840,6 +861,7 @@
 				42E21F111C68826500B85EA9 /* PubCalendarCell.swift in Sources */,
 				D7645BE61C802D8000507072 /* PubPurReturnPdList.swift in Sources */,
 				D72F26491C7ABD3300717394 /* PdSaleMemberSel.swift in Sources */,
+				D7F092241C896CAE005D8C96 /* MsgList.swift in Sources */,
 				D70CD9461C72CBF8008E79E1 /* PubCourseSaleAdEd.swift in Sources */,
 				D70CD9441C72CBF8008E79E1 /* CourseSaleMemberSel.swift in Sources */,
 				D7645BE81C802EFC00507072 /* PubPurReturnPdListCell.swift in Sources */,
@@ -850,6 +872,7 @@
 				D7BB2ADD1C64788700624E08 /* PubCourseSelectCell.swift in Sources */,
 				D7037A6A1C58BFB5002A955E /* MainLogin.swift in Sources */,
 				D7FB953A1C59F17F00B48F57 /* FileMang.swift in Sources */,
+				D7F092261C89782E005D8C96 /* HealthWitnessListColtViewCell.swift in Sources */,
 				D728A26C1C8138B100B93B38 /* PurchaseListDetailCell.swift in Sources */,
 				D7BB2AE01C64788700624E08 /* PubMemberSelect.swift in Sources */,
 				D7F45F451C75752A00735D09 /* PurchasePdSeltCell.swift in Sources */,
@@ -864,6 +887,7 @@
 				D7B29F791C5C712E0025C53A /* MemberAdEdContainer.swift in Sources */,
 				D7134FF91C5F5A990069ACF1 /* MemberMain.swift in Sources */,
 				D7BB2AE11C64788700624E08 /* PubMemberSelectCell.swift in Sources */,
+				D7F092221C896C72005D8C96 /* HealthWitnessList.swift in Sources */,
 				D71DFD101C7C397A0024BB59 /* StockHistoryCell.swift in Sources */,
 				D720FBA11C7458F000AE640C /* Purchase.swift in Sources */,
 				D70854491C7D69C400861694 /* PurchaseListDetail.swift in Sources */,

@@ -6,47 +6,33 @@ import UIKit
 import Foundation
 
 /**
- * 營養師績效列表
+ * 健康訊息列表
  */
-class StaffBenefit: UIViewController {
+class HealthWitnessList: UIViewController {
     
     // @IBOutlet
     @IBOutlet weak var tableData: UITableView!
-    @IBOutlet weak var colviewYYMM: UICollectionView!
-    @IBOutlet weak var labNoData: UILabel!
+    @IBOutlet weak var colectView: UICollectionView!
     
     // common property
     private var pubClass: PubClass!
     
-    // 本頁面需要的全部資料, parent 設定
-    private var dictAllData: Dictionary<String, AnyObject> = [:]
-    private var aryYYMM: Array<Dictionary<String, AnyObject>> = []
-    
     // table data 設定
-    private var aryTableData: Array<Dictionary<String, AnyObject>> = []
+    private var dictAllData: Dictionary<String, AnyObject> = [:]  // http 回傳資料
+    private var aryAllData: Array<Dictionary<String, AnyObject>> = []  // 全部 table 資料
     
     // 其他參數設定
-    private var strToday = ""
-    private var indexPathYYMM: NSIndexPath!  // 目前 YYMM array data position
-    private var currYYMM: String!  // 目前選擇的 yymm, ex. '201601'
+    private var currPosition = 0  // 目前選單的 position
     private var bolReloadPage = true
     
     /**
-    * View Load 程序
-    */
+     * View Load 程序
+     */
     override func viewDidLoad() {
         super.viewDidLoad()
         pubClass = PubClass()
-        
-        // 參數設定
-        labNoData.alpha = 0.0
-        indexPathYYMM = NSIndexPath(forRow: 0, inSection: 0)
     }
-    
-    override func viewWillAppear(animated: Bool) {
 
-    }
-    
     override func viewDidAppear(animated: Bool) {
         if (bolReloadPage) {
             bolReloadPage = false
@@ -58,18 +44,8 @@ class StaffBenefit: UIViewController {
      * 檢查是否有資料
      */
     private func relaodPage() {
-        // 設定 tableview datasource
-        if let aryTmp = aryYYMM[indexPathYYMM.row]["staff"] as? Array<Dictionary<String, AnyObject>> {
-            aryTableData = aryTmp
-            labNoData.alpha = 0.0
-        } else {
-            aryTableData = []
-            labNoData.alpha = 1.0
-        }
-        
+        colectView.reloadData()
         tableData.reloadData()
-        colviewYYMM.reloadData()
-        currYYMM = aryYYMM[indexPathYYMM.row]["yymm"] as! String
     }
     
     /**
@@ -80,8 +56,8 @@ class StaffBenefit: UIViewController {
         var mParam: Dictionary<String, String> = [:]
         mParam["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
         mParam["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
-        mParam["page"] = "staff"
-        mParam["act"] = "staff_benefit"
+        mParam["page"] = "memberdata"
+        mParam["act"] = "memberdata_getwitnessgroup"
         
         // HTTP 開始連線
         pubClass.HTTPConn(self, ConnParm: mParam, callBack: {(dictRS: Dictionary<String, AnyObject>)->Void in
@@ -103,15 +79,14 @@ class StaffBenefit: UIViewController {
             /* 解析正確的 http 回傳結果，執行後續動作 */
             let dictData = dictRS["data"]!["content"] as! Dictionary<String, AnyObject>
             
-            self.strToday = dictData["today"] as! String
             self.dictAllData = dictData
             
             // 設定全部的 YYMM array data, 有錯跳離本頁面
             if let aryTmp = self.dictAllData["data"] as? Array<Dictionary<String, AnyObject>> {
-                self.aryYYMM = aryTmp
+                self.aryAllData = aryTmp
             }
-
-            if (self.aryYYMM.count < 1) {
+            
+            if (self.aryAllData.count < 1) {
                 self.pubClass.popIsee(self, Msg: self.pubClass.getLang("err_trylatermsg"), withHandler: {self.dismissViewControllerAnimated(true, completion: nil)})
             }
             
@@ -131,7 +106,7 @@ class StaffBenefit: UIViewController {
      * #mark: CollectionView, 設定 資料總數
      */
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return aryYYMM.count
+        return aryAllData.count
     }
     
     /**
@@ -139,23 +114,19 @@ class StaffBenefit: UIViewController {
      */
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        if (aryYYMM.count < 1) {
+        if (aryAllData.count < 1) {
             return UICollectionViewCell()
         }
         
-        let mCell: StaffBenefitColtViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("cellStaffBenefitColtView", forIndexPath: indexPath) as! StaffBenefitColtViewCell
+        let mCell: HealthWitnessListColtViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("cellHealthWitnessListColtView", forIndexPath: indexPath) as! HealthWitnessListColtViewCell
         
-        let position = indexPath.row
-        let strYYMM = aryYYMM[position]["yymm"] as! String
-        let strMM = String(format: "%02d", Int(pubClass.subStr(strYYMM, strFrom: 4, strEnd: 6))!)
-        
-        mCell.labTitle.text = pubClass.subStr(strYYMM, strFrom: 0, strEnd: 4) + " " + pubClass.getLang("mm_" + strMM)
+        mCell.labTitle.text = aryAllData[indexPath.row]["dirname"] as? String
         
         // 樣式/外觀/顏色
         mCell.layer.cornerRadius = 2
         var strColor = "silver"
         
-        if (indexPath == indexPathYYMM) {
+        if (indexPath.row == currPosition) {
             strColor = "blue"
         }
         mCell.backgroundColor = pubClass.ColorHEX(pubClass.dictColor[strColor])
@@ -169,8 +140,11 @@ class StaffBenefit: UIViewController {
      */
     func collectionView(collectionView: UICollectionView!, didSelectItemAtIndexPath indexPath: NSIndexPath!) {
         
-        indexPathYYMM = indexPath
+        currPosition = indexPath.row
         relaodPage()
+        
+        let mIndexPath = NSIndexPath(forRow: NSNotFound, inSection: currPosition)
+        tableData.scrollToRowAtIndexPath(mIndexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
     }
     
     /**
@@ -178,31 +152,31 @@ class StaffBenefit: UIViewController {
      * Section 的數量
      */
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return aryAllData.count
     }
     
     /**
      * #mark: UITableView Delegate
-     * 回傳指定 section 的數量
+     * 回傳指定 section 的 Row 數量
      */
     func tableView(tableView: UITableView, numberOfRowsInSection section:Int) -> Int {
-        return aryTableData.count
+        return aryAllData[section]["data"]!.count
     }
     
     /**
      * #mark: UITableView Delegate
-     * UITableView, Cell 內容
+     * UITableView, Cell 內容, 使用 tableview 預設
      */
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if (aryTableData.count < 1) {
+        if (aryAllData.count < 1) {
             return UITableViewCell()
         }
         
         // 產生 Item data
-        let ditItem = aryTableData[indexPath.row] as Dictionary<String, AnyObject>
-        let mCell = tableView.dequeueReusableCellWithIdentifier("cellStaffBenefit", forIndexPath: indexPath) as! StaffBenefitCell
-        
-        mCell.initView(ditItem, PubClass: pubClass)
+        let mCell = tableView.dequeueReusableCellWithIdentifier("cellHealthWitnessList")!
+        let ditItem = aryAllData[indexPath.section]["data"]![indexPath.row] as! Dictionary<String, String>
+
+        mCell.textLabel?.text = ditItem["title"]
         
         return mCell
     }
@@ -212,7 +186,10 @@ class StaffBenefit: UIViewController {
      * UITableView, Cell 點取
      */
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.performSegueWithIdentifier("StaffBenefitDetail", sender: aryTableData[indexPath.row])
+        
+        let ditItem = aryAllData[indexPath.section]["data"]![indexPath.row] as! Dictionary<String, String>
+        
+        self.performSegueWithIdentifier("HealthWitnessDetail", sender: ditItem)
     }
     
     /**
@@ -220,6 +197,11 @@ class StaffBenefit: UIViewController {
      * Section 標題
      */
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        if let strTitle = aryAllData[section]["dirname"] as? String {
+            return strTitle
+        }
+        
         return ""
     }
     
@@ -227,14 +209,11 @@ class StaffBenefit: UIViewController {
      * Segue 跳轉頁面
      */
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if (segue.identifier == "StaffBenefitDetail") {
-            let mVC = segue.destinationViewController as! StaffBenefitDetail
-            mVC.dictAllData = sender as! Dictionary<String, AnyObject>
-            mVC.currYYMM = currYYMM
+        if (segue.identifier == "HealthWitnessDetail") {
             
             return
         }
-
+        
         return
     }
     

@@ -85,6 +85,8 @@
 "menu_staff_employee" = "營氧師";
 "menu_staff_benefit" = "績效提成";
 "menu_staff_list" = "營氧師列表";
+"menu_message_active" = "活動訊息";
+"menu_message_health" = "健康建議";
 
 "member_nodataaddfirst" = "没有会员, 请先新增会员!";
 "member_selectbirth" = "选择生日";
@@ -144,3 +146,7 @@
 
 "staff_nodataaddmsg" = "沒有資料!\n點取 [新增] 加入一位營氧師資料";
 "staff_totnums" = "營氧師總數";
+"staff_benefit_pd" = "商品銷售";
+"staff_benefit_course" = "療程銷售";
+"staff_benefit_count" = "療程服務紀錄";
+
