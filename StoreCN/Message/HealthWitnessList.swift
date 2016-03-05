@@ -186,9 +186,7 @@ class HealthWitnessList: UIViewController {
      * UITableView, Cell 點取
      */
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
         let ditItem = aryAllData[indexPath.section]["data"]![indexPath.row] as! Dictionary<String, String>
-        
         self.performSegueWithIdentifier("HealthWitnessDetail", sender: ditItem)
     }
     
@@ -210,6 +208,8 @@ class HealthWitnessList: UIViewController {
      */
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "HealthWitnessDetail") {
+            let mVC = segue.destinationViewController as! HealthWitnessDetail
+            mVC.dictData = sender as! Dictionary<String, String>
             
             return
         }

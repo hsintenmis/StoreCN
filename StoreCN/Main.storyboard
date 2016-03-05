@@ -9257,6 +9257,7 @@
                     <connections>
                         <outlet property="colectView" destination="aaw-U3-zfD" id="LaX-Fv-Qln"/>
                         <outlet property="tableData" destination="5tw-0v-Qf1" id="cNT-fU-jQY"/>
+                        <segue destination="Jzd-qB-1sN" kind="show" identifier="HealthWitnessDetail" id="qtv-tG-t3l"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wz7-DA-Bnr" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -9266,7 +9267,7 @@
         <!--健康建议-WebView-->
         <scene sceneID="PR6-jx-6iN">
             <objects>
-                <viewController title="健康建议-WebView" id="Jzd-qB-1sN" sceneMemberID="viewController">
+                <viewController title="健康建议-WebView" id="Jzd-qB-1sN" customClass="HealthWitnessDetail" customModule="StoreCN" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="EAH-yP-nvc"/>
                         <viewControllerLayoutGuide type="bottom" id="feh-76-LHe"/>
@@ -9287,8 +9288,11 @@
                                 </textAttributes>
                                 <items>
                                     <navigationItem title="健康建议" id="6Kj-3J-QMN">
-                                        <barButtonItem key="leftBarButtonItem" title="主选单" id="rYI-Us-a32">
+                                        <barButtonItem key="leftBarButtonItem" title="返回" id="rYI-Us-a32">
                                             <color key="tintColor" red="0.80000000000000004" green="1" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                            <connections>
+                                                <action selector="actHome:" destination="Jzd-qB-1sN" id="GHg-B2-aS4"/>
+                                            </connections>
                                         </barButtonItem>
                                     </navigationItem>
                                 </items>
@@ -9305,16 +9309,25 @@
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vfj-uf-Gt0">
                                 <rect key="frame" x="-2" y="98" width="324" height="470"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Jzd-qB-1sN" id="nP2-TU-3As"/>
+                                </connections>
                             </webView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="rNv-QG-da8">
+                                <rect key="frame" x="142" y="266" width="37" height="37"/>
+                                <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="feh-76-LHe" firstAttribute="top" secondItem="Vfj-uf-Gt0" secondAttribute="bottom" id="2q0-o3-V7e"/>
+                            <constraint firstItem="rNv-QG-da8" firstAttribute="centerY" secondItem="AIf-2A-dOA" secondAttribute="centerY" id="5LB-4B-YVB"/>
                             <constraint firstItem="Vfj-uf-Gt0" firstAttribute="top" secondItem="p2s-Gn-N9M" secondAttribute="bottom" constant="10" id="6AW-Vi-beT"/>
                             <constraint firstAttribute="trailingMargin" secondItem="jw8-jU-ccU" secondAttribute="trailing" constant="-18" id="7Ja-Ig-wRF"/>
                             <constraint firstItem="p2s-Gn-N9M" firstAttribute="top" secondItem="jw8-jU-ccU" secondAttribute="bottom" constant="10" id="8Un-ew-PWg"/>
                             <constraint firstItem="jw8-jU-ccU" firstAttribute="top" secondItem="EAH-yP-nvc" secondAttribute="bottom" id="BGE-tm-Ly4"/>
                             <constraint firstItem="jw8-jU-ccU" firstAttribute="leading" secondItem="AIf-2A-dOA" secondAttribute="leadingMargin" constant="-18" id="bSd-oo-bDr"/>
+                            <constraint firstItem="rNv-QG-da8" firstAttribute="centerX" secondItem="AIf-2A-dOA" secondAttribute="centerX" id="cCT-Li-w9Y"/>
                             <constraint firstItem="Vfj-uf-Gt0" firstAttribute="leading" secondItem="jw8-jU-ccU" secondAttribute="leading" id="cqf-Yr-z7T"/>
                             <constraint firstItem="Vfj-uf-Gt0" firstAttribute="trailing" secondItem="jw8-jU-ccU" secondAttribute="trailing" id="rn8-6h-SJ3"/>
                             <constraint firstItem="p2s-Gn-N9M" firstAttribute="centerX" secondItem="AIf-2A-dOA" secondAttribute="centerX" id="z5h-tO-mhK"/>
@@ -9325,6 +9338,11 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="labTitle" destination="p2s-Gn-N9M" id="mL2-uT-WXz"/>
+                        <outlet property="viewLoading" destination="rNv-QG-da8" id="rNo-So-xEt"/>
+                        <outlet property="webviewImg" destination="Vfj-uf-Gt0" id="0fl-Yh-neY"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KwP-uv-Ez5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -626,8 +626,8 @@
 			children = (
 				D7F092211C896C72005D8C96 /* HealthWitnessList.swift */,
 				D7F092251C89782E005D8C96 /* HealthWitnessListColtViewCell.swift */,
-				D7F092231C896CAE005D8C96 /* MsgList.swift */,
 				D7F092271C898D6E005D8C96 /* HealthWitnessDetail.swift */,
+				D7F092231C896CAE005D8C96 /* MsgList.swift */,
 			);
 			name = Message;
 			sourceTree = "<group>";

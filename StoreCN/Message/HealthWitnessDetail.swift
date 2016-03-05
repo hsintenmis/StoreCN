@@ -1,5 +1,5 @@
 //
-// 官網新訊詳細內容
+// WebView
 // URL 網址如：
 // publicsh.hsinten.com.tw/storecn/
 // ?acc=XXX&psd=XXX&po=news&op=company&fm_data[id]=jobj["id"]
@@ -12,57 +12,42 @@ import Foundation
  * 官網新訊詳細內容 class,
  */
 class HealthWitnessDetail: UIViewController {
-    @IBOutlet weak var webviewOffice: UIWebView!
     
-    @IBOutlet weak var labLoading: UILabel!
+    @IBOutlet weak var webviewImg: UIWebView!
+    @IBOutlet weak var labTitle: UILabel!
     @IBOutlet weak var viewLoading: UIActivityIndicatorView!
     
+    // common property
+    private var pubClass: PubClass!
     
-    // public property
-    var mVCtrl: UIViewController!
-    var pubClass: PubClass!
-    private let mAppDelegate = UIApplication.sharedApplication().delegate! as! AppDelegate
-    
-    /**
-     * 前一個頁面傳入的資料, 參數如下<BR>
-     * title, content, pict:'img_店家編號_流水號.png'
-     */
-    var parentData: Dictionary<String, String>!
+    // public, 從 parent 設定
+    var dictData: Dictionary<String, String>!
     
     // View load
     override func viewDidLoad() {
         super.viewDidLoad()
+        pubClass = PubClass()
         
-        // 固定初始參數
-        mVCtrl = self
-        pubClass = PubClass(viewControl: mVCtrl)
-        
-        //print(parentData)
-        self.initViewField()
-        
+        labTitle.text = dictData["title"]
+        webviewImg.scalesPageToFit = true
+        webviewImg.contentMode = UIViewContentMode.ScaleAspectFit
+    }
+    
+    override func viewDidAppear(animated: Bool) {
         // WebView 設定
-        let strURL = "\(pubClass.D_HTEURL)?acc=\(mAppDelegate.V_USRACC!)&psd=\(mAppDelegate.V_USRPSD!)&po=news&op=company_content&fm_data[id]=\(parentData["id"]!)"
-        
-        let request = NSURLRequest(URL: NSURL(string: strURL)!)
+        let strURL = pubClass.D_WEBURL + dictData["filename"]!
+        let nsURL = strURL.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+        let request = NSURLRequest(URL: NSURL(string: nsURL!)!)
         
         dispatch_async(dispatch_get_main_queue(), {
-            self.webviewOffice.loadRequest(request)
+            self.webviewImg.loadRequest(request)
         })
-    }
-    
-    override func viewDidAppear(animated: Bool){
-        super.viewDidAppear(animated)
-    }
-    
-    /**
-     * 初始與設定 VCview 內的 field
-     */
-    private func initViewField() {
     }
     
     /** WebView delegate Start */
     func webView(webView: UIWebView!, didFailLoadWithError error: NSError!) {
-        //print("Webview fail with error \(error)");
+        
+        pubClass.popIsee(self, Msg: pubClass.getLang("err_trylatermsg"), withHandler: {self.dismissViewControllerAnimated(true, completion: nil)})
     }
     
     func webView(webView: UIWebView!, shouldStartLoadWithRequest request: NSURLRequest!, navigationType: UIWebViewNavigationType)->Bool {
@@ -70,22 +55,18 @@ class HealthWitnessDetail: UIViewController {
     }
     
     func webViewDidStartLoad(webView: UIWebView!) {
-        labLoading.alpha = 1.0
-        viewLoading.alpha = 1.0
-        //print("Webview started Loading")
+        viewLoading.startAnimating()
     }
     
     func webViewDidFinishLoad(webView: UIWebView!) {
-        labLoading.alpha = 0.0
-        viewLoading.alpha = 0.0
-        //print("Webview did finish load")
+        viewLoading.stopAnimating()
     }
     /** WebView delegate End */
      
      /**
-     * btn '返回' 點取
+     * act, 點取 '返回' button
      */
-    @IBAction func actBack(sender: UIBarButtonItem) {
+    @IBAction func actHome(sender: UIBarButtonItem) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
