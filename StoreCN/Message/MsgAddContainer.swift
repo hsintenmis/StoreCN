@@ -44,9 +44,11 @@ class MsgAddContainer: UITableViewController, UIImagePickerControllerDelegate, U
         labDate.text = pubClass.formatDateWithStr(strToday, type: 14)
         imgPict.contentMode = .ScaleAspectFit
         
-        // TableCell autoheight
-        tableList.estimatedRowHeight = 44.0
-        tableList.rowHeight = UITableViewAutomaticDimension
+        // textView 外觀樣式
+        txtContent.layer.cornerRadius = 5
+        txtContent.layer.borderWidth = 1
+        txtContent.layer.borderColor = (pubClass.ColorHEX(pubClass.dictColor["gray"]!)).CGColor
+        txtContent.layer.backgroundColor = (pubClass.ColorHEX(pubClass.dictColor["white"]!)).CGColor
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -58,24 +60,24 @@ class MsgAddContainer: UITableViewController, UIImagePickerControllerDelegate, U
         self.imgPict.frame.size = imgNewSize
         tableList.reloadData()
     }
-    
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        
-        if (indexPath.section == 1) {
-            var mHeight: CGFloat = 0.0
-            if let tmpH: CGFloat = self.imgPict.frame.size.height {
-                mHeight = tmpH
-            }
-            return mHeight + 50.0
-        }
-        else if (indexPath.row == 3) {
-           return 130.0
-        }
-        else {
-            return UITableViewAutomaticDimension
-        }
-        
 
+    /**
+    * #mark: UITableViewController
+    * 動態指定 Table Cell height
+    */
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        switch (indexPath.section) {
+        case 0:
+            if (indexPath.row == 3) {
+                return 130.0
+            }
+        case 1:
+            return self.imgPict.frame.size.height + 50
+        default:
+            return 44.0
+        }
+        
+        return 50.0
     }
     
     /**
@@ -159,6 +161,8 @@ class MsgAddContainer: UITableViewController, UIImagePickerControllerDelegate, U
     @IBAction func actClearPict(sender: UIButton) {
         imgNewSize = CGSizeMake(0.0, 0.0)
         self.imgPict.image = nil
+        self.imgPict.frame.size = imgNewSize
+        tableList.reloadData()
     }
     
 }

@@ -15,7 +15,6 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
     
     // common property
     let pubClass: PubClass = PubClass()
-    var dictPref: Dictionary<String, AnyObject>!  // Prefer data
     var reloadMemberList = true
     
     // HTTP 回傳資料設定
@@ -34,9 +33,6 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
      */
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // 固定初始參數
-        dictPref = pubClass.getPrefData()
         
         // 初始會員選擇公用 class
         mPubMemberSelect = storyboard!.instantiateViewControllerWithIdentifier("PubMemberList") as! PubMemberSelect
