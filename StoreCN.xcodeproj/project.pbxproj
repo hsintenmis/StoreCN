@@ -142,6 +142,10 @@
 		D74652071C5CA85900190EF6 /* PickerNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74652061C5CA85900190EF6 /* PickerNumber.swift */; };
 		D7496D1A1C5B343200B75D6A /* MainMenuColtViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7496D191C5B343200B75D6A /* MainMenuColtViewCell.swift */; };
 		D7496D261C5B58CF00B75D6A /* CourseList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7496D251C5B58CF00B75D6A /* CourseList.swift */; };
+		D74A60531C8D11D500946118 /* MsgListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74A60521C8D11D500946118 /* MsgListCell.swift */; };
+		D74A60551C8D165D00946118 /* MsgAdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74A60541C8D165D00946118 /* MsgAdd.swift */; };
+		D74A60571C8D17F600946118 /* MsgEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74A60561C8D17F600946118 /* MsgEdit.swift */; };
+		D74A60591C8D32B300946118 /* MsgAddContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74A60581C8D32B300946118 /* MsgAddContainer.swift */; };
 		D7645BE01C80068400507072 /* PurchaseReturnList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7645BDF1C80068400507072 /* PurchaseReturnList.swift */; };
 		D7645BE21C80074500507072 /* PurchaseReturnListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7645BE11C80074500507072 /* PurchaseReturnListCell.swift */; };
 		D7645BE41C801FA900507072 /* PurchaseReturnEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7645BE31C801FA900507072 /* PurchaseReturnEdit.swift */; };
@@ -314,6 +318,10 @@
 		D74652061C5CA85900190EF6 /* PickerNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PickerNumber.swift; path = PubClass/PickerNumber.swift; sourceTree = "<group>"; };
 		D7496D191C5B343200B75D6A /* MainMenuColtViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainMenuColtViewCell.swift; path = MainHome/MainMenuColtViewCell.swift; sourceTree = "<group>"; };
 		D7496D251C5B58CF00B75D6A /* CourseList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CourseList.swift; path = ServiceMgr/CourseList.swift; sourceTree = "<group>"; };
+		D74A60521C8D11D500946118 /* MsgListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MsgListCell.swift; path = Message/MsgListCell.swift; sourceTree = "<group>"; };
+		D74A60541C8D165D00946118 /* MsgAdd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MsgAdd.swift; path = Message/MsgAdd.swift; sourceTree = "<group>"; };
+		D74A60561C8D17F600946118 /* MsgEdit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MsgEdit.swift; path = Message/MsgEdit.swift; sourceTree = "<group>"; };
+		D74A60581C8D32B300946118 /* MsgAddContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MsgAddContainer.swift; path = Message/MsgAddContainer.swift; sourceTree = "<group>"; };
 		D7645BDF1C80068400507072 /* PurchaseReturnList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchaseReturnList.swift; path = Product/PurchaseReturnList.swift; sourceTree = "<group>"; };
 		D7645BE11C80074500507072 /* PurchaseReturnListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchaseReturnListCell.swift; path = Product/PurchaseReturnListCell.swift; sourceTree = "<group>"; };
 		D7645BE31C801FA900507072 /* PurchaseReturnEdit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchaseReturnEdit.swift; path = Product/PurchaseReturnEdit.swift; sourceTree = "<group>"; };
@@ -628,6 +636,10 @@
 				D7F092251C89782E005D8C96 /* HealthWitnessListColtViewCell.swift */,
 				D7F092271C898D6E005D8C96 /* HealthWitnessDetail.swift */,
 				D7F092231C896CAE005D8C96 /* MsgList.swift */,
+				D74A60521C8D11D500946118 /* MsgListCell.swift */,
+				D74A60541C8D165D00946118 /* MsgAdd.swift */,
+				D74A60581C8D32B300946118 /* MsgAddContainer.swift */,
+				D74A60561C8D17F600946118 /* MsgEdit.swift */,
 			);
 			name = Message;
 			sourceTree = "<group>";
@@ -829,6 +841,7 @@
 				D7150E431C5C6E8000C9FE8B /* MemberAdEd.swift in Sources */,
 				D7BB2AE31C64799D00624E08 /* PubMemberPurchaseSelectCell.swift in Sources */,
 				42FD09E11C841E0D00ADAD4C /* PickerDateTime.swift in Sources */,
+				D74A60551C8D165D00946118 /* MsgAdd.swift in Sources */,
 				D74652071C5CA85900190EF6 /* PickerNumber.swift in Sources */,
 				D7645BE41C801FA900507072 /* PurchaseReturnEdit.swift in Sources */,
 				D70CD9421C72CBF8008E79E1 /* CourseSale.swift in Sources */,
@@ -846,6 +859,7 @@
 				D70854471C7D622500861694 /* PurchaseListCell.swift in Sources */,
 				D7037A751C58C03F002A955E /* ImageClass.swift in Sources */,
 				D72BA3331C8814FA0028898D /* StaffBenefitCell.swift in Sources */,
+				D74A60591C8D32B300946118 /* MsgAddContainer.swift in Sources */,
 				D7496D261C5B58CF00B75D6A /* CourseList.swift in Sources */,
 				D72BA3351C8819500028898D /* StaffBenefitColtViewCell.swift in Sources */,
 				42E21F0B1C68800500B85EA9 /* CourseReserv.swift in Sources */,
@@ -874,6 +888,7 @@
 				D7FB953A1C59F17F00B48F57 /* FileMang.swift in Sources */,
 				D7F092261C89782E005D8C96 /* HealthWitnessListColtViewCell.swift in Sources */,
 				D728A26C1C8138B100B93B38 /* PurchaseListDetailCell.swift in Sources */,
+				D74A60531C8D11D500946118 /* MsgListCell.swift in Sources */,
 				D7BB2AE01C64788700624E08 /* PubMemberSelect.swift in Sources */,
 				D7F45F451C75752A00735D09 /* PurchasePdSeltCell.swift in Sources */,
 				D72BA3371C882EE80028898D /* StaffBenefitDetail.swift in Sources */,
@@ -888,6 +903,7 @@
 				D7134FF91C5F5A990069ACF1 /* MemberMain.swift in Sources */,
 				D7BB2AE11C64788700624E08 /* PubMemberSelectCell.swift in Sources */,
 				D7F092221C896C72005D8C96 /* HealthWitnessList.swift in Sources */,
+				D74A60571C8D17F600946118 /* MsgEdit.swift in Sources */,
 				D71DFD101C7C397A0024BB59 /* StockHistoryCell.swift in Sources */,
 				D720FBA11C7458F000AE640C /* Purchase.swift in Sources */,
 				D70854491C7D69C400861694 /* PurchaseListDetail.swift in Sources */,

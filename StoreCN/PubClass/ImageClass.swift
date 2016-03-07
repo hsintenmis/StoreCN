@@ -66,7 +66,7 @@ class ImageClass {
     */
     func ResizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
         // 壓縮比, 壓縮圖片
-        let fltZipRate: CGFloat = 1.0
+        let fltZipRate: CGFloat = 0.7
         
         let size = image.size
         let widthRatio  = targetSize.width  / image.size.width

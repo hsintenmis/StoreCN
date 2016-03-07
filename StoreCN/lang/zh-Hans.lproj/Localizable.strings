@@ -27,6 +27,7 @@
 "pricemaxovermsg" = "金额超过系统限制";
 "selectdate" = "选择日期";
 "datasendplzconfirmmsg" = "资料即将送出!\n请再次确认输入料是否正确?!";
+"delconfirmmsg" = "资料即将刪除!\n请再次确认是否要刪除選擇的資料?!";
 
 "week_0" = "日";
 "week_1" = "一";
@@ -149,4 +150,7 @@
 "staff_benefit_pd" = "商品銷售";
 "staff_benefit_course" = "療程銷售";
 "staff_benefit_count" = "療程服務紀錄";
+
+"message_type_pub" = "公開";
+"message_type_draft" = "草稿";
 

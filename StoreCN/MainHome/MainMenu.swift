@@ -311,6 +311,12 @@ class MainMenu: UIViewController {
                     return
                 }
                 
+                // 訊息分享列表, HTTP 連線取得資料直接由 child 處理
+                if (strIdent == "message_active") {
+                    self.performSegueWithIdentifier("MsgList", sender: nil)
+                    return
+                }
+                
                 // 健康建議列表, HTTP 連線取得資料直接由 child 處理
                 if (strIdent == "message_health") {
                     self.performSegueWithIdentifier("HealthWitnessList", sender: nil)
