@@ -25,16 +25,13 @@ class AnalyDataToday: UIViewController {
     private var pubClass: PubClass!
     
     // public, parent
+    var dictAllData: Dictionary<String, AnyObject> = [:]
+    var strToday: String!
     var strYYMMDD: String?  // 指定日期， parent 設定
-    
-    // 本頁面需要的全部資料, http 連線取得
-    private var dictAllData: Dictionary<String, AnyObject> = [:]
-    private var strToday: String!
     
     // 其他參數設定
     private let aryField = ["invoice", "course", "pd"] // table 三個 section field
     private var aryTableData: Array<Array<Dictionary<String, AnyObject>>> = []
-    private var bolReload = true // 頁面是否需要 http reload
     
     /**
     * View Load 程序
@@ -52,11 +49,8 @@ class AnalyDataToday: UIViewController {
         tableData.rowHeight = UITableViewAutomaticDimension
     }
     
-    override func viewDidAppear(animated: Bool) {
-        if (bolReload) {
-            reConnHTTP()
-            bolReload = false
-        }
+    override func viewWillAppear(animated: Bool) {
+        chkHaveData()
     }
     
     /**
@@ -101,47 +95,6 @@ class AnalyDataToday: UIViewController {
             mDate = tmpDate
         }
         labDate.text = pubClass.formatDateWithStr(mDate, type: 8)
-    }
-    
-    /**
-     * HTTP 重新連線取得資料
-     */
-    private func reConnHTTP() {
-        // Request 參數設定
-        var mParam: Dictionary<String, String> = [:]
-        mParam["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
-        mParam["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
-        mParam["page"] = "analydata"
-        mParam["act"] = "analydata_today"
-        
-        if let ymd = strYYMMDD {
-            mParam["arg0"] = ymd
-        }
-        
-        // HTTP 開始連線
-        pubClass.HTTPConn(self, ConnParm: mParam, callBack: {(dictRS: Dictionary<String, AnyObject>)->Void in
-            
-            // 任何錯誤跳離
-            if (dictRS["result"] as! Bool != true) {
-                var errMsg = self.pubClass.getLang("err_trylatermsg")
-                if let tmpStr: String = dictRS["msg"] as? String {
-                    errMsg = self.pubClass.getLang(tmpStr)
-                }
-                
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.pubClass.popIsee(self, Msg: errMsg, withHandler: {self.dismissViewControllerAnimated(true, completion: {})})
-                })
-                
-                return
-            }
-            
-            /* 解析正確的 http 回傳結果，執行後續動作 */
-            let dictData = dictRS["data"]!["content"] as! Dictionary<String, AnyObject>
-            
-            self.strToday = dictData["today"] as! String
-            self.dictAllData = dictData
-            self.chkHaveData()
-        })
     }
 
     /**
