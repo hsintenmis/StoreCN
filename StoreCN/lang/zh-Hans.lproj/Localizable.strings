@@ -29,6 +29,10 @@
 "datasendplzconfirmmsg" = "资料即将送出!\n请再次确认输入料是否正确?!";
 "delconfirmmsg" = "资料即将刪除!\n请再次确认是否要刪除選擇的資料?!";
 
+"fieldname_price" = "金額";
+"fieldname_invoiceid" = "訂單編號";
+"fieldname_membername" = "會員名稱";
+
 "week_0" = "日";
 "week_1" = "一";
 "week_2" = "二";
@@ -72,7 +76,6 @@
 "menu_product" = "商品管理";
 "menu_staff" = "人力管理";
 "menu_message" = "信息管理";
-"menu_storesheet" = "店务分析";
 "menu_config" = "设定";
 
 "menu_course_list" = "疗程管理";
@@ -88,6 +91,10 @@
 "menu_staff_list" = "營氧師列表";
 "menu_message_active" = "活動訊息";
 "menu_message_health" = "健康建議";
+
+"menu_analydata" = "店务分析";
+"menu_analydata_income" = "收入分析";
+"menu_analydata_health" = "健康精灵分析";
 
 "member_nodataaddfirst" = "没有会员, 请先新增会员!";
 "member_selectbirth" = "选择生日";
@@ -153,4 +160,12 @@
 
 "message_type_pub" = "公開";
 "message_type_draft" = "草稿";
+
+"analydata_today" = "今日收入";
+"analydata_daily" = "每日收入";
+"analydata_monthly" = "每日收入";
+
+"analydata_sheet_invoice" = "會員訂單";
+"analydata_sheet_course" = "療程銷售";
+"analydata_sheet_pd" = "商品銷售";
 

@@ -23,7 +23,7 @@ class StaffBenefitDetail: UIViewController {
     var currYYMM: String!  // 目前的 yymm
     
     // 其他參數設定
-    private let aryField = ["pd", "course", "count"]
+    private let aryField = ["pd", "course", "count"] // table 三個 section field
     private var dictBenefit: Dictionary<String, AnyObject> = [:]
     private var aryTableData: Array<Array<AnyObject>> = []
     private var strMM: String!  // ex. '07'

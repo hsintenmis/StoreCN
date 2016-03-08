@@ -140,6 +140,15 @@ class MsgAddContainer: UITableViewController, UIImagePickerControllerDelegate, U
     }
     
     /**
+     * 取得本頁面欄位資料, parent 調用
+     */
+    func getPageData()->Dictionary<String, String>! {
+        var dictRS: Dictionary<String, String> = [:]
+        
+        return dictRS
+    }
+    
+    /**
      * act, 點取 '關閉鍵盤'
      */
     @IBAction func actCloseKB(sender: UIButton) {

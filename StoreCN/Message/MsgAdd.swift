@@ -20,6 +20,7 @@ class MsgAdd: UIViewController {
     var strToday = ""
     
     // 其他參數設定
+    private var mMsgAddContainer: MsgAddContainer!
     
     /**
     * View Load 程序
@@ -37,13 +38,20 @@ class MsgAdd: UIViewController {
      */
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "MsgAddContainer") {
-            let mVC = segue.destinationViewController as! MsgAddContainer
-            mVC.strToday = strToday
+            mMsgAddContainer = segue.destinationViewController as! MsgAddContainer
+            mMsgAddContainer.strToday = strToday
             
             return
         }
         
         return
+    }
+    
+    /**
+     * act, 點取 '儲存' button
+     */
+    @IBAction func actSave(sender: UIBarButtonItem) {
+        print(mMsgAddContainer.getPageData())
     }
     
     /**

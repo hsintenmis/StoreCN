@@ -40,7 +40,7 @@ class MainMenu: UIViewController {
     
     // 選單相關設定
     /** 選單代碼："member", "testing", "servicemgr", "product", "staff", "message", "storesheet", "config" */
-    private let aryMenuName = ["member", "testing", "servicemgr", "product", "staff", "message", "storesheet", "config"]
+    private let aryMenuName = ["member", "testing", "servicemgr", "product", "staff", "message", "analydata", "config"]
     
     /**
      * View Load 程序
@@ -213,6 +213,11 @@ class MainMenu: UIViewController {
         case "message":
             mAlert = resetAlertVC(mAlert, withAryIdent: ["message_active", "message_health"])
             break
+            
+            // 店務資料分析
+        case "analydata":
+            mAlert = resetAlertVC(mAlert, withAryIdent: ["analydata_income", "analydata_health"])
+            break
 
         default:
             break
@@ -320,6 +325,12 @@ class MainMenu: UIViewController {
                 // 健康建議列表, HTTP 連線取得資料直接由 child 處理
                 if (strIdent == "message_health") {
                     self.performSegueWithIdentifier("HealthWitnessList", sender: nil)
+                    return
+                }
+                
+                // 店務分析直接跳轉 '今日收入' , HTTP 連線取得資料直接由 child 處理
+                if (strIdent == "analydata_income") {
+                    self.performSegueWithIdentifier("AnalyDataMain", sender: nil)
                     return
                 }
             }))
