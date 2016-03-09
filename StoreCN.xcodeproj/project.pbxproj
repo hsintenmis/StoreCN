@@ -106,6 +106,11 @@
 		D7037B2A1C58C726002A955E /* user_128.png in Resources */ = {isa = PBXBuildFile; fileRef = D7037AD71C58C726002A955E /* user_128.png */; };
 		D7037B2B1C58C726002A955E /* user_empty01.png in Resources */ = {isa = PBXBuildFile; fileRef = D7037AD81C58C726002A955E /* user_empty01.png */; };
 		D7037B2C1C58C726002A955E /* viewedocument_128.png in Resources */ = {isa = PBXBuildFile; fileRef = D7037AD91C58C726002A955E /* viewedocument_128.png */; };
+		D705CE411C8FC2FF00CC9303 /* PubYYMMColtCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D705CE401C8FC2FF00CC9303 /* PubYYMMColtCell.swift */; };
+		D705CE431C8FC85800CC9303 /* AnalyDataDailyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D705CE421C8FC85800CC9303 /* AnalyDataDailyCell.swift */; };
+		D705CE451C8FD1A300CC9303 /* AnalyDataDailyDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D705CE441C8FD1A300CC9303 /* AnalyDataDailyDetail.swift */; };
+		D705CE471C90138800CC9303 /* AnalyDataMonthlyDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D705CE461C90138800CC9303 /* AnalyDataMonthlyDetail.swift */; };
+		D705CE491C90171200CC9303 /* AnalyDataMonthlyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D705CE481C90171200CC9303 /* AnalyDataMonthlyCell.swift */; };
 		D7072BA21C62F04D00A6DDF5 /* html in Resources */ = {isa = PBXBuildFile; fileRef = D7072BA11C62F04D00A6DDF5 /* html */; };
 		D70854471C7D622500861694 /* PurchaseListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70854461C7D622500861694 /* PurchaseListCell.swift */; };
 		D70854491C7D69C400861694 /* PurchaseListDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70854481C7D69C400861694 /* PurchaseListDetail.swift */; };
@@ -291,6 +296,11 @@
 		D7037AD71C58C726002A955E /* user_128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user_128.png; sourceTree = "<group>"; };
 		D7037AD81C58C726002A955E /* user_empty01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user_empty01.png; sourceTree = "<group>"; };
 		D7037AD91C58C726002A955E /* viewedocument_128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = viewedocument_128.png; sourceTree = "<group>"; };
+		D705CE401C8FC2FF00CC9303 /* PubYYMMColtCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubYYMMColtCell.swift; path = PubView/PubYYMMColtCell.swift; sourceTree = "<group>"; };
+		D705CE421C8FC85800CC9303 /* AnalyDataDailyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnalyDataDailyCell.swift; path = AnalyData/AnalyDataDailyCell.swift; sourceTree = "<group>"; };
+		D705CE441C8FD1A300CC9303 /* AnalyDataDailyDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnalyDataDailyDetail.swift; path = AnalyData/AnalyDataDailyDetail.swift; sourceTree = "<group>"; };
+		D705CE461C90138800CC9303 /* AnalyDataMonthlyDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnalyDataMonthlyDetail.swift; path = AnalyData/AnalyDataMonthlyDetail.swift; sourceTree = "<group>"; };
+		D705CE481C90171200CC9303 /* AnalyDataMonthlyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnalyDataMonthlyCell.swift; path = AnalyData/AnalyDataMonthlyCell.swift; sourceTree = "<group>"; };
 		D7072BA11C62F04D00A6DDF5 /* html */ = {isa = PBXFileReference; lastKnownFileType = folder; path = html; sourceTree = "<group>"; };
 		D70854461C7D622500861694 /* PurchaseListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchaseListCell.swift; path = Product/PurchaseListCell.swift; sourceTree = "<group>"; };
 		D70854481C7D69C400861694 /* PurchaseListDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchaseListDetail.swift; path = Product/PurchaseListDetail.swift; sourceTree = "<group>"; };
@@ -673,7 +683,11 @@
 				D710A0801C8EA80200264CEB /* CellSheetCourse.swift */,
 				D710A0821C8EA80F00264CEB /* CellSheetPd.swift */,
 				D710A0841C8EB9F700264CEB /* AnalyDataDaily.swift */,
+				D705CE421C8FC85800CC9303 /* AnalyDataDailyCell.swift */,
+				D705CE441C8FD1A300CC9303 /* AnalyDataDailyDetail.swift */,
 				D710A0881C8EC91600264CEB /* AnalyDataMonthly.swift */,
+				D705CE481C90171200CC9303 /* AnalyDataMonthlyCell.swift */,
+				D705CE461C90138800CC9303 /* AnalyDataMonthlyDetail.swift */,
 			);
 			name = AnalyData;
 			sourceTree = "<group>";
@@ -700,6 +714,7 @@
 				42E21F101C68826500B85EA9 /* PubCalendarCell.swift */,
 				D7645BE51C802D8000507072 /* PubPurReturnPdList.swift */,
 				D7645BE71C802EFC00507072 /* PubPurReturnPdListCell.swift */,
+				D705CE401C8FC2FF00CC9303 /* PubYYMMColtCell.swift */,
 			);
 			name = PubView;
 			sourceTree = "<group>";
@@ -883,6 +898,7 @@
 				D7037A731C58C03F002A955E /* CutImage.swift in Sources */,
 				D7BB2ADF1C64788700624E08 /* PubMeadDataSelectCell.swift in Sources */,
 				42E21F0F1C68825200B85EA9 /* PickerDate.swift in Sources */,
+				D705CE491C90171200CC9303 /* AnalyDataMonthlyCell.swift in Sources */,
 				D7645BE01C80068400507072 /* PurchaseReturnList.swift in Sources */,
 				D7645BE21C80074500507072 /* PurchaseReturnListCell.swift in Sources */,
 				D7FB953C1C59F58C00B48F57 /* MainMenu.swift in Sources */,
@@ -894,11 +910,13 @@
 				D74A60591C8D32B300946118 /* MsgAddContainer.swift in Sources */,
 				D7496D261C5B58CF00B75D6A /* CourseList.swift in Sources */,
 				D72BA3351C8819500028898D /* StaffBenefitColtViewCell.swift in Sources */,
+				D705CE451C8FD1A300CC9303 /* AnalyDataDailyDetail.swift in Sources */,
 				42E21F0B1C68800500B85EA9 /* CourseReserv.swift in Sources */,
 				D71DFD0C1C7C20180024BB59 /* StockCell.swift in Sources */,
 				D7F8BCED1C7ED6C70059E6E5 /* PurchaseDetailEditContainer.swift in Sources */,
 				D7037A771C58C03F002A955E /* NoDataView.swift in Sources */,
 				D71DFD081C7C0EB40024BB59 /* Stock.swift in Sources */,
+				D705CE431C8FC85800CC9303 /* AnalyDataDailyCell.swift in Sources */,
 				D7496D1A1C5B343200B75D6A /* MainMenuColtViewCell.swift in Sources */,
 				D70CD9451C72CBF8008E79E1 /* CourseSaleSugst.swift in Sources */,
 				D71DFD121C7C53A10024BB59 /* PurchaseList.swift in Sources */,
@@ -912,6 +930,7 @@
 				D70CD9441C72CBF8008E79E1 /* CourseSaleMemberSel.swift in Sources */,
 				D7645BE81C802EFC00507072 /* PubPurReturnPdListCell.swift in Sources */,
 				D7BB2AD31C6477F800624E08 /* PubMemberPurchaseSelect.swift in Sources */,
+				D705CE471C90138800CC9303 /* AnalyDataMonthlyDetail.swift in Sources */,
 				D72F26451C7AA61900717394 /* SalePdSelt.swift in Sources */,
 				D7BB2ADE1C64788700624E08 /* PubMeadDataSelect.swift in Sources */,
 				D7F45F431C75733400735D09 /* PurchasePdSelt.swift in Sources */,
@@ -924,6 +943,7 @@
 				D74A60531C8D11D500946118 /* MsgListCell.swift in Sources */,
 				D7BB2AE01C64788700624E08 /* PubMemberSelect.swift in Sources */,
 				D7F45F451C75752A00735D09 /* PurchasePdSeltCell.swift in Sources */,
+				D705CE411C8FC2FF00CC9303 /* PubYYMMColtCell.swift in Sources */,
 				D72BA3371C882EE80028898D /* StaffBenefitDetail.swift in Sources */,
 				D70CD9431C72CBF8008E79E1 /* CourseSaleCourseSel.swift in Sources */,
 				D7EDE8861C6081B800665542 /* MemberMainColtViewCell.swift in Sources */,

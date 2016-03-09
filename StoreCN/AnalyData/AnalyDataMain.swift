@@ -26,6 +26,7 @@ class AnalyDataMain: UIViewController {
     // ContainerView 相關參數
     private var aryChildVC: Array<UIViewController> = []
     private let aryVCIdent = ["today", "daily", "monthly"]
+    private var bolReload = true // 頁面是否需要 http reload
     
     private var mAnalyDataToday: AnalyDataToday!
     private var mAnalyDataDaily: AnalyDataDaily!
@@ -53,7 +54,10 @@ class AnalyDataMain: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
-        reConnHTTP(aryVCIdent[0], strYYMMDD: nil)
+        if (bolReload) {
+            bolReload = false
+            reConnHTTP(aryVCIdent[0], strYYMMDD: nil)
+        }
     }
     
     /**
@@ -103,21 +107,19 @@ class AnalyDataMain: UIViewController {
                 mView = self.mAnalyDataToday.view
             }
             else if (strAct == "daily") {
- 
+                self.mAnalyDataDaily.dictAllData = dictData
+                self.mAnalyDataDaily.strToday = self.strToday
                 mView = self.mAnalyDataDaily.view
             }
             else {
+                self.mAnalyDataMonthly.dictAllData = dictData
+                self.mAnalyDataMonthly.strToday = self.strToday
                 mView = self.mAnalyDataMonthly.view
             }
             
+            // VC view 加入到 container View
             mView.frame.size.height = self.containView.layer.frame.height
             mView.frame.size.width = self.containView.layer.frame.width
-            
-            /*
-            oldViewController.view.removeFromSuperview()
-            oldViewController.removeFromParentViewController()
-            newViewController.didMoveToParentViewController(self)
-            */
             
             self.containView.addSubview(mView)
         })

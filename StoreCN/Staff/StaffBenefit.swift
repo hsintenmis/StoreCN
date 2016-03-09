@@ -57,7 +57,7 @@ class StaffBenefit: UIViewController {
     /**
      * 檢查是否有資料
      */
-    private func relaodPage() {
+    private func reloadPage() {
         // 設定 tableview datasource
         if let aryTmp = aryYYMM[indexPathYYMM.row]["staff"] as? Array<Dictionary<String, AnyObject>> {
             aryTableData = aryTmp
@@ -116,7 +116,7 @@ class StaffBenefit: UIViewController {
             }
             
             // 重整頁面
-            self.relaodPage()
+            self.reloadPage()
         })
     }
     
@@ -170,7 +170,7 @@ class StaffBenefit: UIViewController {
     func collectionView(collectionView: UICollectionView!, didSelectItemAtIndexPath indexPath: NSIndexPath!) {
         
         indexPathYYMM = indexPath
-        relaodPage()
+        reloadPage()
     }
     
     /**

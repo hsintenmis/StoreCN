@@ -40,10 +40,6 @@ class AnalyDataToday: UIViewController {
         super.viewDidLoad()
         pubClass = PubClass()
         
-        
-        // TODO test
-        //strYYMMDD = "20160303"
-        
         // TableCell autoheight
         tableData.estimatedRowHeight = 100.0
         tableData.rowHeight = UITableViewAutomaticDimension
@@ -63,8 +59,10 @@ class AnalyDataToday: UIViewController {
                 
                 // 轉換 dict to array
                 var aryTmp: Array<Dictionary<String, AnyObject>> = []
+                                
+                let sortedDict = dictTmp.sort { $0.0 < $1.0 }
                 
-                for (key, value) in dictTmp {
+                for (key, value) in sortedDict {
                     var dictSub: Dictionary<String, AnyObject> = value
                     dictSub["id"] = key
                     aryTmp.append(dictSub)
@@ -90,11 +88,19 @@ class AnalyDataToday: UIViewController {
             labIncome.text = dictAllData["totIncome"] as? String
         }
         
+        // 設定 YMD string
         var mDate = strToday
         if let tmpDate = strYYMMDD {
             mDate = tmpDate
         }
-        labDate.text = pubClass.formatDateWithStr(mDate, type: 8)
+        
+        if (mDate.characters.count >= 8) {
+            labDate.text = pubClass.formatDateWithStr(mDate, type: 8)
+        }
+        else {
+            let strDate = pubClass.subStr(mDate, strFrom: 0, strEnd: 4) + " " + pubClass.getLang("mm_" + pubClass.subStr(mDate, strFrom: 4, strEnd: 6))
+            labDate.text = strDate
+        }
     }
 
     /**
@@ -102,12 +108,12 @@ class AnalyDataToday: UIViewController {
      * Section 的數量
      */
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return aryTableData.count
+        return aryField.count
     }
     
     /**
      * #mark: UITableView Delegate
-     * 回傳指定 section 的數量
+     * 回傳指定 row 的數量
      */
     func tableView(tableView: UITableView, numberOfRowsInSection section:Int) -> Int {
         return (aryTableData.count > 0) ? aryTableData[section].count : 0
@@ -160,30 +166,11 @@ class AnalyDataToday: UIViewController {
     }
     
     /**
-     * Segue 跳轉頁面
-     */
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if (segue.identifier == "AnalyDataDaily") {
-            self.dismissViewControllerAnimated(true, completion: nil)
-            return
-        }
-        
-        return
-    }
-    
-    /**
      * act, Segment, Table Section 選擇
      */
     @IBAction func actChangSect(sender: UISegmentedControl) {
         let mIndexPath = NSIndexPath(forRow: NSNotFound, inSection: sender.selectedSegmentIndex)
         tableData.scrollToRowAtIndexPath(mIndexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
-    }
-    
-    /**
-     * act, 點取 '主選單' button
-     */
-    @IBAction func actHome(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
 }
