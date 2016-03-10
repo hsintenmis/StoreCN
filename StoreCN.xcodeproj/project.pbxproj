@@ -149,6 +149,15 @@
 		D72BA3331C8814FA0028898D /* StaffBenefitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72BA3321C8814FA0028898D /* StaffBenefitCell.swift */; };
 		D72BA3351C8819500028898D /* StaffBenefitColtViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72BA3341C8819500028898D /* StaffBenefitColtViewCell.swift */; };
 		D72BA3371C882EE80028898D /* StaffBenefitDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72BA3361C882EE80028898D /* StaffBenefitDetail.swift */; };
+		D72E981B1C91117000DA9FA3 /* AnalyDataHealth.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72E981A1C91117000DA9FA3 /* AnalyDataHealth.swift */; };
+		D72E981D1C91133700DA9FA3 /* AnalyDataHealthCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72E981C1C91133700DA9FA3 /* AnalyDataHealthCell.swift */; };
+		D72E981F1C912BA600DA9FA3 /* SysConfigMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72E981E1C912BA600DA9FA3 /* SysConfigMain.swift */; };
+		D72E98231C91523300DA9FA3 /* ConfigProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72E98221C91523300DA9FA3 /* ConfigProfile.swift */; };
+		D72E98251C9154B500DA9FA3 /* ConfigCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72E98241C9154B500DA9FA3 /* ConfigCourse.swift */; };
+		D72E98271C91551F00DA9FA3 /* ConfigBTScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72E98261C91551F00DA9FA3 /* ConfigBTScale.swift */; };
+		D72E98291C91695500DA9FA3 /* SysConfigMainContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72E98281C91695500DA9FA3 /* SysConfigMainContainer.swift */; };
+		D72E982B1C916FE900DA9FA3 /* ConfigProfileEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72E982A1C916FE900DA9FA3 /* ConfigProfileEdit.swift */; };
+		D72E982D1C91719900DA9FA3 /* ConfigCourseEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72E982C1C91719900DA9FA3 /* ConfigCourseEdit.swift */; };
 		D72F26431C7AA60100717394 /* Sale.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72F26421C7AA60100717394 /* Sale.swift */; };
 		D72F26451C7AA61900717394 /* SalePdSelt.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72F26441C7AA61900717394 /* SalePdSelt.swift */; };
 		D72F26471C7AA63A00717394 /* SalePdSeltCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72F26461C7AA63A00717394 /* SalePdSeltCell.swift */; };
@@ -339,6 +348,15 @@
 		D72BA3321C8814FA0028898D /* StaffBenefitCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StaffBenefitCell.swift; path = Staff/StaffBenefitCell.swift; sourceTree = "<group>"; };
 		D72BA3341C8819500028898D /* StaffBenefitColtViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StaffBenefitColtViewCell.swift; path = Staff/StaffBenefitColtViewCell.swift; sourceTree = "<group>"; };
 		D72BA3361C882EE80028898D /* StaffBenefitDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StaffBenefitDetail.swift; path = Staff/StaffBenefitDetail.swift; sourceTree = "<group>"; };
+		D72E981A1C91117000DA9FA3 /* AnalyDataHealth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnalyDataHealth.swift; path = AnalyData/AnalyDataHealth.swift; sourceTree = "<group>"; };
+		D72E981C1C91133700DA9FA3 /* AnalyDataHealthCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnalyDataHealthCell.swift; path = AnalyData/AnalyDataHealthCell.swift; sourceTree = "<group>"; };
+		D72E981E1C912BA600DA9FA3 /* SysConfigMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SysConfigMain.swift; path = SysConfig/SysConfigMain.swift; sourceTree = "<group>"; };
+		D72E98221C91523300DA9FA3 /* ConfigProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfigProfile.swift; path = SysConfig/ConfigProfile.swift; sourceTree = "<group>"; };
+		D72E98241C9154B500DA9FA3 /* ConfigCourse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfigCourse.swift; path = SysConfig/ConfigCourse.swift; sourceTree = "<group>"; };
+		D72E98261C91551F00DA9FA3 /* ConfigBTScale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfigBTScale.swift; path = SysConfig/ConfigBTScale.swift; sourceTree = "<group>"; };
+		D72E98281C91695500DA9FA3 /* SysConfigMainContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SysConfigMainContainer.swift; path = SysConfig/SysConfigMainContainer.swift; sourceTree = "<group>"; };
+		D72E982A1C916FE900DA9FA3 /* ConfigProfileEdit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfigProfileEdit.swift; path = SysConfig/ConfigProfileEdit.swift; sourceTree = "<group>"; };
+		D72E982C1C91719900DA9FA3 /* ConfigCourseEdit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfigCourseEdit.swift; path = SysConfig/ConfigCourseEdit.swift; sourceTree = "<group>"; };
 		D72F26421C7AA60100717394 /* Sale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Sale.swift; path = Product/Sale.swift; sourceTree = "<group>"; };
 		D72F26441C7AA61900717394 /* SalePdSelt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SalePdSelt.swift; path = Product/SalePdSelt.swift; sourceTree = "<group>"; };
 		D72F26461C7AA63A00717394 /* SalePdSeltCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SalePdSeltCell.swift; path = Product/SalePdSeltCell.swift; sourceTree = "<group>"; };
@@ -422,7 +440,7 @@
 				D7496D211C5B4DF600B75D6A /* Staff */,
 				D7496D221C5B4DFF00B75D6A /* Message */,
 				D7496D231C5B4E0900B75D6A /* AnalyData */,
-				D7496D241C5B4E1300B75D6A /* Config */,
+				D7496D241C5B4E1300B75D6A /* SysConfig */,
 				D7BB2AD11C646DD600624E08 /* PubView */,
 				D7037A651C58BCD6002A955E /* PubClass */,
 				D7037A861C58C726002A955E /* image */,
@@ -688,15 +706,24 @@
 				D710A0881C8EC91600264CEB /* AnalyDataMonthly.swift */,
 				D705CE481C90171200CC9303 /* AnalyDataMonthlyCell.swift */,
 				D705CE461C90138800CC9303 /* AnalyDataMonthlyDetail.swift */,
+				D72E981A1C91117000DA9FA3 /* AnalyDataHealth.swift */,
+				D72E981C1C91133700DA9FA3 /* AnalyDataHealthCell.swift */,
 			);
 			name = AnalyData;
 			sourceTree = "<group>";
 		};
-		D7496D241C5B4E1300B75D6A /* Config */ = {
+		D7496D241C5B4E1300B75D6A /* SysConfig */ = {
 			isa = PBXGroup;
 			children = (
+				D72E981E1C912BA600DA9FA3 /* SysConfigMain.swift */,
+				D72E98281C91695500DA9FA3 /* SysConfigMainContainer.swift */,
+				D72E98221C91523300DA9FA3 /* ConfigProfile.swift */,
+				D72E982A1C916FE900DA9FA3 /* ConfigProfileEdit.swift */,
+				D72E98241C9154B500DA9FA3 /* ConfigCourse.swift */,
+				D72E982C1C91719900DA9FA3 /* ConfigCourseEdit.swift */,
+				D72E98261C91551F00DA9FA3 /* ConfigBTScale.swift */,
 			);
-			name = Config;
+			name = SysConfig;
 			sourceTree = "<group>";
 		};
 		D7BB2AD11C646DD600624E08 /* PubView */ = {
@@ -887,16 +914,20 @@
 				D7150E431C5C6E8000C9FE8B /* MemberAdEd.swift in Sources */,
 				D7BB2AE31C64799D00624E08 /* PubMemberPurchaseSelectCell.swift in Sources */,
 				42FD09E11C841E0D00ADAD4C /* PickerDateTime.swift in Sources */,
+				D72E98251C9154B500DA9FA3 /* ConfigCourse.swift in Sources */,
 				D74A60551C8D165D00946118 /* MsgAdd.swift in Sources */,
 				D74652071C5CA85900190EF6 /* PickerNumber.swift in Sources */,
 				D7645BE41C801FA900507072 /* PurchaseReturnEdit.swift in Sources */,
 				D70CD9421C72CBF8008E79E1 /* CourseSale.swift in Sources */,
 				D7F092281C898D6E005D8C96 /* HealthWitnessDetail.swift in Sources */,
+				D72E981B1C91117000DA9FA3 /* AnalyDataHealth.swift in Sources */,
+				D72E981D1C91133700DA9FA3 /* AnalyDataHealthCell.swift in Sources */,
 				D7F0921E1C891900005D8C96 /* StaffBenefitDetailCell.swift in Sources */,
 				D70FCC291C86D4140035D1B6 /* StaffListCell.swift in Sources */,
 				D7F092201C895E07005D8C96 /* CustomUITextField.swift in Sources */,
 				D7037A731C58C03F002A955E /* CutImage.swift in Sources */,
 				D7BB2ADF1C64788700624E08 /* PubMeadDataSelectCell.swift in Sources */,
+				D72E982B1C916FE900DA9FA3 /* ConfigProfileEdit.swift in Sources */,
 				42E21F0F1C68825200B85EA9 /* PickerDate.swift in Sources */,
 				D705CE491C90171200CC9303 /* AnalyDataMonthlyCell.swift in Sources */,
 				D7645BE01C80068400507072 /* PurchaseReturnList.swift in Sources */,
@@ -915,7 +946,9 @@
 				D71DFD0C1C7C20180024BB59 /* StockCell.swift in Sources */,
 				D7F8BCED1C7ED6C70059E6E5 /* PurchaseDetailEditContainer.swift in Sources */,
 				D7037A771C58C03F002A955E /* NoDataView.swift in Sources */,
+				D72E981F1C912BA600DA9FA3 /* SysConfigMain.swift in Sources */,
 				D71DFD081C7C0EB40024BB59 /* Stock.swift in Sources */,
+				D72E982D1C91719900DA9FA3 /* ConfigCourseEdit.swift in Sources */,
 				D705CE431C8FC85800CC9303 /* AnalyDataDailyCell.swift in Sources */,
 				D7496D1A1C5B343200B75D6A /* MainMenuColtViewCell.swift in Sources */,
 				D70CD9451C72CBF8008E79E1 /* CourseSaleSugst.swift in Sources */,
@@ -941,6 +974,7 @@
 				D710A0871C8EC3A900264CEB /* AnalyDataMain.swift in Sources */,
 				D728A26C1C8138B100B93B38 /* PurchaseListDetailCell.swift in Sources */,
 				D74A60531C8D11D500946118 /* MsgListCell.swift in Sources */,
+				D72E98231C91523300DA9FA3 /* ConfigProfile.swift in Sources */,
 				D7BB2AE01C64788700624E08 /* PubMemberSelect.swift in Sources */,
 				D7F45F451C75752A00735D09 /* PurchasePdSeltCell.swift in Sources */,
 				D705CE411C8FC2FF00CC9303 /* PubYYMMColtCell.swift in Sources */,
@@ -952,6 +986,7 @@
 				D710A0851C8EB9F700264CEB /* AnalyDataDaily.swift in Sources */,
 				D7BB2AD01C646DC800624E08 /* PubSoqibedSelect.swift in Sources */,
 				D70FCC2B1C86E8DF0035D1B6 /* StaffAdEdContainer.swift in Sources */,
+				D72E98291C91695500DA9FA3 /* SysConfigMainContainer.swift in Sources */,
 				D7037A761C58C03F002A955E /* JSONClass.swift in Sources */,
 				D7B29F791C5C712E0025C53A /* MemberAdEdContainer.swift in Sources */,
 				D7134FF91C5F5A990069ACF1 /* MemberMain.swift in Sources */,
@@ -962,6 +997,7 @@
 				D71DFD101C7C397A0024BB59 /* StockHistoryCell.swift in Sources */,
 				D720FBA11C7458F000AE640C /* Purchase.swift in Sources */,
 				D70854491C7D69C400861694 /* PurchaseListDetail.swift in Sources */,
+				D72E98271C91551F00DA9FA3 /* ConfigBTScale.swift in Sources */,
 				D7037A781C58C03F002A955E /* PubClass.swift in Sources */,
 				D70FCC251C86CCD80035D1B6 /* StaffList.swift in Sources */,
 				D7BB2ADC1C64788700624E08 /* PubCourseSelect.swift in Sources */,

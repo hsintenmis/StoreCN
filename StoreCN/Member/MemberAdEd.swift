@@ -14,9 +14,7 @@ class MemberAdEd: UIViewController {
     @IBOutlet weak var containView: UIView!
     
     // common property
-    var mVCtrl: UIViewController!
-    let pubClass: PubClass = PubClass()
-    var dictPref: Dictionary<String, AnyObject>!  // Prefer data
+    var pubClass: PubClass!
     
     // public property, 上層 parent 設定
     var strToday: String!
@@ -28,10 +26,7 @@ class MemberAdEd: UIViewController {
      */
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // 固定初始參數
-        mVCtrl = self
-        dictPref = pubClass.getPrefData()
+        pubClass = PubClass()
     }
     
     /**

@@ -167,6 +167,7 @@ class SalePdSelt: UIViewController, SalePdSeltCellDelegate {
         let totPrice = intPrice * intQty
         
         let mCell = tableData.cellForRowAtIndexPath(currIndexPath!) as! SalePdSeltCell
+        
         mCell.labQty.text = String(intQty)
         mCell.labTot.text = String(totPrice)
         

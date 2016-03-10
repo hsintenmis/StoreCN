@@ -164,8 +164,12 @@
 "analydata_today" = "今日收入";
 "analydata_daily" = "每日收入";
 "analydata_monthly" = "每日收入";
-
 "analydata_sheet_invoice" = "會員訂單";
 "analydata_sheet_course" = "療程銷售";
 "analydata_sheet_pd" = "商品銷售";
+
+"analydata_usedaytoday" = "今天";
+"analydata_usedayyest" = "昨天";
+"format_beforedays" = "%d 天前";
+"analydata_usedaynever" = "从未使用";
 

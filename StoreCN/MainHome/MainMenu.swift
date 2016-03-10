@@ -180,10 +180,12 @@ class MainMenu: UIViewController {
         let strItem = aryMenuName[position]
 
         // 直接跳轉 VC
-        if (strItem == "member" || strItem == "testing") {
+        if (strItem == "member" || strItem == "testing" || strItem == "config") {
             var strIdentName = ""
             if (strItem == "member") {
                 strIdentName = "member_list"
+            } else if (strItem == "config") {
+                strIdentName = "SysConfigMain"
             }
             
             self.performSegueWithIdentifier(strIdentName, sender: nil)
@@ -331,6 +333,12 @@ class MainMenu: UIViewController {
                 // 店務分析直接跳轉 '今日收入' , HTTP 連線取得資料直接由 child 處理
                 if (strIdent == "analydata_income") {
                     self.performSegueWithIdentifier("AnalyDataMain", sender: nil)
+                    return
+                }
+                
+                // 店務分析直接跳轉 '健康精靈分析' , HTTP 連線取得資料直接由 child 處理
+                if (strIdent == "analydata_health") {
+                    self.performSegueWithIdentifier("AnalyDataHealth", sender: nil)
                     return
                 }
             }))

@@ -290,7 +290,15 @@ class PubClass {
             }
             
             if ( dictRespon["result"] as! Bool != true) {
-                dictRS["msg"] = "err_accpsd"
+                dictRS["msg"] = "err_data"
+                
+                // 檢查 content ['msg'] 是否有訊息
+                if let errTmp = dictRespon["content"]?["msg"] as? String {
+                    if (errTmp.characters.count > 0) {
+                        dictRS["msg"] = errTmp
+                    }
+                }
+                
                 return dictRS
             }
             

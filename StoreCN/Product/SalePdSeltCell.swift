@@ -26,10 +26,12 @@ class SalePdSeltCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSou
     @IBOutlet weak var labQty: UILabel!
     @IBOutlet weak var labTot: UILabel!
     @IBOutlet weak var edQty: UITextField!
+    @IBOutlet weak var labStock: UILabel!
     
     // Delegate, public property
     var delegate = SalePdSeltCellDelegate?()
     var kbHeight: CGFloat!
+    var intStock: Int!  // 目前庫存量， parent 設定
     
     // Picker 設定
     private var pubClass = PubClass()
@@ -65,6 +67,7 @@ class SalePdSeltCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSou
         // field 設定
         labName.text = ditItem["pdname"] as? String
         labId.text = ditItem["pdid"] as? String
+        labStock.text = ditItem["qty"] as? String
         
         let intPrice = Int(ditItem["price"] as! String)!
         let intQty = Int(ditItem["qtySel"] as! String)!
@@ -78,6 +81,13 @@ class SalePdSeltCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSou
         let mColor =  (Int(ditItem["qtySel"] as! String) > 0) ? pubClass.ColorHEX(pubClass.dictColor["BlueDark"]!) : pubClass.ColorHEX(pubClass.dictColor["gray"]!)
         labQty.textColor = mColor
         labTot .textColor = mColor
+        
+        // 重新設定 '數量' 彈出鍵盤，最大值改為庫存數
+        aryRowVal = []
+        for (var i = aryMaxMin[0]; i <= Int(ditItem["qty"] as! String)!; i++) {
+            aryRowVal.append(String(i))
+        }
+        mPKView.reloadAllComponents()
     }
     
     /**
