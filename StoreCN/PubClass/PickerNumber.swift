@@ -110,7 +110,7 @@ class PickerNumber: NSObject, UIPickerViewDelegate, UIPickerViewDataSource {
         arySelVal[component] = aryRowVal[component][row]
         var strTxt = ""
         
-        for (var i=0; i<arySelVal.count; i++) {
+        for (var i=0; i < arySelVal.count; i++) {
             strTxt += arySelVal[i]
         }
         

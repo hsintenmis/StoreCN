@@ -13,12 +13,12 @@ class ConfigCourse: UIViewController {
     // @IBOutlet
     @IBOutlet weak var containView: UIView!
     
+    
     // common property
     var pubClass: PubClass!
     
     // public property, 上層 parent 設定
-    
-    
+
     /**
     * View Load 程序
     */

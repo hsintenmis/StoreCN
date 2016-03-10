@@ -12071,7 +12071,7 @@
         <scene sceneID="dyo-pc-qgr">
             <objects>
                 <tableViewController title="疗程预约相关设定 - 輸入頁面" id="5ye-0a-dpl" customClass="ConfigCourseEdit" customModule="StoreCN" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="40" sectionHeaderHeight="18" sectionFooterHeight="18" id="LkO-rB-ahC">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="40" sectionHeaderHeight="18" sectionFooterHeight="18" id="LkO-rB-ahC">
                         <rect key="frame" x="0.0" y="0.0" width="324" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -12111,6 +12111,9 @@
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="5ye-0a-dpl" id="3Vv-PL-XWv"/>
+                                                    </connections>
                                                 </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="時" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vQb-6l-baO">
                                                     <rect key="frame" x="183" y="19" width="14" height="17"/>
@@ -12126,6 +12129,9 @@
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="5ye-0a-dpl" id="mqg-zF-fdN"/>
+                                                    </connections>
                                                 </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="~" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rt6-l9-RP4">
                                                     <rect key="frame" x="212" y="12" width="15" height="29"/>
@@ -12162,48 +12168,8 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="固定公休日" footerTitle="" id="ZwH-Y4-iRW">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="checkmark" indentationWidth="10" rowHeight="30" id="25Z-pH-UxP">
-                                        <rect key="frame" x="0.0" y="186" width="324" height="30"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="25Z-pH-UxP" id="HXb-yf-M0Z">
-                                            <rect key="frame" x="0.0" y="0.0" width="285" height="29"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="星期日" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SPC-UH-7x6">
-                                                    <rect key="frame" x="19" y="7" width="36" height="15"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <color key="textColor" red="0.80000000000000004" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="SPC-UH-7x6" firstAttribute="leading" secondItem="HXb-yf-M0Z" secondAttribute="leadingMargin" constant="11" id="ZJd-LR-S9p"/>
-                                                <constraint firstItem="SPC-UH-7x6" firstAttribute="centerY" secondItem="HXb-yf-M0Z" secondAttribute="centerY" id="arQ-AI-ANl"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="checkmark" indentationWidth="10" rowHeight="30" id="Lbo-qq-4fq">
-                                        <rect key="frame" x="0.0" y="216" width="324" height="30"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Lbo-qq-4fq" id="IJ1-UH-HPT">
-                                            <rect key="frame" x="0.0" y="0.0" width="285" height="29"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="星期六" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YE0-IK-soz">
-                                                    <rect key="frame" x="19" y="7" width="36" height="15"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <color key="textColor" red="0.20000000000000001" green="0.40000000000000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="YE0-IK-soz" firstAttribute="leading" secondItem="IJ1-UH-HPT" secondAttribute="leadingMargin" constant="11" id="Gfw-Nh-p7H"/>
-                                                <constraint firstItem="YE0-IK-soz" firstAttribute="centerY" secondItem="IJ1-UH-HPT" secondAttribute="centerY" id="nqM-Xx-hlM"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="checkmark" indentationWidth="10" rowHeight="30" id="n5P-sZ-2Nx">
-                                        <rect key="frame" x="0.0" y="246" width="324" height="30"/>
+                                        <rect key="frame" x="0.0" y="186" width="324" height="30"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="n5P-sZ-2Nx" id="cpL-00-Lym">
                                             <rect key="frame" x="0.0" y="0.0" width="285" height="29"/>
@@ -12223,7 +12189,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="checkmark" indentationWidth="10" rowHeight="30" id="B35-qy-Cl0">
-                                        <rect key="frame" x="0.0" y="276" width="324" height="30"/>
+                                        <rect key="frame" x="0.0" y="216" width="324" height="30"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="B35-qy-Cl0" id="YPO-FZ-DQV">
                                             <rect key="frame" x="0.0" y="0.0" width="285" height="29"/>
@@ -12243,7 +12209,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="checkmark" indentationWidth="10" rowHeight="30" id="tnr-wl-W98">
-                                        <rect key="frame" x="0.0" y="306" width="324" height="30"/>
+                                        <rect key="frame" x="0.0" y="246" width="324" height="30"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tnr-wl-W98" id="0mc-I5-saD">
                                             <rect key="frame" x="0.0" y="0.0" width="285" height="29"/>
@@ -12263,7 +12229,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="checkmark" indentationWidth="10" rowHeight="30" id="moF-Kc-Brs">
-                                        <rect key="frame" x="0.0" y="336" width="324" height="30"/>
+                                        <rect key="frame" x="0.0" y="276" width="324" height="30"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="moF-Kc-Brs" id="fib-4F-opn">
                                             <rect key="frame" x="0.0" y="0.0" width="285" height="29"/>
@@ -12283,7 +12249,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="checkmark" indentationWidth="10" rowHeight="30" id="CwA-cv-i5v">
-                                        <rect key="frame" x="0.0" y="366" width="324" height="30"/>
+                                        <rect key="frame" x="0.0" y="306" width="324" height="30"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CwA-cv-i5v" id="NBR-qo-HV9">
                                             <rect key="frame" x="0.0" y="0.0" width="285" height="29"/>
@@ -12299,6 +12265,46 @@
                                             <constraints>
                                                 <constraint firstItem="M3Y-V2-tni" firstAttribute="centerY" secondItem="NBR-qo-HV9" secondAttribute="centerY" id="1Ou-0C-VMy"/>
                                                 <constraint firstItem="M3Y-V2-tni" firstAttribute="leading" secondItem="NBR-qo-HV9" secondAttribute="leadingMargin" constant="11" id="4AX-hN-x2n"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="checkmark" indentationWidth="10" rowHeight="30" id="Lbo-qq-4fq">
+                                        <rect key="frame" x="0.0" y="336" width="324" height="30"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Lbo-qq-4fq" id="IJ1-UH-HPT">
+                                            <rect key="frame" x="0.0" y="0.0" width="285" height="29"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="星期六" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YE0-IK-soz">
+                                                    <rect key="frame" x="19" y="7" width="36" height="15"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" red="0.20000000000000001" green="0.40000000000000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="YE0-IK-soz" firstAttribute="leading" secondItem="IJ1-UH-HPT" secondAttribute="leadingMargin" constant="11" id="Gfw-Nh-p7H"/>
+                                                <constraint firstItem="YE0-IK-soz" firstAttribute="centerY" secondItem="IJ1-UH-HPT" secondAttribute="centerY" id="nqM-Xx-hlM"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" accessoryType="checkmark" indentationWidth="10" rowHeight="30" id="25Z-pH-UxP">
+                                        <rect key="frame" x="0.0" y="366" width="324" height="30"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="25Z-pH-UxP" id="HXb-yf-M0Z">
+                                            <rect key="frame" x="0.0" y="0.0" width="285" height="29"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="星期日" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SPC-UH-7x6">
+                                                    <rect key="frame" x="19" y="7" width="36" height="15"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" red="0.80000000000000004" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="SPC-UH-7x6" firstAttribute="leading" secondItem="HXb-yf-M0Z" secondAttribute="leadingMargin" constant="11" id="ZJd-LR-S9p"/>
+                                                <constraint firstItem="SPC-UH-7x6" firstAttribute="centerY" secondItem="HXb-yf-M0Z" secondAttribute="centerY" id="arQ-AI-ANl"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -12327,6 +12333,9 @@
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="5ye-0a-dpl" id="Qws-y8-LrV"/>
+                                                    </connections>
                                                 </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="例如: 14:00 ~ 15:00 這個時段," textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PPA-6V-wSK">
                                                     <rect key="frame" x="18" y="42" width="164" height="12"/>
@@ -12372,6 +12381,13 @@
                         <outlet property="edHH_Start" destination="T6w-ht-ztq" id="ZEv-Qe-DNo"/>
                         <outlet property="edNums" destination="GqS-6g-h1J" id="0sW-kC-Obj"/>
                         <outlet property="tableList" destination="LkO-rB-ahC" id="ZhU-zO-U4H"/>
+                        <outletCollection property="groupWeekCell" destination="n5P-sZ-2Nx" collectionClass="NSMutableArray" id="YKG-b7-3dr"/>
+                        <outletCollection property="groupWeekCell" destination="B35-qy-Cl0" collectionClass="NSMutableArray" id="j9D-d0-2Rz"/>
+                        <outletCollection property="groupWeekCell" destination="tnr-wl-W98" collectionClass="NSMutableArray" id="nqN-pV-tpa"/>
+                        <outletCollection property="groupWeekCell" destination="moF-Kc-Brs" collectionClass="NSMutableArray" id="OUv-7S-vF8"/>
+                        <outletCollection property="groupWeekCell" destination="CwA-cv-i5v" collectionClass="NSMutableArray" id="pnV-OV-ckb"/>
+                        <outletCollection property="groupWeekCell" destination="Lbo-qq-4fq" collectionClass="NSMutableArray" id="eqk-Dy-eqG"/>
+                        <outletCollection property="groupWeekCell" destination="25Z-pH-UxP" collectionClass="NSMutableArray" id="mid-I7-dSg"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nGR-Rr-B1w" userLabel="First Responder" sceneMemberID="firstResponder"/>
