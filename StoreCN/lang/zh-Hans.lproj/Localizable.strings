@@ -173,3 +173,11 @@
 "format_beforedays" = "%d 天前";
 "analydata_usedaynever" = "从未使用";
 
+"config_profile_err_edStoreName" = "店家名稱錯誤!";
+"config_profile_err_edTel" = "聯絡電話錯誤!";
+"config_profile_err_edStoreMaster" = "店長姓名錯誤!";
+
+"btsacel_bondmsg" = "要绑定的设备,是否有出现蓝牙标记符号?";
+"btsacel_disbondmsg" = "確定要解除已綁定的藍牙設備?";
+"btsacel_bondY" = "已綁定";
+"btsacel_bondN" = "未綁定";

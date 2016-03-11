@@ -8,16 +8,18 @@ import Foundation
 /**
  * 會員 新增/編輯
  */
-class SysConfigMainContainer: UITableViewController {
+class SysConfigMainContainer: UITableViewController, ConfigBTScaleDelegate {
     
-    // @IBOutlet
+     // @IBOutlet
     @IBOutlet weak var tableList: UITableView!
+    @IBOutlet weak var labScaleBond: UILabel!
+    @IBOutlet weak var labScaleId: UILabel!
     
     // common property
-    var pubClass: PubClass!
+    private var pubClass: PubClass!
     
-    // public property, 上層 parent 設定
-    
+    // 其他參數
+    private var mConfigBTScale: ConfigBTScale!
     
     /**
     * View Load 程序
@@ -25,6 +27,13 @@ class SysConfigMainContainer: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         pubClass = PubClass()
+        
+        // 取得藍牙體指計綁定資料
+        setBTScaleStatTxt(pubClass.getPrefData("vscale") as! String)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        tableList.reloadData()
     }
     
     /**
@@ -55,9 +64,38 @@ class SysConfigMainContainer: UITableViewController {
      * Segue 跳轉頁面
      */
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        //let strIdent = segue.identifier
+        let strIdent = segue.identifier
         
-        return
+        // 藍牙體指計頁面
+        if (strIdent == "ConfigBTScale") {
+            mConfigBTScale = segue.destinationViewController as! ConfigBTScale
+            mConfigBTScale.delegate = self
+        }
+    }
+    
+    /**
+    * 設定藍牙體脂計 Cell 文字
+    */
+    private func setBTScaleStatTxt(IdentID: String!) {
+        var mColor = pubClass.ColorHEX(pubClass.dictColor["RedDark"])
+        var strStat = pubClass.getLang("btsacel_bondN")
+        
+        if (IdentID.characters.count > 0) {
+            mColor = pubClass.ColorHEX(pubClass.dictColor["GreenDark"])
+            strStat = pubClass.getLang("btsacel_bondY")
+        }
+        
+        labScaleBond.text = strStat
+        labScaleBond.textColor = mColor
+        labScaleId.text = IdentID
+    }
+    
+    /**
+    * #mark: 自訂的 ConfigBTScaleDelegate
+    * 藍牙體脂計綁定狀態改變
+    */
+    func BTScaleBondChange(IdentID: String!) {
+        setBTScaleStatTxt(IdentID)
     }
     
 }

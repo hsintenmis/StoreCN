@@ -106,10 +106,12 @@ class PurchaseDetailEdit: UIViewController {
         pubClass.popIsee(self, Msg: strMsg, withHandler: {self.dismissViewControllerAnimated(true, completion: nil)})
     }
     
+    /**
+     * act, btn '返回'
+     */
     @IBAction func actBack(sender: UIBarButtonItem) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     
 }
-

@@ -84,6 +84,7 @@ class PubClass {
         dictPref["psd"] = ""
         dictPref["issave"] = true
         dictPref["lang"] = aryLangCode[1]
+        dictPref["vscale"] = ""
         
         // 取得 pref data
         if let strAcc: String = mPref.objectForKey("acc") as? String {
@@ -100,6 +101,10 @@ class PubClass {
         
         if let strLang: String = mPref.objectForKey("lang") as? String {
             dictPref["lang"] = strLang
+        }
+        
+        if let strLang: String = mPref.objectForKey("vscale") as? String {
+            dictPref["vscale"] = strLang
         }
         
         return dictPref
