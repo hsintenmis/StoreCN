@@ -343,7 +343,6 @@ class Sale: UIViewController, SalePdSeltDelegate, SalePdSeltCellDelegate, PdSale
                     pubClass.popIsee(self, Msg: pubClass.getLang("pricemaxovermsg"))
                 }
             } else {
-                //print("輸入非數字的字元")
                 edRealPrice.text = labTotPrice.text
             }
             

@@ -128,7 +128,7 @@ class ConfigProfileEdit: UITableViewController, UITextFieldDelegate {
     
     /**
      * public
-     * 取得本頁面編修的資料，回傳給 parent 使用
+     * 取得本頁面編修的資料，parent 調用
      */
     func getPageData() -> Dictionary<String, String>! {
         var dictRS: Dictionary<String, String> = [:]

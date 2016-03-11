@@ -12,6 +12,7 @@
 		42E21F111C68826500B85EA9 /* PubCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E21F101C68826500B85EA9 /* PubCalendarCell.swift */; };
 		42E21F131C68E6F500B85EA9 /* CalendarCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E21F121C68E6F500B85EA9 /* CalendarCellData.swift */; };
 		42F6E3651C6B86AE00C9BB94 /* ReservListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F6E3641C6B86AE00C9BB94 /* ReservListCell.swift */; };
+		42FA49C81C931AA3001C6AEE /* KBNavyBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FA49C71C931AA3001C6AEE /* KBNavyBar.swift */; };
 		42FD09E11C841E0D00ADAD4C /* PickerDateTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FD09E01C841E0D00ADAD4C /* PickerDateTime.swift */; };
 		D7037A5A1C58BB8B002A955E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7037A591C58BB8B002A955E /* Assets.xcassets */; };
 		D7037A681C58BF32002A955E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7037A671C58BF32002A955E /* AppDelegate.swift */; };
@@ -206,6 +207,7 @@
 		42E21F101C68826500B85EA9 /* PubCalendarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubCalendarCell.swift; path = PubView/PubCalendarCell.swift; sourceTree = "<group>"; };
 		42E21F121C68E6F500B85EA9 /* CalendarCellData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarCellData.swift; path = PubClass/CalendarCellData.swift; sourceTree = "<group>"; };
 		42F6E3641C6B86AE00C9BB94 /* ReservListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReservListCell.swift; path = ServiceMgr/ReservListCell.swift; sourceTree = "<group>"; };
+		42FA49C71C931AA3001C6AEE /* KBNavyBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KBNavyBar.swift; path = PubClass/KBNavyBar.swift; sourceTree = "<group>"; };
 		42FD09E01C841E0D00ADAD4C /* PickerDateTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PickerDateTime.swift; path = PubClass/PickerDateTime.swift; sourceTree = "<group>"; };
 		D7037A4F1C58BB8B002A955E /* StoreCN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StoreCN.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7037A591C58BB8B002A955E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -474,6 +476,7 @@
 				42FD09E01C841E0D00ADAD4C /* PickerDateTime.swift */,
 				D74652061C5CA85900190EF6 /* PickerNumber.swift */,
 				42E21F121C68E6F500B85EA9 /* CalendarCellData.swift */,
+				42FA49C71C931AA3001C6AEE /* KBNavyBar.swift */,
 				D7F0921F1C895E07005D8C96 /* CustomUITextField.swift */,
 			);
 			name = PubClass;
@@ -909,6 +912,7 @@
 				D710A0811C8EA80200264CEB /* CellSheetCourse.swift in Sources */,
 				D710A0891C8EC91600264CEB /* AnalyDataMonthly.swift in Sources */,
 				D72BA3311C8813450028898D /* StaffBenefit.swift in Sources */,
+				42FA49C81C931AA3001C6AEE /* KBNavyBar.swift in Sources */,
 				42E21F131C68E6F500B85EA9 /* CalendarCellData.swift in Sources */,
 				42F6E3651C6B86AE00C9BB94 /* ReservListCell.swift in Sources */,
 				D7150E431C5C6E8000C9FE8B /* MemberAdEd.swift in Sources */,

@@ -19,7 +19,7 @@ protocol PubPurReturnPdListCellDelegate {
 /**
  * 商品選擇 TableView Cell，從進貨新增頁面轉入
  */
-class PubPurReturnPdListCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSource {
+class PubPurReturnPdListCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSource, KBNavyBarDelegate {
     
     // Delegate, public property
     var delegate = PubPurReturnPdListCellDelegate?()
@@ -37,6 +37,7 @@ class PubPurReturnPdListCell: UITableViewCell, UIPickerViewDelegate, UIPickerVie
     private var mPKView = UIPickerView()
     private var aryRowVal: Array<String> = []  // Picker 的資料
     private var aryMaxMin = [0, 99] // 數量選擇，最小/最大 值
+    private var mKBNavyBar = KBNavyBar()  // 彈出的虛擬鍵盤, 上方的 UIToolbar
     
     // 其他設定
     private var intPrice = 0  // 商品單價
@@ -49,16 +50,16 @@ class PubPurReturnPdListCell: UITableViewCell, UIPickerViewDelegate, UIPickerVie
         super.awakeFromNib()
         aryRowVal = []
         mPKView.delegate = self
+        mKBNavyBar.delegate = self
     }
     
     /**
      * 初始與設定 Cell
      */
     func initView(ditItem: Dictionary<String, AnyObject>!, forIndexPath indexPath: NSIndexPath) {
-        
         currIndexPath = indexPath
         
-        // 設定每個 Picker row 的 array data, TODO 'maxRQty'
+        // 設定每個 Picker row 的 array data
         aryMaxMin[1] = Int(ditItem["maxqty"] as! String)!
         for (var i = aryMaxMin[0]; i <= aryMaxMin[1]; i++) {
             aryRowVal.append(String(i))
@@ -66,7 +67,9 @@ class PubPurReturnPdListCell: UITableViewCell, UIPickerViewDelegate, UIPickerVie
         
         // 設定 'mPickField' 點取彈出 '鍵盤視窗'
         edQty.inputView = mPKView
-        initKBBar(pubClass.getLang("product_selectqty"))
+        let mToolBar = mKBNavyBar.getKBBar(pubClass.getLang("product_selectqty"))
+        edQty.inputAccessoryView = mToolBar
+        kbHeight = mToolBar.frame.height + mPKView.frame.height
         
         // 設定 picker 預設選擇的數量
         mPKView.selectRow(Int(ditItem["selQty"] as! String)!, inComponent: 0, animated: false)
@@ -83,41 +86,6 @@ class PubPurReturnPdListCell: UITableViewCell, UIPickerViewDelegate, UIPickerVie
         labQty.text = String(aryMaxMin[1])
         labTot.text = String(totPrice)
         edQty.text = String(intQty)
-    }
-    
-    /**
-     * 鍵盤輸入視窗的 'navybar' 設定
-     * 顯示 '完成' 與 '取消'
-     */
-    private func initKBBar(strTitle: String) {
-        let toolBar = UIToolbar()
-        toolBar.barStyle = UIBarStyle.Default
-        toolBar.translucent = false  // 半透明
-        toolBar.barTintColor = pubClass.ColorHEX(pubClass.dictColor["silver"]!)  // 背景顏色
-        toolBar.sizeToFit()
-        
-        let doneButton = UIBarButtonItem(title: pubClass.getLang("select_ok"), style: UIBarButtonItemStyle.Plain, target: self, action: "SelectDone")
-        
-        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-        
-        // 自訂一個 label 作為 NavyBar 的 Title
-        let labTitle = UILabel(frame: CGRect(x: 0, y: 0, width: 200.0, height: 14.0))
-        //let labTitle = UILabel()
-        //labTitle.sizeToFit()
-        
-        labTitle.text = strTitle
-        //labTitle.font = UIFont(name: "System", size: 14)
-        
-        labTitle.textAlignment = NSTextAlignment.Center
-        let titleButton = UIBarButtonItem(customView: labTitle)
-        
-        let cancelButton = UIBarButtonItem(title: pubClass.getLang("cancel"), style: UIBarButtonItemStyle.Plain, target: self, action: "SelectCancel")
-        
-        toolBar.setItems([cancelButton, spaceButton, titleButton, spaceButton, doneButton], animated: false)
-        toolBar.userInteractionEnabled = true
-        kbHeight = toolBar.frame.height + mPKView.frame.height
-        
-        edQty.inputAccessoryView = toolBar
     }
     
     /**
@@ -153,9 +121,10 @@ class PubPurReturnPdListCell: UITableViewCell, UIPickerViewDelegate, UIPickerVie
     }
     
     /**
+     * #mark: 自訂的 KBNavyBarDelegate
      * Picker 點取　'done'
      */
-    @objc private func SelectDone() {
+    func KBBarDone() {
         edQty.resignFirstResponder()
         
         // filed value 重新設定
@@ -168,9 +137,10 @@ class PubPurReturnPdListCell: UITableViewCell, UIPickerViewDelegate, UIPickerVie
     }
     
     /**
+     * #mark: 自訂的 KBNavyBarDelegate
      * Picker 點取　'cancel'
      */
-    @objc private func SelectCancel() {
+    func KBBarCancel() {
         edQty.resignFirstResponder()
         delegate?.QtySelecteCancel()
     }

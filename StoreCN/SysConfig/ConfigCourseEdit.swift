@@ -8,7 +8,7 @@ import Foundation
 /**
  * 會員 新增/編輯
  */
-class ConfigCourseEdit: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
+class ConfigCourseEdit: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, KBNavyBarDelegate {
     
     // @IBOutlet
     @IBOutlet var tableList: UITableView!
@@ -26,6 +26,7 @@ class ConfigCourseEdit: UITableViewController, UIPickerViewDelegate, UIPickerVie
     private var dictAllData: Dictionary<String, AnyObject> = [:]  // 本頁面需要的資料
     
     // 鍵盤下拉選單 '時' 選擇相關參數
+    private var mKBNavyBar = KBNavyBar()  // 彈出的虛擬鍵盤, 上方的 UIToolbar
     private var mPKView = UIPickerView()
     private var aryValHH: Array<String> = []
     private var currEdField: UITextField?
@@ -38,6 +39,7 @@ class ConfigCourseEdit: UITableViewController, UIPickerViewDelegate, UIPickerVie
         super.viewDidLoad()
         pubClass = PubClass()
         mPKView.delegate = self
+        mKBNavyBar.delegate = self
         
         // 鍵盤下拉選單 '時' 選擇相關參數
         for (var i=0; i < 24; i++) {
@@ -46,9 +48,10 @@ class ConfigCourseEdit: UITableViewController, UIPickerViewDelegate, UIPickerVie
         
         // 設定 'mPickField' 點取彈出 '鍵盤視窗'
         edHH0.inputView = mPKView
+        edHH0.inputAccessoryView = mKBNavyBar.getKBBar("")
+        
         edHH1.inputView = mPKView
-        initKBBar("", editField: edHH0)
-        initKBBar("", editField: edHH1)
+        edHH1.inputAccessoryView = mKBNavyBar.getKBBar("")
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -115,41 +118,6 @@ class ConfigCourseEdit: UITableViewController, UIPickerViewDelegate, UIPickerVie
             self.dictAllData = dictData["data"] as! Dictionary<String, AnyObject>
             self.relaodPage()
         })
-    }
-
-    /**
-     * 鍵盤輸入視窗的 'navybar' 設定
-     * 顯示 '完成' 與 '取消'
-     */
-    private func initKBBar(strTitle: String, editField: UITextField) {
-        let toolBar = UIToolbar()
-        toolBar.barStyle = UIBarStyle.Default
-        toolBar.translucent = false  // 半透明
-        toolBar.barTintColor = pubClass.ColorHEX(pubClass.dictColor["silver"]!)  // 背景顏色
-        toolBar.sizeToFit()
-        
-        let doneButton = UIBarButtonItem(title: pubClass.getLang("select_ok"), style: UIBarButtonItemStyle.Plain, target: self, action: "SelectDone")
-        
-        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-        
-        // 自訂一個 label 作為 NavyBar 的 Title
-        let labTitle = UILabel(frame: CGRect(x: 0, y: 0, width: 200.0, height: 14.0))
-        //let labTitle = UILabel()
-        //labTitle.sizeToFit()
-        
-        labTitle.text = strTitle
-        //labTitle.font = UIFont(name: "System", size: 14)
-        
-        labTitle.textAlignment = NSTextAlignment.Center
-        let titleButton = UIBarButtonItem(customView: labTitle)
-        
-        let cancelButton = UIBarButtonItem(title: pubClass.getLang("cancel"), style: UIBarButtonItemStyle.Plain, target: self, action: "SelectCancel")
-        
-        toolBar.setItems([cancelButton, spaceButton, titleButton, spaceButton, doneButton], animated: false)
-        toolBar.userInteractionEnabled = true
-        //kbHeight = toolBar.frame.height + mPKView.frame.height
-        
-        editField.inputAccessoryView = toolBar
     }
     
     /**
@@ -222,19 +190,20 @@ class ConfigCourseEdit: UITableViewController, UIPickerViewDelegate, UIPickerVie
     }
     
     /**
+     * #mark: 自訂的 KBNavyBarDelegate
      * Picker 點取　'done'
      */
-    @objc private func SelectDone() {
+    func KBBarDone() {
         let position = mPKView.selectedRowInComponent(0)
         currEdField?.text = String(position)
-        
         currEdField?.resignFirstResponder()
     }
     
     /**
+     * #mark: 自訂的 KBNavyBarDelegate
      * Picker 點取　'cancel'
      */
-    @objc private func SelectCancel() {
+    func KBBarCancel() {
         currEdField?.resignFirstResponder()
     }
     
@@ -247,7 +216,7 @@ class ConfigCourseEdit: UITableViewController, UIPickerViewDelegate, UIPickerVie
     
     /**
     * public
-    * 取得本頁面編修的資料，回傳給 parent 使用
+    * 取得本頁面編修的資料，parent 調用
     */
     func getPageData() -> Dictionary<String, String>! {
         var dictRS: Dictionary<String, String> = [:]
