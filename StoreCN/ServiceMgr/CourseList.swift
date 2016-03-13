@@ -8,7 +8,7 @@ import Foundation
 /**
  * 療程管理，列表 + 刪除 功能
  */
-class Courselist: UIViewController, PubCourseDataSelectDelegate {
+class Courselist: UIViewController {
     
     // @IBOutlet
     @IBOutlet weak var contviewList: UIView!
@@ -62,8 +62,10 @@ class Courselist: UIViewController, PubCourseDataSelectDelegate {
         
         // 初始, 已購買的療程選擇, 公用 class
         mPubCourseSelect = storyboard!.instantiateViewControllerWithIdentifier("PubCourseSelect") as! PubCourseSelect
-        mPubCourseSelect.delegate = self
         mPubCourseSelect.aryCourseData = aryCourseData
+        mPubCourseSelect.aryCourseDB = aryCourseDB
+        mPubCourseSelect.aryMember = aryMember
+        mPubCourseSelect.strToday = strToday
         mPubCourseSelect.currIndexPath = currIndexPath
     }
     

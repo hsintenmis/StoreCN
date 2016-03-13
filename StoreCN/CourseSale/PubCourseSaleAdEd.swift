@@ -8,7 +8,7 @@ import Foundation
 /**
  * 療程銷售 資料新增/編輯 資料上傳, 公用 class
  */
-class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, CourseSaleMemberSelDelegate {
+class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewDelegate, CourseSaleMemberSelDelegate {
     
     // @IBOutlet
     @IBOutlet var tableList: UITableView!
@@ -44,7 +44,7 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, CourseSaleM
     var strToday = ""
     var aryCourseDB: Array<Dictionary<String, AnyObject>> = []
     var aryMember: Array<Dictionary<String, AnyObject>> = []
-    var dictData: Dictionary<String, AnyObject> = [:]
+    var dictSaleData: Dictionary<String, AnyObject> = [:]  // 欄位資料 dict data
     
     // 點取欄位，彈出虛擬鍵盤視窗
     private var mPickerExpire: PickerDate!
@@ -61,6 +61,7 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, CourseSaleM
         
         // 固定初始參數
         edFee.delegate = self
+        txtSugst.delegate = self
         
         /* Picker 設定 */
         // 到期日欄位
@@ -85,22 +86,18 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, CourseSaleM
         txtStepPd.layer.borderWidth = 1
         txtStepPd.layer.borderColor = (pubClass.ColorHEX(pubClass.dictColor["gray"]!)).CGColor
         txtStepPd.layer.backgroundColor = (pubClass.ColorHEX(pubClass.dictColor["white"]!)).CGColor
+        
+        // 編輯模式，設定 field value
+        if (self.strMode == "edit") {
+            self.editModeInit()
+        }
     }
     
     /**
-     * View DidAppear 程序
+     * 編輯模式，設定 field value
      */
-    override func viewDidAppear(animated: Bool) {
-        dispatch_async(dispatch_get_main_queue(), {
-        
-        })
-    }
-    
-    /**
-     * 初始與設定 VCview 內的 field
-     */
-    private func initViewField() {
-        
+    private func editModeInit() {
+        print(dictSaleData)
     }
     
     /**
@@ -190,8 +187,20 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, CourseSaleM
     */
     func MemberSeltPageDone(MemberData: Dictionary<String, AnyObject>, MemberindexPath: NSIndexPath) {
         labMember.text = MemberData["membername"] as? String
-        dictData["member"] = MemberData
+        dictSaleData["member"] = MemberData
         indexPathMember = MemberindexPath
+    }
+    
+    /**
+     * #mark: textViewDidBeginEditing
+     * 建議療程輸入點取執行相關程序
+     */
+    func textViewDidBeginEditing(textView: UITextView) {
+        if (textView == txtSugst) {
+            textView.resignFirstResponder()
+            self.performSegueWithIdentifier("CourseSaleSugst", sender: nil)
+            return
+        }
     }
     
     /**
@@ -251,7 +260,7 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, CourseSaleM
     func saveData()->Dictionary<String, AnyObject> {
         // 欄位值檢查
         
-        return dictData
+        return dictSaleData
     }
     
     /**
@@ -259,7 +268,7 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, CourseSaleM
     */
     @IBAction func actCardTypeCount(sender: UIStepper) {
         labCardTypeCount.text = "\(Int(stepCardType.value))"
-        dictData["count"] = labCardTypeCount.text
+        dictSaleData["count"] = labCardTypeCount.text
     }
 }
 

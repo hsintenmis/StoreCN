@@ -8,19 +8,19 @@ import Foundation
 /**
  * protocol, PubCourseSelect Delegate
  */
+/*
 protocol PubCourseDataSelectDelegate {
     /**
      * Table Cell 點取，點取指定資料，實作點取後相關程序
      */
     func CourseDataSelected(CourseData dictData: Dictionary<String, AnyObject>, indexPath: NSIndexPath)
 }
+*/
 
 /**
- * 療程DB 資料選擇 公用 class
+ * 公用 class, 會員已購買的療程訂單資料列表
  */
 class PubCourseSelect: UITableViewController {
-    var delegate = PubCourseDataSelectDelegate?()
-    
     // @IBOutlet
     @IBOutlet weak var tableData: UITableView!
     @IBOutlet weak var labNoData: UILabel!
@@ -28,8 +28,10 @@ class PubCourseSelect: UITableViewController {
     // common property
     let pubClass: PubClass = PubClass()
     
-    // parent 設定, 會員已購買的療程訂單資料,
+    // parent 設定, 療程訂單資料, 療程DB, 全部會員資料
     var aryCourseData: Array<Dictionary<String, AnyObject>> = []
+    var aryCourseDB: Array<Dictionary<String, AnyObject>> = []
+    var aryMember: Array<Dictionary<String, AnyObject>> = []
     var strToday = ""
     var currIndexPath: NSIndexPath?
     
@@ -99,8 +101,26 @@ class PubCourseSelect: UITableViewController {
      * UITableView, Cell 點取
      */
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        delegate?.CourseDataSelected(CourseData: aryCourseData[indexPath.row], indexPath: indexPath)
+        //delegate?.CourseDataSelected(CourseData: aryCourseData[indexPath.row], indexPath: indexPath)
+        
+        let dictSender = aryCourseData[indexPath.row] 
+        self.performSegueWithIdentifier("PubCourseSaleEdit", sender: dictSender)
+    }
+    
+    /**
+     * Segue 跳轉頁面
+     */
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let strIdent = segue.identifier
+        
+        // 已購買療程編輯頁面
+        if (strIdent == "PubCourseSaleEdit") {
+            let mVC = segue.destinationViewController as! PubCourseSaleEdit
+            mVC.strToday = strToday
+            mVC.aryCourseDB = aryCourseDB
+            mVC.aryMember = aryMember
+            mVC.dictSaleData = sender as! Dictionary<String, AnyObject>
+        }
     }
     
 }
-
