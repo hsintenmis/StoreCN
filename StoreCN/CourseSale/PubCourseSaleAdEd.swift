@@ -97,7 +97,11 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
      * 編輯模式，設定 field value
      */
     private func editModeInit() {
-        print(dictSaleData)
+        labInvoId.text = dictSaleData["odrs_id"] as? String
+        labSdate.text = pubClass.formatDateWithStr(dictSaleData["sdate"] as! String, type: 14)
+        edFee.text = dictSaleData["price"] as? String
+        labMember.text = dictSaleData["membername"] as? String
+        labCourseName.text = dictSaleData["pdname"] as? String
     }
     
     /**
