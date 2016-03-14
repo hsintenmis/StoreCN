@@ -100,8 +100,27 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
         labInvoId.text = dictSaleData["odrs_id"] as? String
         labSdate.text = pubClass.formatDateWithStr(dictSaleData["sdate"] as! String, type: 14)
         edFee.text = dictSaleData["price"] as? String
-        labMember.text = dictSaleData["membername"] as? String
+        
         labCourseName.text = dictSaleData["pdname"] as? String
+        
+        // 會員, id 對應 'indexPathMember'
+        labCourseName.text = dictSaleData["pdname"] as? String
+        let mMemberId = dictSaleData["pdname"] as! String
+        for (var i=0; i < aryMember.count; i++) {
+            if (mMemberId == aryMember[i]["memberid"] as! String) {
+                indexPathMember = NSIndexPath(forItem: i, inSection: 0)
+            }
+        }
+        
+        // 購買的療程, id 對應 'indexPathMember'
+        labCourseName.text = dictSaleData["pdname"] as? String
+        let mMemberId = dictSaleData["pdname"] as! String
+        for (var i=0; i < aryMember.count; i++) {
+            if (mMemberId == aryMember[i]["memberid"] as! String) {
+                indexPathMember = NSIndexPath(forItem: i, inSection: 0)
+            }
+        }
+        
     }
     
     /**
