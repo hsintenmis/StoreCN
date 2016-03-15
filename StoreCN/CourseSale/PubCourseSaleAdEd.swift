@@ -55,7 +55,7 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
     private var indexPathMember: NSIndexPath?
     private var indexPathPd: NSIndexPath?
     private var aryFixUnit = ["次", "个月"]
-    private var dictPickParm: Dictionary<String, AnyObject> = [:]
+    private var dictPickParm: Dictionary<String, AnyObject> = [:] // 日期 picker
     
     /**
      * View Load 程序
@@ -306,11 +306,33 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
     /**
      * 本頁面全部欄位資料上傳儲存
      */
-    func saveData()->Dictionary<String, AnyObject> {
+    func saveData()->Dictionary<String, AnyObject>? {
         var dictRS: Dictionary<String, AnyObject> = [:]
-        
+        var errMgs = ""
         
         // 欄位值檢查
+        if (labMember.text?.characters.count < 1) {
+           errMgs = "err_membername"
+        }
+        else if (labCourseName.text?.characters.count < 1) {
+            errMgs = "err_coursename"
+        }
+        else if (edExpire.text?.characters.count < 1) {
+            errMgs = "err_coursexpiredate"
+        }
+        else if (edFee.text?.characters.count < 1) {
+            errMgs = "err_fee"
+        }
+        
+        if (errMgs != "") {
+            pubClass.popIsee(self, Msg: errMgs, withHandler: {
+                return
+            })
+            
+            return nil
+        }
+        
+        // 產生回傳 dict data
         
         
         

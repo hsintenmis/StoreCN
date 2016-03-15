@@ -49,11 +49,6 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
         
         // HTTP 連線取得資料, 全部會員列表資料
         HTTPGetMemberList()
-        
-        dispatch_async(dispatch_get_main_queue(), {
-            
-        })
-        
         reloadMemberList = false
     }
     
