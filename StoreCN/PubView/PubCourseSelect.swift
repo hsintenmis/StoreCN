@@ -6,18 +6,6 @@ import UIKit
 import Foundation
 
 /**
- * protocol, PubCourseSelect Delegate
- */
-/*
-protocol PubCourseDataSelectDelegate {
-    /**
-     * Table Cell 點取，點取指定資料，實作點取後相關程序
-     */
-    func CourseDataSelected(CourseData dictData: Dictionary<String, AnyObject>, indexPath: NSIndexPath)
-}
-*/
-
-/**
  * 公用 class, 會員已購買的療程訂單資料列表
  */
 class PubCourseSelect: UITableViewController {
@@ -59,16 +47,6 @@ class PubCourseSelect: UITableViewController {
             tableData.reloadData()
             tableData.selectRowAtIndexPath(tmpIndexPath, animated: false, scrollPosition: UITableViewScrollPosition.Middle)
         }
-        
-        dispatch_async(dispatch_get_main_queue(), {
-            
-        })
-    }
-    
-    /**
-     * 初始與設定 VCview 內的 field
-     */
-    func initViewField() {
     }
     
     /**
@@ -101,8 +79,6 @@ class PubCourseSelect: UITableViewController {
      * UITableView, Cell 點取
      */
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        //delegate?.CourseDataSelected(CourseData: aryCourseData[indexPath.row], indexPath: indexPath)
-        
         let dictSender = aryCourseData[indexPath.row] 
         self.performSegueWithIdentifier("PubCourseSaleEdit", sender: dictSender)
     }

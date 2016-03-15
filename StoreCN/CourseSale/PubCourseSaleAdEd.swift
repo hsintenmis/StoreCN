@@ -8,7 +8,7 @@ import Foundation
 /**
  * 療程銷售 資料新增/編輯 資料上傳, 公用 class
  */
-class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewDelegate, CourseSaleMemberSelDelegate {
+class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewDelegate, CourseSaleMemberSelDelegate, CourseSaleCourseSelDelegate {
     
     // @IBOutlet
     @IBOutlet var tableList: UITableView!
@@ -30,6 +30,7 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
     @IBOutlet weak var labS00: UILabel!
     @IBOutlet weak var sliderS00: UISlider!
     @IBOutlet weak var labTypeUnit: UILabel!
+    @IBOutlet weak var btnCloseKB: UIButton!
     
     // common property
     let pubClass: PubClass = PubClass()
@@ -52,6 +53,9 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
     
     // 其他參數設定
     private var indexPathMember: NSIndexPath?
+    private var indexPathPd: NSIndexPath?
+    private var aryFixUnit = ["次", "个月"]
+    private var dictPickParm: Dictionary<String, AnyObject> = [:]
     
     /**
      * View Load 程序
@@ -62,10 +66,10 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
         // 固定初始參數
         edFee.delegate = self
         txtSugst.delegate = self
+        btnCloseKB.alpha = 0.0
         
         /* Picker 設定 */
         // 到期日欄位
-        var dictPickParm: Dictionary<String, AnyObject> = [:]
         dictPickParm["expire_def"] = "20160101"
         dictPickParm["expire_min"] = "20150101"
         dictPickParm["expire_max"] = "20251231"
@@ -104,8 +108,8 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
         labCourseName.text = dictSaleData["pdname"] as? String
         
         // 會員, id 對應 'indexPathMember'
-        labCourseName.text = dictSaleData["pdname"] as? String
-        let mMemberId = dictSaleData["pdname"] as! String
+        labMember.text = dictSaleData["membername"] as? String
+        let mMemberId = dictSaleData["memberid"] as! String
         for (var i=0; i < aryMember.count; i++) {
             if (mMemberId == aryMember[i]["memberid"] as! String) {
                 indexPathMember = NSIndexPath(forItem: i, inSection: 0)
@@ -113,14 +117,41 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
         }
         
         // 購買的療程, id 對應 'indexPathMember'
-        labCourseName.text = dictSaleData["pdname"] as? String
-        let mMemberId = dictSaleData["pdname"] as! String
-        for (var i=0; i < aryMember.count; i++) {
-            if (mMemberId == aryMember[i]["memberid"] as! String) {
-                indexPathMember = NSIndexPath(forItem: i, inSection: 0)
+        let mPdid = dictSaleData["pdid"] as! String
+        for (var i=0; i < aryCourseDB.count; i++) {
+            if (mPdid == aryCourseDB[i]["id"] as! String) {
+                indexPathPd = NSIndexPath(forItem: i, inSection: 0)
+                break
             }
         }
         
+        // SOQI Bed 資料
+        if let dictTmp = dictSaleData["soqibed"] as? Dictionary<String, String> {
+            self.CourseDBDataSelected(CourseData: dictTmp, indexPath: indexPathPd!)
+        } else {
+            swchActSoqibed.on = false
+        }
+        
+        labCourseName.text = aryCourseDB[indexPathPd!.row]["name"] as? String
+        
+        // card 療程型態
+        swchCardType.selectedSegmentIndex = ((dictSaleData["card_type"] as! String) == "T") ? 0 : 1
+        labCardTypeCount.text = dictSaleData["card_times"] as? String
+        labTypeUnit.text = ((dictSaleData["card_type"] as! String) == "T") ? aryFixUnit[0] : aryFixUnit[1]
+        
+        // 次數 + - stepper
+        stepCardType.value = Double(dictSaleData["card_times"] as! String)!
+        
+        // 到期日預設值
+        dictPickParm["expire_def"] = pubClass.subStr((dictSaleData["end_date"] as! String), strFrom: 0, strEnd: 8)
+        edExpire.text = pubClass.formatDateWithStr(dictSaleData["end_date"] as! String, type: 8)
+        mPickerExpire = PickerDate(withUIField: edExpire, PubClass: pubClass, withDefMaxMin: [dictPickParm["expire_def"] as! String, dictPickParm["expire_max"] as! String, dictPickParm["expire_min"] as! String], NavyBarTitle: pubClass.getLang("course_expiredate"))
+        
+        // 療程建議說明文字
+        txtSugst.text = dictSaleData["card_msg"] as! String
+        
+        // 療程步驟文字
+        txtStepPd.text = aryCourseDB[(indexPathPd?.row)!]["steppd"] as! String
     }
     
     /**
@@ -139,11 +170,13 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
     }
     
     /**
-     * public, child class 調用, 
-     * 選擇建議工程後，soqibed模式/疗程步骤与产品使用 變動
+     * #mark: CourseSaleCourseSelDelegate,
+     * 建議工程(療程DB)，點取指定資料，實作點取後相關程序
      */
-    func selectCourseDB(dictData: Dictionary<String, AnyObject>) {
-        var loopi = 0;
+    func CourseDBDataSelected(CourseData dictData: Dictionary<String, AnyObject>, indexPath: NSIndexPath) {
+        
+        indexPathPd = indexPath
+        
         // 建議工程名稱, 疗程步骤与产品使用
         labCourseName.text = dictData["name"] as? String
         txtStepPd.text = dictData["steppd"] as? String
@@ -158,7 +191,7 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
             // 取得數值後，根據對應順序設定到 UISegmentedControl
             let intVal = Int(dictData[strKey] as! String)
             
-            for (loopi = 0; loopi < aryHotDevMinsVal.count; loopi++) {
+            for (var loopi = 0; loopi < aryHotDevMinsVal.count; loopi++) {
                 if (intVal == aryHotDevMinsVal[loopi]) {
                     swchDev.selectedSegmentIndex = loopi
                     break
@@ -167,14 +200,13 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
         }
         
         //  soqibed 模式, S00 slider 變動
-        for (loopi = 0; loopi < aryS00DevMinsVal.count; loopi++) {
+        for (var loopi = 0; loopi < aryS00DevMinsVal.count; loopi++) {
             let intVal = Int(dictData["S00"] as! String)
             if (intVal == aryS00DevMinsVal[loopi]) {
                 sliderS00.value = Float(loopi)
                 break
             }
         }
-        
     }
     
     /**
@@ -197,12 +229,6 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
             self.performSegueWithIdentifier("CourseSaleCourseSel", sender: nil)
             return
         }
-        
-        // 療程建議說明
-        if (strIdent == "cellCoursSaleSugst") {
-            self.performSegueWithIdentifier("CourseSaleSugst", sender: nil)
-            return
-        }
     }
     
     /**
@@ -216,13 +242,12 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
     
     /**
      * #mark: textViewDidBeginEditing
-     * 建議療程輸入點取執行相關程序
+     * 建議療程輸入文字框，點取執行相關程序
      */
     func textViewDidBeginEditing(textView: UITextView) {
         if (textView == txtSugst) {
-            textView.resignFirstResponder()
-            self.performSegueWithIdentifier("CourseSaleSugst", sender: nil)
-            return
+            // 顯示關閉鍵盤 btn
+            btnCloseKB.alpha = 1.0
         }
     }
     
@@ -246,9 +271,10 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
         // 療程 DB list 選擇
         if (strIdent == "CourseSaleCourseSel") {
             let mVC = segue.destinationViewController as! CourseSaleCourseSel
-            mVC.parentClass = self
+            mVC.delegate = self
             mVC.strToday = strToday
             mVC.aryCourseDB = aryCourseDB
+            mVC.currIndexPath = indexPathPd
             
             return
         }
@@ -266,7 +292,7 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
      * act, Segmented, 包卡包月 change
      */
     @IBAction func actCardType(sender: UISegmentedControl) {
-        labTypeUnit.text = (sender.selectedSegmentIndex == 0) ? "次" : "个月"
+        labTypeUnit.text = aryFixUnit[sender.selectedSegmentIndex]
     }
     
     /**
@@ -281,17 +307,42 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
      * 本頁面全部欄位資料上傳儲存
      */
     func saveData()->Dictionary<String, AnyObject> {
+        var dictRS: Dictionary<String, AnyObject> = [:]
+        
+        
         // 欄位值檢查
         
+        
+        
         return dictSaleData
+    }
+    
+    /**
+     * act, '關閉鍵盤' btn,
+     */
+    @IBAction func actCloseKB(sender: UIButton) {
+        btnCloseKB.alpha = 0.0
+        txtSugst.resignFirstResponder()
+    }
+    
+    /**
+    * act, '重新填寫' btn, 療程建議說明
+    */
+    @IBAction func actAddNewSugst(sender: UIButton) {
+        // 療程建議說明編輯頁面
+        self.performSegueWithIdentifier("CourseSaleSugst", sender: nil)
     }
     
     /**
     * act, Stepper, 卡片型態數值 count 增減
     */
     @IBAction func actCardTypeCount(sender: UIStepper) {
+        if (Int(stepCardType.value) == 0) {
+            stepCardType.value = 1.0
+        }
+        
         labCardTypeCount.text = "\(Int(stepCardType.value))"
         dictSaleData["count"] = labCardTypeCount.text
     }
+    
 }
-

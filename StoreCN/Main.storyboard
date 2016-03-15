@@ -5763,7 +5763,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CmC-a4-1cr">
                                                     <rect key="frame" x="103" y="13" width="14" height="17"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                                                    <color key="textColor" red="0.18823529410000001" green="0.18823529410000001" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -5794,7 +5794,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dWi-mh-jWu">
                                                     <rect key="frame" x="103" y="13" width="14" height="17"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                                                    <color key="textColor" red="0.18823529410000001" green="0.18823529410000001" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -6070,26 +6070,46 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="疗程建议说明" id="lco-hT-vjc">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cellCoursSaleSugst" rowHeight="150" id="jru-gn-Os9">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="cellCoursSaleSugst" rowHeight="150" id="jru-gn-Os9">
                                         <rect key="frame" x="0.0" y="901" width="320" height="150"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jru-gn-Os9" id="mAz-6m-jda">
-                                            <rect key="frame" x="0.0" y="0.0" width="287" height="149"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="149"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="j1a-GI-oLF">
-                                                    <rect key="frame" x="8" y="8" width="271" height="133"/>
+                                                    <rect key="frame" x="8" y="8" width="238" height="133"/>
                                                     <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="textColor" red="0.18823529410000001" green="0.18823529410000001" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                                                 </textView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hQQ-5T-TSD">
+                                                    <rect key="frame" x="256" y="60" width="56" height="29"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <state key="normal" title="自动编写"/>
+                                                    <connections>
+                                                        <action selector="actAddNewSugst:" destination="V1A-AR-LYP" eventType="touchUpInside" id="Nc0-2q-Osr"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t61-YX-Ydr">
+                                                    <rect key="frame" x="264" y="114" width="48" height="27"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <state key="normal" title="关闭键盘"/>
+                                                    <connections>
+                                                        <action selector="actCloseKB:" destination="V1A-AR-LYP" eventType="touchUpInside" id="8Gb-tA-pHq"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="j1a-GI-oLF" secondAttribute="trailing" id="4Qk-9h-Ys2"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="j1a-GI-oLF" secondAttribute="bottom" id="8Ba-nN-GNe"/>
+                                                <constraint firstItem="hQQ-5T-TSD" firstAttribute="leading" secondItem="j1a-GI-oLF" secondAttribute="trailing" constant="10" id="QiG-n7-sfz"/>
                                                 <constraint firstItem="j1a-GI-oLF" firstAttribute="top" secondItem="mAz-6m-jda" secondAttribute="topMargin" id="SmS-ax-fmw"/>
                                                 <constraint firstAttribute="leadingMargin" secondItem="j1a-GI-oLF" secondAttribute="leading" id="W5j-Em-J12"/>
+                                                <constraint firstItem="hQQ-5T-TSD" firstAttribute="centerY" secondItem="mAz-6m-jda" secondAttribute="centerY" id="X8Y-ED-hHN"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="t61-YX-Ydr" secondAttribute="bottom" id="Zgo-Tb-rhC"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="hQQ-5T-TSD" secondAttribute="trailing" id="hw1-cA-TVT"/>
+                                                <constraint firstItem="t61-YX-Ydr" firstAttribute="trailing" secondItem="hQQ-5T-TSD" secondAttribute="trailing" id="ysL-aa-YlE"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -6135,6 +6155,7 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="1300"/>
                     <connections>
+                        <outlet property="btnCloseKB" destination="t61-YX-Ydr" id="TFl-kH-Huf"/>
                         <outlet property="edExpire" destination="iGd-Vi-HJp" id="lPV-7D-f4T"/>
                         <outlet property="edFee" destination="RXS-ik-Dq1" id="P2c-jc-EdP"/>
                         <outlet property="labCardTypeCount" destination="TNn-0C-lId" id="YZX-WN-vjt"/>
