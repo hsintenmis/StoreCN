@@ -66,25 +66,15 @@ class CourseSale: UIViewController {
     }
     
     /**
-     * View DidAppear 程序
-     */
-    override func viewDidAppear(animated: Bool) {
-        dispatch_async(dispatch_get_main_queue(), {
-            
-        })
-    }
-    
-    /**
-     * 初始與設定 VCview 內的 field
-     */
-    private func initViewField() {
-    }
-    
-    /**
      * act, 點取 '儲存' button
      */
     @IBAction func actSave(sender: UIBarButtonItem) {
-        mPubCourseSaleAdEd.saveData()
+        let dictRS = mPubCourseSaleAdEd.saveData()
+        
+        if ((dictRS["rs"] as! Bool) != true) {
+            pubClass.popIsee(self, Msg: (dictRS["msg"] as! String))
+            return
+        }
     }
     
     /**

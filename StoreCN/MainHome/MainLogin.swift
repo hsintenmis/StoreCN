@@ -42,10 +42,6 @@ class MainLogin: UIViewController {
         self.pubClass.ReloadAppDelg()
         dictPref = pubClass.getPrefData()
         initViewField()
-        
-        dispatch_async(dispatch_get_main_queue(), {
-
-        })
     }
     
     /**
@@ -64,6 +60,13 @@ class MainLogin: UIViewController {
         // 註銷监听键盘事件函数
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    /**
+     * view StatusBarHidden(
+     */
+    override func prefersStatusBarHidden() -> Bool {
+        return true
     }
     
     /**

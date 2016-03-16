@@ -12,8 +12,7 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
     
     // @IBOutlet
     @IBOutlet var tableList: UITableView!
-    @IBOutlet var swchSoqbed: [UISegmentedControl]!  // switch group
-    
+    @IBOutlet var swchSoqbed: [UISegmentedControl]!  // HotDev 6個 Segment
     @IBOutlet weak var edExpire: UITextField!
     @IBOutlet weak var edFee: UITextField!
     @IBOutlet weak var swchCardType: UISegmentedControl!
@@ -40,12 +39,12 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
     let aryHotDevMinsVal = [0, 15, 30, 45, 60]
     let aryS00DevMinsVal = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 30]
     
-    // 由parent設定參數
+    // public, parent 設定參數
     var strMode = "add"
     var strToday = ""
     var aryCourseDB: Array<Dictionary<String, AnyObject>> = []
     var aryMember: Array<Dictionary<String, AnyObject>> = []
-    var dictSaleData: Dictionary<String, AnyObject> = [:]  // 欄位資料 dict data
+    var dictSaleData: Dictionary<String, AnyObject> = [:]  // 編輯模式，原始欄位資料 dict data
     
     // 點取欄位，彈出虛擬鍵盤視窗
     private var mPickerExpire: PickerDate!
@@ -56,6 +55,7 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
     private var indexPathPd: NSIndexPath?
     private var aryFixUnit = ["次", "个月"]
     private var dictPickParm: Dictionary<String, AnyObject> = [:] // 日期 picker
+    private var dictRequest: Dictionary<String, AnyObject> = [:]  // http 存檔傳遞參數
     
     /**
      * View Load 程序
@@ -104,12 +104,13 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
         labInvoId.text = dictSaleData["odrs_id"] as? String
         labSdate.text = pubClass.formatDateWithStr(dictSaleData["sdate"] as! String, type: 14)
         edFee.text = dictSaleData["price"] as? String
-        
-        labCourseName.text = dictSaleData["pdname"] as? String
+
+        dictRequest["expire"] = dictSaleData["sdate"] as? String
         
         // 會員, id 對應 'indexPathMember'
-        labMember.text = dictSaleData["membername"] as? String
         let mMemberId = dictSaleData["memberid"] as! String
+        labMember.text = dictSaleData["membername"] as? String
+        
         for (var i=0; i < aryMember.count; i++) {
             if (mMemberId == aryMember[i]["memberid"] as! String) {
                 indexPathMember = NSIndexPath(forItem: i, inSection: 0)
@@ -118,6 +119,8 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
         
         // 購買的療程, id 對應 'indexPathMember'
         let mPdid = dictSaleData["pdid"] as! String
+        labCourseName.text = dictSaleData["pdname"] as? String
+        
         for (var i=0; i < aryCourseDB.count; i++) {
             if (mPdid == aryCourseDB[i]["id"] as! String) {
                 indexPathPd = NSIndexPath(forItem: i, inSection: 0)
@@ -236,6 +239,8 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
     */
     func MemberSeltPageDone(MemberData: Dictionary<String, AnyObject>, MemberindexPath: NSIndexPath) {
         labMember.text = MemberData["membername"] as? String
+        dictRequest["memberid"] = MemberData["memberid"] as? String
+        
         dictSaleData["member"] = MemberData
         indexPathMember = MemberindexPath
     }
@@ -304,38 +309,62 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
     }
     
     /**
-     * 本頁面全部欄位資料上傳儲存
+     * public, parent 調用，本頁面全部欄位資料上傳儲存<BR>
+     * @return: 'rs' => bool, 'msg' => err msg or nil, 'data'
      */
-    func saveData()->Dictionary<String, AnyObject>? {
+    func saveData()->Dictionary<String, AnyObject>!{
         var dictRS: Dictionary<String, AnyObject> = [:]
-        var errMgs = ""
+        var errMsg = ""
+        dictRS["rs"] = false
+        dictRS["msg"] = nil
+        dictRS["data"] = nil
         
         // 欄位值檢查
         if (labMember.text?.characters.count < 1) {
-           errMgs = "err_membername"
+           errMsg = "coursesale_err_membername"
         }
         else if (labCourseName.text?.characters.count < 1) {
-            errMgs = "err_coursename"
+            errMsg = "coursesale_err_coursename"
         }
         else if (edExpire.text?.characters.count < 1) {
-            errMgs = "err_coursexpiredate"
+            errMsg = "coursesale_err_coursexpiredate"
         }
         else if (edFee.text?.characters.count < 1) {
-            errMgs = "err_fee"
+            errMsg = "coursesale_err_fee"
         }
         
-        if (errMgs != "") {
-            pubClass.popIsee(self, Msg: errMgs, withHandler: {
-                return
-            })
-            
-            return nil
+        if (errMsg != "") {
+            dictRS["msg"] = pubClass.getLang(errMsg)
+            return dictRS
         }
         
         // 產生回傳 dict data
+        dictRequest["odrsid"] = dictSaleData["odrs_id"] as? String
+        dictRequest["price"] = edFee.text
+        dictRequest["membername"] = labMember.text
+        dictRequest["coursename"] = labCourseName.text
+        dictRequest["S00"] = labS00.text
+        dictRequest["machmsg"] = txtSugst.text
         
+        dictRequest["memberid"] = aryMember[indexPathMember!.row]["memberid"] as? String
+        dictRequest["courseid"] = aryCourseDB[indexPathPd!.row]["id"] as? String
+        dictRequest["type"] = (swchCardType.selectedSegmentIndex == 0) ? "T" : "M"
+        dictRequest["times"] = labCardTypeCount.text
+        dictRequest["expire"] = mPickerExpire.getStrDate()
         
+        /*
+        add =
+        edit = coursesale_updatedata, 'odrsid' 欄位
         
+        jobjRequest.put("expire", strExpirDate);
+
+        
+        jobjRequest.put("soqibed", (chkSoqibed.isChecked()) ? "Y" : "N");
+        'aryHotDevCode', ex. H01 = '30' ...
+        */
+
+
+
         return dictSaleData
     }
     
