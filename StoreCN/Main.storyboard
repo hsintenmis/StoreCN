@@ -742,7 +742,7 @@
                         <outlet property="labTodayMsg" destination="LvG-gM-OL3" id="JcS-WI-LYo"/>
                         <segue destination="G3L-qr-XgU" kind="presentation" identifier="member_list" modalTransitionStyle="crossDissolve" id="zu1-aT-Ghz"/>
                         <segue destination="9un-9g-MIt" kind="presentation" identifier="PubCourseSelect" modalTransitionStyle="crossDissolve" id="IFy-Ic-Xep"/>
-                        <segue destination="gwW-LZ-tup" kind="presentation" identifier="course_reservation" modalTransitionStyle="crossDissolve" id="Ng0-60-Mwv"/>
+                        <segue destination="gwW-LZ-tup" kind="presentation" identifier="CourseReserv" modalTransitionStyle="crossDissolve" id="Ng0-60-Mwv"/>
                         <segue destination="THO-5I-P6k" kind="presentation" identifier="course_sale" id="T9Q-0q-0Q6"/>
                         <segue destination="Yfo-28-90H" kind="presentation" identifier="product_purchase" modalTransitionStyle="crossDissolve" id="TLM-fu-dRs"/>
                         <segue destination="7ON-KN-y2e" kind="presentation" identifier="product_sale" id="QBY-Tn-T5k"/>
@@ -1281,18 +1281,18 @@
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="lab invoice data" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wSY-H5-AWs" userLabel="labInvo">
-                                                    <rect key="frame" x="13" y="47" width="76" height="24"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                                    <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MT000001" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BfY-01-1Zq" userLabel="会员编号:">
                                                     <rect key="frame" x="58" y="32" width="52" height="10"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="10" id="TVf-Ip-8w0"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                    <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="lab invoice data" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wSY-H5-AWs" userLabel="labInvo">
+                                                    <rect key="frame" x="13" y="47" width="97" height="24"/>
+                                                    <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="10"/>
                                                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -1362,8 +1362,8 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="member data" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lRG-N6-LwW" userLabel="labInvo">
-                                                    <rect key="frame" x="13" y="50" width="64" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                    <rect key="frame" x="13" y="50" width="67" height="21"/>
+                                                    <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="10"/>
                                                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -5173,7 +5173,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E0c-dK-mit" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1796" y="672"/>
+            <point key="canvasLocation" x="1940" y="616"/>
         </scene>
         <!--療程預約-->
         <scene sceneID="aqX-4y-RDD">
@@ -5214,8 +5214,8 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="三月" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ipg-55-gYO" userLabel="MM">
-                                <rect key="frame" x="142" y="79" width="36" height="18"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ipg-55-gYO" userLabel="MM">
+                                <rect key="frame" x="152" y="79" width="17" height="18"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="18" id="shg-Io-h37"/>
                                 </constraints>
@@ -5223,8 +5223,8 @@
                                 <color key="textColor" red="0.18823529410000001" green="0.18823529410000001" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2015" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oij-6w-hvZ" userLabel="YY">
-                                <rect key="frame" x="102" y="82" width="32" height="12"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oij-6w-hvZ" userLabel="YY">
+                                <rect key="frame" x="131" y="82" width="13" height="12"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="12" id="ykd-Vr-VOc"/>
                                 </constraints>
@@ -5234,11 +5234,12 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="btnCalendarPre" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KzY-Vp-S4f" userLabel="btnPre">
                                 <rect key="frame" x="3" y="69" width="40" height="30"/>
+                                <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="d89-pb-9JG"/>
                                     <constraint firstAttribute="height" constant="30" id="fpB-tj-5g0"/>
                                 </constraints>
-                                <inset key="imageEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                                <inset key="imageEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
                                 <state key="normal" image="arrow_left02.png"/>
                                 <connections>
                                     <action selector="actMMChange:" destination="gwW-LZ-tup" eventType="touchUpInside" id="bq4-AR-jkW"/>
@@ -5327,7 +5328,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="45" height="30"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="31" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hwT-13-EMK">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hwT-13-EMK">
                                                     <rect key="frame" x="10" y="3" width="25" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="25" id="k12-Gj-Lw9"/>
@@ -5370,8 +5371,8 @@
                                 <color key="textColor" red="0.18823529410000001" green="0.18823529410000001" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="01月31日" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Eb-EO-z8M">
-                                <rect key="frame" x="11" y="326" width="59" height="14"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--月--日" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Eb-EO-z8M">
+                                <rect key="frame" x="11" y="326" width="54" height="14"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="14" id="pcX-vs-6RG"/>
                                 </constraints>
@@ -5458,13 +5459,14 @@
                                     <outlet property="delegate" destination="gwW-LZ-tup" id="pUn-2d-ZuP"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="btnCalendarNext" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ccx-0g-IYb" userLabel="btnNext">
+                            <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="btnCalendarNext" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ccx-0g-IYb" userLabel="btnNext">
                                 <rect key="frame" x="277" y="69" width="40" height="30"/>
+                                <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="58n-ud-9qe"/>
                                     <constraint firstAttribute="width" constant="40" id="xlg-70-2Rx"/>
                                 </constraints>
-                                <inset key="imageEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                                <inset key="imageEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
                                 <state key="normal" image="arrow_right02.png"/>
                                 <connections>
                                     <action selector="actMMChange:" destination="gwW-LZ-tup" eventType="touchUpInside" id="uB4-l4-et4"/>
@@ -5538,7 +5540,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="chI-mQ-TJ6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1796" y="-18"/>
+            <point key="canvasLocation" x="1940" y="-180"/>
         </scene>
         <!--公用-療程銷售新增編輯-->
         <scene sceneID="aPc-YB-GYL">

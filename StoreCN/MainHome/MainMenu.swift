@@ -42,15 +42,17 @@ class MainMenu: UIViewController {
     /** 選單代碼："member", "testing", "servicemgr", "product", "staff", "message", "storesheet", "config" */
     private let aryMenuName = ["member", "testing", "servicemgr", "product", "staff", "message", "analydata", "config"]
     
+    // 其他參數
+    private var bolReload = true  // 本頁面是否重整
+    
     /**
      * View Load 程序
      */
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // HTTP 連線參數設定
-        dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
-        dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
+        // 選單 coltView
+        colviewMenu.reloadData()
     }
     
     /**
@@ -64,13 +66,10 @@ class MainMenu: UIViewController {
      * View DidAppear 程序
      */
     override func viewDidAppear(animated: Bool) {
-        self.pubClass.ReloadAppDelg()
-        colviewMenu.reloadData()
-        
-        dispatch_async(dispatch_get_main_queue(), {
-            // 連線取得資料
+        if (bolReload == true) {
+            bolReload = false
             self.StartHTTPConn()
-        })
+        }
     }
     
     /**
@@ -80,13 +79,19 @@ class MainMenu: UIViewController {
         labTodayMsg.text = strTodayMsg
         
         // 設定 CollectionView, 選單資料
-        
     }
     
     /**
      * 登入後主選單，連線取得資料
      */
     private func StartHTTPConn() {
+        // 全域變數 delegate reload
+        self.pubClass.ReloadAppDelg()
+        
+        // HTTP 連線參數設定
+        dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
+        dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
+        
         // 連線 HTTP post/get 參數
         var mParam = dictParm
         mParam["page"] = "homepage"
@@ -126,9 +131,7 @@ class MainMenu: UIViewController {
         
         // 產生'今日提醒文字'
         strTodayMsg = String(format: pubClass.getLang("FMT_todayinfo"), arguments: [aryTodayCourse.count, aryExpire.count, aryStock.count])
-        
-        // 頁面 field 資料初始與設定
-        initViewField()
+        labTodayMsg.text = strTodayMsg
     }
     
     /**
@@ -252,12 +255,9 @@ class MainMenu: UIViewController {
                     return
                 }
                 
-                // 療程預約
-                if (strIdent == "course_reservation") {                    
-                    mParam["page"] = "course"
-                    mParam["act"] = "course_getdata"
-                    self.MenuItemSelect(strIdent, HTTPParam: mParam)
-                    
+                // 療程預約, HTTP 連線取得資料直接由 child 'CourseReserv' 處理
+                if (strIdent == "course_reservation") {
+                    self.performSegueWithIdentifier("CourseReserv", sender: nil)
                     return
                 }
                 
@@ -380,15 +380,6 @@ class MainMenu: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let strIdent = segue.identifier
         
-        // 療程預約
-        if (strIdent == "course_reservation") {
-            let mVC = segue.destinationViewController as! CourseReserv
-            mVC.strToday = strToday
-            mVC.dictAllData = sender as! Dictionary<String, AnyObject>
-            
-            return
-        }
-        
         // 療程銷售
         if (strIdent == "course_sale") {
             let mVC = segue.destinationViewController as! CourseSale
@@ -439,12 +430,8 @@ class MainMenu: UIViewController {
      * act, 點取 '刷新' button
      */
     @IBAction func actReload(sender: UIBarButtonItem) {
-        dispatch_async(dispatch_get_main_queue(), {
-            // 連線取得資料
-            self.StartHTTPConn()
-        })
+        self.StartHTTPConn()
         
-        self.pubClass.ReloadAppDelg()
         initViewField()
     }
     

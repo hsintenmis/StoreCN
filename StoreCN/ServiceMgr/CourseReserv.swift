@@ -20,15 +20,14 @@ class CourseReserv: UIViewController {
     // common property
     private let pubClass: PubClass = PubClass()
     
-    // public, 本頁面需要的全部資料, parent 設定
-    // dictAllData => 'data', 'pd', 'member', 'today'
-    var strToday = ""
-    var dictAllData: Dictionary<String, AnyObject> = [:]
+    // 本頁面需要的全部資料, parent 設定, dictAllData => 'data', 'pd', 'member', 'today'
+    private var strToday = ""
+    private var dictAllData: Dictionary<String, AnyObject> = [:]
     
     // 本 class 需要的資料設定
-    private var aryReservData: Array<Dictionary<String, AnyObject>>!
-    private var aryMember: Array<Dictionary<String, AnyObject>>?
-    private var aryCourse: Array<Dictionary<String, AnyObject>>!
+    private var aryReservData: Array<Dictionary<String, AnyObject>> = []
+    private var aryMember: Array<Dictionary<String, AnyObject>> = []
+    private var aryCourse: Array<Dictionary<String, AnyObject>> = []
     private var aryReservDataDay: Array<Dictionary<String, AnyObject>> = [] // 當日預約資料 array
     
     // 其他參數設定
@@ -44,6 +43,7 @@ class CourseReserv: UIViewController {
     
     // 顏色
     private var dictColor: Dictionary<String, String>!
+    
     /**
     * View Load 程序
     */
@@ -51,7 +51,19 @@ class CourseReserv: UIViewController {
         // 固定初始參數
         super.viewDidLoad()
         dictColor = pubClass.dictColor
-        
+    }
+    
+    /**
+     * View DidAppear 程序
+     */
+    override func viewDidAppear(animated: Bool) {
+        reConnHTTP()
+    }
+    
+    /**
+     * 檢查是否有資料與頁面重整
+     */
+    private func chkHaveData() {
         // 檢查是否有會員
         if let tmpData = dictAllData["member"] as? Array<Dictionary<String, AnyObject>> {
             aryMember = tmpData
@@ -66,10 +78,10 @@ class CourseReserv: UIViewController {
         // 設定預約/療程DB 資料
         aryReservData = dictAllData["data"] as! Array<Dictionary<String, AnyObject>>
         aryCourse = dictAllData["pd"] as! Array<Dictionary<String, AnyObject>>
-
+        
         // 設定今天日期 YYMMDD
         currYYMM = ["YY":pubClass.subStr(strToday, strFrom: 0, strEnd: 4), "MM":pubClass.subStr(strToday, strFrom: 4, strEnd: 6), "DD":pubClass.subStr(strToday, strFrom: 6, strEnd: 8)]
-
+        
         // 設定 aryReservData data position
         let strYYMM = pubClass.subStr(strToday, strFrom: 0, strEnd: 6)
         for (var i=0; i<aryReservData.count; i++) {
@@ -79,20 +91,40 @@ class CourseReserv: UIViewController {
                 break
             }
         }
-
+        
         // 初始與顯示頁面資料
         initViewField()
     }
     
     /**
-     * View DidAppear 程序
+     * HTTP 重新連線取得資料
      */
-    override func viewDidAppear(animated: Bool) {
-        dispatch_async(dispatch_get_main_queue(), {
-
+    private func reConnHTTP() {
+        // http 參數設定, 連線設定，判別 parent '療程管理列表' or '會員管理的療程列表'
+        var mParam: Dictionary<String, String> = [:]
+        mParam["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
+        mParam["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
+        mParam["page"] = "course"
+        mParam["act"] = "course_getdata"
+        
+        // HTTP 開始連線
+        pubClass.HTTPConn(self, ConnParm: mParam, callBack: {(dictRS: Dictionary<String, AnyObject>)->Void in
+            
+            // 任何錯誤跳離本頁
+            if (dictRS["result"] as! Bool != true) {
+                self.pubClass.popIsee(self, Msg: self.pubClass.getLang("err_trylatermsg"), withHandler: {self.dismissViewControllerAnimated(true, completion: nil)})
+                return
+            }
+            
+            /* 解析正確的 http 回傳結果，執行後續動作 */
+            let dictData = dictRS["data"]!["content"] as! Dictionary<String, AnyObject>
+            
+            self.strToday = dictData["today"] as! String
+            self.dictAllData = dictData
+            self.chkHaveData()
         })
     }
-
+    
     /**
      * 初始與設定 VCview 內的 field
      */
@@ -126,7 +158,7 @@ class CourseReserv: UIViewController {
      * CollectionView, 設定 Sections
      */
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 6
+        return (aryReservData.count > 0) ? 6 : 0
     }
     
     /**
@@ -134,7 +166,7 @@ class CourseReserv: UIViewController {
      * CollectionView, 設定 資料總數
      */
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 7
+        return (aryReservData.count > 0) ? 7 : 0
     }
     
     /**
@@ -142,6 +174,11 @@ class CourseReserv: UIViewController {
      * CollectionView, 設定資料 Cell 的内容
      */
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        
+        if (aryReservData.count < 1) {
+            return UICollectionViewCell()
+        }
+        
         let mCell: PubCalendarCell = collectionView.dequeueReusableCellWithReuseIdentifier("cellPubCalendar", forIndexPath: indexPath) as! PubCalendarCell
         
         let dictBlock: Dictionary<String, AnyObject> = aryBlockData[indexPath.section][indexPath.row]
