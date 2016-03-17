@@ -9,11 +9,11 @@ import UIKit
 /**
  * protocol, PubClass Delegate
  */
-protocol PubClassDelegate {
+@objc protocol PubClassDelegate {
     /**
      * 設定上層 class page 是否需要 reload
      */
-    func PageNeedReload(needReload: Bool)
+    optional func PageNeedReload(needReload: Bool)
 }
 
 /**

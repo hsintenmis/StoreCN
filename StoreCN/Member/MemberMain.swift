@@ -64,9 +64,7 @@ class MemberMain: UIViewController, MemberMainPagerDelegate {
      * View DidAppear 程序
      */
     override func viewDidAppear(animated: Bool) {
-        dispatch_async(dispatch_get_main_queue(), {
-            
-        })
+        // http 連線取得資料
     }
     
     /**

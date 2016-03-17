@@ -102,7 +102,7 @@ class PurchaseDetailEdit: UIViewController {
         // 回傳後跳離, 通知 parent 資料 reload
         let strMsg = (dictRS["result"] as! Bool != true) ? pubClass.getLang("err_trylatermsg") : pubClass.getLang("datasavecompleted")
         
-        delegate?.PageNeedReload(true)
+        delegate?.PageNeedReload!(true)
         pubClass.popIsee(self, Msg: strMsg, withHandler: {self.dismissViewControllerAnimated(true, completion: nil)})
     }
     

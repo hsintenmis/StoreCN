@@ -68,9 +68,13 @@ class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIP
             case "course":  // 療程資料 VC
                 let mVC: PubCourseSelect = storyboard?.instantiateViewControllerWithIdentifier("PubCourseSelect") as! PubCourseSelect
                 
+                /*
                 if let tmpDict = dictAllData["course"] as? Array<Dictionary<String, AnyObject>> {
                     mVC.aryCourseData = tmpDict
                 }
+                */
+                
+                
                 
                 aryPages.append(mVC)
                 

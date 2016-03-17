@@ -9,7 +9,6 @@ import Foundation
  * 療程銷售 資料新增/編輯 資料上傳, 公用 class
  */
 class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewDelegate, CourseSaleMemberSelDelegate, CourseSaleCourseSelDelegate {
-    
     // @IBOutlet
     @IBOutlet var tableList: UITableView!
     @IBOutlet var swchSoqbed: [UISegmentedControl]!  // HotDev 6個 Segment
@@ -310,16 +309,18 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
     
     /**
      * public, parent 調用，本頁面全部欄位資料上傳儲存<BR>
-     * @return: 'rs' => bool, 'msg' => err msg or nil, 'data'
+     * 回傳整理好的 dict REQUEST 資料<BR>
+     * @return: dict, 'rs'=>Bool, 'data'=>dict data, 'msg'=>"" or msg
      */
-    func saveData()->Dictionary<String, AnyObject>!{
-        var dictRS: Dictionary<String, AnyObject> = [:]
-        var errMsg = ""
-        dictRS["rs"] = false
-        dictRS["msg"] = nil
-        dictRS["data"] = nil
+    func saveData() -> Dictionary<String, AnyObject>! {
+        var dictResult: Dictionary<String, AnyObject> = [:]
+        dictResult["rs"] = false
+        dictResult["data"] = [:]
+        dictResult["msg"] = pubClass.getLang("err_trylatermsg")
         
         // 欄位值檢查
+        var errMsg = ""
+        
         if (labMember.text?.characters.count < 1) {
            errMsg = "coursesale_err_membername"
         }
@@ -334,12 +335,15 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
         }
         
         if (errMsg != "") {
-            dictRS["msg"] = pubClass.getLang(errMsg)
-            return dictRS
+            dictResult["msg"] = pubClass.getLang(errMsg)
+            return dictResult
         }
         
         // 產生回傳 dict data
-        dictRequest["odrsid"] = dictSaleData["odrs_id"] as? String
+        if (strMode == "edit") {
+            dictRequest["odrsid"] = dictSaleData["odrs_id"] as? String
+        }
+        
         dictRequest["price"] = edFee.text
         dictRequest["membername"] = labMember.text
         dictRequest["coursename"] = labCourseName.text
@@ -352,20 +356,21 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
         dictRequest["times"] = labCardTypeCount.text
         dictRequest["expire"] = mPickerExpire.getStrDate()
         
-        /*
-        add =
-        edit = coursesale_updatedata, 'odrsid' 欄位
+        // SOQIBED hothouse 裝置時間, 是否啟用
+        for swchDev in swchSoqbed {
+            // 取得欄位名稱, ex. 'H00'
+            let strIdent = swchDev.restorationIdentifier  // ex. 'DevH00'
+            let strDevKey = strIdent!.stringByReplacingOccurrencesOfString("Dev", withString: "", range: nil)
+            dictRequest[strDevKey] = String((swchDev.selectedSegmentIndex) * 15)
+        }
         
-        jobjRequest.put("expire", strExpirDate);
-
+        dictRequest["soqibed"] = (swchActSoqibed.on) ? "Y" : "N"
         
-        jobjRequest.put("soqibed", (chkSoqibed.isChecked()) ? "Y" : "N");
-        'aryHotDevCode', ex. H01 = '30' ...
-        */
-
-
-
-        return dictSaleData
+        // 回傳資料
+        dictResult["rs"] = true
+        dictResult["msg"] = ""
+        
+        return dictResult
     }
     
     /**

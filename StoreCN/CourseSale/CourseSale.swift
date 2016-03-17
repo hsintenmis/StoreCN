@@ -69,12 +69,8 @@ class CourseSale: UIViewController {
      * act, 點取 '儲存' button
      */
     @IBAction func actSave(sender: UIBarButtonItem) {
-        let dictRS = mPubCourseSaleAdEd.saveData()
-        
-        if ((dictRS["rs"] as! Bool) != true) {
-            pubClass.popIsee(self, Msg: (dictRS["msg"] as! String))
-            return
-        }
+        mPubCourseSaleAdEd.saveData()
+        return
     }
     
     /**

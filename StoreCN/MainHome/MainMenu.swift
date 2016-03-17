@@ -246,12 +246,9 @@ class MainMenu: UIViewController {
                 /* 判斷是否需要 'prepareForSegue' */
                 var mParam = self.dictParm
                 
-                // 療程列表
+                // 療程列表, HTTP 連線取得資料直接由 child 'PurchaseList' 處理
                 if (strIdent == "course_list") {
-                    mParam["page"] = "cardmanage"
-                    mParam["act"] = "cardmanage_getdata"
-                    self.MenuItemSelect(strIdent, HTTPParam: mParam)
-                    
+                    self.performSegueWithIdentifier("PubCourseSelect", sender: nil)
                     return
                 }
                 
@@ -382,15 +379,6 @@ class MainMenu: UIViewController {
      */
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let strIdent = segue.identifier
-        
-        // 療程列表
-        if (strIdent == "course_list") {
-            let mVC = segue.destinationViewController as! Courselist
-            mVC.strToday = strToday
-            mVC.dictAllData = sender as! Dictionary<String, AnyObject>
-
-            return
-        }
         
         // 療程預約
         if (strIdent == "course_reservation") {

@@ -741,7 +741,7 @@
                         <outlet property="colviewMenu" destination="dE8-ew-PUv" id="PxS-JG-w2k"/>
                         <outlet property="labTodayMsg" destination="LvG-gM-OL3" id="JcS-WI-LYo"/>
                         <segue destination="G3L-qr-XgU" kind="presentation" identifier="member_list" modalTransitionStyle="crossDissolve" id="zu1-aT-Ghz"/>
-                        <segue destination="9un-9g-MIt" kind="presentation" identifier="course_list" modalTransitionStyle="crossDissolve" id="IFy-Ic-Xep"/>
+                        <segue destination="9un-9g-MIt" kind="presentation" identifier="PubCourseSelect" modalTransitionStyle="crossDissolve" id="IFy-Ic-Xep"/>
                         <segue destination="gwW-LZ-tup" kind="presentation" identifier="course_reservation" modalTransitionStyle="crossDissolve" id="Ng0-60-Mwv"/>
                         <segue destination="THO-5I-P6k" kind="presentation" identifier="course_sale" id="T9Q-0q-0Q6"/>
                         <segue destination="Yfo-28-90H" kind="presentation" identifier="product_purchase" modalTransitionStyle="crossDissolve" id="TLM-fu-dRs"/>
@@ -823,7 +823,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U02-oo-n54" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1276" y="2032"/>
+            <point key="canvasLocation" x="1426" y="2032"/>
         </scene>
         <!--設定主頁面-List-->
         <scene sceneID="ivO-kc-gHX">
@@ -942,7 +942,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GxS-d4-CUI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1276" y="2746"/>
+            <point key="canvasLocation" x="1428" y="2778"/>
         </scene>
         <!--店家基本资料设定-->
         <scene sceneID="Ib6-mP-EFY">
@@ -1012,7 +1012,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hxH-PE-TFZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1276" y="3568"/>
+            <point key="canvasLocation" x="1428" y="3600"/>
         </scene>
         <!--疗程预约相关设定-->
         <scene sceneID="0Pd-IH-UR4">
@@ -1082,7 +1082,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yB5-Bv-221" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1750" y="3568"/>
+            <point key="canvasLocation" x="1902" y="3600"/>
         </scene>
         <!--今日收入-->
         <scene sceneID="Anz-BH-LLk">
@@ -6671,11 +6671,11 @@
             <objects>
                 <tableViewController storyboardIdentifier="PubCourseSelect" title="公用-會員購買療程選擇" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Dgt-vK-rZ3" customClass="PubCourseSelect" customModule="StoreCN" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="120" sectionHeaderHeight="1" sectionFooterHeight="1" id="aJh-5r-Bp2">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="324" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <label key="tableFooterView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="目前无资料" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KRe-6z-fPg" userLabel="LabNoData">
-                            <rect key="frame" x="0.0" y="121" width="320" height="44"/>
+                            <rect key="frame" x="0.0" y="121" width="324" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" red="0.56470588239999997" green="0.56470588239999997" blue="0.56470588239999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -6683,10 +6683,10 @@
                         </label>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellPubCourseSelect" id="wVV-0G-rhK" customClass="PubCourseSelectCell" customModule="StoreCN" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="1" width="320" height="120"/>
+                                <rect key="frame" x="0.0" y="1" width="324" height="120"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wVV-0G-rhK" id="18W-0q-gdU">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="119"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="324" height="119"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Member name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tGd-25-BjZ">
@@ -6707,7 +6707,7 @@
                                             <color key="textColor" red="0.18823529410000001" green="0.18823529410000001" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已使用次数:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bh7-0W-4YE">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="已使用次数:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bh7-0W-4YE">
                                             <rect key="frame" x="224" y="47" width="64" height="12"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="12" id="t0U-fW-lsq"/>
@@ -6734,7 +6734,7 @@
                                             <color key="textColor" red="0.56470588239999997" green="0.56470588239999997" blue="0.56470588239999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="到期日:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4BL-ZO-nDb" userLabel="訂購日">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="到期日:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4BL-ZO-nDb" userLabel="訂購日">
                                             <rect key="frame" x="182" y="69" width="40" height="12"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="12" id="6uC-Yd-B48"/>
@@ -6743,7 +6743,7 @@
                                             <color key="textColor" red="0.56470588239999997" green="0.56470588239999997" blue="0.56470588239999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="订购日:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vtm-Rq-rFA">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="订购日:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vtm-Rq-rFA">
                                             <rect key="frame" x="182" y="88" width="40" height="12"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="12" id="aoG-61-dHC"/>
@@ -6752,7 +6752,7 @@
                                             <color key="textColor" red="0.56470588239999997" green="0.56470588239999997" blue="0.56470588239999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="itF-aM-FzY" userLabel="labCount">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="itF-aM-FzY" userLabel="labCount">
                                             <rect key="frame" x="298" y="47" width="9" height="12"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="12" id="0Vu-EV-5bx"/>
@@ -6761,7 +6761,7 @@
                                             <color key="textColor" red="0.18823529410000001" green="0.18823529410000001" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016/05/31" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tpv-0b-SQN" userLabel="eDate">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="2016/05/31" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tpv-0b-SQN" userLabel="eDate">
                                             <rect key="frame" x="227" y="69" width="80" height="12"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="12" id="Pjw-Iu-h90"/>
@@ -6771,7 +6771,7 @@
                                             <color key="textColor" red="0.1843137255" green="0.50980392159999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016/05/31" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vOV-ip-WXC" userLabel="sDate">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="2016/05/31" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vOV-ip-WXC" userLabel="sDate">
                                             <rect key="frame" x="227" y="88" width="80" height="12"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="12" id="MQH-fd-zIF"/>
@@ -6824,7 +6824,6 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="labNoData" destination="KRe-6z-fPg" id="prf-5L-Eqk"/>
                         <outlet property="tableData" destination="aJh-5r-Bp2" id="Zag-Xc-2HV"/>
@@ -6833,7 +6832,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zdB-80-1XG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1208" y="-2561"/>
+            <point key="canvasLocation" x="905" y="1418"/>
         </scene>
         <!--會員購買療程編輯-->
         <scene sceneID="aQa-S4-NEw">
@@ -6858,14 +6857,14 @@
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </textAttributes>
                                 <items>
-                                    <navigationItem title="會員購買療程編輯" id="Nab-gf-tjj">
+                                    <navigationItem title="疗程编修" id="Nab-gf-tjj">
                                         <barButtonItem key="leftBarButtonItem" title="返回" id="lyO-sp-WmW">
                                             <color key="tintColor" red="0.80000000000000004" green="1" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>
                                                 <action selector="actHome:" destination="pzN-1r-4k0" id="Lmx-qT-w5x"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="儲存" id="02L-ve-K3e">
+                                        <barButtonItem key="rightBarButtonItem" title="储存" id="02L-ve-K3e">
                                             <color key="tintColor" red="0.80000000000000004" green="1" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>
                                                 <action selector="actSave:" destination="pzN-1r-4k0" id="le9-AU-yn0"/>
@@ -6900,7 +6899,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Of-QS-7Xe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-759" y="-2561"/>
+            <point key="canvasLocation" x="903" y="2032"/>
         </scene>
         <!--公用-Mead檢測資料選擇-->
         <scene sceneID="yfg-rU-nfy">
@@ -7495,31 +7494,22 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="选择项目向左滑动可以删除该笔资料" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o6F-0I-tbS" userLabel="navyMsg">
-                                <rect key="frame" x="16" y="72" width="293" height="12"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="12" id="xLM-3Y-D2E"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <color key="textColor" red="0.56470588239999997" green="0.56470588239999997" blue="0.56470588239999997" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="djl-bK-uxf">
-                                <rect key="frame" x="-2" y="89" width="324" height="479"/>
+                                <rect key="frame" x="-2" y="64" width="324" height="504"/>
+                                <connections>
+                                    <segue destination="Dgt-vK-rZ3" kind="embed" identifier="CourseSaleList" id="x4k-mF-wxf"/>
+                                </connections>
                             </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="o6F-0I-tbS" secondAttribute="trailing" constant="-5" id="4cW-6M-Swf"/>
-                            <constraint firstItem="djl-bK-uxf" firstAttribute="top" secondItem="o6F-0I-tbS" secondAttribute="bottom" constant="5" id="AR6-BP-ad3"/>
+                            <constraint firstItem="djl-bK-uxf" firstAttribute="top" secondItem="LzH-Pu-zg5" secondAttribute="bottom" id="9F2-pV-csh"/>
                             <constraint firstItem="djl-bK-uxf" firstAttribute="leading" secondItem="LzH-Pu-zg5" secondAttribute="leading" id="Ecd-8M-lta"/>
-                            <constraint firstItem="o6F-0I-tbS" firstAttribute="leading" secondItem="xcz-IR-AMI" secondAttribute="leadingMargin" id="HCI-RN-6sm"/>
                             <constraint firstItem="LzH-Pu-zg5" firstAttribute="leading" secondItem="xcz-IR-AMI" secondAttribute="leadingMargin" constant="-18" id="HMo-R7-3eW"/>
                             <constraint firstItem="bED-wo-DDX" firstAttribute="top" secondItem="djl-bK-uxf" secondAttribute="bottom" id="SMB-4x-50w"/>
                             <constraint firstItem="djl-bK-uxf" firstAttribute="trailing" secondItem="LzH-Pu-zg5" secondAttribute="trailing" id="by7-do-ota"/>
                             <constraint firstItem="LzH-Pu-zg5" firstAttribute="top" secondItem="Pqx-zG-yy3" secondAttribute="bottom" id="df8-Sp-Sex"/>
                             <constraint firstAttribute="trailingMargin" secondItem="LzH-Pu-zg5" secondAttribute="trailing" constant="-18" id="k09-B4-StM"/>
-                            <constraint firstItem="o6F-0I-tbS" firstAttribute="top" secondItem="LzH-Pu-zg5" secondAttribute="bottom" constant="8" id="s0e-eW-ebH"/>
                         </constraints>
                     </view>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
@@ -7533,7 +7523,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="at2-2n-Lca" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1796" y="-676"/>
+            <point key="canvasLocation" x="406" y="1342"/>
         </scene>
         <!--個人資料編輯 Container-->
         <scene sceneID="1cc-ib-5ZT">
@@ -7915,6 +7905,7 @@
                     <size key="freeformSize" width="324" height="284"/>
                     <connections>
                         <segue destination="4Wk-Dt-t5Z" kind="show" identifier="MemberHealthMenu" id="ClX-tv-ALH"/>
+                        <segue destination="Dgt-vK-rZ3" kind="show" identifier="MemberCourseSaleList" id="px2-Qx-HTH"/>
                     </connections>
                 </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GmG-kc-yoi" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -11864,7 +11855,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="paB-ag-oSC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1750" y="2778"/>
+            <point key="canvasLocation" x="1902" y="2778"/>
         </scene>
         <!--店家基本資料 - 輸入頁面-->
         <scene sceneID="bce-0d-5gD">
@@ -12189,7 +12180,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aNS-bX-WXT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1278" y="4284"/>
+            <point key="canvasLocation" x="1430" y="4316"/>
         </scene>
         <!--疗程预约相关设定 - 輸入頁面-->
         <scene sceneID="dyo-pc-qgr">
@@ -12519,7 +12510,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nGR-Rr-B1w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1750" y="4284"/>
+            <point key="canvasLocation" x="1902" y="4316"/>
         </scene>
     </scenes>
     <resources>
@@ -12536,5 +12527,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="g9E-lV-tef"/>
+        <segue reference="x4k-mF-wxf"/>
     </inferredMetricsTieBreakers>
 </document>

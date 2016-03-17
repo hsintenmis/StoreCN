@@ -62,7 +62,7 @@ class PurchaseReturnList: UIViewController, PubClassDelegate {
         // 子頁面有資料變動，本頁面結束設定 parent class reload
         if (bolReload) {
             self.view.alpha = 0.6
-            delegate?.PageNeedReload(true)
+            delegate?.PageNeedReload!(true)
             self.dismissViewControllerAnimated(false, completion: {})
         }
         

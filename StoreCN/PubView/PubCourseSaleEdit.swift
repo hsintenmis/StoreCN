@@ -9,6 +9,8 @@ import Foundation
  * 公用, 會員療程銷售編輯
  */
 class PubCourseSaleEdit: UIViewController {
+    // delegate
+    var delegate = PubClassDelegate?()
     
     // @IBOutlet
     @IBOutlet weak var contviewTable: UIView!
@@ -35,6 +37,7 @@ class PubCourseSaleEdit: UIViewController {
         // !! container 直接加入 ViewControler
         mPubCourseSaleAdEd = storyboard?.instantiateViewControllerWithIdentifier("PubCourseSaleAdEd") as! PubCourseSaleAdEd
         
+        
         mPubCourseSaleAdEd.dictSaleData = dictSaleData
         mPubCourseSaleAdEd.strToday = strToday
         mPubCourseSaleAdEd.aryCourseDB = aryCourseDB
@@ -52,12 +55,49 @@ class PubCourseSaleEdit: UIViewController {
      * act, 點取 '儲存' button
      */
     @IBAction func actSave(sender: UIBarButtonItem) {
-        let dictRS = mPubCourseSaleAdEd.saveData()
+        self.delegate?.PageNeedReload!(true)
+        return
         
-        if ((dictRS["rs"] as! Bool) != true) {
-            pubClass.popIsee(self, Msg: (dictRS["msg"] as! String))
+        let dictData = mPubCourseSaleAdEd.saveData()
+        
+        if (dictData["rs"] as! Bool != true) {
+            pubClass.popIsee(self, Msg: dictData["msg"] as! String)
             return
         }
+        
+        // 產生 http post data, http 連線儲存後跳離
+        var dictParm: Dictionary<String, String> = [:]
+        dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
+        dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
+        dictParm["page"] = "coursesale"
+        dictParm["act"] = "coursesale_updatedata"
+        
+        do {
+            let tmpDictData = try
+                NSJSONSerialization.dataWithJSONObject(dictData["data"] as! Dictionary<String, String>, options: NSJSONWritingOptions(rawValue: 0))
+            let jsonString = NSString(data: tmpDictData, encoding: NSUTF8StringEncoding)! as String
+            
+            dictParm["arg0"] = jsonString
+        } catch {
+            pubClass.popIsee(self, Msg: pubClass.getLang("err_trylatermsg"))
+            return
+        }
+        
+        // HTTP 開始連線
+        var errMsg = self.pubClass.getLang("err_trylatermsg")
+        
+        self.pubClass.HTTPConn(self, ConnParm: dictParm, callBack: {
+            (dictHTTPSRS: Dictionary<String, AnyObject>)->Void in
+            // 回傳後跳離, 通知 parent 資料 reload
+            if (dictHTTPSRS["result"] as! Bool == true) {
+                errMsg = self.pubClass.getLang("datasavecompleted")
+            }
+            
+            self.delegate?.PageNeedReload!(true)
+        })
+        
+        
+        return
     }
     
     /**
