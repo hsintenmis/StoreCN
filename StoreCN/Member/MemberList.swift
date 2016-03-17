@@ -22,7 +22,7 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
 
     // 其他參數設定
     private var strToday = ""
-    private var mMemberData: Dictionary<String, AnyObject> = [:]  // 選擇的會員
+    private var dictMemberData: Dictionary<String, AnyObject> = [:]  // 選擇的會員
     private var currIndexPath: NSIndexPath?  // 目前 TableView 的 IndexPath
     
     // 會員選擇公用 class
@@ -118,7 +118,7 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
     */
     func MemberSelected(MemberData dictData: Dictionary<String, AnyObject>, indexPath: NSIndexPath) {
         currIndexPath = indexPath
-        mMemberData = dictData
+        dictMemberData = dictData
         
         // HTTP 連線取得該會員全部資料(course, mead, soqibed, purchase)
         var dictParm = Dictionary<String, String>()
@@ -170,7 +170,7 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
         if (strIdent == "MemberMain") {
             let mVC = segue.destinationViewController as! MemberMain
             mVC.strToday = strToday
-            mVC.dictMember = mMemberData
+            mVC.dictMember = dictMemberData
             mVC.dictAllData = sender as! Dictionary<String, AnyObject>
             
             return

@@ -28,11 +28,11 @@
 "pricemaxovermsg" = "金额超过系统限制";
 "selectdate" = "选择日期";
 "datasendplzconfirmmsg" = "资料即将送出!\n请再次确认输入料是否正确?!";
-"delconfirmmsg" = "资料即将刪除!\n请再次确认是否要刪除選擇的資料?!";
+"delconfirmmsg" = "资料即将删除!\n请再次确认是否要删除选择的资料?!";
 
-"fieldname_price" = "金額";
-"fieldname_invoiceid" = "訂單編號";
-"fieldname_membername" = "會員名稱";
+"fieldname_price" = "金额";
+"fieldname_invoiceid" = "订单编号";
+"fieldname_membername" = "会员名称";
 
 "week_0" = "日";
 "week_1" = "一";
@@ -87,11 +87,11 @@
 "menu_product_stock" = "商品库存";
 "menu_product_purchaselist" = "进出货列表";
 
-"menu_staff_employee" = "營氧師";
-"menu_staff_benefit" = "績效提成";
-"menu_staff_list" = "營氧師列表";
-"menu_message_active" = "活動訊息";
-"menu_message_health" = "健康建議";
+"menu_staff_employee" = "营氧师";
+"menu_staff_benefit" = "绩效提成";
+"menu_staff_list" = "营氧师列表";
+"menu_message_active" = "活动讯息";
+"menu_message_health" = "健康建议";
 
 "menu_analydata" = "店务分析";
 "menu_analydata_income" = "收入分析";
@@ -153,38 +153,38 @@
 "purchase_delwarringmsg" = "删除订货单资料，将会影响商品的库存数量!业绩分析相关的损益报表也会影响!\n\n请务必再次确认是否要删除这笔进货资料?!";
 "purchasee_cantdelpurchasemsg" = "无法删除资料!\n\n该订货单有退货商品,请先移除该订货单全部的退货商品!";
 
-"staff_nodataaddmsg" = "沒有資料!\n點取 [新增] 加入一位營氧師資料";
-"staff_totnums" = "營氧師總數";
-"staff_benefit_pd" = "商品銷售";
-"staff_benefit_course" = "療程銷售";
-"staff_benefit_count" = "療程服務紀錄";
+"staff_nodataaddmsg" = "没有资料!\n点取 [新增] 加入一位营氧师资料";
+"staff_totnums" = "营氧师总数";
+"staff_benefit_pd" = "商品销售";
+"staff_benefit_course" = "疗程销售";
+"staff_benefit_count" = "疗程服务纪录";
 
-"message_type_pub" = "公開";
+"message_type_pub" = "公开";
 "message_type_draft" = "草稿";
 
 "analydata_today" = "今日收入";
 "analydata_daily" = "每日收入";
 "analydata_monthly" = "每日收入";
-"analydata_sheet_invoice" = "會員訂單";
-"analydata_sheet_course" = "療程銷售";
-"analydata_sheet_pd" = "商品銷售";
+"analydata_sheet_invoice" = "会员订单";
+"analydata_sheet_course" = "疗程销售";
+"analydata_sheet_pd" = "商品销售";
 
 "analydata_usedaytoday" = "今天";
 "analydata_usedayyest" = "昨天";
 "format_beforedays" = "%d 天前";
 "analydata_usedaynever" = "从未使用";
 
-"config_profile_err_edStoreName" = "店家名稱錯誤!";
-"config_profile_err_edTel" = "聯絡電話錯誤!";
-"config_profile_err_edStoreMaster" = "店長姓名錯誤!";
+"config_profile_err_edStoreName" = "店家名称错误!";
+"config_profile_err_edTel" = "联络电话错误!";
+"config_profile_err_edStoreMaster" = "店长姓名错误!";
 
 "btsacel_bondmsg" = "要绑定的设备,是否有出现蓝牙标记符号?";
-"btsacel_disbondmsg" = "確定要解除已綁定的藍牙設備?";
-"btsacel_bondY" = "已綁定";
-"btsacel_bondN" = "未綁定";
+"btsacel_disbondmsg" = "确定要解除已绑定的蓝牙设备?";
+"btsacel_bondY" = "已绑定";
+"btsacel_bondN" = "未绑定";
 
-"coursesale_err_membername" = "訂購人錯誤!";
-"coursesale_err_coursename" = "建議錯誤!";
-"coursesale_err_coursexpiredate" = "療程到期日錯誤!";
-"coursesale_err_fee" = "療程費用錯誤!";
+"coursesale_err_membername" = "订购人错误!";
+"coursesale_err_coursename" = "建议工程错误!";
+"coursesale_err_coursexpiredate" = "疗程到期日错误!";
+"coursesale_err_fee" = "疗程费用错误!";
 

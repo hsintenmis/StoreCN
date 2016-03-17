@@ -24,32 +24,41 @@ class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIP
     // 參考上層 ["course", "mead", "soqibed", "purchase", "health"]
     var aryMenuName: Array<String>!
     
-    // 各個 Pager Table 需要的 datasource, parent 設定
+    // public, 各個 Pager Table 需要的 datasource, parent 設定
     var dictAllData: Dictionary<String, AnyObject>!
     
-    // Pager 包含的 sub VC
-    private let aryVCIdent = ["CourseList", "MeadList","SoqibedList","PurchaseList","Health"]  // Storyboard Identname
+    // public, 選擇的會員資料
+    var dictMember: Dictionary<String, AnyObject>!
     
-    private var aryPages: Array<UIViewController>!  // 全部 page 的 array
+    // Pager 包含的 sub VC
+    private let aryVCIdent = ["CourseSaleList", "MeadList","SoqibedList","PurchaseList","Health"]  // Storyboard Identname
+    
+    private var aryPages: Array<UIViewController> = []  // 全部 page 的 array
     private var indexPages = -1;  // 目前已滑動完成 page 的 position
     private var indexNextPages = 1;
     
-    // View DidLoad
+    // 其他參數
+    private var bolReload = true
+    
+    /**
+     * View DidLoad
+     */
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.delegate = self
         self.dataSource = self
-        
-        self.makePages()
-        
-        // 初始與顯示第一個頁面
-        self.moveToPage(0)
     }
     
     // viewDidAppear
     override func viewDidAppear(animated: Bool) {
-        
+        if (bolReload) {
+            bolReload = false
+            self.makePages()
+            
+            // 初始與顯示第一個頁面
+            self.moveToPage(0)
+        }
     }
     
     /**
@@ -64,21 +73,6 @@ class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIP
             let strMenuName = aryMenuName[i]
             
             switch (strMenuName) {
-                
-            case "course":  // 療程資料 VC
-                let mVC: PubCourseSelect = storyboard?.instantiateViewControllerWithIdentifier("PubCourseSelect") as! PubCourseSelect
-                
-                /*
-                if let tmpDict = dictAllData["course"] as? Array<Dictionary<String, AnyObject>> {
-                    mVC.aryCourseData = tmpDict
-                }
-                */
-                
-                
-                
-                aryPages.append(mVC)
-                
-                break
                 
             case "mead":  // Mead 資料 VC
                 let mVC: PubMeadDataSelect = storyboard?.instantiateViewControllerWithIdentifier("PubMeadDataList") as! PubMeadDataSelect
@@ -113,8 +107,16 @@ class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIP
                 
                 break
                 
+            case "course":  // 已購買療程列表
+                let mVC = storyboard?.instantiateViewControllerWithIdentifier("PubCourseSelect") as! PubCourseSelect
+                mVC.strMemberId = dictMember["memberid"] as? String
+                
+                aryPages.append(mVC)
+                break
+                
             default:
-                let mVC = storyboard?.instantiateViewControllerWithIdentifier("Member" + aryVCIdent[i])
+                let strResorIdent = "Member" + aryVCIdent[i]
+                let mVC = storyboard?.instantiateViewControllerWithIdentifier(strResorIdent)
                 aryPages.append(mVC!)
             }
         }

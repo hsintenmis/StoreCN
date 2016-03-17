@@ -28,6 +28,9 @@ class PubCourseSaleEdit: UIViewController {
     // 公用VC, 療程銷售新增/編輯 class
     var mPubCourseSaleAdEd: PubCourseSaleAdEd!
     
+    // 其他參數
+    private var bolDataChange = false  // 本頁面資料是否有儲存
+    
     /**
      * View Load 程序
      */
@@ -55,9 +58,7 @@ class PubCourseSaleEdit: UIViewController {
      * act, 點取 '儲存' button
      */
     @IBAction func actSave(sender: UIBarButtonItem) {
-        self.delegate?.PageNeedReload!(true)
-        return
-        
+        bolDataChange = false
         let dictData = mPubCourseSaleAdEd.saveData()
         
         if (dictData["rs"] as! Bool != true) {
@@ -65,7 +66,7 @@ class PubCourseSaleEdit: UIViewController {
             return
         }
         
-        // 產生 http post data, http 連線儲存後跳離
+        // 產生 http post data, http 連線儲存
         var dictParm: Dictionary<String, String> = [:]
         dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
         dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
@@ -88,14 +89,15 @@ class PubCourseSaleEdit: UIViewController {
         
         self.pubClass.HTTPConn(self, ConnParm: dictParm, callBack: {
             (dictHTTPSRS: Dictionary<String, AnyObject>)->Void in
-            // 回傳後跳離, 通知 parent 資料 reload
+            
+            // 回傳通知 parent 資料 reload
             if (dictHTTPSRS["result"] as! Bool == true) {
                 errMsg = self.pubClass.getLang("datasavecompleted")
+                self.bolDataChange = true
             }
             
-            self.delegate?.PageNeedReload!(true)
+            self.pubClass.popIsee(self, Msg: errMsg)
         })
-        
         
         return
     }
@@ -104,7 +106,9 @@ class PubCourseSaleEdit: UIViewController {
      * act, 點取 '返回' button
      */
     @IBAction func actHome(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismissViewControllerAnimated(true, completion: {
+            self.delegate?.PageNeedReload!(self.bolDataChange)
+        })
     }
     
 }

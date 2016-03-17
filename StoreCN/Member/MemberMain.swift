@@ -162,6 +162,7 @@ class MemberMain: UIViewController, MemberMainPagerDelegate {
             mMemberMainPager.delegateMemberMainPager = self
             mMemberMainPager.aryMenuName = aryMenuName
             mMemberMainPager.dictAllData = dictAllData
+            mMemberMainPager.dictMember = dictMember
             
             return
         }

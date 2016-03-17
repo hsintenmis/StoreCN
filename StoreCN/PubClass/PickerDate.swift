@@ -71,7 +71,7 @@ class PickerDate {
     func setDefVal(strDate: String) {
         let mDate = dateFmtYMD.dateFromString(strDate)!
         datePickerView.setDate(mDate, animated: false)
-        //mPickField.inputView = datePickerView
+        strCurrDate = strDate
     }
     
     /**

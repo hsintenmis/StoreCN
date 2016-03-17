@@ -9,9 +9,6 @@ import Foundation
  * 公用 class, 會員已購買的療程訂單資料列表
  */
 class PubCourseSelect: UITableViewController, PubClassDelegate {
-    // delegate
-    var delegate = PubClassDelegate?()
-    
     // @IBOutlet
     @IBOutlet weak var tableData: UITableView!
     @IBOutlet weak var labNoData: UILabel!
@@ -21,6 +18,7 @@ class PubCourseSelect: UITableViewController, PubClassDelegate {
     
     // public, parent 傳入
     var dictAllData: Dictionary<String, AnyObject> = [:]
+    var strMemberId: String?  // 若指定會員，表示僅列出該會員的購買療程
     
     // 療程訂單資料, 療程DB, 全部會員資料
     private var aryCourseData: Array<Dictionary<String, AnyObject>> = []
@@ -30,40 +28,34 @@ class PubCourseSelect: UITableViewController, PubClassDelegate {
     private var currIndexPath: NSIndexPath?
     
     // 其他參數
-    private var bolReload = false
+    private var bolReload = true
     
     /**
      * View Load 程序
      */
     override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        // 本頁面資料設定
-        //self.chkHaveData()
+        //super.viewDidLoad()
+        labNoData.alpha = 0.0
     }
     
     /**
      * viewDidAppear 程序
      */
     override func viewDidAppear(animated: Bool) {
-        /*
         if (bolReload == true) {
             bolReload = false
-            chkHaveData()
+            reConnHTTP()
         }
-        */
-        
-        
-        chkHaveData()
     }
     
     /**
      * #mark: PubClassDelegate
-     * Page 重整
+     * 頁面重整 flag 通知
      */
     func PageNeedReload(needReload: Bool) {
-        bolReload = needReload
-        delegate?.PageNeedReload!(needReload)
+        if (needReload == true) {
+            reConnHTTP()
+        }
     }
     
     /**
@@ -79,12 +71,31 @@ class PubCourseSelect: UITableViewController, PubClassDelegate {
             hasErr = true
         }
         
+        // 已購買的療程列表
         if let aryTmp = dictAllData["data"] as? Array<Dictionary<String, AnyObject>> {
-            aryCourseData = aryTmp
+            
+            // 重新整理 array data，若有指定 '會員 ID'
+            if (strMemberId == nil) {
+                aryCourseData = aryTmp
+            } else {
+                aryCourseData = []
+                
+                for dictTmp in aryTmp {
+                    if (dictTmp["memberid"] as? String == strMemberId) {
+                        aryCourseData.append(dictTmp)
+                    }
+                }
+                
+                if (aryCourseData.count < 1) {
+                    hasErr = true
+                }
+            }
+            
         } else {
             hasErr = true
         }
         
+        // 療程 DB 列表
         if let aryTmp = dictAllData["course"] as? Array<Dictionary<String, AnyObject>> {
             aryCourseDB = aryTmp
         } else {
@@ -103,13 +114,15 @@ class PubCourseSelect: UITableViewController, PubClassDelegate {
         if let tmpIndexPath = currIndexPath {
             tableData.selectRowAtIndexPath(tmpIndexPath, animated: true, scrollPosition: UITableViewScrollPosition.None)
         }
+        
+        bolReload = false
     }
     
     /**
      * HTTP 重新連線取得資料
      */
     private func reConnHTTP() {
-        // Request 參數設定
+        // http 參數設定, 連線設定，判別 parent '療程管理列表' or '會員管理的療程列表'
         var mParam: Dictionary<String, String> = [:]
         mParam["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
         mParam["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
@@ -119,31 +132,20 @@ class PubCourseSelect: UITableViewController, PubClassDelegate {
         // HTTP 開始連線
         pubClass.HTTPConn(self, ConnParm: mParam, callBack: {(dictRS: Dictionary<String, AnyObject>)->Void in
             
-            // 任何錯誤跳離
+            // 任何錯誤, 停留本頁面
             if (dictRS["result"] as! Bool != true) {
-                var errMsg = self.pubClass.getLang("err_trylatermsg")
-                if let tmpStr: String = dictRS["msg"] as? String {
-                    errMsg = self.pubClass.getLang(tmpStr)
-                }
-                
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.pubClass.popIsee(self, Msg: errMsg, withHandler: {self.dismissViewControllerAnimated(true, completion: {})})
-                })
-                
+                self.labNoData.alpha = 1.0
                 return
             }
             
             /* 解析正確的 http 回傳結果，執行後續動作 */
             let dictData = dictRS["data"]!["content"] as! Dictionary<String, AnyObject>
             
-            
             self.dictAllData = dictData
             self.chkHaveData()
-            
         })
     }
 
-    
     /**
      * #mark: UITableView Delegate
      * 回傳指定的數量

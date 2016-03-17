@@ -321,6 +321,14 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
         // 欄位值檢查
         var errMsg = ""
         
+        // 療程費用為數字 8位數
+        errMsg = "coursesale_err_fee"
+        if let intFee = Int(edFee.text!) {
+            if ( String(intFee).characters.count <= 8 ) {
+                errMsg = ""
+            }
+        }
+        
         if (labMember.text?.characters.count < 1) {
            errMsg = "coursesale_err_membername"
         }
@@ -329,9 +337,6 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
         }
         else if (edExpire.text?.characters.count < 1) {
             errMsg = "coursesale_err_coursexpiredate"
-        }
-        else if (edFee.text?.characters.count < 1) {
-            errMsg = "coursesale_err_fee"
         }
         
         if (errMsg != "") {
@@ -369,6 +374,7 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
         // 回傳資料
         dictResult["rs"] = true
         dictResult["msg"] = ""
+        dictResult["data"] = dictRequest
         
         return dictResult
     }

@@ -17,13 +17,22 @@
 "confirm_yes" = "是";
 "confirm_no" = "否";
 "cancel" = "取消";
-"err_login" = "登入失敗, 請重新登入!";
-"nomember" = "沒有會員!";
-"name_age" = "歲";
+"err_login" = "登入失败, 请重新登入!";
+"nomember" = "没有会员!";
+"name_age" = "岁";
 "gender_M" = "男性";
 "gender_F" = "女性";
 "done" = "完成";
+"select_ok" = "确定";
+"systemwarring" = "系统警告";
+"pricemaxovermsg" = "金额超过系统限制";
+"selectdate" = "选择日期";
+"datasendplzconfirmmsg" = "资料即将送出!\n请再次确认输入料是否正确?!";
+"delconfirmmsg" = "资料即将删除!\n请再次确认是否要删除选择的资料?!";
 
+"fieldname_price" = "金额";
+"fieldname_invoiceid" = "订单编号";
+"fieldname_membername" = "会员名称";
 
 "week_0" = "日";
 "week_1" = "一";
@@ -56,20 +65,126 @@
 "mm_11" = "十一月";
 "mm_12" = "十二月";
 
-"FMT_todayinfo" = "今日有 %d筆療程預約, %d名會員療程快到期, %d項商品庫存不足.";
+"FMT_todayinfo" = "今日有 %d笔疗程预约, %d名会员疗程快到期, %d项商品库存不足.";
+"FMT_MMDD" = "%d月%d日";
+"FMT_MTInvoId" = "美利销货单号: %@";
+"FMT_returnmsg" = "退货金额: %@, 实际退货金额: %@";
+"FMT_alreadyrqty" = "已退货数量: %@";
 
-"menu_member" = "會員管理";
-"menu_testing" = "健康檢測";
-"menu_servicemgr" = "服務管理";
+"menu_member" = "会员管理";
+"menu_testing" = "健康检测";
+"menu_servicemgr" = "服务管理";
 "menu_product" = "商品管理";
 "menu_staff" = "人力管理";
 "menu_message" = "信息管理";
-"menu_storesheet" = "店務分析";
-"menu_config" = "設定";
+"menu_config" = "设定";
 
-"menu_course_list" = "療程管理";
-"menu_course_reservation" = "療程預約";
-"menu_course_sale" = "療程銷售";
+"menu_course_list" = "疗程管理";
+"menu_course_reservation" = "疗程预约";
+"menu_course_sale" = "疗程销售";
+"menu_product_sale" = "商品销货";
+"menu_product_purchase" = "商品入库";
+"menu_product_stock" = "商品库存";
+"menu_product_purchaselist" = "进出货列表";
 
-"member_nodataaddfirst" = "沒有會員, 請先新增會員!";
+"menu_staff_employee" = "营氧师";
+"menu_staff_benefit" = "绩效提成";
+"menu_staff_list" = "营氧师列表";
+"menu_message_active" = "活动讯息";
+"menu_message_health" = "健康建议";
+
+"menu_analydata" = "店务分析";
+"menu_analydata_income" = "收入分析";
+"menu_analydata_health" = "健康精灵分析";
+
+"member_nodataaddfirst" = "没有会员, 请先新增会员!";
+"member_selectbirth" = "选择生日";
+"member_main_course" = "疗程纪录";
+"member_main_mead" = "能量检测";
+"member_main_soqibed" = "SOQIBed";
+"member_main_purchase" = "购货纪录";
+"member_main_health" = "健康纪录";
+
+"course_nodata" = "没有疗程资料";
+"course_nobuy" = "未购买疗程";
+"course_alreadybuy" = "已购买疗程";
+"course_finished" = "疗程已完成";
+"course_expiredate" = "疗程到期日";
+
+"soqibed_actdate" = "建立日期";
+"soqibed_usecount" = "使用次数";
+"soqibed_builddate" = "建立时间";
+
+"bodypoint_0" = "心包经";
+"bodypoint_1" = "肺经";
+"bodypoint_2" = "心经";
+"bodypoint_3" = "大肠经";
+"bodypoint_4" = "三焦经";
+"bodypoint_5" = "小肠经";
+"bodypoint_6" = "肝经";
+"bodypoint_7" = "肾经";
+"bodypoint_8" = "脾经";
+"bodypoint_9" = "胆经";
+"bodypoint_10" = "胃经";
+"bodypoint_11" = "膀胱经";
+"bodypoint_12" = "任咏";
+"bodypoint_13" = "督咏";
+
+"product_ptype_S" = "器材类";
+"product_ptype_C" = "美容保养品";
+"product_ptype_N" = "健康食品类";
+"product_selectqty" = "选择数量";
+"product_nodatapurchasefirst" = "没有商品资料，请先进货并入库!";
+"product_purchase_detailedit" = "编辑(总金额/日期/备注)";
+"product_purchase_returnadd" = "新增退货";
+"product_purchase_returnlist" = "退货列表";
+"product_purchase_returndetail" = "退货明细";
+"product_selpurchasedate" = "选择进货日期";
+"product_purchasepricecusterr" = "进货实际金额错误!";
+"product_qtyreturneditto0msg" = "无法修改进货数量！\n有退货的商品不能修改进货数量!";
+
+"purchase_pruchaseqtyeditmsg" = "进货数量修改，将会影响以下资料：\n1. 该商品的库存数量\n2. 进货总金额\n3. 实际进货金额";
+"purchase_noreturnpdselmsg" = "请选择退货商品与退货数量!";
+"product_selreturndate" = "选择退货日期";
+"product_returnpricecusterr" = "退货实际金额错误!";
+"purchase_mksurepurchasereturnmsg" = "确定退货?!\n请再次确认退货资料是否正确!";
+"purchase_returndelmsg" = "确定本次退货全部取消?!\n退货取消将会影响商品的库存!";
+"purchase_returndatadelcomplete" = "退货资料移除完成!";
+"purchase_delwarringmsg" = "删除订货单资料，将会影响商品的库存数量!业绩分析相关的损益报表也会影响!\n\n请务必再次确认是否要删除这笔进货资料?!";
+"purchasee_cantdelpurchasemsg" = "无法删除资料!\n\n该订货单有退货商品,请先移除该订货单全部的退货商品!";
+
+"staff_nodataaddmsg" = "没有资料!\n点取 [新增] 加入一位营氧师资料";
+"staff_totnums" = "营氧师总数";
+"staff_benefit_pd" = "商品销售";
+"staff_benefit_course" = "疗程销售";
+"staff_benefit_count" = "疗程服务纪录";
+
+"message_type_pub" = "公开";
+"message_type_draft" = "草稿";
+
+"analydata_today" = "今日收入";
+"analydata_daily" = "每日收入";
+"analydata_monthly" = "每日收入";
+"analydata_sheet_invoice" = "会员订单";
+"analydata_sheet_course" = "疗程销售";
+"analydata_sheet_pd" = "商品销售";
+
+"analydata_usedaytoday" = "今天";
+"analydata_usedayyest" = "昨天";
+"format_beforedays" = "%d 天前";
+"analydata_usedaynever" = "从未使用";
+
+"config_profile_err_edStoreName" = "店家名称错误!";
+"config_profile_err_edTel" = "联络电话错误!";
+"config_profile_err_edStoreMaster" = "店长姓名错误!";
+
+"btsacel_bondmsg" = "要绑定的设备,是否有出现蓝牙标记符号?";
+"btsacel_disbondmsg" = "确定要解除已绑定的蓝牙设备?";
+"btsacel_bondY" = "已绑定";
+"btsacel_bondN" = "未绑定";
+
+"coursesale_err_membername" = "订购人错误!";
+"coursesale_err_coursename" = "建议工程错误!";
+"coursesale_err_coursexpiredate" = "疗程到期日错误!";
+"coursesale_err_fee" = "疗程费用错误!";
 
