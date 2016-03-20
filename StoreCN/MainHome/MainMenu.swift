@@ -249,18 +249,6 @@ class MainMenu: UIViewController {
                 /* 判斷是否需要 'prepareForSegue' */
                 var mParam = self.dictParm
                 
-                // 療程列表, HTTP 連線取得資料直接由 child 'PurchaseList' 處理
-                if (strIdent == "course_list") {
-                    self.performSegueWithIdentifier("PubCourseSelect", sender: nil)
-                    return
-                }
-                
-                // 療程預約, HTTP 連線取得資料直接由 child 'CourseReserv' 處理
-                if (strIdent == "course_reservation") {
-                    self.performSegueWithIdentifier("CourseReserv", sender: nil)
-                    return
-                }
-                
                 // 療程銷售
                 if (strIdent == "course_sale") {
                     mParam["page"] = "coursesale"
@@ -297,47 +285,22 @@ class MainMenu: UIViewController {
                     return
                 }
                 
-                // 商品進貨列表, HTTP 連線取得資料直接由 child 'PurchaseList' 處理
-                if (strIdent == "product_purchaselist") {
-                    self.performSegueWithIdentifier(strIdent, sender: nil)
-                    return
-                }
+                /* 直接 performSegueWithIdentifier 跳轉，設定對應 ident */
+                let dictIdentMap = [
+                    "course_list":"PubCourseSelect",
+                    "course_reservation":"CourseReserv",
+                    "product_purchaselist":"product_purchaselist",
+                    "staff_employee":"StaffList",
+                    "staff_benefit":"StaffBenefit",
+                    "message_active":"MsgList",
+                    "message_health":"HealthWitnessList",
+                    "analydata_income":"AnalyDataMain",
+                    "analydata_health":"AnalyDataHealth",
+                ]
                 
-                // 營養師列表, HTTP 連線取得資料直接由 child 處理
-                if (strIdent == "staff_employee") {
-                    self.performSegueWithIdentifier("StaffList", sender: nil)
-                    return
-                }
-                
-                // 績效列表, HTTP 連線取得資料直接由 child 處理
-                if (strIdent == "staff_benefit") {
-                    self.performSegueWithIdentifier("StaffBenefit", sender: nil)
-                    return
-                }
-                
-                // 訊息分享列表, HTTP 連線取得資料直接由 child 處理
-                if (strIdent == "message_active") {
-                    self.performSegueWithIdentifier("MsgList", sender: nil)
-                    return
-                }
-                
-                // 健康建議列表, HTTP 連線取得資料直接由 child 處理
-                if (strIdent == "message_health") {
-                    self.performSegueWithIdentifier("HealthWitnessList", sender: nil)
-                    return
-                }
-                
-                // 店務分析直接跳轉 '今日收入' , HTTP 連線取得資料直接由 child 處理
-                if (strIdent == "analydata_income") {
-                    self.performSegueWithIdentifier("AnalyDataMain", sender: nil)
-                    return
-                }
-                
-                // 店務分析直接跳轉 '健康精靈分析' , HTTP 連線取得資料直接由 child 處理
-                if (strIdent == "analydata_health") {
-                    self.performSegueWithIdentifier("AnalyDataHealth", sender: nil)
-                    return
-                }
+                // HTTP 連線取得資料直接由 child 'PurchaseList'
+                self.performSegueWithIdentifier(dictIdentMap[strIdent]!, sender: nil)
+                return
             }))
         }
         
@@ -437,4 +400,3 @@ class MainMenu: UIViewController {
     
 
 }
-

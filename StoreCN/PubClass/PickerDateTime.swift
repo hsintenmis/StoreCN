@@ -135,7 +135,7 @@ class PickerDateTime {
     /**
      * DatePicker 點取　'cancel'
      */
-    func PKDateCancel() {
+    @objc private func PKDateCancel() {
         dispatch_async(dispatch_get_main_queue(), {
             self.mPickField.text = self.pubClass.formatDateWithStr(self.strCurrDate, type: 14)
         })

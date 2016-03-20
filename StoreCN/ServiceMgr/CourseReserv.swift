@@ -34,6 +34,7 @@ class CourseReserv: UIViewController {
     private var mCalendarCellData = CalendarCellData()
     private var currYYMM: Dictionary<String, String> = [:]  // 目前選擇的 YYMMDD
     private var aryBlockData: Array<Array<Dictionary<String, AnyObject>>> = []
+    private var bolReload = true
     
     // 本月曆的起始 YYMM, 'aryReservData' 對應的 position
     private var positionReservData = 0
@@ -57,7 +58,10 @@ class CourseReserv: UIViewController {
      * View DidAppear 程序
      */
     override func viewDidAppear(animated: Bool) {
-        reConnHTTP()
+        if (bolReload == true) {
+            bolReload = false
+            reConnHTTP()
+        }
     }
     
     /**
@@ -271,6 +275,25 @@ class CourseReserv: UIViewController {
     }
     
     /**
+     * Segue 跳轉頁面
+     */
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let strIdent = segue.identifier
+        
+        // 療程預約新增
+        if (strIdent == "CourseReservAdd") {
+            let mVC = segue.destinationViewController as! CourseReservAdd
+            mVC.strToday = currYYMM["YY"]! + currYYMM["MM"]! + currYYMM["DD"]!
+            mVC.aryCourse = aryCourse
+            mVC.aryMember = aryMember
+            
+            return
+        }
+        
+        return
+    }
+    
+    /**
      * act, 點取 前月/次月 button, 需設定 restorationId
      */
     @IBAction func actMMChange(sender: UIButton) {
@@ -320,13 +343,6 @@ class CourseReserv: UIViewController {
         positionReservData = positionToday
         
         self.initViewField()
-    }
-    
-    /**
-     * act, 點取 '新增預約' button
-     */
-    @IBAction func actAddReserv(sender: UIButton) {
-        
     }
 
     /**

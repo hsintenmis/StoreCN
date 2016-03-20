@@ -187,4 +187,5 @@
 "coursesale_err_coursename" = "建议工程错误!";
 "coursesale_err_coursexpiredate" = "疗程到期日错误!";
 "coursesale_err_fee" = "疗程费用错误!";
+"courseresver_selecttime" = "選擇預約時間";
 
