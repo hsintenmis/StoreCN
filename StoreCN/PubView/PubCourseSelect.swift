@@ -145,10 +145,18 @@ class PubCourseSelect: UITableViewController, PubClassDelegate {
             self.chkHaveData()
         })
     }
+    
+    /**
+     * #mark: UITableView Delegate
+     * Section 的數量
+     */
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
 
     /**
      * #mark: UITableView Delegate
-     * 回傳指定的數量
+     * 回傳指定sectiuon的 Row 數量
      */
     override func tableView(tableView: UITableView, numberOfRowsInSection section:Int) -> Int {
         return aryCourseData.count

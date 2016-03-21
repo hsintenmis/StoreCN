@@ -189,6 +189,10 @@ class MainMenu: UIViewController {
                 strIdentName = "member_list"
             } else if (strItem == "config") {
                 strIdentName = "SysConfigMain"
+            } else if (strItem == "testing") {
+                strIdentName = "Testing"
+            } else {
+                return
             }
             
             self.performSegueWithIdentifier(strIdentName, sender: nil)

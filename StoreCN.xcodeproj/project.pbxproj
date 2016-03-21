@@ -174,6 +174,13 @@
 		D74A60551C8D165D00946118 /* MsgAdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74A60541C8D165D00946118 /* MsgAdd.swift */; };
 		D74A60571C8D17F600946118 /* MsgEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74A60561C8D17F600946118 /* MsgEdit.swift */; };
 		D74A60591C8D32B300946118 /* MsgAddContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74A60581C8D32B300946118 /* MsgAddContainer.swift */; };
+		D74B4B8E1C9FCB14001F1176 /* TestingDevLiist.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74B4B8D1C9FCB14001F1176 /* TestingDevLiist.swift */; };
+		D74B4B921C9FCBE0001F1176 /* TestingContMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74B4B911C9FCBE0001F1176 /* TestingContMain.swift */; };
+		D74B4B941C9FD1EE001F1176 /* BTScaleMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74B4B931C9FD1EE001F1176 /* BTScaleMain.swift */; };
+		D74B4B961C9FD41B001F1176 /* BTScaleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74B4B951C9FD41B001F1176 /* BTScaleService.swift */; };
+		D74B4B991C9FD4DA001F1176 /* HealthDataInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74B4B981C9FD4DA001F1176 /* HealthDataInit.swift */; };
+		D74B4B9B1C9FE1C4001F1176 /* BTScaleMainCont.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74B4B9A1C9FE1C4001F1176 /* BTScaleMainCont.swift */; };
+		D74B4B9D1C9FEA1A001F1176 /* TestingMemberSel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74B4B9C1C9FEA1A001F1176 /* TestingMemberSel.swift */; };
 		D7645BE01C80068400507072 /* PurchaseReturnList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7645BDF1C80068400507072 /* PurchaseReturnList.swift */; };
 		D7645BE21C80074500507072 /* PurchaseReturnListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7645BE11C80074500507072 /* PurchaseReturnListCell.swift */; };
 		D7645BE41C801FA900507072 /* PurchaseReturnEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7645BE31C801FA900507072 /* PurchaseReturnEdit.swift */; };
@@ -378,6 +385,13 @@
 		D74A60541C8D165D00946118 /* MsgAdd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MsgAdd.swift; path = Message/MsgAdd.swift; sourceTree = "<group>"; };
 		D74A60561C8D17F600946118 /* MsgEdit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MsgEdit.swift; path = Message/MsgEdit.swift; sourceTree = "<group>"; };
 		D74A60581C8D32B300946118 /* MsgAddContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MsgAddContainer.swift; path = Message/MsgAddContainer.swift; sourceTree = "<group>"; };
+		D74B4B8D1C9FCB14001F1176 /* TestingDevLiist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestingDevLiist.swift; path = Testing/TestingDevLiist.swift; sourceTree = "<group>"; };
+		D74B4B911C9FCBE0001F1176 /* TestingContMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestingContMain.swift; path = Testing/TestingContMain.swift; sourceTree = "<group>"; };
+		D74B4B931C9FD1EE001F1176 /* BTScaleMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BTScaleMain.swift; path = Testing/BTScaleMain.swift; sourceTree = "<group>"; };
+		D74B4B951C9FD41B001F1176 /* BTScaleService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BTScaleService.swift; path = Testing/BTScaleService.swift; sourceTree = "<group>"; };
+		D74B4B981C9FD4DA001F1176 /* HealthDataInit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HealthDataInit.swift; path = Health/HealthDataInit.swift; sourceTree = "<group>"; };
+		D74B4B9A1C9FE1C4001F1176 /* BTScaleMainCont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BTScaleMainCont.swift; path = Testing/BTScaleMainCont.swift; sourceTree = "<group>"; };
+		D74B4B9C1C9FEA1A001F1176 /* TestingMemberSel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestingMemberSel.swift; path = Testing/TestingMemberSel.swift; sourceTree = "<group>"; };
 		D7645BDF1C80068400507072 /* PurchaseReturnList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchaseReturnList.swift; path = Product/PurchaseReturnList.swift; sourceTree = "<group>"; };
 		D7645BE11C80074500507072 /* PurchaseReturnListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchaseReturnListCell.swift; path = Product/PurchaseReturnListCell.swift; sourceTree = "<group>"; };
 		D7645BE31C801FA900507072 /* PurchaseReturnEdit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchaseReturnEdit.swift; path = Product/PurchaseReturnEdit.swift; sourceTree = "<group>"; };
@@ -445,6 +459,7 @@
 				D7496D1F1C5B4DD600B75D6A /* ServiceMgr */,
 				D70CD93C1C72CB24008E79E1 /* CourseSale */,
 				D7496D1E1C5B4DCE00B75D6A /* Testing */,
+				D74B4B971C9FD4B3001F1176 /* Health */,
 				D7496D1B1C5B4D9700B75D6A /* Member */,
 				D7496D201C5B4DE900B75D6A /* Product */,
 				D7496D211C5B4DF600B75D6A /* Staff */,
@@ -629,6 +644,12 @@
 		D7496D1E1C5B4DCE00B75D6A /* Testing */ = {
 			isa = PBXGroup;
 			children = (
+				D74B4B8D1C9FCB14001F1176 /* TestingDevLiist.swift */,
+				D74B4B911C9FCBE0001F1176 /* TestingContMain.swift */,
+				D74B4B9C1C9FEA1A001F1176 /* TestingMemberSel.swift */,
+				D74B4B931C9FD1EE001F1176 /* BTScaleMain.swift */,
+				D74B4B9A1C9FE1C4001F1176 /* BTScaleMainCont.swift */,
+				D74B4B951C9FD41B001F1176 /* BTScaleService.swift */,
 			);
 			name = Testing;
 			sourceTree = "<group>";
@@ -640,8 +661,8 @@
 				42E21F0A1C68800500B85EA9 /* CourseReserv.swift */,
 				4226BF541C9E73B30096AECA /* CourseReservAdd.swift */,
 				4226BF561C9E7BCE0096AECA /* CourseReservMemberSel.swift */,
-				42F6E3641C6B86AE00C9BB94 /* ReservListCell.swift */,
 				4226BF581C9EFA520096AECA /* CourseSelCustCell.swift */,
+				42F6E3641C6B86AE00C9BB94 /* ReservListCell.swift */,
 			);
 			name = ServiceMgr;
 			sourceTree = "<group>";
@@ -737,6 +758,14 @@
 				D72E98261C91551F00DA9FA3 /* ConfigBTScale.swift */,
 			);
 			name = SysConfig;
+			sourceTree = "<group>";
+		};
+		D74B4B971C9FD4B3001F1176 /* Health */ = {
+			isa = PBXGroup;
+			children = (
+				D74B4B981C9FD4DA001F1176 /* HealthDataInit.swift */,
+			);
+			name = Health;
 			sourceTree = "<group>";
 		};
 		D7BB2AD11C646DD600624E08 /* PubView */ = {
@@ -962,6 +991,7 @@
 				D72BA3351C8819500028898D /* StaffBenefitColtViewCell.swift in Sources */,
 				D705CE451C8FD1A300CC9303 /* AnalyDataDailyDetail.swift in Sources */,
 				42E21F0B1C68800500B85EA9 /* CourseReserv.swift in Sources */,
+				D74B4B961C9FD41B001F1176 /* BTScaleService.swift in Sources */,
 				D71DFD0C1C7C20180024BB59 /* StockCell.swift in Sources */,
 				D7F8BCED1C7ED6C70059E6E5 /* PurchaseDetailEditContainer.swift in Sources */,
 				D7037A771C58C03F002A955E /* NoDataView.swift in Sources */,
@@ -969,6 +999,7 @@
 				D71DFD081C7C0EB40024BB59 /* Stock.swift in Sources */,
 				D72E982D1C91719900DA9FA3 /* ConfigCourseEdit.swift in Sources */,
 				D705CE431C8FC85800CC9303 /* AnalyDataDailyCell.swift in Sources */,
+				D74B4B8E1C9FCB14001F1176 /* TestingDevLiist.swift in Sources */,
 				D7496D1A1C5B343200B75D6A /* MainMenuColtViewCell.swift in Sources */,
 				D70CD9451C72CBF8008E79E1 /* CourseSaleSugst.swift in Sources */,
 				D71DFD121C7C53A10024BB59 /* PurchaseList.swift in Sources */,
@@ -994,11 +1025,13 @@
 				D728A26C1C8138B100B93B38 /* PurchaseListDetailCell.swift in Sources */,
 				D74A60531C8D11D500946118 /* MsgListCell.swift in Sources */,
 				D72E98231C91523300DA9FA3 /* ConfigProfile.swift in Sources */,
+				D74B4B921C9FCBE0001F1176 /* TestingContMain.swift in Sources */,
 				D7BB2AE01C64788700624E08 /* PubMemberSelect.swift in Sources */,
 				D7F45F451C75752A00735D09 /* PurchasePdSeltCell.swift in Sources */,
 				D705CE411C8FC2FF00CC9303 /* PubYYMMColtCell.swift in Sources */,
 				D72BA3371C882EE80028898D /* StaffBenefitDetail.swift in Sources */,
 				D70CD9431C72CBF8008E79E1 /* CourseSaleCourseSel.swift in Sources */,
+				D74B4B991C9FD4DA001F1176 /* HealthDataInit.swift in Sources */,
 				D7EDE8861C6081B800665542 /* MemberMainColtViewCell.swift in Sources */,
 				D70CD9481C72CC42008E79E1 /* SugstChildPage.swift in Sources */,
 				D7EDE8841C60733200665542 /* MemberMainPager.swift in Sources */,
@@ -1011,9 +1044,12 @@
 				D7134FF91C5F5A990069ACF1 /* MemberMain.swift in Sources */,
 				D710A07F1C8EA50200264CEB /* CellSheetInvoice.swift in Sources */,
 				D7BB2AE11C64788700624E08 /* PubMemberSelectCell.swift in Sources */,
+				D74B4B9B1C9FE1C4001F1176 /* BTScaleMainCont.swift in Sources */,
 				D7F092221C896C72005D8C96 /* HealthWitnessList.swift in Sources */,
 				4226BF551C9E73B30096AECA /* CourseReservAdd.swift in Sources */,
+				D74B4B9D1C9FEA1A001F1176 /* TestingMemberSel.swift in Sources */,
 				D74A60571C8D17F600946118 /* MsgEdit.swift in Sources */,
+				D74B4B941C9FD1EE001F1176 /* BTScaleMain.swift in Sources */,
 				D71DFD101C7C397A0024BB59 /* StockHistoryCell.swift in Sources */,
 				D720FBA11C7458F000AE640C /* Purchase.swift in Sources */,
 				D70854491C7D69C400861694 /* PurchaseListDetail.swift in Sources */,

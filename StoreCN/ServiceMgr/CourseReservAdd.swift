@@ -54,9 +54,21 @@ class CourseReservAdd: UIViewController, CourseReservMemberSelDelegate, PickerDa
         mPickerDateTime = PickerDateTime(withUIField: edDate, withDefMaxMin: [dictPickParm["def"] as! String, dictPickParm["max"] as! String, dictPickParm["min"] as! String], NavyBarTitle: pubClass.getLang("courseresver_selecttime"))
         mPickerDateTime.delegate = self
         
-        // table data source
+        // TableCell autoheight
+        tableList.estimatedRowHeight = 150.0
+        tableList.rowHeight = UITableViewAutomaticDimension
+        
+        // 重設與重整 table data source
+        resetTableData()
+    }
+    
+    /**
+    * 重設與重整 table data source
+    */
+    private func resetTableData() {
         aryTableData.append(aryCourse)
         aryTableData.append([])
+        tableList.reloadData()
     }
     
     /**
@@ -77,6 +89,88 @@ class CourseReservAdd: UIViewController, CourseReservMemberSelDelegate, PickerDa
     }
     
     /**
+     * #mark: UITableView Delegate
+     * Section 的數量
+     */
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    /**
+     * #mark: UITableView Delegate
+     * 回傳指定sectiuon的 Row 數量
+     */
+    func tableView(tableView: UITableView, numberOfRowsInSection section:Int) -> Int {
+        return aryTableData[section].count
+    }
+    
+    /**
+     * #mark: UITableView Delegate
+     * UITableView, Cell 內容, 不同 cell 初始對應的 cell class
+     */
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let intSect = indexPath.section
+        let arySection = aryTableData[intSect]
+        
+        if (arySection.count < 1) {
+            return UITableViewCell()
+        }
+        
+        let ditItem = arySection[indexPath.row]
+        segmCourse.selectedSegmentIndex = intSect
+        
+        /* 預設療程, 使用 tableview Cell 預設樣式 */
+        if (intSect == 0) {
+            // 取得 Item data source, CellView
+            let mCell = tableView.dequeueReusableCellWithIdentifier("cellCourseDefSel")!
+            
+            mCell.textLabel?.text = ditItem["pdname"] as? String
+            mCell.detailTextLabel?.text = ditItem["pdid"] as? String
+            
+            return mCell
+        }
+        
+        /* 預設療程, 使用 tableview Cell 預設樣式 */
+        let mCell = tableView.dequeueReusableCellWithIdentifier("cellCourseCustSel", forIndexPath: indexPath) as! CourseSelCustCell
+        
+        mCell.initView(ditItem)
+        
+        return mCell
+    }
+    
+    /**
+     * #mark: UITableView Delegate
+     * UITableView, Cell 點取
+     */
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        currIndexCourse = indexPath
+        let intSect = indexPath.section
+        let ditItem = aryTableData[intSect][indexPath.row]
+        
+        
+        dictRequest["course_id"] = ditItem["pdid"] as? String
+        dictRequest["pdid"] = ditItem["pdid"] as? String
+        
+        if let strTmp = ditItem["invo_id"] as? String {
+            dictRequest["odrs_id"] = strTmp
+        } else {
+            dictRequest["odrs_id"] = ""
+        }
+        
+        labCourse.text = ditItem["pdname"] as? String
+        labOdrsId.text = dictRequest["odrs_id"]
+    }
+
+    /**
+     * #mark: UITableView Delegate
+     * Section 標題
+     */
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let strTitle = (section == 0) ? "defcourse" : "memberbuycourse"
+        return pubClass.getLang("courseresver_" + strTitle)
+    }
+    
+    /**
     * #mark: CourseReservMemberSelDelegate
     * 會員列表選擇會員完成，執行相關程序
     */
@@ -87,7 +181,22 @@ class CourseReservAdd: UIViewController, CourseReservMemberSelDelegate, PickerDa
         dictRequest["memberid"] = MemberData["memberid"] as? String
         
         // 該會員是否有購買療程
+        aryTableData.removeAtIndex(1)
+        if let dictTmp = MemberData["odrs"] as? Array<Dictionary<String, AnyObject>> {
+            aryTableData.append(dictTmp)
+        } else {
+            aryTableData.append([])
+        }
         
+        // 頁面資料重整，相關 Request 資料重設
+        dictRequest["course_id"] = ""  // 療程商品編號
+        dictRequest["pdid"] = "" // 療程商品編號
+        dictRequest["odrs_id"] = "" // 已經購買療程的 invo_id
+        
+        tableList.reloadData()
+        segmCourse.selectedSegmentIndex = 0
+        labCourse.text = ""
+        labOdrsId.text = ""
     }
     
     /**
@@ -99,9 +208,11 @@ class CourseReservAdd: UIViewController, CourseReservMemberSelDelegate, PickerDa
     }
     
     /**
-     * act, 點取 '選擇療程' Segmented
+     * act, 點取 '選擇療程' Segmented, tableView 移動到指定 section
      */
     @IBAction func actSelCourse(sender: UISegmentedControl) {
+        let mIndexPath = NSIndexPath(forRow: NSNotFound, inSection: sender.selectedSegmentIndex)
+        tableList.scrollToRowAtIndexPath(mIndexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
     }
     
     /**
