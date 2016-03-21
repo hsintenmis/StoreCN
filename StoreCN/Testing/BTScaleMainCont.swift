@@ -16,21 +16,34 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate {
     let aryTestingField: Array<String> = ["weight", "bmi", "fat", "water", "calory", "bone", "muscle", "vfat"]
     
     // @IBOutlet
+    @IBOutlet var tableList: UITableView!
     @IBOutlet weak var labBTStat: UILabel!
     @IBOutlet weak var btnBTConn: UIButton!
     @IBOutlet weak var webScale: UIWebView!
     
+    @IBOutlet weak var labVal_bmi: UILabel!
+    @IBOutlet weak var labVal_fat: UILabel!
+    @IBOutlet weak var labVal_water: UILabel!
+    @IBOutlet weak var labVal_calory: UILabel!
+    @IBOutlet weak var labVal_bone: UILabel!
+    @IBOutlet weak var labVal_muscle: UILabel!
+    @IBOutlet weak var labVal_vfat: UILabel!
+    
+    @IBOutlet weak var labMemberName: UILabel!
+    @IBOutlet weak var labMemberInfo: UILabel!
+    
     // common property
     let pubClass: PubClass = PubClass()
     
-    // public, 本頁面需要的全部資料, parent 設定
+    // public, 本頁面需要的資料, parent 設定
     var strToday = ""
     var aryMember: Array<Dictionary<String, AnyObject>> = []
     
     // 其他參數
     private var currIndexMember: NSIndexPath? // 已選擇的會員
     private var dictRequest: Dictionary<String, AnyObject> = [:]  // 回傳資料
-    private var dictTableData: Dictionary<String, AnyObject> = [:]  // Table 資料
+    private var dictTableData: Dictionary<String, AnyObject> = [:]  // 本頁面欄位對應的資料
+    private var dictLabVal: Dictionary<String, UILabel> = [:] // 產生其他量測數值 UILabel 對應
     
     /**
      * View Load 程序
@@ -38,14 +51,24 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        /* 初始 table 資料 */
+        // 選擇的會員資料初始值
         dictTableData["member"] = [:]
         
-        // 初始量測數值資料
+        // 初始量測數值資料歸0
         for strScaleField in aryTestingField {
             dictTableData[strScaleField] = "0.0"
         }
         dictTableData["calory"] = "0"
+        
+        // 產生其他量測數值 UILabel 對應
+        dictLabVal["bmi"] = labVal_bmi
+        dictLabVal["fat"] = labVal_fat
+        dictLabVal["water"] = labVal_water
+        dictLabVal["calory"] = labVal_calory
+        dictLabVal["bone"] = labVal_bone
+        dictLabVal["muscle"] = labVal_muscle
+        dictLabVal["vfat"] = labVal_vfat
+        
     }
     
     /**
@@ -59,30 +82,21 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate {
     * Table 資料重新設定並重整
     */
     private func resetTableData() {
-        
-    }
-    
-    /**
-     * #mark: UITableView Delegate
-     * UITableView, Cell 內容, 不同 cell 初始對應的 cell class
-     */
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let intSect = indexPath.section
-        
-        
-        
-        /* 第二個 section, 顯示量測數值 */
-        /*
-        if (intSect == 0) {
-            // 取得 Item data source, CellView
-            let mCell = tableView.dequeueReusableCellWithIdentifier("cellCourseDefSel")!
-            
-            mCell.textLabel?.text = ditItem["pdname"] as? String
-            mCell.detailTextLabel?.text = ditItem["pdid"] as? String
-            
-            return mCell
+        // 量測數值 cell 設定
+        for strScaleField in aryTestingField {
+            if (strScaleField != "weight") {
+                dictLabVal[strScaleField]!.text = dictTableData[strScaleField] as? String
+            }
         }
-        */
+
+        // 會員名稱與相關資料
+        let strGender = pubClass.getLang("gender_" + (dictTableData["member"]!["gender"] as! String))
+        let strAge = dictTableData["member"]!["age"] as! String + pubClass.getLang("name_age")
+        let strHeight = dictTableData["member"]!["height"] as! String + "cm"
+        let strMemberInfo = strGender + strAge + ", " + strHeight
+
+        labMemberInfo.text = strMemberInfo
+        labMemberName.text = dictTableData["member"]!["membername"] as? String
     }
 
     /**
@@ -95,24 +109,21 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate {
     }
     
     /**
-     * #mark: UITableView Delegate
-     * Section 標題
-     */
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        
-        /* 第ㄧ個 section, 顯示會員身高，年齡資料 */
-        return ""
-    }
-    
-    /**
     * #mark: TestingMemberSel Delegate
     * 點取會員後執行相關程序
     */
     func MemberSeltPageDone(MemberData: Dictionary<String, AnyObject>, MemberindexPath: NSIndexPath) {
         currIndexMember = MemberindexPath
+        dictTableData["member"] = MemberData
         
-        // 本頁面資料全部資料重設與重整
-        print(MemberData)
+        // 量測值全部歸0
+        for strScaleField in aryTestingField {
+            dictTableData[strScaleField] = "0.0"
+        }
+        dictTableData["calory"] = "0"
+        
+        // 本頁面 field 資料全部資料重設與重整
+        self.resetTableData()
     }
     
     /**

@@ -1165,20 +1165,20 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="menu_testing.png" translatesAutoresizingMaskIntoConstraints="NO" id="15E-nm-56T">
-                                                    <rect key="frame" x="18" y="18" width="64" height="64"/>
+                                                    <rect key="frame" x="18" y="25" width="50" height="50"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="64" id="6ct-qb-mIv"/>
-                                                        <constraint firstAttribute="width" constant="64" id="Afe-E3-LHU"/>
+                                                        <constraint firstAttribute="height" constant="50" id="6ct-qb-mIv"/>
+                                                        <constraint firstAttribute="width" constant="50" id="Afe-E3-LHU"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="身体能量指数测量" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DBk-QH-F3R">
-                                                    <rect key="frame" x="97" y="56" width="96" height="15"/>
+                                                    <rect key="frame" x="88" y="56" width="96" height="15"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" red="0.56470588239999997" green="0.56470588239999997" blue="0.56470588239999997" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="蓝牙能量检测仪" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oef-Lg-1w3">
-                                                    <rect key="frame" x="97" y="29" width="126" height="22"/>
+                                                    <rect key="frame" x="88" y="29" width="126" height="22"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                     <color key="textColor" red="0.37647058820000001" green="0.37647058820000001" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1187,7 +1187,7 @@
                                             <constraints>
                                                 <constraint firstItem="DBk-QH-F3R" firstAttribute="leading" secondItem="Oef-Lg-1w3" secondAttribute="leading" id="6oX-GB-iWd"/>
                                                 <constraint firstItem="DBk-QH-F3R" firstAttribute="top" secondItem="Oef-Lg-1w3" secondAttribute="bottom" constant="5" id="JFQ-y1-iMW"/>
-                                                <constraint firstItem="Oef-Lg-1w3" firstAttribute="leading" secondItem="15E-nm-56T" secondAttribute="trailing" constant="15" id="MrS-1c-4VR"/>
+                                                <constraint firstItem="Oef-Lg-1w3" firstAttribute="leading" secondItem="15E-nm-56T" secondAttribute="trailing" constant="20" id="MrS-1c-4VR"/>
                                                 <constraint firstItem="Oef-Lg-1w3" firstAttribute="centerY" secondItem="15E-nm-56T" secondAttribute="centerY" constant="-10" id="Y5a-lo-Msy"/>
                                                 <constraint firstItem="15E-nm-56T" firstAttribute="centerY" secondItem="QhZ-Mx-7q0" secondAttribute="centerY" id="p0A-ws-i5f"/>
                                                 <constraint firstAttribute="leadingMargin" secondItem="15E-nm-56T" secondAttribute="leading" constant="-10" id="uFR-vq-0N8"/>
@@ -1325,7 +1325,7 @@
                         <sections>
                             <tableViewSection headerTitle="体重数值" id="X6c-ir-Nuk">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cellScaleMemberSel" textLabel="zaV-eB-N14" style="IBUITableViewCellStyleDefault" id="H4o-GU-ghJ" userLabel="Cell 選擇會員">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cellScaleMemberSel" textLabel="zaV-eB-N14" detailTextLabel="h8c-YL-tWT" style="IBUITableViewCellStyleValue1" id="H4o-GU-ghJ" userLabel="Cell 選擇會員">
                                         <rect key="frame" x="0.0" y="50" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="H4o-GU-ghJ" id="SUn-2b-0WQ">
@@ -1333,10 +1333,17 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="选择会员" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zaV-eB-N14">
-                                                    <rect key="frame" x="15" y="0.0" width="270" height="43"/>
+                                                    <rect key="frame" x="15" y="13" width="56" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.18823529410000001" green="0.18823529410000001" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="男性40歲, 175cm" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="h8c-YL-tWT">
+                                                    <rect key="frame" x="189" y="15" width="96" height="15"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" red="0.56470588239999997" green="0.56470588239999997" blue="0.56470588239999997" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -1466,7 +1473,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="GWU-ls-hZJ" detailTextLabel="hV8-op-DJB" style="IBUITableViewCellStyleValue1" id="tmz-U1-8tw">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cellScale_fat" textLabel="GWU-ls-hZJ" detailTextLabel="hV8-op-DJB" style="IBUITableViewCellStyleValue1" id="tmz-U1-8tw">
                                         <rect key="frame" x="0.0" y="608" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tmz-U1-8tw" id="PAI-wi-DCh">
@@ -1490,7 +1497,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="X29-Ri-N44" detailTextLabel="sPn-BY-ZK4" style="IBUITableViewCellStyleValue1" id="FqD-7q-dNu">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cellScale_water" textLabel="X29-Ri-N44" detailTextLabel="sPn-BY-ZK4" style="IBUITableViewCellStyleValue1" id="FqD-7q-dNu">
                                         <rect key="frame" x="0.0" y="652" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FqD-7q-dNu" id="wKC-tk-iTN">
@@ -1514,7 +1521,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="bjl-zL-r7d" detailTextLabel="D5Q-i1-rfe" style="IBUITableViewCellStyleValue1" id="Adj-ch-Aec">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cellScale_calory" textLabel="bjl-zL-r7d" detailTextLabel="D5Q-i1-rfe" style="IBUITableViewCellStyleValue1" id="Adj-ch-Aec">
                                         <rect key="frame" x="0.0" y="696" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Adj-ch-Aec" id="CTo-ic-zfb">
@@ -1538,7 +1545,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="fto-ej-y15" detailTextLabel="GK6-c8-S25" style="IBUITableViewCellStyleValue1" id="nOY-s9-H6q">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cellScale_bone" textLabel="fto-ej-y15" detailTextLabel="GK6-c8-S25" style="IBUITableViewCellStyleValue1" id="nOY-s9-H6q">
                                         <rect key="frame" x="0.0" y="740" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nOY-s9-H6q" id="Mqf-Un-6xp">
@@ -1562,7 +1569,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="Jjw-Ck-iWJ" detailTextLabel="DKU-dh-GRv" style="IBUITableViewCellStyleValue1" id="iU8-6D-wXo">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cellScale_muscle" textLabel="Jjw-Ck-iWJ" detailTextLabel="DKU-dh-GRv" style="IBUITableViewCellStyleValue1" id="iU8-6D-wXo">
                                         <rect key="frame" x="0.0" y="784" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iU8-6D-wXo" id="Qeq-sn-EM3">
@@ -1586,7 +1593,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="Vbi-gQ-y3z" detailTextLabel="hsr-0Q-0BN" style="IBUITableViewCellStyleValue1" id="Rzk-dj-fz3">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cellScale_vfat" textLabel="Vbi-gQ-y3z" detailTextLabel="hsr-0Q-0BN" style="IBUITableViewCellStyleValue1" id="Rzk-dj-fz3">
                                         <rect key="frame" x="0.0" y="828" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Rzk-dj-fz3" id="iGL-nB-kHq">
@@ -1622,6 +1629,16 @@
                     <connections>
                         <outlet property="btnBTConn" destination="hQI-MZ-aXZ" id="tef-Zl-E3l"/>
                         <outlet property="labBTStat" destination="d6k-M5-bnW" id="sYv-1b-0d6"/>
+                        <outlet property="labMemberInfo" destination="h8c-YL-tWT" id="0d5-AC-fnt"/>
+                        <outlet property="labMemberName" destination="zaV-eB-N14" id="nZs-oQ-yKK"/>
+                        <outlet property="labVal_bmi" destination="Ljv-m8-K2e" id="gQD-JD-hjv"/>
+                        <outlet property="labVal_bone" destination="GK6-c8-S25" id="o7e-Br-thg"/>
+                        <outlet property="labVal_calory" destination="D5Q-i1-rfe" id="o2k-iv-p3f"/>
+                        <outlet property="labVal_fat" destination="hV8-op-DJB" id="keV-Yt-qCK"/>
+                        <outlet property="labVal_muscle" destination="DKU-dh-GRv" id="f2q-3g-gs9"/>
+                        <outlet property="labVal_vfat" destination="hsr-0Q-0BN" id="HhO-mb-WzL"/>
+                        <outlet property="labVal_water" destination="sPn-BY-ZK4" id="uyB-xR-GWq"/>
+                        <outlet property="tableList" destination="fnI-Z5-674" id="VP1-FH-a60"/>
                         <outlet property="webScale" destination="Bjz-Bs-M7B" id="Uh9-6i-W3Y"/>
                     </connections>
                 </tableViewController>
