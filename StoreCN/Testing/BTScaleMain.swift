@@ -50,6 +50,8 @@ class BTScaleMain: UIViewController {
      * act, 點取 '主選單' button
      */
     @IBAction func actHome(sender: UIBarButtonItem) {
+        // 須檢查 child BT 是否連線中
+        
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
