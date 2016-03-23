@@ -55,7 +55,7 @@ class PurchasePdSelt: UIViewController, PurchasePdSeltCellDelegate {
      */
     override func viewWillAppear(animated: Bool) {
         // 设置监听键盘事件函数
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PurchasePdSelt.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
     }
     
     /**

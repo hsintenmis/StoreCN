@@ -42,7 +42,7 @@ class ConfigCourseEdit: UITableViewController, UIPickerViewDelegate, UIPickerVie
         mKBNavyBar.delegate = self
         
         // 鍵盤下拉選單 '時' 選擇相關參數
-        for (var i=0; i < 24; i++) {
+        for i in (0..<24) {
             aryValHH.append(String(i) + strPreFixHHunit )
         }
         
@@ -129,7 +129,8 @@ class ConfigCourseEdit: UITableViewController, UIPickerViewDelegate, UIPickerVie
         
         // 設定 picker 預設選擇的數量, '時' 的下拉選單
         let strHH = textField.text! + strPreFixHHunit
-        for (var i=0; i < aryValHH.count; i++) {
+        
+        for i in (0..<aryValHH.count) {
             if (aryValHH[i] == strHH) {
                 mPKView.selectRow(i, inComponent: 0, animated: true)
                 
@@ -226,7 +227,7 @@ class ConfigCourseEdit: UITableViewController, UIPickerViewDelegate, UIPickerVie
         dictRS["course_srvnums"] = labSrvNums.text
         
         var strRest = ""
-        for (var i=0; i < 7; i++) {
+        for i in (0..<7) {
             let mIndexPath = NSIndexPath(forItem: i, inSection: 1)
             let mCell = tableList.cellForRowAtIndexPath(mIndexPath)!
             

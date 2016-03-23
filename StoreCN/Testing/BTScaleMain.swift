@@ -14,6 +14,9 @@ class BTScaleMain: UIViewController {
     var strToday = ""
     var aryMember: Array<Dictionary<String, AnyObject>> = []
     
+    // 藍牙體脂計量測子頁面
+    private var mBTScaleMainCont: BTScaleMainCont!
+    
     /**
      * View Load 程序
      */
@@ -29,9 +32,9 @@ class BTScaleMain: UIViewController {
         
         // Container 轉入體脂計主頁面
         if (strIdent == "BTScaleMainCont") {
-            let mVC = segue.destinationViewController as! BTScaleMainCont
-            mVC.strToday = self.strToday
-            mVC.aryMember = self.aryMember
+            mBTScaleMainCont = segue.destinationViewController as! BTScaleMainCont
+            mBTScaleMainCont.strToday = self.strToday
+            mBTScaleMainCont.aryMember = self.aryMember
             
             return
         }
@@ -50,7 +53,8 @@ class BTScaleMain: UIViewController {
      * act, 點取 '主選單' button
      */
     @IBAction func actHome(sender: UIBarButtonItem) {
-        // 須檢查 child BT 是否連線中
+        // 檢查 child BT 是否連線中
+        mBTScaleMainCont.dicConnBT()
         
         self.dismissViewControllerAnimated(true, completion: nil)
     }

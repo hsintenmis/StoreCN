@@ -49,8 +49,8 @@ class MainLogin: UIViewController {
      */
     override func viewWillAppear(animated: Bool) {
         // 设置监听键盘事件函数
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MainLogin.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MainLogin.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
     }
     
     /**

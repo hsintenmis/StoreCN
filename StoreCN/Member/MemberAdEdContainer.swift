@@ -96,7 +96,7 @@ class MemberAdEdContainer: UITableViewController, UITextFieldDelegate {
         aryTxtView = [edName, txtTEL, txtBirth, txtHeigh, txtWeight, txtCNID, txtWechat, txtQQ, txtEmail, txtZip, txtCity, txtAddr]
         aryField = ["name", "tel","birth","height","weight","cid_cn","id_wechat","id_qq","email","zip","province","addr"]
         
-        for(var loopi = 0; loopi < aryField.count; loopi++) {
+        for loopi in (0..<aryField.count) {
             // textView 的 delegate
             aryTxtView[loopi].delegate = self
         }

@@ -382,7 +382,7 @@
 "bt_alreadymatchdevice" = "目前已经配对的设备";
 "bt_searching" = "藍芽設備搜寻中. . .";
 "bt_searchingstop" = "停止搜寻藍芽設備";
-"bt_cantfindbtdevice" = "搜寻不到蓝牙設備!";
+"bt_cantfindbtdevice" = "搜寻不到蓝牙設備...";
 "bt_devicenotyetmatch" = "装置未配对";
 "bt_devicenotsupportbt" = "本机不支援蓝牙功能. . .";
 "bt_btdeviceconnsuccessful" = "蓝牙连线成功!";
@@ -394,7 +394,7 @@
 "bt_initing" = "蓝牙設備初始中...";
 
 "bt_mobile_off" = "藍牙未開啟";
-"bt_mobile_on" = "藍牙已開啟";
+"bt_mobile_on" = "藍牙開啟搜尋周邊裝置中...";
 "bt_mobile_resetting" = "藍牙重啟中";
 "bt_mobile_unauthorized" = "藍牙未通過認證";
 "bt_mobile_unknown_stat" = "藍芽為未知狀態";

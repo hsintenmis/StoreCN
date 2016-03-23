@@ -89,7 +89,8 @@ class CalendarCellData {
         var strDayKey = ""  // ex. 'dd01'
         var isStartSet = false  // 是否開始設定資料 flag
         
-        for (var loopi = 0; loopi < 7; loopi++) {
+        for loopi in (0..<7) {
+        //for (var loopi = 0; loopi < 7; loopi++) {
             dictBlock = [:]
             dictBlock["data"] = nil
             
@@ -120,11 +121,12 @@ class CalendarCellData {
         aryAllBlock.append(arySect)
         
         // 其他 sect 列設定, 2~6 列
-        for (var currSect = 1; currSect <= 5; currSect++) {
+        for _ in (1..<6) {
+        //for (var currSect = 1; currSect <= 5; currSect++) {
             arySect = []
             
             // 指定的 sect 列, 設定「星期幾」的資料
-            for (var loopi = 0; loopi < 7; loopi++) {
+            for _ in (0..<7) {
                 dictBlock = [:]
                 dictBlock["data"] = nil
                 
@@ -142,7 +144,7 @@ class CalendarCellData {
                 }
                 
                 arySect.append(dictBlock)
-                currDay++
+                currDay += 1
             }
             
             aryAllBlock.append(arySect)

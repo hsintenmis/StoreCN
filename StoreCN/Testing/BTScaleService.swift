@@ -59,7 +59,7 @@ protocol BTScaleServiceDelegate {
 }
 
 class BTScaleService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
-    private let IS_DEBUG = false
+    private let IS_DEBUG = true
     
     // delegate
     var delegate = BTScaleServiceDelegate?()
@@ -76,7 +76,7 @@ class BTScaleService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     // BT service 相關參數
     private var mCentMgr: CBCentralManager! // BT CentralManager
-    private var mConnDev: CBPeripheral!  // 已連線的藍牙周邊設備
+    private var mConnDev: CBPeripheral?  // 已連線的藍牙周邊設備
     private var mUIDServ: CBService!
     private var mUIDChart_T: CBCharacteristic!
     private var mUIDChart_W: CBCharacteristic!
@@ -86,6 +86,7 @@ class BTScaleService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     // 其他參數
     private var pubClass = PubClass()
     private var dictUserData: Dictionary<String, String>!
+    private var mTimer = NSTimer()
     
     /**
      * init
@@ -115,11 +116,18 @@ class BTScaleService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
      * public parent 執行, BT 斷開連接
      */
     func BTDisconn() {
+        // 是否搜尋中
+        if (self.mCentMgr.isScanning) {
+            if (IS_DEBUG) { print("BT is scanning and let it Stop!") }
+            self.mCentMgr.stopScan()
+        }
+        
         // BT dev 是否連線中
+        /*
         if (BT_ISREADYFOTESTING) {
             mCentMgr.cancelPeripheralConnection(mConnDev)
-            return
         }
+        */
     }
     
     /**
@@ -130,8 +138,6 @@ class BTScaleService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
         
         if (IS_DEBUG) { print("Discovered: \(peripheral.name)") }
-        
-        // TODO 需要設定搜尋時間
         
         // 找到指定裝置 名稱 or addr
         if (peripheral.name == D_BTDEVNAME0) {
@@ -150,11 +156,11 @@ class BTScaleService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         if (IS_DEBUG) { print("\(peripheral.name): Start discover Device channel ...") }
         
         // 通知上層開始查詢藍牙設備 channel, 標記：'BT_statu', 顯示 '設備初始化訊息'
-        delegate?.handlerBLE("BT_statu", result: false, msg: pubClass.getLang("bt_initing"), dictData: nil)
+        delegate?.handlerBLE("BT_statu", result: true, msg: pubClass.getLang("bt_initing"), dictData: nil)
         
         // 開始執行 CBPeripheral Delegate 相關程序
-        self.mConnDev.delegate = self
-        self.mConnDev.discoverServices([UID_SERV])  // Dev 尋找指定 UID Service
+        self.mConnDev?.delegate = self
+        self.mConnDev?.discoverServices([UID_SERV])  // Dev 尋找指定 UID Service
     }
 
     /**
@@ -163,14 +169,16 @@ class BTScaleService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
      */
     func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?) {
         
-        // 通知 parent BT 斷線，parent 跳離
-        // 本 class 執行相關 BLE 中斷程序, 標記：'BT_conn'
-        delegate?.handlerBLE("BT_conn", result: false, msg: pubClass.getLang("bt_connect_break"), dictData: nil)
+        if (IS_DEBUG) { print("CBCentralManager Disconnection!") }
         
+        // 通知 parent BT 斷線，parent 跳離
         mCentMgr = nil
         mConnDev = nil
         mUIDChart_T = nil
         BT_ISREADYFOTESTING = false
+        
+        // 本 class 執行相關 BLE 中斷程序, 標記：'BT_conn'
+        delegate?.handlerBLE("BT_conn", result: false, msg: pubClass.getLang("bt_connect_break"), dictData: nil)
     }
     
     /**
@@ -179,6 +187,9 @@ class BTScaleService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
      */
     func centralManagerDidUpdateState(central: CBCentralManager) {
         var msg = ""
+        var bolRS = false
+        
+        print(central.state)
         
         switch (central.state) {
         case .PoweredOff:
@@ -186,9 +197,17 @@ class BTScaleService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             
         case .PoweredOn:
             msg = "bt_mobile_on"
+            bolRS = true
+            
+            // parent 顯示藍牙開啟搜尋周邊訊息
+            delegate?.handlerBLE("BT_statu", result: true, msg: pubClass.getLang(msg), dictData: nil)
+            
             // CBCentralManager 開始執行搜索藍牙 Device
             mCentMgr.scanForPeripheralsWithServices(nil, options: nil)
             
+            // 設置 Timer
+            mTimer = NSTimer.scheduledTimerWithTimeInterval(5.0, target:self, selector:#selector(self.procBTScanTimeOut), userInfo: nil, repeats: false)
+    
         case .Resetting:
             msg = "bt_mobile_resetting"
             
@@ -205,7 +224,23 @@ class BTScaleService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         if (IS_DEBUG) { print(msg) }
         
         // 設定 'handler', 標記：'BT_statu'
-        delegate?.handlerBLE("BT_statu", result: false, msg: pubClass.getLang(msg), dictData: nil)
+        if (bolRS != true) {
+            delegate?.handlerBLE("BT_statu", result: true, msg: pubClass.getLang(msg), dictData: nil)
+        }
+    }
+    
+    /**
+    * #selector: 設置 Timer, 藍牙搜尋提停止
+    */
+    @objc private func procBTScanTimeOut() {
+        if mCentMgr != nil {
+            mCentMgr.stopScan()
+        }
+        
+        // 連接不到裝置，顯示找不到裝置
+        if (mConnDev == nil) {
+            delegate?.handlerBLE("BT_statu", result: true, msg: pubClass.getLang("bt_cantfindbtdevice"), dictData: nil)
+        }
     }
     
     /**
@@ -263,56 +298,23 @@ class BTScaleService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         
         if (IS_DEBUG) {
             print("BT chart notify statu:")
-            print("UID: \(characteristic.UUID)\n")
-            print("Val: \(characteristic.value)\n")
+            print("UID: \(characteristic.UUID)")
+            print("Val: \(characteristic.value)")
             print("isNotifying: \(characteristic.isNotifying)\n")
         }
         
         // 連接的 BT device, 寫入讀寫更新通知 value
-        self.mConnDev.writeValue( NSData(bytes: [0x01] as [UInt8], length: 1), forCharacteristic: self.mUIDChart_T, type: CBCharacteristicWriteType.WithResponse)
+        self.mConnDev?.writeValue( NSData(bytes: [0x01] as [UInt8], length: 1), forCharacteristic: self.mUIDChart_T, type: CBCharacteristicWriteType.WithResponse)
         
         // 連接的 BT device, 讀寫通知更新開關已開啟，設備可以開始使用
         if (characteristic.isNotifying == true) {
-            print("BT Device Notify OK!!")
+            if (IS_DEBUG) { print("BT Device Notify OK!!") }
             
             // 通知上層可以開始使用藍芽設備, 設定 'handler', 標記：'BT_conn'
             delegate?.handlerBLE("BT_conn", result: true, msg: pubClass.getLang("bt_btdeviceready"), dictData: nil)
             
             BT_ISREADYFOTESTING = true
         }
-    }
-    
-    /**
-     * #mark: CBPeripheral Delegate
-     * Discover characteristics 的 DiscoverDescriptors
-     * 指定的 characteristic, 查詢 Descriptor,
-     * 此 method 執行 notify 功能開啟(Descriptor 寫入0x01)
-     */
-    func peripheral(peripheral: CBPeripheral, didDiscoverDescriptorsForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
-        
-        if (IS_DEBUG) {
-            print("Chart of Despt: \(characteristic.UUID)")
-            
-            if (characteristic.descriptors?.count > 0) {
-                for tmpDispt in characteristic.descriptors! {
-                    print("Despt: \(tmpDispt.UUID)")
-                    print("Despt: \(tmpDispt.value)\n")
-                }
-            }
-        }
-        
-        let mDisp: CBDescriptor = characteristic.descriptors![0]
-        mDisp.setValue(1, forKey: "value")
-        mDisp.setValue(UID_NOTIFY, forKey: "UUID")
-        
-        if (IS_DEBUG) {
-            print("WRITE BTDEF_NOTIFY: \(mDisp)")
-        }
-        
-        // let mNSData = NSData()
-        let mNSData = NSData(bytes: [0x01] as [UInt8], length: 1)
-        peripheral.writeValue(mNSData, forDescriptor: mDisp)
-        peripheral.readValueForCharacteristic(self.mUIDChart_T)
     }
     
     /**

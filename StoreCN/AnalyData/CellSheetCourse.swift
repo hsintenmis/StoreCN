@@ -30,7 +30,7 @@ class CellSheetCourse: UITableViewCell {
         let nums = aryName.count
         var strData = "", strData1 = ""
         
-        for (var i=0; i < nums; i++) {
+        for i in (0..<nums) {
             strData += pubClass.getLang("fieldname_membername") + ": " + aryName[i]
             strData1 += pubClass.getLang("fieldname_price") + ": " + aryPrice[i]
             

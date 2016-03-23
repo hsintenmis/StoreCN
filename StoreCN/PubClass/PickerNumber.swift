@@ -44,7 +44,7 @@ class PickerNumber: NSObject, UIPickerViewDelegate, UIPickerViewDataSource {
         arySelVal = aryDef
         
         // 下拉選單預設值, 各個選單的資料 array data
-        for (var i=0; i<aryDef.count; i++) {
+        for i in (0..<aryDef.count) {
             // 特殊欄位，小數點 '.'
             if (aryDef[i] == ".") {
                 aryRowVal.append(["."])
@@ -56,7 +56,8 @@ class PickerNumber: NSObject, UIPickerViewDelegate, UIPickerViewDataSource {
             let Min = Int(aryMaxMin[i]["min"]!)
             var aryData: Array<String> = []
             
-            for (var j=Min; j<=Max;j++) {
+            for j in (Min..<(Max + 1)) {
+            //for (var j=Min; j<=Max;j++) {
                 aryData.append(String(j))
             }
             
@@ -64,7 +65,7 @@ class PickerNumber: NSObject, UIPickerViewDelegate, UIPickerViewDataSource {
         }
         
         // 設定預設值
-        for (var i=0; i<aryDef.count; i++) {
+        for i in (0..<aryDef.count) {
             if (aryDef[i] != ".") {
                 // 最小值不一定 =0 會影響 position, 需要調整
                 let intPosition = Int(aryDef[i])! - Int(aryRowVal[i][0])!
@@ -110,7 +111,7 @@ class PickerNumber: NSObject, UIPickerViewDelegate, UIPickerViewDataSource {
         arySelVal[component] = aryRowVal[component][row]
         var strTxt = ""
         
-        for (var i=0; i < arySelVal.count; i++) {
+        for i in (0..<arySelVal.count) {
             strTxt += arySelVal[i]
         }
         

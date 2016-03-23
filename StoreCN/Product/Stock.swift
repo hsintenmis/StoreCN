@@ -127,10 +127,10 @@ class Stock: UIViewController {
      */
     @IBAction func actSort(sender: UIBarButtonItem) {
         let nums = aryStock.count
-        var loopi = 0
         var aryStockNew: Array<Dictionary<String, AnyObject>> = []
         
-        for (loopi = (nums - 1); loopi >= 0; loopi--) {
+        for loopi in (0..<nums).reverse() {
+        //for (loopi = (nums - 1); loopi >= 0; loopi -= 1) {
             aryStockNew.append(aryStock[loopi])
         }
         

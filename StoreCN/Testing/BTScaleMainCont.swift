@@ -82,7 +82,8 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate, BTScaleS
         dictLabVal["muscle"] = labVal_muscle
         dictLabVal["vfat"] = labVal_vfat
         
-        // webView 設定
+        // view 相關 field
+        btnBTConn.alpha = 0.1
         webScale.scrollView.scrollEnabled = false
         webScale.scrollView.bounces = false
     }
@@ -182,6 +183,9 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate, BTScaleS
         // 體脂計 user 資料更新, 'gender', 'age', 'height'
         let dictUser = ["gender":MemberData["gender"] as! String, "age":MemberData["age"] as! String, "height":MemberData["height"] as! String]
         mBTScaleService.setUserData(dictUser)
+        
+        // button 藍芽連線
+        btnBTConn.alpha = 1.0
     }
     
     /**
@@ -189,11 +193,31 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate, BTScaleS
      * 體脂計 Service class, handler
      */
     func handlerBLE(identCode: String!, result: Bool!, msg: String!, dictData: Dictionary<String, String>?) {
+
         switch (identCode) {
         case "BT_conn":
+            if (result != true) {
+                pubClass.popIsee(self, Msg: msg, withHandler: {
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                })
+            }
+            
+            labBTStat.text = msg
+            
             break
             
         case "BT_statu":
+            if (result != true) {
+                mBTScaleService.BTDisconn()
+                pubClass.popIsee(self, Msg: msg, withHandler: {
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                })
+                
+                return
+            }
+            
+            labBTStat.text = msg
+            
             break
             
         case "BT_data":
@@ -202,6 +226,13 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate, BTScaleS
         default:
             break
         }
+    }
+    
+    /**
+    * public, 斷開藍芽連線
+    */
+    func dicConnBT() {
+        mBTScaleService.BTDisconn()
     }
     
     /**
@@ -228,6 +259,7 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate, BTScaleS
     * act, 點取藍芽 '連線' button
     */
     @IBAction func actBTConn(sender: UIButton) {
+        mBTScaleService.BTConnStart()
     }
     
     

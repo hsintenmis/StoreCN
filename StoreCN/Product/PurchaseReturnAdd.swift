@@ -41,7 +41,8 @@ class PurchaseReturnAdd: UIViewController, PubPurReturnPdListDelegate, PickerDat
         
         // 設定退貨商品 array data, 加入數量相關欄位
         aryReturnPd = dictAllData["pd"] as! Array<Dictionary<String, AnyObject>>
-        for (var i=0; i < aryReturnPd.count; i++) {
+        
+        for i in (0..<aryReturnPd.count) {
             aryReturnPd[i]["selQty"] = "0"
         }
         

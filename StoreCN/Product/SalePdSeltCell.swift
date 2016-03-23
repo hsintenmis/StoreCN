@@ -109,7 +109,8 @@ class SalePdSeltCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSou
     func textFieldDidBeginEditing(textField: UITextField) {
         // 重新設定 '數量' 彈出鍵盤，最大值改為庫存數
         aryRowVal = []
-        for (var i = aryMaxMin[0]; i <= intStock; i++) {
+        for i in (aryMaxMin[0]..<(intStock + 1)) {
+        //for (var i = aryMaxMin[0]; i <= intStock; i++) {
             aryRowVal.append(String(i))
         }
         mPKView.reloadAllComponents()

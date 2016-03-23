@@ -64,7 +64,7 @@ class SugstChildPage: UITableViewController {
         // 固定初始參數
         
         // collectionView 參數, 經絡疏通重點共 14 個，紀錄是否有被 '選取'
-        for (var loopi = 0; loopi < 14; loopi++) {
+        for _ in (0..<14) {
             aryColviewBol.append(false)
         }
         
@@ -80,7 +80,7 @@ class SugstChildPage: UITableViewController {
         }
         
         // 设置监听键盘事件函数
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SugstChildPage.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
     }
     
     /**
@@ -245,7 +245,8 @@ class SugstChildPage: UITableViewController {
         // collectionView 產生文字
         var strPointMsg = "\n经络疏通重点: "
         var isPointMsg = false
-        for (var loopi = 0; loopi < aryColviewBol.count; loopi++) {
+        
+        for loopi in (0..<aryColviewBol.count) {
             if (aryColviewBol[loopi]) {
                 strPointMsg += pubClass.getLang("bodypoint_" + String(loopi)) + " "
                 isPointMsg = true

@@ -92,7 +92,7 @@ class PickerDate {
         //toolBar.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)  // 文字顏色
         toolBar.sizeToFit()
         
-        let doneButton = UIBarButtonItem(title: pubClass.getLang("select_ok"), style: UIBarButtonItemStyle.Plain, target: self, action: "PKDateDone")
+        let doneButton = UIBarButtonItem(title: pubClass.getLang("select_ok"), style: UIBarButtonItemStyle.Plain, target: self, action: #selector(PickerDate.PKDateDone))
         
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
         
@@ -106,7 +106,7 @@ class PickerDate {
         labTitle.textAlignment = NSTextAlignment.Center
         let titleButton = UIBarButtonItem(customView: labTitle)
    
-        let cancelButton = UIBarButtonItem(title: pubClass.getLang("cancel"), style: UIBarButtonItemStyle.Plain, target: self, action: "PKDateCancel")
+        let cancelButton = UIBarButtonItem(title: pubClass.getLang("cancel"), style: UIBarButtonItemStyle.Plain, target: self, action: #selector(PickerDate.PKDateCancel))
         
         toolBar.setItems([cancelButton, spaceButton, titleButton, spaceButton, doneButton], animated: false)
         toolBar.userInteractionEnabled = true

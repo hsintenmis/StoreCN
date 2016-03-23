@@ -123,7 +123,10 @@ class PubClass {
     * SubString
     */
     func subStr(mStr: String, strFrom: Int, strEnd: Int)->String {
-        return mStr.substringWithRange(Range<String.Index>(start: mStr.startIndex.advancedBy(strFrom), end: mStr.startIndex.advancedBy(strEnd)))
+        let nsStr = mStr as NSString
+        return nsStr.substringWithRange(NSRange(location: strFrom, length: (strEnd - strFrom))) as String
+        
+        //return mStr.substringWithRange(Range<String.Index>(start: mStr.startIndex.advancedBy(strFrom), end: mStr.startIndex.advancedBy(strEnd)))
     }
     
     /**
@@ -140,12 +143,14 @@ class PubClass {
     /**
      * [我知道了] 彈出視窗
      */
-    func popIsee(mVC: UIViewController, var Title strTitle: String? = nil, Msg strMsg: String!) {
-        if strTitle == nil {
-            strTitle = getLang("sysprompt")
+    func popIsee(mVC: UIViewController, Title strTitle: String? = nil, Msg strMsg: String!) {
+        var title = getLang("sysprompt")
+        
+        if strTitle != nil {
+            title = strTitle!
         }
         
-        let mAlert = UIAlertController(title: strTitle, message: strMsg, preferredStyle:UIAlertControllerStyle.Alert)
+        let mAlert = UIAlertController(title: title, message: strMsg, preferredStyle:UIAlertControllerStyle.Alert)
         
         mAlert.addAction(UIAlertAction(title:getLang("i_see"), style: UIAlertActionStyle.Default, handler:nil))
         
@@ -157,12 +162,15 @@ class PubClass {
     /**
      * [我知道了] 彈出視窗, with 'handler'
      */
-    func popIsee(mVC: UIViewController, var Title strTitle: String? = nil, Msg strMsg: String!, withHandler mHandler:()->Void) {
-        if strTitle == nil {
-            strTitle = getLang("sysprompt")
+    func popIsee(mVC: UIViewController, Title strTitle: String? = nil, Msg strMsg: String!, withHandler mHandler:()->Void) {
+        
+        var title = getLang("sysprompt")
+        
+        if strTitle != nil {
+            title = strTitle!
         }
         
-        let mAlert = UIAlertController(title: strTitle, message: strMsg, preferredStyle:UIAlertControllerStyle.Alert)
+        let mAlert = UIAlertController(title: title, message: strMsg, preferredStyle:UIAlertControllerStyle.Alert)
         
         mAlert.addAction(UIAlertAction(title:getLang("i_see"), style: UIAlertActionStyle.Default, handler:
             {(action: UIAlertAction!) in mHandler()}
@@ -235,7 +243,7 @@ class PubClass {
         
         for (strKey, strVal) in dictParm {
             strConnParm += "\(strKey)=\(strVal)"
-            loopi++
+            loopi += 1
             
             if loopi != dictParm.count {
                 strConnParm += "&"
@@ -364,11 +372,18 @@ class PubClass {
             return strDate
         }
         
+        let nsStrDate = strDate as NSString
         var strYY: String, strMM: String, strDD: String
 
+        strYY = nsStrDate.substringWithRange(NSRange(location: 0, length: 4))
+        strMM = nsStrDate.substringWithRange(NSRange(location: 4, length: 2))
+        strDD = nsStrDate.substringWithRange(NSRange(location: 6, length: 2))
+        
+        /*
         strYY = strDate.substringWithRange(Range<String.Index>(start: strDate.startIndex.advancedBy(0), end: strDate.startIndex.advancedBy(4)))
         strMM = strDate.substringWithRange(Range<String.Index>(start: strDate.startIndex.advancedBy(4), end: strDate.startIndex.advancedBy(6)))
         strDD = strDate.substringWithRange(Range<String.Index>(start: strDate.startIndex.advancedBy(6), end: strDate.startIndex.advancedBy(8)))
+        */
         
         if (type == 8) {
             return "\(strYY)年\(Int(strMM)!)月\(Int(strDD)!)日"
@@ -377,8 +392,13 @@ class PubClass {
         if (type > 8) {
             var strHH: String, strMin: String
             
+            strHH = nsStrDate.substringWithRange(NSRange(location: 8, length: 2))
+            strMin = nsStrDate.substringWithRange(NSRange(location: 10, length: 2))
+            
+            /*
             strHH = strDate.substringWithRange(Range<String.Index>(start: strDate.startIndex.advancedBy(8), end: strDate.startIndex.advancedBy(10)))
             strMin = strDate.substringWithRange(Range<String.Index>(start: strDate.startIndex.advancedBy(10), end: strDate.startIndex.advancedBy(12)))
+            */
             
             return "\(strYY)年\(strMM)月\(strDD)日 \(strHH):\(strMin)"
         }
@@ -391,15 +411,22 @@ class PubClass {
      * @param type: 8s or 14s (String)
      */
     func formatDateWithStr(strDate: String!, type: String?)->String {
-        if ( strDate.characters.count < 8) {
+        if (strDate.characters.count < 8) {
             return strDate
         }
         
+        let nsStrDate = strDate as NSString
         var strYY: String, strMM: String, strDD: String
         
+        strYY = nsStrDate.substringWithRange(NSRange(location: 0, length: 4))
+        strMM = nsStrDate.substringWithRange(NSRange(location: 4, length: 2))
+        strDD = nsStrDate.substringWithRange(NSRange(location: 6, length: 2))
+        
+        /*
         strYY = strDate.substringWithRange(Range<String.Index>(start: strDate.startIndex.advancedBy(0), end: strDate.startIndex.advancedBy(4)))
         strMM = strDate.substringWithRange(Range<String.Index>(start: strDate.startIndex.advancedBy(4), end: strDate.startIndex.advancedBy(6)))
         strDD = strDate.substringWithRange(Range<String.Index>(start: strDate.startIndex.advancedBy(6), end: strDate.startIndex.advancedBy(8)))
+        */
         
         if (type == "8s") {
             return "\(strYY)/\(strMM)/\(strDD)"
@@ -408,8 +435,13 @@ class PubClass {
         if (type == "14s") {
             var strHH: String, strMin: String
             
+            strHH = nsStrDate.substringWithRange(NSRange(location: 8, length: 2))
+            strMin = nsStrDate.substringWithRange(NSRange(location: 10, length: 2))
+            
+            /*
             strHH = strDate.substringWithRange(Range<String.Index>(start: strDate.startIndex.advancedBy(8), end: strDate.startIndex.advancedBy(10)))
             strMin = strDate.substringWithRange(Range<String.Index>(start: strDate.startIndex.advancedBy(10), end: strDate.startIndex.advancedBy(12)))
+            */
             
             return "\(strYY)/\(strMM)/\(strDD) \(strHH):\(strMin)"
         }

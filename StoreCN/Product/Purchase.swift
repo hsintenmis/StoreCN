@@ -53,7 +53,7 @@ class Purchase: UIViewController, PurchasePdSeltDelegate, PurchasePdSeltCellDele
      */
     override func viewWillAppear(animated: Bool) {
         // 设置监听键盘事件函数
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(Purchase.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
     }
     
     /**
@@ -220,15 +220,15 @@ class Purchase: UIViewController, PurchasePdSeltDelegate, PurchasePdSeltCellDele
         for strPType in aryPdType {
             let aryPd = dictCategoryPd[strPType]!
             
-            for (var i=0; i < aryPd.count; i++) {
-                var dictPd = aryPd[i]
+            for loopi in (0..<aryPd.count) {
+                var dictPd = aryPd[loopi]
                 let intQty = Int(dictPd["qtySel"]!)
                 
                 if (intQty > 0) {
                     intAmount += intQty! * Int(dictPd["price"]!)!
                     
                     // dictPd 加到 aryCart
-                    dictPd["position"] = String(i)
+                    dictPd["position"] = String(loopi)
                     aryCart.append(dictPd)
                 }
             }

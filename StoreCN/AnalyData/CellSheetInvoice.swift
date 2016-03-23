@@ -29,11 +29,11 @@ class CellSheetInvoice: UITableViewCell {
         let nums = aryId.count
         var strData = ""
         
-        for (var i=0; i < nums; i++) {
+        for i in (0..<nums) {
             strData += pubClass.getLang("fieldname_invoiceid") + ": " + aryId[i] + ", " + pubClass.getLang("fieldname_price") + ": " + aryPrice[i]
             
             if (i < (nums - 1)) {
-               strData += "\n"
+                strData += "\n"
             }
         }
         

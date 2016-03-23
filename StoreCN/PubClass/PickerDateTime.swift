@@ -83,7 +83,8 @@ class PickerDateTime {
         self.initKBBar(strTitle)
         
         // 設定 datePicker value change
-        datePickerView.addTarget(self, action: Selector("datePickerValueChanged:"), forControlEvents: UIControlEvents.ValueChanged)
+        //datePickerView.addTarget(self, action: Selector("datePickerValueChanged:"), forControlEvents: UIControlEvents.ValueChanged)
+        datePickerView.addTarget(self, action: #selector(PickerDateTime.datePickerValueChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
     }
     
     /**
@@ -97,7 +98,7 @@ class PickerDateTime {
         //toolBar.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)  // 文字顏色
         toolBar.sizeToFit()
         
-        let doneButton = UIBarButtonItem(title: pubClass.getLang("select_ok"), style: UIBarButtonItemStyle.Plain, target: self, action: "PKDateDone")
+        let doneButton = UIBarButtonItem(title: pubClass.getLang("select_ok"), style: UIBarButtonItemStyle.Plain, target: self, action: #selector(PickerDateTime.PKDateDone))
         
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
         
@@ -108,7 +109,7 @@ class PickerDateTime {
         labTitle.textAlignment = NSTextAlignment.Center
         let titleButton = UIBarButtonItem(customView: labTitle)
         
-        let cancelButton = UIBarButtonItem(title: pubClass.getLang("cancel"), style: UIBarButtonItemStyle.Plain, target: self, action: "PKDateCancel")
+        let cancelButton = UIBarButtonItem(title: pubClass.getLang("cancel"), style: UIBarButtonItemStyle.Plain, target: self, action: #selector(PickerDateTime.PKDateCancel))
         
         toolBar.setItems([cancelButton, spaceButton, titleButton, spaceButton, doneButton], animated: false)
         toolBar.userInteractionEnabled = true

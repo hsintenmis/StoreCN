@@ -110,7 +110,7 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
         let mMemberId = dictSaleData["memberid"] as! String
         labMember.text = dictSaleData["membername"] as? String
         
-        for (var i=0; i < aryMember.count; i++) {
+        for i in (0..<aryMember.count) {
             if (mMemberId == aryMember[i]["memberid"] as! String) {
                 indexPathMember = NSIndexPath(forItem: i, inSection: 0)
             }
@@ -120,7 +120,7 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
         let mPdid = dictSaleData["pdid"] as! String
         labCourseName.text = dictSaleData["pdname"] as? String
         
-        for (var i=0; i < aryCourseDB.count; i++) {
+        for i in (0..<aryCourseDB.count) {
             if (mPdid == aryCourseDB[i]["id"] as! String) {
                 indexPathPd = NSIndexPath(forItem: i, inSection: 0)
                 break
@@ -193,7 +193,7 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
             // 取得數值後，根據對應順序設定到 UISegmentedControl
             let intVal = Int(dictData[strKey] as! String)
             
-            for (var loopi = 0; loopi < aryHotDevMinsVal.count; loopi++) {
+            for loopi in (0..<aryHotDevMinsVal.count) {
                 if (intVal == aryHotDevMinsVal[loopi]) {
                     swchDev.selectedSegmentIndex = loopi
                     break
@@ -202,7 +202,7 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
         }
         
         //  soqibed 模式, S00 slider 變動
-        for (var loopi = 0; loopi < aryS00DevMinsVal.count; loopi++) {
+        for loopi in (0..<aryS00DevMinsVal.count) {
             let intVal = Int(dictData["S00"] as! String)
             if (intVal == aryS00DevMinsVal[loopi]) {
                 sliderS00.value = Float(loopi)

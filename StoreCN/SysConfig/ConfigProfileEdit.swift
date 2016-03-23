@@ -68,7 +68,7 @@ class ConfigProfileEdit: UITableViewController, UITextFieldDelegate {
      * 頁面資料重整，檢查是否有資料
      */
     private func relaodPage() {
-        for (var i=0; i < aryRSField.count; i++) {
+        for i in (0..<aryRSField.count) {
             aryUITextField[i].text = dictAllData[aryRSField[i]] as? String
         }
     }
@@ -133,7 +133,7 @@ class ConfigProfileEdit: UITableViewController, UITextFieldDelegate {
     func getPageData() -> Dictionary<String, String>! {
         var dictRS: Dictionary<String, String> = [:]
         
-        for (var i=0; i < aryRSField.count; i++) {
+        for i in (0..<aryRSField.count) {
             dictRS[arySaveField[i]] = aryUITextField[i].text
         }
         

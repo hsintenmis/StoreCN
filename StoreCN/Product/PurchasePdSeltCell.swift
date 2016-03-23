@@ -45,7 +45,7 @@ class PurchasePdSeltCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDat
         mPKView.delegate = self
  
         // 設定每個 Picker row 的 array data
-        for (var i = aryMaxMin[0]; i <= aryMaxMin[1]; i++) {
+        for i in (aryMaxMin[0]..<aryMaxMin[1]) {
             aryRowVal.append(String(i))
         }
         
@@ -91,7 +91,7 @@ class PurchasePdSeltCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDat
         toolBar.barTintColor = pubClass.ColorHEX(pubClass.dictColor["silver"]!)  // 背景顏色
         toolBar.sizeToFit()
         
-        let doneButton = UIBarButtonItem(title: pubClass.getLang("select_ok"), style: UIBarButtonItemStyle.Plain, target: self, action: "SelectDone")
+        let doneButton = UIBarButtonItem(title: pubClass.getLang("select_ok"), style: UIBarButtonItemStyle.Plain, target: self, action: #selector(PurchasePdSeltCell.SelectDone))
         
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
         
@@ -106,7 +106,7 @@ class PurchasePdSeltCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDat
         labTitle.textAlignment = NSTextAlignment.Center
         let titleButton = UIBarButtonItem(customView: labTitle)
         
-        let cancelButton = UIBarButtonItem(title: pubClass.getLang("cancel"), style: UIBarButtonItemStyle.Plain, target: self, action: "SelectCancel")
+        let cancelButton = UIBarButtonItem(title: pubClass.getLang("cancel"), style: UIBarButtonItemStyle.Plain, target: self, action: #selector(PurchasePdSeltCell.SelectCancel))
         
         toolBar.setItems([cancelButton, spaceButton, titleButton, spaceButton, doneButton], animated: false)
         toolBar.userInteractionEnabled = true

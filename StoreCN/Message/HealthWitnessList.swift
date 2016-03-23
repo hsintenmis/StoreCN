@@ -174,7 +174,8 @@ class HealthWitnessList: UIViewController {
         
         // 產生 Item data
         let mCell = tableView.dequeueReusableCellWithIdentifier("cellHealthWitnessList")!
-        let ditItem = aryAllData[indexPath.section]["data"]![indexPath.row] as! Dictionary<String, String>
+        let arySection = aryAllData[indexPath.section]["data"] as! Array<Dictionary<String, String>>
+        let ditItem = arySection[indexPath.row]
 
         mCell.textLabel?.text = ditItem["title"]
         
@@ -186,7 +187,9 @@ class HealthWitnessList: UIViewController {
      * UITableView, Cell 點取
      */
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let ditItem = aryAllData[indexPath.section]["data"]![indexPath.row] as! Dictionary<String, String>
+        
+        let arySection = aryAllData[indexPath.section]["data"] as! Array<Dictionary<String, String>>
+        let ditItem = arySection[indexPath.row]
         self.performSegueWithIdentifier("HealthWitnessDetail", sender: ditItem)
     }
     

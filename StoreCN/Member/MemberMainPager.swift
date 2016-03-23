@@ -69,7 +69,7 @@ class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIP
         //let vcEmpty = storyboard?.instantiateViewControllerWithIdentifier("NodataView")
         
         // 各個 page 加入 aryPages
-        for (var i=0; i<aryMenuName.count; i++) {
+        for i in (0..<aryMenuName.count) {
             let strMenuName = aryMenuName[i]
             
             switch (strMenuName) {

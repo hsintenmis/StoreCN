@@ -37,7 +37,7 @@ class StaffListCell: UITableViewCell {
         
         if let tmpAry = ditItem["lesson"] as? Array<Dictionary<String, String>> {
             
-            for (var i=0; i < tmpAry.count; i++) {
+            for i in (0..<tmpAry.count) {
                 let dictLesson = tmpAry[i]
                 strLesson += "[" +
                     pubClass.formatDateWithStr(dictLesson["sdate"], type: "8s") + " ] " + dictLesson["description"]!

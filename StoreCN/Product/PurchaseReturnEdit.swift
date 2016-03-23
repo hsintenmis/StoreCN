@@ -45,7 +45,8 @@ class PurchaseReturnEdit: UIViewController, PubPurReturnPdListDelegate , PickerD
         // 設定退貨商品 array data, 加入數量相關欄位
         aryReturnPd = dictReturn["pd"] as! Array<Dictionary<String, AnyObject>>
 
-        for (var i=0; i < aryReturnPd.count; i++) {
+        for i in (0..<aryReturnPd.count) {
+        //for (var i=0; i < aryReturnPd.count; i++) {
             let pdid = aryReturnPd[i]["pdid"] as! String
             let dictPd = dictPurchasePd[pdid]!
             

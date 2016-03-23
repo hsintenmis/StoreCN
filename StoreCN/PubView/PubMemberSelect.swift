@@ -77,7 +77,7 @@ class PubMemberSelect: UIViewController {
         //mVC = self
         
         // 加入原始的 position
-        for (var i=0; i < aryMember.count; i++) {
+        for i in (0..<aryMember.count) {
             aryMember[i]["position"] = i
         }
         

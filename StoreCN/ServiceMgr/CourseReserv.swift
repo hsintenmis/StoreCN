@@ -88,7 +88,8 @@ class CourseReserv: UIViewController {
         
         // 設定 aryReservData data position
         let strYYMM = pubClass.subStr(strToday, strFrom: 0, strEnd: 6)
-        for (var i=0; i<aryReservData.count; i++) {
+        
+        for i in (0..<aryReservData.count) {
             if (strYYMM == aryReservData[i]["yymm"] as! String) {
                 positionReservData = i
                 positionToday = i
@@ -306,24 +307,24 @@ class CourseReserv: UIViewController {
                 return
             }
             
-            MM++
+            MM += 1
             if (MM > 12) {
-                MM = 1; YY++;
+                MM = 1; YY += 1;
             }
             
-            positionReservData++
+            positionReservData += 1
         }
         else {
             if (firstYYMM == (currYYMM["YY"]! + currYYMM["MM"]!)) {
                 return
             }
             
-            MM--;
+            MM -= 1;
             if (MM < 1) {
-                MM = 12; YY--;
+                MM = 12; YY -= 1;
             }
             
-            positionReservData--
+            positionReservData -= 1
         }
         
         currYYMM["YY"] = String(YY)

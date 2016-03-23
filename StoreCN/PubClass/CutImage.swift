@@ -107,7 +107,7 @@ class CutImage: UIViewController, UIGestureRecognizerDelegate {
         clipBtn.setAttributedTitle(myNormalAttributedTitle, forState: .Normal)
         
         // Button add click event
-        clipBtn.addTarget(self, action: "clipBtnSelected", forControlEvents: UIControlEvents.TouchUpInside)
+        clipBtn.addTarget(self, action: #selector(CutImage.clipBtnSelected), forControlEvents: UIControlEvents.TouchUpInside)
 
         self.view.addSubview(clipBtn)
 
@@ -233,14 +233,14 @@ class CutImage: UIViewController, UIGestureRecognizerDelegate {
     func addAllGesture() {
         // 捏合手势
         //let pinGesture: UIPinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: "handlePinGesture")
-        let pinGesture: UIPinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: Selector("handlePinGesture:"))
+        let pinGesture: UIPinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(CutImage.handlePinGesture(_:)))
 
         pinGesture.delegate = self
         self.view.addGestureRecognizer(pinGesture)
 
         // 拖动手势
         //let panGesture: UIPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: "handlePanGesture")
-        let panGesture: UIPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: Selector("handlePanGesture:"))
+        let panGesture: UIPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(CutImage.handlePanGesture(_:)))
         
         panGesture.delegate = self
         self.view.addGestureRecognizer(panGesture)

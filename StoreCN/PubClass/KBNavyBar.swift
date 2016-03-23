@@ -46,7 +46,7 @@ class KBNavyBar {
         toolBar.barTintColor = pubClass.ColorHEX(pubClass.dictColor["silver"]!)  // 背景顏色
         toolBar.sizeToFit()
         
-        let doneButton = UIBarButtonItem(title: pubClass.getLang("select_ok"), style: UIBarButtonItemStyle.Plain, target: self, action: "SelectDone")
+        let doneButton = UIBarButtonItem(title: pubClass.getLang("select_ok"), style: UIBarButtonItemStyle.Plain, target: self, action: #selector(KBNavyBar.SelectDone))
         
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
         
@@ -61,7 +61,7 @@ class KBNavyBar {
         labTitle.textAlignment = NSTextAlignment.Center
         let titleButton = UIBarButtonItem(customView: labTitle)
         
-        let cancelButton = UIBarButtonItem(title: pubClass.getLang("cancel"), style: UIBarButtonItemStyle.Plain, target: self, action: "SelectCancel")
+        let cancelButton = UIBarButtonItem(title: pubClass.getLang("cancel"), style: UIBarButtonItemStyle.Plain, target: self, action: #selector(KBNavyBar.SelectCancel))
         
         toolBar.setItems([cancelButton, spaceButton, titleButton, spaceButton, doneButton], animated: false)
         toolBar.userInteractionEnabled = true

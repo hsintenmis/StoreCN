@@ -76,7 +76,7 @@ class Sale: UIViewController, SalePdSeltDelegate, SalePdSeltCellDelegate, PdSale
      */
     override func viewWillAppear(animated: Bool) {
         // 设置监听键盘事件函数
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(Sale.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
     }
 
     /**
@@ -235,7 +235,7 @@ class Sale: UIViewController, SalePdSeltDelegate, SalePdSeltCellDelegate, PdSale
         for strPType in aryPdType {
             let aryPd = dictCategoryPd[strPType]!
             
-            for (var i=0; i < aryPd.count; i++) {
+            for i in (0..<aryPd.count) {
                 var dictPd = aryPd[i]
                 let intQty = Int(dictPd["qtySel"]!)
                 
