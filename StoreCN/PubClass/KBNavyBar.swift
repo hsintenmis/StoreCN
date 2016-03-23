@@ -27,13 +27,13 @@ protocol KBNavyBarDelegate {
 class KBNavyBar {
     var delegate = KBNavyBarDelegate?()
     
-    private var pubClass: PubClass!
+    private var pubClass = PubClass()
     
     /**
      * init
      */
     init() {
-        pubClass = PubClass()
+
     }
     
     /**

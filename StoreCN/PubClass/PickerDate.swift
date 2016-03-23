@@ -14,7 +14,7 @@ import UIKit
  * @param Array<String>: 預設的日期, maxDate, minDate, 8碼<BR>
  * @param String: 彈出虛擬鍵盤 navybar 的 title<BR>
  */
-class PickerDate {
+class PickerDate: NSObject, KBNavyBarDelegate {
     // 日期預設值，最大/最小
     private var defDate = "19600101"
     private var maxDate = "20101231"
@@ -23,18 +23,21 @@ class PickerDate {
     // UIDatePicker 設定
     private var pubClass: PubClass!
     private var mPickField: UITextField!
-    private let dateFmtYMD: NSDateFormatter!  // 根據local顯示可閱讀的日期, ex. 2015年1月1日
+    private let dateFmtYMD = NSDateFormatter()  // 根據local顯示可閱讀的日期, ex. 2015年1月1日
     private var datePickerView: UIDatePicker!
     private var strCurrDate = ""  // 取得目前選擇的日期，轉為 8碼 string
     
+    private let mKBNavyBar = KBNavyBar()
+
     /**
     * init
     */
     init(withUIField mField: UITextField, PubClass mPubClass: PubClass, withDefMaxMin aryDefineDate: Array<String>!, NavyBarTitle strTitle: String!) {
         
+        super.init()
+        
         mPickField = mField
         pubClass = mPubClass
-        dateFmtYMD = NSDateFormatter()
         
         defDate = aryDefineDate[0]
         maxDate = aryDefineDate[1]
@@ -55,14 +58,13 @@ class PickerDate {
 
         datePickerView.minimumDate = dateFmtYMD.dateFromString(minDate)!
         datePickerView.maximumDate = dateFmtYMD.dateFromString(maxDate)!
-        
-        // 設定 datePick value change 要執行的程序
-        //datePickerView.addTarget(self, action: Selector("datePickerValueChanged:"), forControlEvents: UIControlEvents.ValueChanged)
-        
         setDefVal(aryDefineDate[0])
-        mPickField.inputView = datePickerView
         
-        self.initKBBar(strTitle)
+        
+        // 設定 edDate 輸入鍵盤，樣式
+        mPickField.inputView = datePickerView
+        mKBNavyBar.delegate = self
+        mPickField.inputAccessoryView = mKBNavyBar.getKBBar(strTitle)
     }
     
     /**
@@ -85,6 +87,7 @@ class PickerDate {
      * 鍵盤輸入視窗的 'navybar' 設定
      * 日期欄位 點取彈出 資料輸入視窗 (虛擬鍵盤), 'InputView' 的頂端顯示 'navyBar'
      */
+    /*
     private func initKBBar(strTitle: String) {
         let toolBar = UIToolbar()
         toolBar.barStyle = UIBarStyle.Default
@@ -113,19 +116,22 @@ class PickerDate {
         
         mPickField.inputAccessoryView = toolBar
     }
+    */
     
     /**
-     * DatePicker 點取　'done'
+     * #mark: KBNavyBarDelegate
+     * 虛擬自訂鍵盤　toolbar 點取 'done'
      */
-    @objc private func PKDateDone() {
+    func KBBarDone() {
         mPickField.resignFirstResponder()
         self.PKDateChang(self.datePickerView)
     }
     
     /**
-     * DatePicker 點取　'cancel'
+     * #mark: KBNavyBarDelegate
+     * 虛擬自訂鍵盤　toolbar 點取 'cancel'
      */
-    @objc private func PKDateCancel() {
+    func KBBarCancel() {
         mPickField.resignFirstResponder()
     }
     
@@ -144,4 +150,5 @@ class PickerDate {
         // 設定 strDate value
         strCurrDate = dateFmtYMD.stringFromDate(sender.date)
     }
+    
 }

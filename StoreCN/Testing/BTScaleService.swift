@@ -122,12 +122,16 @@ class BTScaleService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             self.mCentMgr.stopScan()
         }
         
-        // BT dev 是否連線中
-        /*
-        if (BT_ISREADYFOTESTING) {
-            mCentMgr.cancelPeripheralConnection(mConnDev)
+        // BT dev 是否連線
+        if (mConnDev != nil) {
+            if (IS_DEBUG) { print("let BT dev cancel connect") }
+            mCentMgr.cancelPeripheralConnection(mConnDev!)
         }
-        */
+
+        mCentMgr = nil
+        mConnDev = nil
+        mUIDChart_T = nil
+        BT_ISREADYFOTESTING = false
     }
     
     /**
@@ -170,14 +174,9 @@ class BTScaleService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?) {
         
         if (IS_DEBUG) { print("CBCentralManager Disconnection!") }
-        
-        // 通知 parent BT 斷線，parent 跳離
-        mCentMgr = nil
-        mConnDev = nil
-        mUIDChart_T = nil
-        BT_ISREADYFOTESTING = false
-        
+
         // 本 class 執行相關 BLE 中斷程序, 標記：'BT_conn'
+        BTDisconn()
         delegate?.handlerBLE("BT_conn", result: false, msg: pubClass.getLang("bt_connect_break"), dictData: nil)
     }
     
@@ -188,8 +187,6 @@ class BTScaleService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     func centralManagerDidUpdateState(central: CBCentralManager) {
         var msg = ""
         var bolRS = false
-        
-        print(central.state)
         
         switch (central.state) {
         case .PoweredOff:
