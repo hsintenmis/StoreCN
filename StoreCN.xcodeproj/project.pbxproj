@@ -121,6 +121,9 @@
 		D70854471C7D622500861694 /* PurchaseListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70854461C7D622500861694 /* PurchaseListCell.swift */; };
 		D70854491C7D69C400861694 /* PurchaseListDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70854481C7D69C400861694 /* PurchaseListDetail.swift */; };
 		D708544B1C7DA3D600861694 /* PurchaseReturnAdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = D708544A1C7DA3D600861694 /* PurchaseReturnAdd.swift */; };
+		D709CCA21CA3974800F85DDF /* HealthCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D709CCA11CA3974800F85DDF /* HealthCalendar.swift */; };
+		D709CCA41CA3B36700F85DDF /* HealthTestingValCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D709CCA31CA3B36700F85DDF /* HealthTestingValCell.swift */; };
+		D709CCA61CA3B67400F85DDF /* HealthExplainTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D709CCA51CA3B67400F85DDF /* HealthExplainTestData.swift */; };
 		D70CD9421C72CBF8008E79E1 /* CourseSale.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70CD93D1C72CBF8008E79E1 /* CourseSale.swift */; };
 		D70CD9431C72CBF8008E79E1 /* CourseSaleCourseSel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70CD93E1C72CBF8008E79E1 /* CourseSaleCourseSel.swift */; };
 		D70CD9441C72CBF8008E79E1 /* CourseSaleMemberSel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70CD93F1C72CBF8008E79E1 /* CourseSaleMemberSel.swift */; };
@@ -332,6 +335,9 @@
 		D70854461C7D622500861694 /* PurchaseListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchaseListCell.swift; path = Product/PurchaseListCell.swift; sourceTree = "<group>"; };
 		D70854481C7D69C400861694 /* PurchaseListDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchaseListDetail.swift; path = Product/PurchaseListDetail.swift; sourceTree = "<group>"; };
 		D708544A1C7DA3D600861694 /* PurchaseReturnAdd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchaseReturnAdd.swift; path = Product/PurchaseReturnAdd.swift; sourceTree = "<group>"; };
+		D709CCA11CA3974800F85DDF /* HealthCalendar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HealthCalendar.swift; path = Health/HealthCalendar.swift; sourceTree = "<group>"; };
+		D709CCA31CA3B36700F85DDF /* HealthTestingValCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HealthTestingValCell.swift; path = Health/HealthTestingValCell.swift; sourceTree = "<group>"; };
+		D709CCA51CA3B67400F85DDF /* HealthExplainTestData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HealthExplainTestData.swift; path = Health/HealthExplainTestData.swift; sourceTree = "<group>"; };
 		D70CD93D1C72CBF8008E79E1 /* CourseSale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CourseSale.swift; path = CourseSale/CourseSale.swift; sourceTree = "<group>"; };
 		D70CD93E1C72CBF8008E79E1 /* CourseSaleCourseSel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CourseSaleCourseSel.swift; path = CourseSale/CourseSaleCourseSel.swift; sourceTree = "<group>"; };
 		D70CD93F1C72CBF8008E79E1 /* CourseSaleMemberSel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CourseSaleMemberSel.swift; path = CourseSale/CourseSaleMemberSel.swift; sourceTree = "<group>"; };
@@ -764,6 +770,9 @@
 			isa = PBXGroup;
 			children = (
 				D74B4B981C9FD4DA001F1176 /* HealthDataInit.swift */,
+				D709CCA11CA3974800F85DDF /* HealthCalendar.swift */,
+				D709CCA31CA3B36700F85DDF /* HealthTestingValCell.swift */,
+				D709CCA51CA3B67400F85DDF /* HealthExplainTestData.swift */,
 			);
 			name = Health;
 			sourceTree = "<group>";
@@ -993,6 +1002,7 @@
 				42E21F0B1C68800500B85EA9 /* CourseReserv.swift in Sources */,
 				D74B4B961C9FD41B001F1176 /* BTScaleService.swift in Sources */,
 				D71DFD0C1C7C20180024BB59 /* StockCell.swift in Sources */,
+				D709CCA61CA3B67400F85DDF /* HealthExplainTestData.swift in Sources */,
 				D7F8BCED1C7ED6C70059E6E5 /* PurchaseDetailEditContainer.swift in Sources */,
 				D7037A771C58C03F002A955E /* NoDataView.swift in Sources */,
 				D72E981F1C912BA600DA9FA3 /* SysConfigMain.swift in Sources */,
@@ -1048,6 +1058,8 @@
 				D7F092221C896C72005D8C96 /* HealthWitnessList.swift in Sources */,
 				4226BF551C9E73B30096AECA /* CourseReservAdd.swift in Sources */,
 				D74B4B9D1C9FEA1A001F1176 /* TestingMemberSel.swift in Sources */,
+				D709CCA41CA3B36700F85DDF /* HealthTestingValCell.swift in Sources */,
+				D709CCA21CA3974800F85DDF /* HealthCalendar.swift in Sources */,
 				D74A60571C8D17F600946118 /* MsgEdit.swift in Sources */,
 				D74B4B941C9FD1EE001F1176 /* BTScaleMain.swift in Sources */,
 				D71DFD101C7C397A0024BB59 /* StockHistoryCell.swift in Sources */,

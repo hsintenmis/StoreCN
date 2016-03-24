@@ -59,13 +59,14 @@ protocol BTScaleServiceDelegate {
 }
 
 class BTScaleService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
-    private let IS_DEBUG = true
+    private let IS_DEBUG = false
     
     // delegate
     var delegate = BTScaleServiceDelegate?()
     
     // 公用參數
     let aryTestingField: Array<String> = ["weight", "bmi", "fat", "water", "calory", "bone", "muscle", "vfat"]
+    var BT_ISREADYFOTESTING = false  // 藍牙周邊是否可以開始使用
     
     // UID, 固定參數設定
     private let D_BTDEVNAME0 = "VScale"
@@ -80,8 +81,6 @@ class BTScaleService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     private var mUIDServ: CBService!
     private var mUIDChart_T: CBCharacteristic!
     private var mUIDChart_W: CBCharacteristic!
-    
-    private var BT_ISREADYFOTESTING = false  // 藍牙周邊是否可以開始使用
     
     // 其他參數
     private var pubClass = PubClass()
@@ -117,9 +116,11 @@ class BTScaleService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
      */
     func BTDisconn() {
         // 是否搜尋中
-        if (self.mCentMgr.isScanning) {
-            if (IS_DEBUG) { print("BT is scanning and let it Stop!") }
-            self.mCentMgr.stopScan()
+        if (mCentMgr != nil) {
+            if (self.mCentMgr.isScanning) {
+                if (IS_DEBUG) { print("BT is scanning and let it Stop!") }
+                self.mCentMgr.stopScan()
+            }
         }
         
         // BT dev 是否連線
@@ -204,6 +205,7 @@ class BTScaleService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             
             // 設置 Timer
             mTimer = NSTimer.scheduledTimerWithTimeInterval(5.0, target:self, selector:#selector(self.procBTScanTimeOut), userInfo: nil, repeats: false)
+            mTimer = NSTimer()
     
         case .Resetting:
             msg = "bt_mobile_resetting"
@@ -257,8 +259,6 @@ class BTScaleService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         if (IS_DEBUG) { print("found SrvChannel: \(self.mUIDServ.UUID)") }
         
         // 指定的 charact 執行 Discover 與連接
-        //peripheral.discoverCharacteristics([UID_CHAR_T], forService: self.mUIDServ)
-        //peripheral.discoverCharacteristics([UID_CHAR_W], forService: self.mUIDServ)
         peripheral.discoverCharacteristics([UID_CHAR_T, UID_CHAR_W], forService: self.mUIDServ)
     }
     
@@ -367,10 +367,13 @@ class BTScaleService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             if (mIntVal[0] == 1) {
                 
                 // 通知 parent 有資料回傳, 標記: 'BT_data'
-                if let dictRS = self.self.getScaleResult(mIntVal) {
+                let dictRS = self.getScaleResult(mIntVal)
+                let bolsRS = (Float(dictRS["weight"]!) > 0.0) ? true : false
+                
+                if (bolsRS == true) {
                     delegate?.handlerBLE("BT_data", result: true, msg: pubClass.getLang("bt_testing_success"), dictData: dictRS)
                 } else {
-                    delegate?.handlerBLE("BT_data", result: false, msg: pubClass.getLang("bt_testingvalerr"), dictData: nil)
+                    delegate?.handlerBLE("BT_data", result: false, msg: pubClass.getLang("bt_testingvalerr"), dictData: dictRS)
                 }
                 
                 return
@@ -388,7 +391,7 @@ class BTScaleService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
      * [1, 1, 45, 173, 2, 177, 1, 23, 2, 1, 0, 28, 0, 221, 10, 6, 85, 0, 230, 0]
      * @return Dict data, ex. 'weight'='69.1', 'bmi'='23.0', ...
      */
-    private func getScaleResult(aryRS: Array<UInt8>)-> Dictionary<String, String>? {
+    private func getScaleResult(aryRS: Array<UInt8>)-> Dictionary<String, String>! {
         // 預設數值
         var dictRS: Dictionary<String, String> = [:]
         for strScaleField in aryTestingField {
@@ -396,9 +399,10 @@ class BTScaleService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         }
         dictRS["calory"] = "0"
         
-        // 檢查回傳的資料是否太離譜, 以 'vfat'內臟脂肪判別 >= 100, <=1
-        if aryRS[14] >= 255 {
-            return nil
+        // 檢查回傳的資料是否太離譜, 以 'vfat'內臟脂肪判別 >= 99, <=1
+        if (aryRS[14] >= 99 || aryRS[14] <= 1)  {
+            print("vfat err")
+            return dictRS
         }
         
         // 重新設定各健康數值

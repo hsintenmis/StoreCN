@@ -36,7 +36,7 @@ class CalendarCellData {
     // 系統 Calendar 參數設定
     let mCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
     let mNSDate = NSDate()
-    let components: NSDateComponents
+    let components: NSDateComponents!
     
     /**
      * init

@@ -20,10 +20,9 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate, BTScaleS
     
     // @IBOutlet
     @IBOutlet var tableList: UITableView!
-    @IBOutlet weak var labBTStat: UILabel!
-    @IBOutlet weak var btnBTConn: UIButton!
     @IBOutlet weak var webScale: UIWebView!
     
+    @IBOutlet weak var labBTStat: UILabel!
     @IBOutlet weak var labVal_bmi: UILabel!
     @IBOutlet weak var labVal_fat: UILabel!
     @IBOutlet weak var labVal_water: UILabel!
@@ -31,9 +30,11 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate, BTScaleS
     @IBOutlet weak var labVal_bone: UILabel!
     @IBOutlet weak var labVal_muscle: UILabel!
     @IBOutlet weak var labVal_vfat: UILabel!
-    
     @IBOutlet weak var labMemberName: UILabel!
     @IBOutlet weak var labMemberInfo: UILabel!
+    
+    @IBOutlet weak var btnBTConn: UIButton!
+    @IBOutlet weak var btnTestExplain: UIButton!
     
     // common property
     let pubClass: PubClass = PubClass()
@@ -45,8 +46,7 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate, BTScaleS
     // 其他參數
     private var mBTScaleService: BTScaleService!  // 體脂計藍牙 Service
     private var currIndexMember: NSIndexPath? // 已選擇的會員
-    private var dictRequest: Dictionary<String, AnyObject> = [:]  // 回傳資料
-    private var dictTableData: Dictionary<String, AnyObject> = [:]  // 本頁面欄位對應的資料
+    private var dictRequest: Dictionary<String, AnyObject> = [:]  // 量測數值與會員資料
     private var dictLabVal: Dictionary<String, UILabel> = [:] // 產生其他量測數值 UILabel 對應
     
     // 體指計數值對應參數, value 來自'BTScaleService'
@@ -65,13 +65,10 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate, BTScaleS
         aryTestingField = mBTScaleService.aryTestingField
         
         // 選擇的會員資料初始值
-        dictTableData["member"] = [:]
+        dictRequest["member"] = [:]
         
         // 初始量測數值資料歸0
-        for strScaleField in aryTestingField {
-            dictTableData[strScaleField] = "0.0"
-        }
-        dictTableData["calory"] = "0"
+        clearTestingVal()
         
         // 產生其他量測數值 UILabel 對應
         dictLabVal["bmi"] = labVal_bmi
@@ -83,9 +80,15 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate, BTScaleS
         dictLabVal["vfat"] = labVal_vfat
         
         // view 相關 field
-        btnBTConn.alpha = 0.1
         webScale.scrollView.scrollEnabled = false
         webScale.scrollView.bounces = false
+        
+        btnBTConn.alpha = 0.0
+        btnTestExplain.alpha = 0.0
+        
+        btnBTConn.layer.cornerRadius = 5
+        btnTestExplain.layer.cornerRadius = 5
+        setViewChartHTML("0")
     }
     
     /**
@@ -94,33 +97,18 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate, BTScaleS
     override func viewDidAppear(animated: Bool) {
         if (bolReload) {
             bolReload = false
-            self.btnBTConn.layer.cornerRadius = 5
-            self.setViewChartHTML("0")
+
         }
     }
     
     /**
-    * 本頁面 Table field 資料重新設定並重整
-    */
-    private func resetTableData() {
-        // 量測數值 cell 設定
+     * // 初始量測數值資料歸 0
+     */
+    private func clearTestingVal() {
         for strScaleField in aryTestingField {
-            if (strScaleField != "weight") {
-                dictLabVal[strScaleField]!.text = dictTableData[strScaleField] as? String
-            }
+            dictRequest[strScaleField] = "0.0"
         }
-
-        // 會員名稱與相關資料
-        let strGender = pubClass.getLang("gender_" + (dictTableData["member"]!["gender"] as! String))
-        let strAge = dictTableData["member"]!["age"] as! String + pubClass.getLang("name_age")
-        let strHeight = dictTableData["member"]!["height"] as! String + "cm"
-        let strMemberInfo = strGender + strAge + ", " + strHeight
-
-        labMemberInfo.text = strMemberInfo
-        labMemberName.text = dictTableData["member"]!["membername"] as? String
-        
-        // WebView chart 重新載入
-        self.setViewChartHTML("0")
+        dictRequest["calory"] = "0"
     }
     
     /**
@@ -153,7 +141,6 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate, BTScaleS
         }
     }
 
-
     /**
      * #mark: UITableView Delegate
      * UITableView, Cell 點取
@@ -169,23 +156,49 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate, BTScaleS
     */
     func MemberSeltPageDone(MemberData: Dictionary<String, AnyObject>, MemberindexPath: NSIndexPath) {
         currIndexMember = MemberindexPath
-        dictTableData["member"] = MemberData
+        dictRequest["member"] = MemberData
+        
+        // 會員名稱與相關資料重新顯示
+        let strGender = pubClass.getLang("gender_" + (dictRequest["member"]!["gender"] as! String))
+        let strAge = dictRequest["member"]!["age"] as! String + pubClass.getLang("name_age")
+        let strHeight = dictRequest["member"]!["height"] as! String + "cm"
+        let strMemberInfo = strGender + strAge + ", " + strHeight
+        
+        labMemberInfo.text = strMemberInfo
+        labMemberName.text = dictRequest["member"]!["membername"] as? String
         
         // 量測值全部歸0
-        for strScaleField in aryTestingField {
-            dictTableData[strScaleField] = "0.0"
-        }
-        dictTableData["calory"] = "0"
+        clearTestingVal()
         
-        // 本頁面 field 資料全部資料重設與重整
-        self.resetTableData()
+        // 本頁面數值資料重設並重整
+        self.resetValData()
         
         // 體脂計 user 資料更新, 'gender', 'age', 'height'
         let dictUser = ["gender":MemberData["gender"] as! String, "age":MemberData["age"] as! String, "height":MemberData["height"] as! String]
         mBTScaleService.setUserData(dictUser)
         
-        // button 藍芽連線
-        btnBTConn.alpha = 1.0
+        // 其他 filed 設定
+        btnBTConn.alpha = 1.0  // button, 藍芽連線
+        btnTestExplain.alpha = 1.0
+        
+        if (mBTScaleService.BT_ISREADYFOTESTING == true) {
+            labBTStat.text = pubClass.getLang("bt_btdeviceready")  // BT stat 訊息
+        }
+    }
+    
+    /**
+     * 本頁面數值資料重設並重整
+     */
+    private func resetValData() {
+        // 量測數值 cell 設定
+        for strScaleField in aryTestingField {
+            if (strScaleField != "weight") {
+                dictLabVal[strScaleField]!.text = dictRequest[strScaleField] as? String
+            }
+        }
+        
+        // WebView chart 重新載入
+        self.setViewChartHTML(dictRequest["weight"] as! String)
     }
     
     /**
@@ -220,7 +233,21 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate, BTScaleS
             
             break
             
+        // 藍芽設備回傳資料
         case "BT_data":
+            // 回傳資料重新設定到 'dictTableData'
+            if (result == true) {
+                for strScaleField in aryTestingField {
+                    dictRequest[strScaleField] = dictData![strScaleField]
+                }
+            } else {
+                // 量測值全部歸0
+                clearTestingVal()
+            }
+            
+            self.resetValData()
+            labBTStat.text = msg
+            
             break
             
         default:
@@ -229,10 +256,17 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate, BTScaleS
     }
     
     /**
-    * public, 斷開藍芽連線
+    * public, parent 調用, 斷開藍芽連線
     */
     func dicConnBT() {
         mBTScaleService.BTDisconn()
+    }
+    
+    /**
+     * public, parent 調用, 回傳量測數值與相關資料
+     */
+    func getTestingData() -> Dictionary<String, AnyObject>! {
+        return dictRequest
     }
     
     /**
@@ -252,7 +286,22 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate, BTScaleS
             return
         }
         
+        // 健康管理月曆主頁面(公用)
+        if (strIdent == "BTScaleExplain") {
+            let mVC = segue.destinationViewController as! HealthCalendar
+            mVC.strMemberId = dictRequest["member"]!["memberid"] as! String
+
+            return
+        }
+        
         return
+    }
+    
+    /**
+     * act, 點取 '查看量測結果', 跳轉健康管理月曆主頁面
+     */
+    @IBAction func actTestExplain(sender: UIButton) {
+        self.performSegueWithIdentifier("BTScaleExplain", sender: nil)
     }
     
     /**

@@ -25,7 +25,7 @@ class TestingMemberSel: UIViewController, PubMemberSelectDelegate {
     @IBOutlet weak var contviewTable: UIView!
     
     // common property
-    let pubClass: PubClass = PubClass()
+    private let pubClass: PubClass = PubClass()
     
     // public, parent 設定設定
     var strToday = ""

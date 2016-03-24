@@ -16,7 +16,8 @@ class HealthDataInit {
     private var pubClass = PubClass()
     
     // 指定日期的全部健康項目資料 dict array
-    private var mapAllData: [String: [String:String]] = [:]
+    //private var mapAllData: [String: [String:String]] = [:]
+    private var mapAllData: Dictionary<String, Dictionary<String, String>> = [:]
     
     /**
      * init
@@ -29,7 +30,8 @@ class HealthDataInit {
      * 回傳指定日期的全部健康項目資料 dict array<BR>
      * 回傳如: 'bmi' => ['name'=>"BMI", 'val'=>"20.1", ...], ...
      */
-    func GetAllTestData()->[String: [String:String]] {
+    //func GetAllTestData()->[String: [String:String]] {
+    func GetAllTestData() -> Dictionary<String, Dictionary<String, String>> {
         return mapAllData
     }
     
