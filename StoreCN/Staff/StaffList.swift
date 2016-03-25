@@ -34,7 +34,7 @@ class StaffList: UIViewController {
         super.viewDidLoad()
         pubClass = PubClass()
         
-        // TableCell autoheight
+        // TableCell 自動調整高度
         tableData.estimatedRowHeight = 100.0
         tableData.rowHeight = UITableViewAutomaticDimension
     }

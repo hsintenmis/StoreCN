@@ -16,6 +16,7 @@
 		42E21F111C68826500B85EA9 /* PubCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E21F101C68826500B85EA9 /* PubCalendarCell.swift */; };
 		42E21F131C68E6F500B85EA9 /* CalendarCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E21F121C68E6F500B85EA9 /* CalendarCellData.swift */; };
 		42E2D5A21C99ACBF0075D14B /* PubCourseSaleAdEd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E2D5A11C99ACBF0075D14B /* PubCourseSaleAdEd.swift */; };
+		42E823481CA5859B00893881 /* PubSoqibedAdEdCont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E823471CA5859B00893881 /* PubSoqibedAdEdCont.swift */; };
 		42F6E3651C6B86AE00C9BB94 /* ReservListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F6E3641C6B86AE00C9BB94 /* ReservListCell.swift */; };
 		42FA49C81C931AA3001C6AEE /* KBNavyBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FA49C71C931AA3001C6AEE /* KBNavyBar.swift */; };
 		42FD09E11C841E0D00ADAD4C /* PickerDateTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FD09E01C841E0D00ADAD4C /* PickerDateTime.swift */; };
@@ -226,6 +227,7 @@
 		42E21F101C68826500B85EA9 /* PubCalendarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubCalendarCell.swift; path = PubView/PubCalendarCell.swift; sourceTree = "<group>"; };
 		42E21F121C68E6F500B85EA9 /* CalendarCellData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarCellData.swift; path = PubClass/CalendarCellData.swift; sourceTree = "<group>"; };
 		42E2D5A11C99ACBF0075D14B /* PubCourseSaleAdEd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubCourseSaleAdEd.swift; path = PubView/PubCourseSaleAdEd.swift; sourceTree = "<group>"; };
+		42E823471CA5859B00893881 /* PubSoqibedAdEdCont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubSoqibedAdEdCont.swift; path = PubView/PubSoqibedAdEdCont.swift; sourceTree = "<group>"; };
 		42F6E3641C6B86AE00C9BB94 /* ReservListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReservListCell.swift; path = ServiceMgr/ReservListCell.swift; sourceTree = "<group>"; };
 		42FA49C71C931AA3001C6AEE /* KBNavyBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KBNavyBar.swift; path = PubClass/KBNavyBar.swift; sourceTree = "<group>"; };
 		42FD09E01C841E0D00ADAD4C /* PickerDateTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PickerDateTime.swift; path = PubClass/PickerDateTime.swift; sourceTree = "<group>"; };
@@ -791,13 +793,14 @@
 				D7BB2ADA1C64788700624E08 /* PubMemberSelect.swift */,
 				D7BB2ADB1C64788700624E08 /* PubMemberSelectCell.swift */,
 				D7BB2ACF1C646DC800624E08 /* PubSoqibedSelect.swift */,
+				42FF6F381CA44ECC00E5E870 /* PubSoqibedAdEd.swift */,
+				42E823471CA5859B00893881 /* PubSoqibedAdEdCont.swift */,
 				D7BB2AD21C6477F800624E08 /* PubMemberPurchaseSelect.swift */,
 				D7BB2AE21C64799D00624E08 /* PubMemberPurchaseSelectCell.swift */,
 				42E21F101C68826500B85EA9 /* PubCalendarCell.swift */,
 				D7645BE51C802D8000507072 /* PubPurReturnPdList.swift */,
 				D7645BE71C802EFC00507072 /* PubPurReturnPdListCell.swift */,
 				D705CE401C8FC2FF00CC9303 /* PubYYMMColtCell.swift */,
-				42FF6F381CA44ECC00E5E870 /* PubSoqibedAdEd.swift */,
 			);
 			name = PubView;
 			sourceTree = "<group>";
@@ -1046,6 +1049,7 @@
 				D72BA3371C882EE80028898D /* StaffBenefitDetail.swift in Sources */,
 				D70CD9431C72CBF8008E79E1 /* CourseSaleCourseSel.swift in Sources */,
 				D74B4B991C9FD4DA001F1176 /* HealthDataInit.swift in Sources */,
+				42E823481CA5859B00893881 /* PubSoqibedAdEdCont.swift in Sources */,
 				D7EDE8861C6081B800665542 /* MemberMainColtViewCell.swift in Sources */,
 				D70CD9481C72CC42008E79E1 /* SugstChildPage.swift in Sources */,
 				D7EDE8841C60733200665542 /* MemberMainPager.swift in Sources */,

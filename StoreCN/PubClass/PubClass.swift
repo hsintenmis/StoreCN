@@ -32,6 +32,11 @@ class PubClass {
     let filenameMEADDB = "meaddb.txt"      // MEAD DB 資料檔名稱
     let aryProductType = ["S", "C", "N"]   // 商品分類
     
+    // soqibed H01..., 遠紅外線/搖擺機 設備代碼, 對應時間
+    let aryHotDevCode = ["H00","H01","H02","H10","H11","H12"]
+    let aryHotDevMinsVal = [0, 15, 30, 45, 60]
+    let aryS00DevMinsVal = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 30]
+    
     // 顏色
     let dictColor = ["white":"FFFFFF", "red":"FFCCCC", "gray":"C0C0C0", "silver":"F0F0F0", "blue":"66CCFF", "black":"000000", "green":"99CC33", "RedDark":"990000", "GreenDark":"336633", "BlueDark":"000099"]
     

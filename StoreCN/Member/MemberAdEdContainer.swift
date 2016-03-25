@@ -34,9 +34,7 @@ class MemberAdEdContainer: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var txtAddr: UITextField!
     
     // common property
-    var mVCtrl: UIViewController!
     let pubClass: PubClass = PubClass()
-    var dictPref: Dictionary<String, AnyObject>!  // Prefer data
     
     // public property, 上層 parent 設定
     var strToday: String!
@@ -61,10 +59,6 @@ class MemberAdEdContainer: UITableViewController, UITextFieldDelegate {
     */
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // 固定初始參數
-        mVCtrl = self
-        dictPref = pubClass.getPrefData()
         
         // Picker param 初始資料
         dictPickParm["birth_def"] = "19600101"

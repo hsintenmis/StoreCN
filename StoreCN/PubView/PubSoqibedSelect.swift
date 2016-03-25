@@ -8,28 +8,29 @@ import Foundation
 /**
  * protocol, PubSoqibedSelect Delegate
  */
+/*
 protocol PubSoqibedSelectDelegate {
     /**
      * Table Cell 點取，點取指定資料，實作點取後相關程序
      */
     func SoqibedDataSelected(SoqibedData dictData: Dictionary<String, AnyObject>, indexPath: NSIndexPath)
 }
+*/
 
 /**
  * 會員產生的 SoqiBed 資料選擇 公用 class
  */
 class PubSoqibedSelect: UITableViewController {
-    var delegate = PubSoqibedSelectDelegate?()
+    //var delegate = PubSoqibedSelectDelegate?()
     
     // @IBOutlet
     @IBOutlet weak var tableData: UITableView!
     @IBOutlet weak var labNoData: UILabel!
     
     // common property
-    var mVCtrl: UIViewController!
     let pubClass: PubClass = PubClass()
     
-    // Table DataSource, Soqibed 全部的檢測資料, paent 設定
+    // public, paent 設定, Table DataSource, Soqibed 全部的檢測資料
     var arySoqibedData: Array<Dictionary<String, AnyObject>> = []
     
     // 其他參數設定
@@ -43,7 +44,6 @@ class PubSoqibedSelect: UITableViewController {
         super.viewDidLoad()
         
         // 固定初始參數
-        mVCtrl = self
         newIndexPath = NSIndexPath(forRow: 0, inSection: 0)
         labNoData.alpha = 0.0
         
@@ -108,8 +108,28 @@ class PubSoqibedSelect: UITableViewController {
      * UITableView, Cell 點取
      */
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        delegate?.SoqibedDataSelected(SoqibedData: arySoqibedData[indexPath.row], indexPath: indexPath)
+        //delegate?.SoqibedDataSelected(SoqibedData: arySoqibedData[indexPath.row], indexPath: indexPath)
+        
+        // 取得選擇的 SOQIBED dict Data, 跳轉編輯頁面
+        self.performSegueWithIdentifier("SoqiBedMember", sender: arySoqibedData[indexPath.row])
+    }
+    
+    /**
+     * Segue 跳轉頁面，StoryBoard 介面需要拖曳 pressenting segue
+     */
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let strIdentName = segue.identifier
+        
+        //  SOQIBED 編輯頁面
+        if (strIdentName == "SoqiBedMember") {
+            let mVC = segue.destinationViewController as! PubSoqibedAdEd
+            mVC.dictAllData = sender as! Dictionary<String, AnyObject>
+            mVC.strMode = "edit"
+            
+            return
+        }
+        
+        return
     }
     
 }
-
