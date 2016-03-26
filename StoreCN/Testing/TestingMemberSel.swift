@@ -44,7 +44,8 @@ class TestingMemberSel: UIViewController, PubMemberSelectDelegate {
         // 固定初始參數
         
         // 初始會員選擇公用 class
-        mPubMemberSelect = storyboard!.instantiateViewControllerWithIdentifier("PubMemberList") as! PubMemberSelect
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        mPubMemberSelect = storyboard.instantiateViewControllerWithIdentifier("PubMemberList") as! PubMemberSelect
         mPubMemberSelect.delegate = self
         mPubMemberSelect.aryMember = aryMember
         mPubMemberSelect.currIndexPath = currIndexPath

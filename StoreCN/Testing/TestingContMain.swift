@@ -1,5 +1,5 @@
 //
-// Container 主頁面
+// Container 主頁面, Static TableView
 //
 
 import UIKit
@@ -84,6 +84,14 @@ class TestingContMain: UITableViewController {
             self.dictAllData = dictData
             self.chkHaveData()
         })
+    }
+    
+    /**
+     * #mark: UITableView Delegate
+     * UITableView, Cell 點取
+     */
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+
     }
 
     /**

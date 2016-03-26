@@ -38,8 +38,8 @@ class PubCourseSaleEdit: UIViewController {
         super.viewDidLoad()
         
         // !! container 直接加入 ViewControler
-        mPubCourseSaleAdEd = storyboard?.instantiateViewControllerWithIdentifier("PubCourseSaleAdEd") as! PubCourseSaleAdEd
-        
+        let storyboard = UIStoryboard(name: "CourseSaleAdEd", bundle: nil)
+        mPubCourseSaleAdEd = storyboard.instantiateViewControllerWithIdentifier("PubCourseSaleAdEd") as! PubCourseSaleAdEd
         
         mPubCourseSaleAdEd.dictSaleData = dictSaleData
         mPubCourseSaleAdEd.strToday = strToday

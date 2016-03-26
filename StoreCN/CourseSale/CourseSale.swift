@@ -48,8 +48,9 @@ class CourseSale: UIViewController {
             return
         }
         
-        // !! container 直接加入 ViewControler
-        mPubCourseSaleAdEd = storyboard?.instantiateViewControllerWithIdentifier("PubCourseSaleAdEd") as! PubCourseSaleAdEd
+        // !! container 直接加入 ViewControler, 切換其他 storyboard
+        let storyboard = UIStoryboard(name: "CourseSaleAdEd", bundle: nil)
+        mPubCourseSaleAdEd = storyboard.instantiateViewControllerWithIdentifier("PubCourseSaleAdEd") as! PubCourseSaleAdEd
         
         mPubCourseSaleAdEd.strToday = strToday
         mPubCourseSaleAdEd.aryCourseDB = aryCourseDB

@@ -10,6 +10,15 @@
 		4226BF551C9E73B30096AECA /* CourseReservAdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4226BF541C9E73B30096AECA /* CourseReservAdd.swift */; };
 		4226BF571C9E7BCE0096AECA /* CourseReservMemberSel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4226BF561C9E7BCE0096AECA /* CourseReservMemberSel.swift */; };
 		4226BF591C9EFA520096AECA /* CourseSelCustCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4226BF581C9EFA520096AECA /* CourseSelCustCell.swift */; };
+		42CD2E911CA624940041B44B /* Mead.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD2E901CA624940041B44B /* Mead.swift */; };
+		42CD2E931CA629200041B44B /* CourseSaleAdEd.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42CD2E921CA629200041B44B /* CourseSaleAdEd.storyboard */; };
+		42CD2E971CA65E7A0041B44B /* Testing.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42CD2E961CA65E7A0041B44B /* Testing.storyboard */; };
+		42CD2E991CA65FEE0041B44B /* SysConfig.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42CD2E981CA65FEE0041B44B /* SysConfig.storyboard */; };
+		42CD2E9B1CA660990041B44B /* AnalyData.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42CD2E9A1CA660990041B44B /* AnalyData.storyboard */; };
+		42CD2E9D1CA661E50041B44B /* Product.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42CD2E9C1CA661E50041B44B /* Product.storyboard */; };
+		42CD2E9F1CA6623D0041B44B /* Staff.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42CD2E9E1CA6623D0041B44B /* Staff.storyboard */; };
+		42CD2EA11CA664870041B44B /* Message.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42CD2EA01CA664870041B44B /* Message.storyboard */; };
+		42CD2EA31CA668430041B44B /* Health.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42CD2EA21CA668430041B44B /* Health.storyboard */; };
 		42CE5D0B1C954FEC00F82C4C /* PubCourseSaleEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CE5D0A1C954FEC00F82C4C /* PubCourseSaleEdit.swift */; };
 		42E21F0B1C68800500B85EA9 /* CourseReserv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E21F0A1C68800500B85EA9 /* CourseReserv.swift */; };
 		42E21F0F1C68825200B85EA9 /* PickerDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E21F0E1C68825200B85EA9 /* PickerDate.swift */; };
@@ -221,6 +230,15 @@
 		4226BF541C9E73B30096AECA /* CourseReservAdd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CourseReservAdd.swift; path = ServiceMgr/CourseReservAdd.swift; sourceTree = "<group>"; };
 		4226BF561C9E7BCE0096AECA /* CourseReservMemberSel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CourseReservMemberSel.swift; path = ServiceMgr/CourseReservMemberSel.swift; sourceTree = "<group>"; };
 		4226BF581C9EFA520096AECA /* CourseSelCustCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CourseSelCustCell.swift; path = ServiceMgr/CourseSelCustCell.swift; sourceTree = "<group>"; };
+		42CD2E901CA624940041B44B /* Mead.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Mead.swift; path = Mead/Mead.swift; sourceTree = "<group>"; };
+		42CD2E921CA629200041B44B /* CourseSaleAdEd.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = CourseSaleAdEd.storyboard; path = PubView/CourseSaleAdEd.storyboard; sourceTree = "<group>"; };
+		42CD2E961CA65E7A0041B44B /* Testing.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Testing.storyboard; path = Testing/Testing.storyboard; sourceTree = "<group>"; };
+		42CD2E981CA65FEE0041B44B /* SysConfig.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SysConfig.storyboard; path = SysConfig/SysConfig.storyboard; sourceTree = "<group>"; };
+		42CD2E9A1CA660990041B44B /* AnalyData.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = AnalyData.storyboard; path = AnalyData/AnalyData.storyboard; sourceTree = "<group>"; };
+		42CD2E9C1CA661E50041B44B /* Product.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Product.storyboard; path = Product/Product.storyboard; sourceTree = "<group>"; };
+		42CD2E9E1CA6623D0041B44B /* Staff.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Staff.storyboard; path = Staff/Staff.storyboard; sourceTree = "<group>"; };
+		42CD2EA01CA664870041B44B /* Message.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Message.storyboard; path = Message/Message.storyboard; sourceTree = "<group>"; };
+		42CD2EA21CA668430041B44B /* Health.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Health.storyboard; path = Health/Health.storyboard; sourceTree = "<group>"; };
 		42CE5D0A1C954FEC00F82C4C /* PubCourseSaleEdit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubCourseSaleEdit.swift; path = PubView/PubCourseSaleEdit.swift; sourceTree = "<group>"; };
 		42E21F0A1C68800500B85EA9 /* CourseReserv.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CourseReserv.swift; path = ServiceMgr/CourseReserv.swift; sourceTree = "<group>"; };
 		42E21F0E1C68825200B85EA9 /* PickerDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PickerDate.swift; path = PubClass/PickerDate.swift; sourceTree = "<group>"; };
@@ -444,6 +462,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		42CD2E8F1CA624550041B44B /* Mead */ = {
+			isa = PBXGroup;
+			children = (
+				42CD2E901CA624940041B44B /* Mead.swift */,
+			);
+			name = Mead;
+			sourceTree = "<group>";
+		};
 		D7037A461C58BB8B002A955E = {
 			isa = PBXGroup;
 			children = (
@@ -469,6 +495,7 @@
 				D7496D1F1C5B4DD600B75D6A /* ServiceMgr */,
 				D70CD93C1C72CB24008E79E1 /* CourseSale */,
 				D7496D1E1C5B4DCE00B75D6A /* Testing */,
+				42CD2E8F1CA624550041B44B /* Mead */,
 				D74B4B971C9FD4B3001F1176 /* Health */,
 				D7496D1B1C5B4D9700B75D6A /* Member */,
 				D7496D201C5B4DE900B75D6A /* Product */,
@@ -654,6 +681,7 @@
 		D7496D1E1C5B4DCE00B75D6A /* Testing */ = {
 			isa = PBXGroup;
 			children = (
+				42CD2E961CA65E7A0041B44B /* Testing.storyboard */,
 				D74B4B8D1C9FCB14001F1176 /* TestingDevLiist.swift */,
 				D74B4B911C9FCBE0001F1176 /* TestingContMain.swift */,
 				D74B4B9C1C9FEA1A001F1176 /* TestingMemberSel.swift */,
@@ -680,6 +708,7 @@
 		D7496D201C5B4DE900B75D6A /* Product */ = {
 			isa = PBXGroup;
 			children = (
+				42CD2E9C1CA661E50041B44B /* Product.storyboard */,
 				D720FBA01C7458F000AE640C /* Purchase.swift */,
 				D7F45F421C75733400735D09 /* PurchasePdSelt.swift */,
 				D7F45F441C75752A00735D09 /* PurchasePdSeltCell.swift */,
@@ -708,6 +737,7 @@
 		D7496D211C5B4DF600B75D6A /* Staff */ = {
 			isa = PBXGroup;
 			children = (
+				42CD2E9E1CA6623D0041B44B /* Staff.storyboard */,
 				D70FCC241C86CCD80035D1B6 /* StaffList.swift */,
 				D70FCC281C86D4140035D1B6 /* StaffListCell.swift */,
 				D70FCC261C86CF1D0035D1B6 /* StaffAdEd.swift */,
@@ -724,6 +754,7 @@
 		D7496D221C5B4DFF00B75D6A /* Message */ = {
 			isa = PBXGroup;
 			children = (
+				42CD2EA01CA664870041B44B /* Message.storyboard */,
 				D7F092211C896C72005D8C96 /* HealthWitnessList.swift */,
 				D7F092251C89782E005D8C96 /* HealthWitnessListColtViewCell.swift */,
 				D7F092271C898D6E005D8C96 /* HealthWitnessDetail.swift */,
@@ -739,6 +770,7 @@
 		D7496D231C5B4E0900B75D6A /* AnalyData */ = {
 			isa = PBXGroup;
 			children = (
+				42CD2E9A1CA660990041B44B /* AnalyData.storyboard */,
 				D710A0861C8EC3A900264CEB /* AnalyDataMain.swift */,
 				D710A0781C8E794400264CEB /* AnalyDataToday.swift */,
 				D710A07E1C8EA50200264CEB /* CellSheetInvoice.swift */,
@@ -759,6 +791,7 @@
 		D7496D241C5B4E1300B75D6A /* SysConfig */ = {
 			isa = PBXGroup;
 			children = (
+				42CD2E981CA65FEE0041B44B /* SysConfig.storyboard */,
 				D72E981E1C912BA600DA9FA3 /* SysConfigMain.swift */,
 				D72E98281C91695500DA9FA3 /* SysConfigMainContainer.swift */,
 				D72E98221C91523300DA9FA3 /* ConfigProfile.swift */,
@@ -773,6 +806,7 @@
 		D74B4B971C9FD4B3001F1176 /* Health */ = {
 			isa = PBXGroup;
 			children = (
+				42CD2EA21CA668430041B44B /* Health.storyboard */,
 				D74B4B981C9FD4DA001F1176 /* HealthDataInit.swift */,
 				D709CCA11CA3974800F85DDF /* HealthCalendar.swift */,
 				D709CCA31CA3B36700F85DDF /* HealthTestingValCell.swift */,
@@ -784,6 +818,7 @@
 		D7BB2AD11C646DD600624E08 /* PubView */ = {
 			isa = PBXGroup;
 			children = (
+				42CD2E921CA629200041B44B /* CourseSaleAdEd.storyboard */,
 				D7BB2AD61C64788700624E08 /* PubCourseSelect.swift */,
 				D7BB2AD71C64788700624E08 /* PubCourseSelectCell.swift */,
 				42CE5D0A1C954FEC00F82C4C /* PubCourseSaleEdit.swift */,
@@ -876,13 +911,16 @@
 				D7037B141C58C726002A955E /* menuitem_seasrchagent_256.png in Resources */,
 				D7037B261C58C726002A955E /* staff_128_02.png in Resources */,
 				D7037ADD1C58C726002A955E /* arrow_down02.png in Resources */,
+				42CD2E9D1CA661E50041B44B /* Product.storyboard in Resources */,
 				D7037B1A1C58C726002A955E /* okteta_128.png in Resources */,
 				D7037AE21C58C726002A955E /* arrow_right02.png in Resources */,
 				D7037B231C58C726002A955E /* menu_message.png in Resources */,
 				D7037B021C58C726002A955E /* homelogo_003.png in Resources */,
 				D7037B2B1C58C726002A955E /* user_empty01.png in Resources */,
+				42CD2EA31CA668430041B44B /* Health.storyboard in Resources */,
 				D7037AE41C58C726002A955E /* arrow_up03.png in Resources */,
 				D7037B241C58C726002A955E /* staff_128.png in Resources */,
+				42CD2E9B1CA660990041B44B /* AnalyData.storyboard in Resources */,
 				D7037AF81C58C726002A955E /* dev04.png in Resources */,
 				D7037B041C58C726002A955E /* menu_storesheet.png in Resources */,
 				D7037AEE1C58C726002A955E /* camera_shutter.png in Resources */,
@@ -901,12 +939,14 @@
 				D7037AED1C58C726002A955E /* camera_256_01.png in Resources */,
 				D7037B0D1C58C726002A955E /* menu_calendar01_256.png in Resources */,
 				D7037B2C1C58C726002A955E /* viewedocument_128.png in Resources */,
+				42CD2E9F1CA6623D0041B44B /* Staff.storyboard in Resources */,
 				D7037AE31C58C726002A955E /* arrow_up02.png in Resources */,
 				D7037AE11C58C726002A955E /* arrow_right01.png in Resources */,
 				D7037B0B1C58C726002A955E /* logo_merit02.png in Resources */,
 				D7037B071C58C726002A955E /* menu_product.png in Resources */,
 				D7037AEB1C58C726002A955E /* calendarclock_128.png in Resources */,
 				D7037AF91C58C726002A955E /* doctor01.png in Resources */,
+				42CD2EA11CA664870041B44B /* Message.storyboard in Resources */,
 				D7037AFF1C58C726002A955E /* f2_l_p.jpg in Resources */,
 				D7037B221C58C726002A955E /* search03.png in Resources */,
 				D7037ADB1C58C726002A955E /* app_icon01.png in Resources */,
@@ -915,6 +955,7 @@
 				D7037B081C58C726002A955E /* kword_128.png in Resources */,
 				D7037B191C58C726002A955E /* news01_128.png in Resources */,
 				D7037AFC1C58C726002A955E /* engval_down.png in Resources */,
+				42CD2E991CA65FEE0041B44B /* SysConfig.storyboard in Resources */,
 				D7037A6C1C58C008002A955E /* Main.storyboard in Resources */,
 				D7037AE81C58C726002A955E /* bluetooth_on_128.png in Resources */,
 				D7037ADE1C58C726002A955E /* arrow_down03.png in Resources */,
@@ -934,6 +975,7 @@
 				D7037AFA1C58C726002A955E /* edit_128_001.png in Resources */,
 				D7037B171C58C726002A955E /* msgicon_qq.png in Resources */,
 				D7037B1B1C58C726002A955E /* photo1.png in Resources */,
+				42CD2E931CA629200041B44B /* CourseSaleAdEd.storyboard in Resources */,
 				D7037B0A1C58C726002A955E /* logo_merit01.png in Resources */,
 				D7037B2A1C58C726002A955E /* user_128.png in Resources */,
 				D7037B181C58C726002A955E /* msgicon_wechat.png in Resources */,
@@ -949,6 +991,7 @@
 				D7037B291C58C726002A955E /* unchecked_checkbox_128.png in Resources */,
 				D7037B251C58C726002A955E /* menu_staff.png in Resources */,
 				D7037AF61C58C726002A955E /* dev02.png in Resources */,
+				42CD2E971CA65E7A0041B44B /* Testing.storyboard in Resources */,
 				D7037B051C58C726002A955E /* klipper_128.png in Resources */,
 				D7037B1F1C58C726002A955E /* scribus_128.png in Resources */,
 				D7037B1C1C58C726002A955E /* planner_256.png in Resources */,
@@ -1063,6 +1106,7 @@
 				D710A07F1C8EA50200264CEB /* CellSheetInvoice.swift in Sources */,
 				D7BB2AE11C64788700624E08 /* PubMemberSelectCell.swift in Sources */,
 				D74B4B9B1C9FE1C4001F1176 /* BTScaleMainCont.swift in Sources */,
+				42CD2E911CA624940041B44B /* Mead.swift in Sources */,
 				D7F092221C896C72005D8C96 /* HealthWitnessList.swift in Sources */,
 				4226BF551C9E73B30096AECA /* CourseReservAdd.swift in Sources */,
 				D74B4B9D1C9FEA1A001F1176 /* TestingMemberSel.swift in Sources */,

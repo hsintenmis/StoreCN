@@ -301,7 +301,12 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate, BTScaleS
      * act, 點取 '查看量測結果', 跳轉健康管理月曆主頁面
      */
     @IBAction func actTestExplain(sender: UIButton) {
-        self.performSegueWithIdentifier("BTScaleExplain", sender: nil)
+        let storyboard = UIStoryboard(name: "Health", bundle: nil)
+        let mVC = storyboard.instantiateViewControllerWithIdentifier("HealthCalendar") as! HealthCalendar
+        mVC.strMemberId = dictRequest["member"]!["memberid"] as! String
+        self.presentViewController(mVC, animated: true, completion: nil)
+        
+        return
     }
     
     /**

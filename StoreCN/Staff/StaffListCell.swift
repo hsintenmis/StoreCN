@@ -36,7 +36,6 @@ class StaffListCell: UITableViewCell {
         var strLesson = ""
         
         if let tmpAry = ditItem["lesson"] as? Array<Dictionary<String, String>> {
-            
             for i in (0..<tmpAry.count) {
                 let dictLesson = tmpAry[i]
                 strLesson += "[" +

@@ -181,16 +181,31 @@ class MainMenu: UIViewController {
         
         let position = indexPath.row
         let strItem = aryMenuName[position]
+        
+        /* 直接跳轉 storyborad */
+        if (strItem == "testing") {
+            let storyboardProduct = UIStoryboard(name: "Testing", bundle: nil)
+            let controller = storyboardProduct.instantiateViewControllerWithIdentifier("TestingDevLiist") as UIViewController
+            self.presentViewController(controller, animated: true, completion: nil)
+            
+            return
+        }
+        
+        if (strItem == "config") {
+            let storyboardProduct = UIStoryboard(name: "SysConfig", bundle: nil)
+            let controller = storyboardProduct.instantiateViewControllerWithIdentifier("SysConfigMain") as UIViewController
+            self.presentViewController(controller, animated: true, completion: nil)
+            
+            return
+        }
 
-        // 直接跳轉 VC
-        if (strItem == "member" || strItem == "testing" || strItem == "config") {
+        // 會員列表
+        if (strItem == "member") {
             var strIdentName = ""
             if (strItem == "member") {
                 strIdentName = "member_list"
             } else if (strItem == "config") {
                 strIdentName = "SysConfigMain"
-            } else if (strItem == "testing") {
-                strIdentName = "Testing"
             } else {
                 return
             }
@@ -250,6 +265,56 @@ class MainMenu: UIViewController {
             mAlert.addAction(UIAlertAction(title:pubClass.getLang("menu_" + strIdent), style: UIAlertActionStyle.Default, handler:{
                 (alert: UIAlertAction!)->Void in
                 
+                /* 直接跳轉 storyborad */
+                var mVC: UIViewController?
+                
+                // 商品進出貨列表
+                if (strIdent == "product_purchaselist") {
+                    let storyboard = UIStoryboard(name: "Product", bundle: nil)
+                    mVC = storyboard.instantiateViewControllerWithIdentifier("PurchaseList") as UIViewController
+                }
+                
+                // 分析報表 - 損益
+                else if (strIdent == "analydata_income") {
+                    let storyboard = UIStoryboard(name: "AnalyData", bundle: nil)
+                    mVC = storyboard.instantiateViewControllerWithIdentifier("AnalyDataMain") as UIViewController
+                }
+                
+                // 分析報表 - 健康精靈會員
+                else if (strIdent == "analydata_health") {
+                    let storyboard = UIStoryboard(name: "AnalyData", bundle: nil)
+                    mVC = storyboard.instantiateViewControllerWithIdentifier("AnalyDataHealth") as UIViewController
+                }
+                
+                // 員工列表
+                else if (strIdent == "staff_employee") {
+                    let storyboard = UIStoryboard(name: "Staff", bundle: nil)
+                    mVC = storyboard.instantiateViewControllerWithIdentifier("StaffList") as UIViewController
+                }
+                
+                // 員工績效
+                else if (strIdent == "staff_benefit") {
+                    let storyboard = UIStoryboard(name: "Staff", bundle: nil)
+                    mVC = storyboard.instantiateViewControllerWithIdentifier("StaffBenefit") as UIViewController
+                }
+                
+                // 訊息 - 列表與發布
+                else if (strIdent == "message_active") {
+                    let storyboard = UIStoryboard(name: "Message", bundle: nil)
+                    mVC = storyboard.instantiateViewControllerWithIdentifier("MsgList") as UIViewController
+                }
+                    
+                // 訊息 - 健康資訊網頁
+                else if (strIdent == "message_health") {
+                    let storyboard = UIStoryboard(name: "Message", bundle: nil)
+                    mVC = storyboard.instantiateViewControllerWithIdentifier("HealthWitnessList") as UIViewController
+                }
+                
+                if (mVC != nil) {
+                    self.presentViewController(mVC!, animated: true, completion: nil)
+                    return
+                }
+                
                 /* 判斷是否需要 'prepareForSegue' */
                 var mParam = self.dictParm
                 
@@ -293,16 +358,9 @@ class MainMenu: UIViewController {
                 let dictIdentMap = [
                     "course_list":"PubCourseSelect",
                     "course_reservation":"CourseReserv",
-                    "product_purchaselist":"product_purchaselist",
-                    "staff_employee":"StaffList",
-                    "staff_benefit":"StaffBenefit",
-                    "message_active":"MsgList",
-                    "message_health":"HealthWitnessList",
-                    "analydata_income":"AnalyDataMain",
-                    "analydata_health":"AnalyDataHealth",
                 ]
                 
-                // HTTP 連線取得資料直接由 child 'PurchaseList'
+                // HTTP 連線取得資料直接由 child 執行　http 連線取得資料
                 self.performSegueWithIdentifier(dictIdentMap[strIdent]!, sender: nil)
                 return
             }))
@@ -336,6 +394,39 @@ class MainMenu: UIViewController {
                 }
             }
             
+            /* 直接跳轉商品 storyborad */
+            let storyboardProduct = UIStoryboard(name: "Product", bundle: nil)
+                
+            // 商品入庫
+            if (strIdent == "product_purchase") {
+                let mVC = storyboardProduct.instantiateViewControllerWithIdentifier("PurchaseList") as! PurchaseList
+                mVC.strToday = self.strToday
+                mVC.dictAllData = dictData
+                self.presentViewController(mVC, animated: true, completion: nil)
+                
+                return
+            }
+            
+            // 商品銷售
+            if (strIdent == "product_sale") {
+                let mVC = storyboardProduct.instantiateViewControllerWithIdentifier("PdSale") as! Sale
+                mVC.strToday = self.strToday
+                mVC.dictAllData = dictData
+                self.presentViewController(mVC, animated: true, completion: nil)
+                
+                return
+            }
+             
+            // 商品庫存
+            if (strIdent == "product_stock") {
+                let mVC = storyboardProduct.instantiateViewControllerWithIdentifier("PdStock") as! Stock
+                mVC.strToday = self.strToday
+                mVC.dictAllData = dictData
+                self.presentViewController(mVC, animated: true, completion: nil)
+                
+                return
+            }
+            
             // 將整個回傳資料傳送下個頁面
             self.performSegueWithIdentifier(strIdent, sender: dictData)
         })
@@ -350,33 +441,6 @@ class MainMenu: UIViewController {
         // 療程銷售
         if (strIdent == "course_sale") {
             let mVC = segue.destinationViewController as! CourseSale
-            mVC.strToday = strToday
-            mVC.dictAllData = sender as! Dictionary<String, AnyObject>
-            
-            return
-        }
-        
-        // 商品入庫
-        if (strIdent == "product_purchase") {
-            let mVC = segue.destinationViewController as! Purchase
-            mVC.strToday = strToday
-            mVC.dictAllData = sender as! Dictionary<String, AnyObject>
-            
-            return
-        }
-        
-        // 商品銷售
-        if (strIdent == "product_sale") {
-            let mVC = segue.destinationViewController as! Sale
-            mVC.strToday = strToday
-            mVC.dictAllData = sender as! Dictionary<String, AnyObject>
-            
-            return
-        }
-        
-        // 商品庫存
-        if (strIdent == "product_stock") {
-            let mVC = segue.destinationViewController as! Stock
             mVC.strToday = strToday
             mVC.dictAllData = sender as! Dictionary<String, AnyObject>
             

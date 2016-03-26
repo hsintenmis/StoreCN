@@ -62,13 +62,6 @@ class PubSoqibedAdEdCont: UITableViewController {
     }
     
     /**
-     * View DidAppear 程序
-     */
-    override func viewDidAppear(animated: Bool) {
-        tableList.reloadData()
-    }
-    
-    /**
     * View filed 資料初始/設定
     */
     private func initView() {
@@ -104,11 +97,16 @@ class PubSoqibedAdEdCont: UITableViewController {
         // 處理使用記錄
         var strRecords = ""
         if let aryItems = dictAllData["times"] as? Array<Dictionary<String, String>> {
-            for dictItem in aryItems {
-                strRecords += pubClass.formatDateWithStr(dictItem["sdate"], type: 14) + "\n"
+            for i in (0..<aryItems.count) {
+                let dictItem = aryItems[i]
+                strRecords += pubClass.formatDateWithStr(dictItem["sdate"], type: 14)
+                
+                if (i < aryItems.count - 1) {
+                    strRecords += "\n";
+                }
             }
         }
-        
+
         labRecord.text = strRecords
         
         // 設備 S00 slider 預設值
