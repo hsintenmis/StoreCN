@@ -218,7 +218,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xIB-WN-n6K" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2460" y="-3839"/>
+            <point key="canvasLocation" x="3395" y="-5583"/>
         </scene>
         <!--商品管理-庫存歷史資料-->
         <scene sceneID="1JM-w0-Euc">
@@ -490,7 +490,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dqg-bf-9Yh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2880" y="-3839"/>
+            <point key="canvasLocation" x="3815" y="-5583"/>
         </scene>
         <!--商品管理-進貨列表-->
         <scene sceneID="ciV-f9-rvk">
@@ -696,7 +696,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BJg-9z-uz6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2460" y="-3134"/>
+            <point key="canvasLocation" x="3395" y="-4143"/>
         </scene>
         <!--商品管理-進貨明細-->
         <scene sceneID="dfo-59-Czg">
@@ -1088,7 +1088,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5hF-bQ-HbX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2880" y="-3134"/>
+            <point key="canvasLocation" x="3895" y="-4143"/>
         </scene>
         <!--商品管理-新增退貨-->
         <scene sceneID="shM-qy-WLB">
@@ -1296,7 +1296,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MT8-yg-0xI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3395" y="-3799"/>
+            <point key="canvasLocation" x="4410" y="-4143"/>
         </scene>
         <!--商品管理-入庫-->
         <scene sceneID="4aD-4M-I9V">
@@ -2256,7 +2256,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kst-hW-vWN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2460" y="-4491"/>
+            <point key="canvasLocation" x="2460" y="-4875"/>
         </scene>
         <!--商品銷售-选择會員-->
         <scene sceneID="qXl-VR-3Pl">
@@ -2317,7 +2317,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lLN-55-aZY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3395" y="-4491"/>
+            <point key="canvasLocation" x="2460" y="-4143"/>
         </scene>
         <!--商品銷售-选择商品-->
         <scene sceneID="FFW-70-a36">
@@ -2571,7 +2571,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wfc-9j-75X" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3395" y="-5175"/>
+            <point key="canvasLocation" x="2918" y="-4875"/>
         </scene>
         <!--商品管理-进货明细编辑-->
         <scene sceneID="abF-Jy-xF2">
@@ -2639,7 +2639,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jHy-ur-4jd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3395" y="-3134"/>
+            <point key="canvasLocation" x="4410" y="-3287"/>
         </scene>
         <!--进货明细编辑 - Container-->
         <scene sceneID="Jcb-Ys-rGT">
@@ -2848,7 +2848,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bWK-ug-g23" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3842" y="-3134"/>
+            <point key="canvasLocation" x="4889" y="-3287"/>
         </scene>
         <!--公用 - 退貨商品列表-->
         <scene sceneID="Xbl-nt-i0O">
@@ -2998,7 +2998,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kTb-7k-CDw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3842" y="-3799"/>
+            <point key="canvasLocation" x="4885" y="-4143"/>
         </scene>
         <!--商品管理-退货明细-->
         <scene sceneID="pTe-ai-YHD">
@@ -3237,7 +3237,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7IK-Kr-OuL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2880" y="-2278"/>
+            <point key="canvasLocation" x="3895" y="-3287"/>
         </scene>
         <!--退货編輯-->
         <scene sceneID="Vup-Ru-Gil">
@@ -3443,7 +3443,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="13c-OE-axn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3395" y="-2278"/>
+            <point key="canvasLocation" x="3895" y="-2551"/>
         </scene>
     </scenes>
 </document>

@@ -97,10 +97,14 @@ class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIP
                 break
                 
             case "purchase":  // 會員購貨資料 VC
-                let mVC: PubMemberPurchaseSelect = storyboard?.instantiateViewControllerWithIdentifier("PubMemberPurchaseSelect") as! PubMemberPurchaseSelect
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let mVC: PubMemberPurchaseSelect = storyboard.instantiateViewControllerWithIdentifier("PubMemberPurchaseSelect") as! PubMemberPurchaseSelect
                 
                 if let tmpDict = dictAllData["purchase"] as? Array<Dictionary<String, AnyObject>> {
                     mVC.aryPurchaseData = tmpDict
+                    mVC.strMemberId = dictMember["memberid"] as! String
+                    mVC.strToday = dictAllData["today"] as! String
+                    mVC.mParent = self
                 }
                 
                 aryPages.append(mVC)

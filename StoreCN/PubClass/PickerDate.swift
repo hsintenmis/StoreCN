@@ -84,41 +84,6 @@ class PickerDate: NSObject, KBNavyBarDelegate {
     }
     
     /**
-     * 鍵盤輸入視窗的 'navybar' 設定
-     * 日期欄位 點取彈出 資料輸入視窗 (虛擬鍵盤), 'InputView' 的頂端顯示 'navyBar'
-     */
-    /*
-    private func initKBBar(strTitle: String) {
-        let toolBar = UIToolbar()
-        toolBar.barStyle = UIBarStyle.Default
-        toolBar.translucent = true  // 半透明
-        //toolBar.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)  // 文字顏色
-        toolBar.sizeToFit()
-        
-        let doneButton = UIBarButtonItem(title: pubClass.getLang("select_ok"), style: UIBarButtonItemStyle.Plain, target: self, action: #selector(PickerDate.PKDateDone))
-        
-        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-        
-        // 自訂一個 label 作為 NavyBar 的 Title
-        let labTitle = UILabel(frame: CGRect(x: 0, y: 0, width: 200.0, height: 14.0))
-        //let labTitle = UILabel()
-        //labTitle.sizeToFit()
-        
-        labTitle.text = strTitle
-        //labTitle.font = UIFont(name: "System", size: 14)
-        labTitle.textAlignment = NSTextAlignment.Center
-        let titleButton = UIBarButtonItem(customView: labTitle)
-   
-        let cancelButton = UIBarButtonItem(title: pubClass.getLang("cancel"), style: UIBarButtonItemStyle.Plain, target: self, action: #selector(PickerDate.PKDateCancel))
-        
-        toolBar.setItems([cancelButton, spaceButton, titleButton, spaceButton, doneButton], animated: false)
-        toolBar.userInteractionEnabled = true
-        
-        mPickField.inputAccessoryView = toolBar
-    }
-    */
-    
-    /**
      * #mark: KBNavyBarDelegate
      * 虛擬自訂鍵盤　toolbar 點取 'done'
      */

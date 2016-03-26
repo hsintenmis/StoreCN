@@ -402,3 +402,5 @@
 
 "bt_testingvalerr" = "量測數值異常, 請重新量測!";
 "bt_testing_success" = "量測完成!";
+
+"sale_pruchaseqtyeditmsg" = "出货数量修改，将会影响以下资料：\n1. 该商品的库存数量\n2. 进货总金额\n3. 实际进货金额";

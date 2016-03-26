@@ -6,10 +6,11 @@ import UIKit
 import Foundation
 
 /**
- * 商品管理 - 進貨明細主頁面
+ * 會員購貨紀錄明細主頁面，由會員管理購貨紀錄轉入
+ * 提供退貨新增/修改，金額，數量修改等功能
  */
-class PurchaseListDetail: UIViewController, PurchaseListDetailCellDelegate, PubClassDelegate {
-    // Delegate
+class SaleDetail: UIViewController, SaleDetailCellDelegate {
+    // delegate
     var delegate = PubClassDelegate?()
     
     // @IBOutlet
@@ -19,42 +20,44 @@ class PurchaseListDetail: UIViewController, PurchaseListDetailCellDelegate, PubC
     @IBOutlet weak var labAmount: UILabel!
     @IBOutlet weak var labCustPrice: UILabel!
     @IBOutlet weak var labReturnAmount: UILabel!
-
+    @IBOutlet weak var labMemberName: UILabel!
+    
     // common property
     let pubClass: PubClass = PubClass()
     
     // public, 本頁面需要的全部資料, parent 設定
     var strToday = ""
     var dictAllData: Dictionary<String, AnyObject> = [:]
-    var parentVC: PurchaseList!
     
     // 其他參數設定
-    private var aryPd: Array<Dictionary<String, AnyObject>>!
-    private var mAlert: UIAlertController!  // alertView 功能選單
+    private var aryPd: Array<Dictionary<String, AnyObject>>!  // 出貨商品 array
+    private var mAlert: UIAlertController!  // alertView 功能選單 (ActionSheet menu)
     private var keyboardHeightQty: CGFloat = 0.0  // 自訂的選擇數量鍵盤高度
-    private var bolReload = false // top parent 頁面是否需要 http reload
+    private var bolReload = false // parent 頁面是否需要 http reload
     
     /**
-    * View Load 程序
-    */
+     * View Load 程序
+     */
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 進貨商品設定到 aryPd
-        aryPd = dictAllData["pd"] as! Array<Dictionary<String, AnyObject>>
-
-        // field value 設定
-        labHteid.text = dictAllData["hte_id"] as? String
+        // 出貨商品設定到 aryPd
+        aryPd = dictAllData["odrs"] as! Array<Dictionary<String, AnyObject>>
+        
+        // field 設定
+        labHteid.text = dictAllData["id"] as? String
         labAmount.text = dictAllData["price"] as? String
         labCustPrice.text = dictAllData["custprice"] as? String
         labSdate.text = pubClass.formatDateWithStr(dictAllData["sdate"] as! String, type: 14)
+        labMemberName.text = dictAllData["membername"] as? String
         
+        //  退貨文字處理
         var strReturn = ""
         if let _ = dictAllData["return"] as? Array<AnyObject> {
             strReturn = String(format: pubClass.getLang("FMT_returnmsg"), dictAllData["returnprice"] as! String, dictAllData["returnpricecust"] as! String)
         }
         labReturnAmount.text = strReturn
-
+        
         // 設定彈出 ActionSheet 子選單, 提供：編輯 / 新增退貨 / 退貨明細
         setAlertVC()
     }
@@ -63,13 +66,6 @@ class PurchaseListDetail: UIViewController, PurchaseListDetailCellDelegate, PubC
      * View WillAppear 程序
      */
     override func viewWillAppear(animated: Bool) {
-        // 子頁面有資料變動，本頁面結束設定 parent class reload
-        if (bolReload) {
-            self.view.alpha = 0.6
-            delegate?.PageNeedReload!(true)
-            self.dismissViewControllerAnimated(false, completion: {})
-        }
-        
         // 设置监听键盘事件函数
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PurchaseListDetail.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
     }
@@ -80,6 +76,32 @@ class PurchaseListDetail: UIViewController, PurchaseListDetailCellDelegate, PubC
     override func viewWillDisappear(animated: Bool) {
         // 註銷銷鍵盤監聽
         NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    /**
+     * 設定 ActionSheet 功能選單
+     */
+    private func setAlertVC() {
+        // 彈出 ActionSheet 子選單, 提供：編輯 / 新增退貨 / 退貨明細
+        mAlert = UIAlertController(title: nil, message: nil, preferredStyle:UIAlertControllerStyle.ActionSheet)
+        
+        // 設定選單項目, 對應 ident string
+        var aryIdent = ["sale_detailedit", "sale_returnadd"]
+        if let _ = dictAllData["return"] as? Array<AnyObject> {
+            aryIdent.append("sale_returnlist")
+        }
+        
+        // loop 子選單 ident name, 重新產生 UIAlertController
+        for strIdent in aryIdent {
+            mAlert.addAction(UIAlertAction(title:pubClass.getLang("sale_" + strIdent), style: UIAlertActionStyle.Default, handler:{
+                (alert: UIAlertAction!)->Void in
+                
+                // 執行 'prepareForSegue' 跳轉指定頁面
+                self.performSegueWithIdentifier(strIdent, sender: nil)
+            }))
+        }
+        
+        mAlert.addAction(UIAlertAction(title: pubClass.getLang("cancel"), style: UIAlertActionStyle.Destructive, handler:nil))
     }
     
     /**
@@ -109,7 +131,7 @@ class PurchaseListDetail: UIViewController, PurchaseListDetailCellDelegate, PubC
         
         // 產生 Item data
         let ditItem = aryPd[indexPath.row] as Dictionary<String, AnyObject>
-        let mCell = tableView.dequeueReusableCellWithIdentifier("cellPurchaseListDetail", forIndexPath: indexPath) as! PurchaseListDetailCell
+        let mCell = tableView.dequeueReusableCellWithIdentifier("cellSaleDetail", forIndexPath: indexPath) as! SaleDetailCell
         
         // 取得虛擬鍵盤高度
         if (keyboardHeightQty <= 0) {
@@ -120,12 +142,9 @@ class PurchaseListDetail: UIViewController, PurchaseListDetailCellDelegate, PubC
         mCell.initView(ditItem, indexpath: indexPath)
         
         // 有退貨數量不能點取
-        let dictPd = aryPd[indexPath.row]
-        
-        if (dictPd["totRQty"] as! String != "0") {
+        if (Int(ditItem["returnQty"] as! String) > 0) {
             mCell.userInteractionEnabled = false
-        }
-        else {
+        } else {
             mCell.userInteractionEnabled = true
         }
         
@@ -139,33 +158,24 @@ class PurchaseListDetail: UIViewController, PurchaseListDetailCellDelegate, PubC
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.keyboardClose()
         
-        // 有退貨數量不執行
-        /*
-        let dictPd = aryPd[indexPath.row]
-        if (dictPd["totRQty"] as! String != "0") {
-            pubClass.popIsee(self, Msg: pubClass.getLang("product_qtyreturneditto0msg"))
-            return
-        }
-        */
-        
         // 取得 cell EditField
-        let edQty = (tableView.cellForRowAtIndexPath(indexPath) as! PurchaseListDetailCell).edQty
+        let edQty = (tableView.cellForRowAtIndexPath(indexPath) as! SaleDetailCell).edQty
         edQty.becomeFirstResponder()
     }
     
     /**
-     * #mark: PurchaseListDetailCellDelegate
-     * 進貨商品數量 '數量鍵盤'點取完成，回傳選擇的 qty, 執行相關程序
+     * #mark: SaleDetailCellDelegate
+     * 出貨商品數量 '數量鍵盤'點取完成，回傳選擇的 qty, 執行相關程序
      */
     func QtySelecteDone(SelectQty: Int, indexpath: NSIndexPath) {
         self.keyboardClose()
-        
-        // 彈出警告視窗，確認後執行 http 儲存，本頁面結束
+
+        // HTTP 連線參數設定
         var dictParm: Dictionary<String, String> = [:]
         dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
         dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
-        dictParm["page"] = "purchase"
-        dictParm["act"] = "purchase_qtysave"
+        dictParm["page"] = "sale"
+        dictParm["act"] = "sale_qtysave"
         
         var dictArg0: Dictionary<String, AnyObject> = [:]
         dictArg0["pdid"] = aryPd[indexpath.row]["pdid"] as! String
@@ -184,19 +194,24 @@ class PurchaseListDetail: UIViewController, PurchaseListDetailCellDelegate, PubC
             return
         }
         
-        // HTTP 開始連線
-        pubClass.popConfirm(self, aryMsg: [pubClass.getLang("systemwarring"), pubClass.getLang("purchase_pruchaseqtyeditmsg")], withHandlerYes: {self.pubClass.HTTPConn(self, ConnParm: dictParm, callBack: self.HttpQtySaveResponChk)}, withHandlerNo: {return})
-    }
-    
-    /**
-     * 商品進貨數量改變，HTTP 連線後取得連線結果
-     */
-    private func HttpQtySaveResponChk(dictRS: Dictionary<String, AnyObject>) {
-        // 回傳後跳離, 通知 parent 資料 reload
-        let strMsg = (dictRS["result"] as! Bool != true) ? pubClass.getLang("err_trylatermsg") : pubClass.getLang("datasavecompleted")
-        
-        delegate?.PageNeedReload!(true)
-        pubClass.popIsee(self, Msg: strMsg, withHandler: {self.dismissViewControllerAnimated(true, completion: nil)})
+        // 彈出警告視窗，確認後執行 http 儲存，本頁面結束
+        pubClass.popConfirm(self, aryMsg: [pubClass.getLang("systemwarring"), pubClass.getLang("sale_pruchaseqtyeditmsg")], withHandlerYes: {self.pubClass.HTTPConn(self, ConnParm: dictParm, callBack:{ (dictRS: Dictionary<String, AnyObject>) -> Void in
+            
+            // 回傳後跳離
+            var strMsg = self.pubClass.getLang("err_trylatermsg")
+            let bolRS = dictRS["result"] as! Bool
+            if (bolRS == true) {
+                strMsg = self.pubClass.getLang("datasavecompleted")
+            }
+            
+            self.pubClass.popIsee(self, Msg: strMsg, withHandler: {self.dismissViewControllerAnimated(true, completion: {
+                // 通知 parent 資料有變動
+                self.delegate?.PageNeedReload!(bolRS)
+            })})
+            
+            return
+            
+        } )}, withHandlerNo: {return})
     }
     
     /**
@@ -205,91 +220,6 @@ class PurchaseListDetail: UIViewController, PurchaseListDetailCellDelegate, PubC
      */
     func QtySelecteCancel() {
         self.keyboardClose()
-    }
-    
-    /**
-     * #mark: PurchaseDetailEditDelegate Delegate
-     * 設定 top parent class page 是否需要 reload
-     */
-    func PageNeedReload(needReload: Bool) {
-        bolReload = needReload
-    }
-    
-    /**
-     * 設定 ActionSheet 功能選單
-     */
-    private func setAlertVC() {
-        // 彈出 ActionSheet 子選單, 提供：編輯 / 新增退貨 / 退貨明細
-        mAlert = UIAlertController(title: nil, message: nil, preferredStyle:UIAlertControllerStyle.ActionSheet)
-        
-        // 設定選單項目, 對應 ident string
-        var aryIdent = ["purchase_detailedit", "purchase_returnadd"]
-        if let _ = dictAllData["return"] as? Array<AnyObject> {
-            aryIdent.append("purchase_returnlist")
-        }
-        
-        // loop 子選單 ident name, 重新產生 UIAlertController
-        for strIdent in aryIdent {
-            mAlert.addAction(UIAlertAction(title:pubClass.getLang("product_" + strIdent), style: UIAlertActionStyle.Default, handler:{
-                (alert: UIAlertAction!)->Void in
-                
-                // 執行 'prepareForSegue' 跳轉指定頁面
-                self.performSegueWithIdentifier(strIdent, sender: nil)
-            }))
-        }
-        
-        mAlert.addAction(UIAlertAction(title: pubClass.getLang("cancel"), style: UIAlertActionStyle.Destructive, handler:nil))
-    }
-    
-    /**
-     * Segue 跳轉頁面
-     */
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let strIdent = segue.identifier
-        
-        // 編輯
-        if (strIdent == "purchase_detailedit") {
-            let mVC = segue.destinationViewController as! PurchaseDetailEdit
-            mVC.dictAllData = dictAllData
-            mVC.strToday = strToday
-            mVC.delegate = self
-            
-            return
-        }
-        
-        // 新增退貨
-        if (strIdent == "purchase_returnadd") {
-            let mVC = segue.destinationViewController as! PurchaseReturnAdd
-            mVC.dictAllData = dictAllData
-            mVC.strToday = strToday
-            mVC.delegate = self
-            
-            return
-        }
-        
-        // 退貨明細
-        if (strIdent == "purchase_returnlist") {
-            let mVC = segue.destinationViewController as! PurchaseReturnList
-            mVC.dictAllData = dictAllData
-            mVC.strToday = strToday
-            mVC.delegate = self
-            
-            return
-        }
-    }
-    
-    /**
-     * act, 點取 '選項' button
-     */
-    @IBAction func actOption(sender: UIBarButtonItem) {
-        self.presentViewController(mAlert, animated: true, completion: nil)
-    }
-    
-    /**
-     * act, 點取 '返回' button
-     */
-    @IBAction func actHome(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true, completion: {})
     }
     
     /**
@@ -319,6 +249,61 @@ class PurchaseListDetail: UIViewController, PurchaseListDetailCellDelegate, PubC
             let rect = CGRectMake(0.0, -(mPoint), width, height)
             self.view.frame = rect
         }
+    }
+    
+    /**
+     * Segue 跳轉頁面
+     */
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        /*
+        let strIdent = segue.identifier
+        
+        // 編輯
+        if (strIdent == "sale_detailedit") {
+            let mVC = segue.destinationViewController as! PurchaseDetailEdit
+            mVC.dictAllData = dictAllData
+            mVC.strToday = strToday
+            mVC.delegate = self
+            
+            return
+        }
+        
+        // 新增退貨
+        if (strIdent == "sale_returnadd") {
+            let mVC = segue.destinationViewController as! PurchaseReturnAdd
+            mVC.dictAllData = dictAllData
+            mVC.strToday = strToday
+            mVC.delegate = self
+            
+            return
+        }
+        
+        // 退貨明細
+        if (strIdent == "sale_returnlist") {
+            let mVC = segue.destinationViewController as! PurchaseReturnList
+            mVC.dictAllData = dictAllData
+            mVC.strToday = strToday
+            mVC.delegate = self
+            
+            return
+        }
+        */
+        
+        return
+    }
+    
+    /**
+     * act, 點取 '選項' button
+     */
+    @IBAction func actOption(sender: UIBarButtonItem) {
+        self.presentViewController(mAlert, animated: true, completion: nil)
+    }
+    
+    /**
+     * act, 點取 '返回' button
+     */
+    @IBAction func actBack(sender: UIBarButtonItem) {
+        self.dismissViewControllerAnimated(true, completion: {})
     }
     
 }

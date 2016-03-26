@@ -6,35 +6,25 @@ import UIKit
 import Foundation
 
 /**
- * protocol, PubMemberPurchaseSelect Delegate
+ * 會員購貨紀錄列表, 公用 class
  */
-protocol PubMemberPurchaseSelectDelegate {
-    /**
-     * Table Cell 點取，點取指定資料，實作點取後相關程序
-     */
-    func PurchaseDataSelected(PurchaseData dictData: Dictionary<String, AnyObject>, indexPath: NSIndexPath)
-}
-
-/**
- * 會員購貨紀錄選擇 公用 class
- */
-class PubMemberPurchaseSelect: UITableViewController {
-    var delegate = PubMemberPurchaseSelectDelegate?()
-    
+class PubMemberPurchaseSelect: UITableViewController, PubClassDelegate {
     // @IBOutlet
     @IBOutlet weak var tableData: UITableView!
     @IBOutlet weak var labNoData: UILabel!
     
     // common property
-    var mVCtrl: UIViewController!
     let pubClass: PubClass = PubClass()
     
-    // Table DataSource, Mead 全部的檢測資料, paent 設定
+    // public, parent 設定
     var aryPurchaseData: Array<Dictionary<String, AnyObject>> = []
+    var strMemberId: String!
+    var strToday = ""
+    var mParent: MemberMainPager!
     
     // 其他參數設定
-    var strToday = ""
-    private var newIndexPath: NSIndexPath!
+    private var mSaleDetail: SaleDetail!
+    private var currIndexPath: NSIndexPath?
     
     /**
      * View Load 程序
@@ -42,29 +32,67 @@ class PubMemberPurchaseSelect: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 固定初始參數
-        mVCtrl = self
-        newIndexPath = NSIndexPath(forRow: 0, inSection: 0)
-        labNoData.alpha = 0.0
-        
-        if (self.aryPurchaseData.count < 1) {
-            self.labNoData.alpha = 1.0
-        }
+        // 顯示'無資料'
+        self.labNoData.alpha = (self.aryPurchaseData.count < 1) ? 1.0 : 0.0
     }
     
     /**
-     * View DidAppear 程序
-     */
-    override func viewDidAppear(animated: Bool) {
-        dispatch_async(dispatch_get_main_queue(), {
+    * HTTP 重新連線取得資料
+    */
+    private func reConnHTTP() {
+        // HTTP 連線取得該會員全部資料(course, mead, soqibed, purchase)
+        var dictParm = Dictionary<String, String>()
+        dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
+        dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
+        dictParm["page"] = "memberdata"
+        dictParm["act"] = "memberdata_getdata"
+        dictParm["arg0"] = strMemberId
+        
+        // HTTP 開始連線
+        pubClass.HTTPConn(self, ConnParm: dictParm, callBack: {(dictRS: Dictionary<String, AnyObject>)->Void in
             
+            // 任何錯誤顯示錯誤訊息
+            if (dictRS["result"] as! Bool != true) {
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.pubClass.popIsee(self, Msg: self.pubClass.getLang(dictRS["msg"] as? String))
+                })
+                
+                return
+            }
+            
+            /* 解析正確的 http 回傳結果，執行後續動作 */
+            let dictData = (dictRS["data"]!["content"]!)!
+            
+            // parent 'MemberMainPager' 的 dictAllData 重設
+            self.mParent.dictAllData = dictData as! Dictionary<String, AnyObject>
+            
+            // 重設本頁面 'aryPurchaseData'
+            if let tmpDict = dictData["purchase"] as? Array<Dictionary<String, AnyObject>> {
+                self.aryPurchaseData = tmpDict
+            } else {
+                self.aryPurchaseData = []
+            }
+            
+            // 本頁面資料有變動, TableView Reload
+            self.tableData.reloadData()
+            if let tmpIndexPath = self.currIndexPath {
+                self.tableData.selectRowAtIndexPath(tmpIndexPath, animated: true, scrollPosition: UITableViewScrollPosition.None)
+            }
+            
+            // 顯示'無資料'
+            self.labNoData.alpha = (self.aryPurchaseData.count < 1) ? 1.0 : 0.0
         })
     }
     
     /**
-     * 初始與設定 VCview 內的 field
+     * #mark: PubClassDelegate
+     * page reload
      */
-    func initViewField() {
+    func PageNeedReload(needReload: Bool) {
+        // 重新連線 HTTP 取得資料
+        if (needReload == true) {
+            reConnHTTP()
+        }
     }
     
     /**
@@ -97,7 +125,18 @@ class PubMemberPurchaseSelect: UITableViewController {
      * UITableView, Cell 點取
      */
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        delegate?.PurchaseDataSelected(PurchaseData: aryPurchaseData[indexPath.row], indexPath: indexPath)
+        currIndexPath = indexPath
+        
+        // 跳轉 'SaleDetail' storyboard
+        let storyboard = UIStoryboard(name: "SaleDetail", bundle: nil)
+        mSaleDetail = storyboard.instantiateViewControllerWithIdentifier("SaleDetail") as! SaleDetail
+        mSaleDetail.strToday = self.strToday
+        mSaleDetail.dictAllData = aryPurchaseData[indexPath.row]
+        mSaleDetail.delegate = self
+        
+        self.presentViewController(mSaleDetail, animated: true, completion: nil)
+        
+        return
     }
     
 }
