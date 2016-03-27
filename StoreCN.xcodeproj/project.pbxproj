@@ -29,6 +29,8 @@
 		42E2D5A21C99ACBF0075D14B /* PubCourseSaleAdEd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E2D5A11C99ACBF0075D14B /* PubCourseSaleAdEd.swift */; };
 		42E823481CA5859B00893881 /* PubSoqibedAdEdCont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E823471CA5859B00893881 /* PubSoqibedAdEdCont.swift */; };
 		42F6E3651C6B86AE00C9BB94 /* ReservListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F6E3641C6B86AE00C9BB94 /* ReservListCell.swift */; };
+		42F7532D1CA81CB900637B78 /* SaleDetailEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F7532C1CA81CB900637B78 /* SaleDetailEdit.swift */; };
+		42F7532F1CA81D4100637B78 /* SaleDetailEditCont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F7532E1CA81D4100637B78 /* SaleDetailEditCont.swift */; };
 		42FA49C81C931AA3001C6AEE /* KBNavyBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FA49C71C931AA3001C6AEE /* KBNavyBar.swift */; };
 		42FD09E11C841E0D00ADAD4C /* PickerDateTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FD09E01C841E0D00ADAD4C /* PickerDateTime.swift */; };
 		42FF6F391CA44ECC00E5E870 /* PubSoqibedAdEd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FF6F381CA44ECC00E5E870 /* PubSoqibedAdEd.swift */; };
@@ -251,6 +253,8 @@
 		42E2D5A11C99ACBF0075D14B /* PubCourseSaleAdEd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubCourseSaleAdEd.swift; path = PubView/PubCourseSaleAdEd.swift; sourceTree = "<group>"; };
 		42E823471CA5859B00893881 /* PubSoqibedAdEdCont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubSoqibedAdEdCont.swift; path = PubView/PubSoqibedAdEdCont.swift; sourceTree = "<group>"; };
 		42F6E3641C6B86AE00C9BB94 /* ReservListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReservListCell.swift; path = ServiceMgr/ReservListCell.swift; sourceTree = "<group>"; };
+		42F7532C1CA81CB900637B78 /* SaleDetailEdit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SaleDetailEdit.swift; path = SaleDetail/SaleDetailEdit.swift; sourceTree = "<group>"; };
+		42F7532E1CA81D4100637B78 /* SaleDetailEditCont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SaleDetailEditCont.swift; path = SaleDetail/SaleDetailEditCont.swift; sourceTree = "<group>"; };
 		42FA49C71C931AA3001C6AEE /* KBNavyBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KBNavyBar.swift; path = PubClass/KBNavyBar.swift; sourceTree = "<group>"; };
 		42FD09E01C841E0D00ADAD4C /* PickerDateTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PickerDateTime.swift; path = PubClass/PickerDateTime.swift; sourceTree = "<group>"; };
 		42FF6F381CA44ECC00E5E870 /* PubSoqibedAdEd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubSoqibedAdEd.swift; path = PubView/PubSoqibedAdEd.swift; sourceTree = "<group>"; };
@@ -472,6 +476,8 @@
 				42CD2EA91CA6C2CD0041B44B /* SaleDetail.storyboard */,
 				42CD2EAA1CA6C2CD0041B44B /* SaleDetail.swift */,
 				423B7E2E1CA6C9430078BAE4 /* SaleDetailCell.swift */,
+				42F7532C1CA81CB900637B78 /* SaleDetailEdit.swift */,
+				42F7532E1CA81D4100637B78 /* SaleDetailEditCont.swift */,
 			);
 			name = SaleDetail;
 			sourceTree = "<group>";
@@ -1110,6 +1116,7 @@
 				D70FCC2B1C86E8DF0035D1B6 /* StaffAdEdContainer.swift in Sources */,
 				D72E98291C91695500DA9FA3 /* SysConfigMainContainer.swift in Sources */,
 				D7037A761C58C03F002A955E /* JSONClass.swift in Sources */,
+				42F7532D1CA81CB900637B78 /* SaleDetailEdit.swift in Sources */,
 				D7B29F791C5C712E0025C53A /* MemberAdEdContainer.swift in Sources */,
 				D7134FF91C5F5A990069ACF1 /* MemberMain.swift in Sources */,
 				D710A07F1C8EA50200264CEB /* CellSheetInvoice.swift in Sources */,
@@ -1124,6 +1131,7 @@
 				D74B4B941C9FD1EE001F1176 /* BTScaleMain.swift in Sources */,
 				D71DFD101C7C397A0024BB59 /* StockHistoryCell.swift in Sources */,
 				D720FBA11C7458F000AE640C /* Purchase.swift in Sources */,
+				42F7532F1CA81D4100637B78 /* SaleDetailEditCont.swift in Sources */,
 				D70854491C7D69C400861694 /* PurchaseListDetail.swift in Sources */,
 				D72E98271C91551F00DA9FA3 /* ConfigBTScale.swift in Sources */,
 				D7037A781C58C03F002A955E /* PubClass.swift in Sources */,

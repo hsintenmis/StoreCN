@@ -6,10 +6,10 @@ import UIKit
 import Foundation
 
 /**
- * 會員購貨紀錄明細主頁面，由會員管理購貨紀錄轉入
+ * 會員購貨紀錄明細主頁面，由會員管理購貨紀錄 'PubMemberPurchaseSelect' 轉入
  * 提供退貨新增/修改，金額，數量修改等功能
  */
-class SaleDetail: UIViewController, SaleDetailCellDelegate {
+class SaleDetail: UIViewController, SaleDetailCellDelegate, PubClassDelegate {
     // delegate
     var delegate = PubClassDelegate?()
     
@@ -33,7 +33,7 @@ class SaleDetail: UIViewController, SaleDetailCellDelegate {
     private var aryPd: Array<Dictionary<String, AnyObject>>!  // 出貨商品 array
     private var mAlert: UIAlertController!  // alertView 功能選單 (ActionSheet menu)
     private var keyboardHeightQty: CGFloat = 0.0  // 自訂的選擇數量鍵盤高度
-    private var bolReload = false // parent 頁面是否需要 http reload
+    private var bolReload = false // 本頁面是否需要 reload
     
     /**
      * View Load 程序
@@ -66,8 +66,16 @@ class SaleDetail: UIViewController, SaleDetailCellDelegate {
      * View WillAppear 程序
      */
     override func viewWillAppear(animated: Bool) {
+        // 子頁面有資料變動，本頁面結束設定 parent class reload
+        if (bolReload) {
+            self.view.alpha = 0.6
+            self.dismissViewControllerAnimated(false, completion: {self.delegate?.PageNeedReload!(true)})
+            
+            return
+        }
+        
         // 设置监听键盘事件函数
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PurchaseListDetail.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
     }
     
     /**
@@ -76,6 +84,14 @@ class SaleDetail: UIViewController, SaleDetailCellDelegate {
     override func viewWillDisappear(animated: Bool) {
         // 註銷銷鍵盤監聽
         NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    /**
+     * #mark: PubClassDelegate
+     * page reload
+     */
+    func PageNeedReload(needReload: Bool) {
+        bolReload = needReload
     }
     
     /**
@@ -93,7 +109,7 @@ class SaleDetail: UIViewController, SaleDetailCellDelegate {
         
         // loop 子選單 ident name, 重新產生 UIAlertController
         for strIdent in aryIdent {
-            mAlert.addAction(UIAlertAction(title:pubClass.getLang("sale_" + strIdent), style: UIAlertActionStyle.Default, handler:{
+            mAlert.addAction(UIAlertAction(title:pubClass.getLang(strIdent), style: UIAlertActionStyle.Default, handler:{
                 (alert: UIAlertAction!)->Void in
                 
                 // 執行 'prepareForSegue' 跳轉指定頁面
@@ -141,8 +157,8 @@ class SaleDetail: UIViewController, SaleDetailCellDelegate {
         mCell.delegate = self
         mCell.initView(ditItem, indexpath: indexPath)
         
-        // 有退貨數量不能點取
-        if (Int(ditItem["returnQty"] as! String) > 0) {
+        // 有退貨/療程商品 不能點取
+        if (Int(ditItem["returnQty"] as! String) > 0 || (ditItem["ptype"] as! String) == "card" ) {
             mCell.userInteractionEnabled = false
         } else {
             mCell.userInteractionEnabled = true
@@ -215,7 +231,7 @@ class SaleDetail: UIViewController, SaleDetailCellDelegate {
     }
     
     /**
-     * #mark: PurchaseListDetailCellDelegate
+     * #mark: SaleDetailCellDelegate
      * '數量鍵盤' 點取 '取消'
      */
     func QtySelecteCancel() {
@@ -255,19 +271,20 @@ class SaleDetail: UIViewController, SaleDetailCellDelegate {
      * Segue 跳轉頁面
      */
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        /*
         let strIdent = segue.identifier
         
-        // 編輯
+        // 明細編輯
         if (strIdent == "sale_detailedit") {
-            let mVC = segue.destinationViewController as! PurchaseDetailEdit
+            let mVC = segue.destinationViewController as! SaleDetailEdit
             mVC.dictAllData = dictAllData
             mVC.strToday = strToday
             mVC.delegate = self
             
             return
         }
+        /*
         
+
         // 新增退貨
         if (strIdent == "sale_returnadd") {
             let mVC = segue.destinationViewController as! PurchaseReturnAdd

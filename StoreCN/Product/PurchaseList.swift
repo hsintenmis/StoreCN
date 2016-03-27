@@ -42,8 +42,8 @@ class PurchaseList: UIViewController, PubClassDelegate {
     
     override func viewDidAppear(animated: Bool) {
         if (bolReload) {
-            reConnHTTP()
             bolReload = false
+            reConnHTTP()
         }
     }
     
@@ -68,7 +68,7 @@ class PurchaseList: UIViewController, PubClassDelegate {
         // tableview reload
         tableData.reloadData()
         if let tmpIndexPath = currIndexPath {
-            tableData.selectRowAtIndexPath(tmpIndexPath, animated: true, scrollPosition: UITableViewScrollPosition.None)
+            tableData.selectRowAtIndexPath(tmpIndexPath, animated: true, scrollPosition: UITableViewScrollPosition.Middle)
         }
     }
     

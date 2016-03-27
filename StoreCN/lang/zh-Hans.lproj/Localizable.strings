@@ -404,3 +404,7 @@
 "bt_testing_success" = "量測完成!";
 
 "sale_pruchaseqtyeditmsg" = "出货数量修改，将会影响以下资料：\n1. 该商品的库存数量\n2. 进货总金额\n3. 实际进货金额";
+"sale_pricecusterr" = "出货实际金额错误!";
+"sale_detailedit" = "编辑(总金额/日期/备注)";
+"sale_returnadd" = "新增退货";
+"sale_returnlist" = "退货列表";

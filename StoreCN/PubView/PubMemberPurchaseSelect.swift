@@ -76,7 +76,7 @@ class PubMemberPurchaseSelect: UITableViewController, PubClassDelegate {
             // 本頁面資料有變動, TableView Reload
             self.tableData.reloadData()
             if let tmpIndexPath = self.currIndexPath {
-                self.tableData.selectRowAtIndexPath(tmpIndexPath, animated: true, scrollPosition: UITableViewScrollPosition.None)
+                self.tableData.selectRowAtIndexPath(tmpIndexPath, animated: true, scrollPosition: UITableViewScrollPosition.Middle)
             }
             
             // 顯示'無資料'
