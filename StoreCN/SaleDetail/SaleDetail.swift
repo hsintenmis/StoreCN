@@ -117,7 +117,18 @@ class SaleDetail: UIViewController, SaleDetailCellDelegate, PubClassDelegate {
             }))
         }
         
-        mAlert.addAction(UIAlertAction(title: pubClass.getLang("cancel"), style: UIAlertActionStyle.Destructive, handler:nil))
+        // 刪除
+        mAlert.addAction(UIAlertAction(title: pubClass.getLang("sale_delete"), style: UIAlertActionStyle.Destructive, handler:{
+            (alert: UIAlertAction!) -> Void in
+            
+            // 執行刪除程序
+            let aryMsg = [self.pubClass.getLang("systemwarring"), self.pubClass.getLang("sale_delwarringmsg")]
+            self.pubClass.popConfirm(self, aryMsg: aryMsg, withHandlerYes: {}, withHandlerNo: {})
+            
+        }))
+        
+        // 取消
+        mAlert.addAction(UIAlertAction(title: pubClass.getLang("cancel"), style: UIAlertActionStyle.Cancel, handler:nil))
     }
     
     /**
@@ -282,12 +293,10 @@ class SaleDetail: UIViewController, SaleDetailCellDelegate, PubClassDelegate {
             
             return
         }
-        /*
         
-
         // 新增退貨
         if (strIdent == "sale_returnadd") {
-            let mVC = segue.destinationViewController as! PurchaseReturnAdd
+            let mVC = segue.destinationViewController as! SaleDetailReturnAdd
             mVC.dictAllData = dictAllData
             mVC.strToday = strToday
             mVC.delegate = self
@@ -295,6 +304,7 @@ class SaleDetail: UIViewController, SaleDetailCellDelegate, PubClassDelegate {
             return
         }
         
+        /*
         // 退貨明細
         if (strIdent == "sale_returnlist") {
             let mVC = segue.destinationViewController as! PurchaseReturnList

@@ -6,9 +6,9 @@ import Foundation
 import UIKit
 
 /**
- * protocol, PubPurReturnPdListCell Delegate
+ * protocol, SaleReturnPdCell Delegate
  */
-protocol PubPurReturnPdListCellDelegate {
+protocol SaleReturnPdCellDelegate {
     /**
      * Pickr view, 點取 '完成' / '取消'時， parent class 執行相關動作
      */
@@ -17,12 +17,12 @@ protocol PubPurReturnPdListCellDelegate {
 }
 
 /**
- * 退貨商品選擇 TableView Cell，從進貨新增頁面轉入
+ * 退貨商品 TableView Cell
  */
-class PubPurReturnPdListCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSource, KBNavyBarDelegate {
+class SaleReturnPdCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSource, KBNavyBarDelegate {
     
     // Delegate, public property
-    var delegate = PubPurReturnPdListCellDelegate?()
+    var delegate = SaleReturnPdCellDelegate?()
     var kbHeight: CGFloat!
     
     @IBOutlet weak var labName: UILabel!
@@ -44,8 +44,8 @@ class PubPurReturnPdListCell: UITableViewCell, UIPickerViewDelegate, UIPickerVie
     private var currIndexPath: NSIndexPath!
     
     /**
-    * Cell Load
-    */
+     * Cell Load
+     */
     override func awakeFromNib() {
         super.awakeFromNib()
         aryRowVal = []
@@ -63,7 +63,7 @@ class PubPurReturnPdListCell: UITableViewCell, UIPickerViewDelegate, UIPickerVie
         aryMaxMin[1] = Int(ditItem["maxqty"] as! String)!
         
         for i in (aryMaxMin[0]..<(aryMaxMin[1] + 1)) {
-        //for (var i = aryMaxMin[0]; i <= aryMaxMin[1]; i++) {
+            //for (var i = aryMaxMin[0]; i <= aryMaxMin[1]; i++) {
             aryRowVal.append(String(i))
         }
         
