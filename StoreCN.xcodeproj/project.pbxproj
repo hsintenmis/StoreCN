@@ -199,6 +199,13 @@
 		D74B4B991C9FD4DA001F1176 /* HealthDataInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74B4B981C9FD4DA001F1176 /* HealthDataInit.swift */; };
 		D74B4B9B1C9FE1C4001F1176 /* BTScaleMainCont.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74B4B9A1C9FE1C4001F1176 /* BTScaleMainCont.swift */; };
 		D74B4B9D1C9FEA1A001F1176 /* TestingMemberSel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74B4B9C1C9FEA1A001F1176 /* TestingMemberSel.swift */; };
+		D75F0F6B1CA90248009287A7 /* pict_testing in Resources */ = {isa = PBXBuildFile; fileRef = D75F0F6A1CA90248009287A7 /* pict_testing */; };
+		D75F0F6D1CA90903009287A7 /* BTMeadMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75F0F6C1CA90903009287A7 /* BTMeadMain.swift */; };
+		D75F0F6F1CA91126009287A7 /* H1_L_P.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D75F0F6E1CA91126009287A7 /* H1_L_P.jpg */; };
+		D75F0F711CA9127D009287A7 /* BTMeadMainCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75F0F701CA9127D009287A7 /* BTMeadMainCell.swift */; };
+		D75F0F751CA915E9009287A7 /* MeadCFG.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75F0F731CA915E9009287A7 /* MeadCFG.swift */; };
+		D75F0F761CA915E9009287A7 /* MeadClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75F0F741CA915E9009287A7 /* MeadClass.swift */; };
+		D75F0F781CA92245009287A7 /* BTMeadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75F0F771CA92245009287A7 /* BTMeadService.swift */; };
 		D7645BE01C80068400507072 /* PurchaseReturnList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7645BDF1C80068400507072 /* PurchaseReturnList.swift */; };
 		D7645BE21C80074500507072 /* PurchaseReturnListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7645BE11C80074500507072 /* PurchaseReturnListCell.swift */; };
 		D7645BE41C801FA900507072 /* PurchaseReturnEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7645BE31C801FA900507072 /* PurchaseReturnEdit.swift */; };
@@ -428,6 +435,13 @@
 		D74B4B981C9FD4DA001F1176 /* HealthDataInit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HealthDataInit.swift; path = Health/HealthDataInit.swift; sourceTree = "<group>"; };
 		D74B4B9A1C9FE1C4001F1176 /* BTScaleMainCont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BTScaleMainCont.swift; path = Testing/BTScaleMainCont.swift; sourceTree = "<group>"; };
 		D74B4B9C1C9FEA1A001F1176 /* TestingMemberSel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestingMemberSel.swift; path = Testing/TestingMemberSel.swift; sourceTree = "<group>"; };
+		D75F0F6A1CA90248009287A7 /* pict_testing */ = {isa = PBXFileReference; lastKnownFileType = folder; path = pict_testing; sourceTree = "<group>"; };
+		D75F0F6C1CA90903009287A7 /* BTMeadMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BTMeadMain.swift; path = Testing/BTMeadMain.swift; sourceTree = "<group>"; };
+		D75F0F6E1CA91126009287A7 /* H1_L_P.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = H1_L_P.jpg; sourceTree = "<group>"; };
+		D75F0F701CA9127D009287A7 /* BTMeadMainCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BTMeadMainCell.swift; path = Testing/BTMeadMainCell.swift; sourceTree = "<group>"; };
+		D75F0F731CA915E9009287A7 /* MeadCFG.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MeadCFG.swift; path = Mead/MeadCFG.swift; sourceTree = "<group>"; };
+		D75F0F741CA915E9009287A7 /* MeadClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MeadClass.swift; path = Mead/MeadClass.swift; sourceTree = "<group>"; };
+		D75F0F771CA92245009287A7 /* BTMeadService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BTMeadService.swift; path = Testing/BTMeadService.swift; sourceTree = "<group>"; };
 		D7645BDF1C80068400507072 /* PurchaseReturnList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchaseReturnList.swift; path = Product/PurchaseReturnList.swift; sourceTree = "<group>"; };
 		D7645BE11C80074500507072 /* PurchaseReturnListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchaseReturnListCell.swift; path = Product/PurchaseReturnListCell.swift; sourceTree = "<group>"; };
 		D7645BE31C801FA900507072 /* PurchaseReturnEdit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchaseReturnEdit.swift; path = Product/PurchaseReturnEdit.swift; sourceTree = "<group>"; };
@@ -517,9 +531,11 @@
 				D7496D241C5B4E1300B75D6A /* SysConfig */,
 				D7BB2AD11C646DD600624E08 /* PubView */,
 				D7037A651C58BCD6002A955E /* PubClass */,
+				D75F0F721CA915D8009287A7 /* Mead */,
 				D7037A861C58C726002A955E /* image */,
 				D7037A7B1C58C4DA002A955E /* lang */,
 				D7037A641C58BCB0002A955E /* SysFile */,
+				D75F0F6A1CA90248009287A7 /* pict_testing */,
 				D7072BA11C62F04D00A6DDF5 /* html */,
 			);
 			path = StoreCN;
@@ -575,6 +591,7 @@
 		D7037A861C58C726002A955E /* image */ = {
 			isa = PBXGroup;
 			children = (
+				D75F0F6E1CA91126009287A7 /* H1_L_P.jpg */,
 				D710A07C1C8E8B7F00264CEB /* testmechine_128.png */,
 				D710A07A1C8E8B6B00264CEB /* menu_analydata.png */,
 				D7037A871C58C726002A955E /* menu_servicemgr.png */,
@@ -700,6 +717,9 @@
 				D74B4B931C9FD1EE001F1176 /* BTScaleMain.swift */,
 				D74B4B9A1C9FE1C4001F1176 /* BTScaleMainCont.swift */,
 				D74B4B951C9FD41B001F1176 /* BTScaleService.swift */,
+				D75F0F6C1CA90903009287A7 /* BTMeadMain.swift */,
+				D75F0F701CA9127D009287A7 /* BTMeadMainCell.swift */,
+				D75F0F771CA92245009287A7 /* BTMeadService.swift */,
 			);
 			name = Testing;
 			sourceTree = "<group>";
@@ -827,6 +847,15 @@
 			name = Health;
 			sourceTree = "<group>";
 		};
+		D75F0F721CA915D8009287A7 /* Mead */ = {
+			isa = PBXGroup;
+			children = (
+				D75F0F731CA915E9009287A7 /* MeadCFG.swift */,
+				D75F0F741CA915E9009287A7 /* MeadClass.swift */,
+			);
+			name = Mead;
+			sourceTree = "<group>";
+		};
 		D7BB2AD11C646DD600624E08 /* PubView */ = {
 			isa = PBXGroup;
 			children = (
@@ -923,6 +952,7 @@
 				D7037B141C58C726002A955E /* menuitem_seasrchagent_256.png in Resources */,
 				D7037B261C58C726002A955E /* staff_128_02.png in Resources */,
 				D7037ADD1C58C726002A955E /* arrow_down02.png in Resources */,
+				D75F0F6F1CA91126009287A7 /* H1_L_P.jpg in Resources */,
 				42CD2E9D1CA661E50041B44B /* Product.storyboard in Resources */,
 				D7037B1A1C58C726002A955E /* okteta_128.png in Resources */,
 				D7037AE21C58C726002A955E /* arrow_right02.png in Resources */,
@@ -962,6 +992,7 @@
 				42CD2EA11CA664870041B44B /* Message.storyboard in Resources */,
 				D7037AFF1C58C726002A955E /* f2_l_p.jpg in Resources */,
 				D7037B221C58C726002A955E /* search03.png in Resources */,
+				D75F0F6B1CA90248009287A7 /* pict_testing in Resources */,
 				D7037ADB1C58C726002A955E /* app_icon01.png in Resources */,
 				D7037AFE1C58C726002A955E /* f1_l_p.jpg in Resources */,
 				D7037B0C1C58C726002A955E /* mailreceive_128.png in Resources */,
@@ -1026,6 +1057,7 @@
 				D72BA3311C8813450028898D /* StaffBenefit.swift in Sources */,
 				42FA49C81C931AA3001C6AEE /* KBNavyBar.swift in Sources */,
 				42E21F131C68E6F500B85EA9 /* CalendarCellData.swift in Sources */,
+				D75F0F711CA9127D009287A7 /* BTMeadMainCell.swift in Sources */,
 				42F6E3651C6B86AE00C9BB94 /* ReservListCell.swift in Sources */,
 				D7150E431C5C6E8000C9FE8B /* MemberAdEd.swift in Sources */,
 				423B7E2F1CA6C9430078BAE4 /* SaleDetailCell.swift in Sources */,
@@ -1083,15 +1115,18 @@
 				42FF6F391CA44ECC00E5E870 /* PubSoqibedAdEd.swift in Sources */,
 				4226BF591C9EFA520096AECA /* CourseSelCustCell.swift in Sources */,
 				D7645BE61C802D8000507072 /* PubPurReturnPdList.swift in Sources */,
+				D75F0F751CA915E9009287A7 /* MeadCFG.swift in Sources */,
 				D72F26491C7ABD3300717394 /* PdSaleMemberSel.swift in Sources */,
 				D7F092241C896CAE005D8C96 /* MsgList.swift in Sources */,
 				D70CD9441C72CBF8008E79E1 /* CourseSaleMemberSel.swift in Sources */,
 				D7645BE81C802EFC00507072 /* PubPurReturnPdListCell.swift in Sources */,
 				D7BB2AD31C6477F800624E08 /* PubMemberPurchaseSelect.swift in Sources */,
+				D75F0F6D1CA90903009287A7 /* BTMeadMain.swift in Sources */,
 				D705CE471C90138800CC9303 /* AnalyDataMonthlyDetail.swift in Sources */,
 				D72F26451C7AA61900717394 /* SalePdSelt.swift in Sources */,
 				D7BB2ADE1C64788700624E08 /* PubMeadDataSelect.swift in Sources */,
 				D7F45F431C75733400735D09 /* PurchasePdSelt.swift in Sources */,
+				D75F0F781CA92245009287A7 /* BTMeadService.swift in Sources */,
 				D7BB2ADD1C64788700624E08 /* PubCourseSelectCell.swift in Sources */,
 				D7037A6A1C58BFB5002A955E /* MainLogin.swift in Sources */,
 				D7FB953A1C59F17F00B48F57 /* FileMang.swift in Sources */,
@@ -1142,6 +1177,7 @@
 				D710A0791C8E794400264CEB /* AnalyDataToday.swift in Sources */,
 				D7F8BCEB1C7ED4390059E6E5 /* PurchaseDetailEdit.swift in Sources */,
 				D72F26471C7AA63A00717394 /* SalePdSeltCell.swift in Sources */,
+				D75F0F761CA915E9009287A7 /* MeadClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

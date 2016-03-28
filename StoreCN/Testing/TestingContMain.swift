@@ -108,6 +108,15 @@ class TestingContMain: UITableViewController {
             
             return
         }
+        
+        // 能量檢測主頁面
+        if (strIdent == "BTMeadMain") {
+            let mVC = segue.destinationViewController as! BTMeadMain
+            mVC.strToday = self.strToday
+            mVC.aryMember = self.aryMember
+            
+            return
+        }
 
         return
     }

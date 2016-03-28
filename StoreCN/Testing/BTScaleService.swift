@@ -248,7 +248,7 @@ class BTScaleService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
      */
     func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?)
     {
-        // loop Device Service UUID, 設定本 class 體脂計主 service channel
+        // loop Device Service UUID, 設定藍芽設備主 service channel
         for tmpCBService in peripheral.services! {
             if (tmpCBService.UUID == UID_SERV) {
                 self.mUIDServ = tmpCBService
