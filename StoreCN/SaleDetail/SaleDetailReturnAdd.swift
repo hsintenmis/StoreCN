@@ -26,10 +26,10 @@ class SaleDetailReturnAdd: UIViewController, SaleReturnPdListDelegate, PickerDat
     
     // public, 本頁面需要的全部資料, parent 設定
     var strToday: String!
-    var dictAllData: Dictionary<String, AnyObject> = [:]
+    var dictAllData: Dictionary<String, AnyObject>!
+    var aryPd: Array<Dictionary<String, AnyObject>>!  //  訂單內的商品 array
     
     // 其他參數
-    private var aryPd: Array<Dictionary<String, AnyObject>>!  // 已出貨商品 array
     private var mPicker: PickerDateTime!  // datetime Picker
     private var strCurrDate: String!  // 目前選擇的退貨日期
     
@@ -38,13 +38,6 @@ class SaleDetailReturnAdd: UIViewController, SaleReturnPdListDelegate, PickerDat
      */
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // 設定退貨商品 array data, 加入數量相關欄位
-        aryPd = dictAllData["odrs"] as! Array<Dictionary<String, AnyObject>>
-        
-        for i in (0..<aryPd.count) {
-            aryPd[i]["selQty"] = "0"
-        }
         
         /* 初始與設定 日期時間 picker */
         // Picker data 參數
@@ -115,7 +108,7 @@ class SaleDetailReturnAdd: UIViewController, SaleReturnPdListDelegate, PickerDat
      */
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let strIdent = segue.identifier
-        
+
         if (strIdent == "SaleReturnPdList") {
             let mVC = segue.destinationViewController as! SaleReturnPdList
             mVC.aryData = aryPd
@@ -163,8 +156,8 @@ class SaleDetailReturnAdd: UIViewController, SaleReturnPdListDelegate, PickerDat
         var dictParm: Dictionary<String, String> = [:]
         dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
         dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
-        dictParm["page"] = "purchase"
-        dictParm["act"] = "purchase_returnaddsave"
+        dictParm["page"] = "sale"
+        dictParm["act"] = "sale_returnaddsave"
         
         var dictArg0: Dictionary<String, AnyObject> = [:]
         dictArg0["invo_id"] = dictAllData["id"] as? String
@@ -185,18 +178,19 @@ class SaleDetailReturnAdd: UIViewController, SaleReturnPdListDelegate, PickerDat
         }
         
         // HTTP 開始連線
-        pubClass.popConfirm(self, aryMsg: ["", pubClass.getLang("purchase_mksurepurchasereturnmsg")], withHandlerYes: {self.pubClass.HTTPConn(self, ConnParm: dictParm, callBack: self.HttpSaveResponChk)}, withHandlerNo: {return})
-    }
-    
-    /**
-     * HTTP 連線後取得連線結果
-     */
-    private func HttpSaveResponChk(dictRS: Dictionary<String, AnyObject>) {
-        // 回傳後跳離, 通知 parent 資料 reload
-        let strMsg = (dictRS["result"] as! Bool != true) ? pubClass.getLang("err_trylatermsg") : pubClass.getLang("datasavecompleted")
+        pubClass.popConfirm(self, aryMsg: ["", pubClass.getLang("purchase_mksurepurchasereturnmsg")], withHandlerYes: {self.pubClass.HTTPConn(self, ConnParm: dictParm, callBack: {
+            (dictRS: Dictionary<String, AnyObject>) -> Void in
+            
+            // 回傳後跳離, 通知 parent 資料 reload
+            let bolRS = dictRS["result"] as! Bool
+            let strMsg = (bolRS != true) ? self.pubClass.getLang("err_trylatermsg") : self.pubClass.getLang("datasavecompleted")
+            
+            self.delegate?.PageNeedReload!(bolRS)
+            self.pubClass.popIsee(self, Msg: strMsg, withHandler: {self.dismissViewControllerAnimated(true, completion: nil)})
+            
+        })}, withHandlerNo: {})
         
-        delegate?.PageNeedReload!(true)
-        pubClass.popIsee(self, Msg: strMsg, withHandler: {self.dismissViewControllerAnimated(true, completion: nil)})
+        return
     }
     
     /**

@@ -25,11 +25,11 @@ class SaleReturnPdList: UITableViewController, SaleReturnPdCellDelegate {
     @IBOutlet weak var tableData: UITableView!
     
     // common property
-    let pubClass: PubClass = PubClass()
+    let pubClass = PubClass()
     
     // parent 設定, 指定日期的退貨資料 array data
     var aryData: Array<Dictionary<String, AnyObject>>!
-    var strToday = ""
+    var strToday: String!
     
     // 其他參數設定
     

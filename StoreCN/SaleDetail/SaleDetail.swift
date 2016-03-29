@@ -296,9 +296,16 @@ class SaleDetail: UIViewController, SaleDetailCellDelegate, PubClassDelegate {
         
         // 新增退貨
         if (strIdent == "sale_returnadd") {
+            // 設定退貨商品 array data, 加入數量相關欄位
+            var aryRPd = dictAllData["odrs"] as! Array<Dictionary<String, AnyObject>>
+            for i in (0..<aryRPd.count) {
+                aryRPd[i]["selQty"] = "0"
+            }
+            
             let mVC = segue.destinationViewController as! SaleDetailReturnAdd
             mVC.dictAllData = dictAllData
             mVC.strToday = strToday
+            mVC.aryPd = aryRPd
             mVC.delegate = self
             
             return
