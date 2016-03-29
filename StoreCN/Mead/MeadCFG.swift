@@ -11,8 +11,8 @@ class MeadCFG {
     /** 紀錄資料數值的 最小值 = 8 */
     let D_VALUE_MIN = 8;
     
-    /** 最大的資料數值  = 201*/
-    let D_VALUE_MAX = 201;
+    /** 最大的資料數值  = 200*/
+    let D_VALUE_MAX = 200;
     
     /** 設備連線後,固定傳送數值 = 1*/
     let D_DEVICE_CONNVALUE = 1;

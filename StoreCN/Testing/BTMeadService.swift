@@ -189,7 +189,12 @@ class BTMeadService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         
         // 設定 'handler', 標記：'BT_statu'
         if (bolRS != true) {
-            delegate?.handlerBLE("BT_statu", result: true, msg: pubClass.getLang(msg), intVal: nil)
+            var code = 2
+            if (msg == "bt_mobile_off") {
+                code = 3
+            }
+            
+            delegate?.handlerBLE("BT_statu", result: true, msg: pubClass.getLang(msg), intVal: code)
         }
     }
     
@@ -201,9 +206,9 @@ class BTMeadService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             mCentMgr.stopScan()
         }
         
-        // 連接不到裝置，顯示找不到裝置
+        // 連接不到裝置，顯示找不到裝置, 回傳 int 代碼 1
         if (mConnDev == nil) {
-            delegate?.handlerBLE("BT_statu", result: true, msg: pubClass.getLang("bt_cantfindbtdevice"), intVal: nil)
+            delegate?.handlerBLE("BT_statu", result: true, msg: pubClass.getLang("bt_cantfindbtdevice"), intVal: 1)
         }
     }
 

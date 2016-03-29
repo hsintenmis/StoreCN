@@ -106,6 +106,8 @@ class BTScaleService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
      * public parent 執行, BT 執行連接程序, 啟動 CBCentralManager
      */
     func BTConnStart() {
+        BTDisconn()
+        
         if (BT_ISREADYFOTESTING != true) {
             mCentMgr = CBCentralManager(delegate: self, queue: nil)
         }

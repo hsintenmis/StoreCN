@@ -202,6 +202,9 @@
 		D74B4B991C9FD4DA001F1176 /* HealthDataInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74B4B981C9FD4DA001F1176 /* HealthDataInit.swift */; };
 		D74B4B9B1C9FE1C4001F1176 /* BTScaleMainCont.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74B4B9A1C9FE1C4001F1176 /* BTScaleMainCont.swift */; };
 		D74B4B9D1C9FEA1A001F1176 /* TestingMemberSel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74B4B9C1C9FEA1A001F1176 /* TestingMemberSel.swift */; };
+		D7553E9A1CAA5F73007A323F /* RecordDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7553E971CAA5F73007A323F /* RecordDetail.swift */; };
+		D7553E9B1CAA5F73007A323F /* RecordDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7553E981CAA5F73007A323F /* RecordDetailCell.swift */; };
+		D7553E9C1CAA5F73007A323F /* RecordDetailTxt.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7553E991CAA5F73007A323F /* RecordDetailTxt.swift */; };
 		D75F0F6B1CA90248009287A7 /* pict_testing in Resources */ = {isa = PBXBuildFile; fileRef = D75F0F6A1CA90248009287A7 /* pict_testing */; };
 		D75F0F6D1CA90903009287A7 /* BTMeadMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75F0F6C1CA90903009287A7 /* BTMeadMain.swift */; };
 		D75F0F6F1CA91126009287A7 /* H1_L_P.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D75F0F6E1CA91126009287A7 /* H1_L_P.jpg */; };
@@ -441,6 +444,9 @@
 		D74B4B981C9FD4DA001F1176 /* HealthDataInit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HealthDataInit.swift; path = Health/HealthDataInit.swift; sourceTree = "<group>"; };
 		D74B4B9A1C9FE1C4001F1176 /* BTScaleMainCont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BTScaleMainCont.swift; path = Testing/BTScaleMainCont.swift; sourceTree = "<group>"; };
 		D74B4B9C1C9FEA1A001F1176 /* TestingMemberSel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestingMemberSel.swift; path = Testing/TestingMemberSel.swift; sourceTree = "<group>"; };
+		D7553E971CAA5F73007A323F /* RecordDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecordDetail.swift; path = Mead/RecordDetail.swift; sourceTree = "<group>"; };
+		D7553E981CAA5F73007A323F /* RecordDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecordDetailCell.swift; path = Mead/RecordDetailCell.swift; sourceTree = "<group>"; };
+		D7553E991CAA5F73007A323F /* RecordDetailTxt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecordDetailTxt.swift; path = Mead/RecordDetailTxt.swift; sourceTree = "<group>"; };
 		D75F0F6A1CA90248009287A7 /* pict_testing */ = {isa = PBXFileReference; lastKnownFileType = folder; path = pict_testing; sourceTree = "<group>"; };
 		D75F0F6C1CA90903009287A7 /* BTMeadMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BTMeadMain.swift; path = Testing/BTMeadMain.swift; sourceTree = "<group>"; };
 		D75F0F6E1CA91126009287A7 /* H1_L_P.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = H1_L_P.jpg; sourceTree = "<group>"; };
@@ -861,6 +867,9 @@
 			children = (
 				D75F0F731CA915E9009287A7 /* MeadCFG.swift */,
 				D75F0F741CA915E9009287A7 /* MeadClass.swift */,
+				D7553E971CAA5F73007A323F /* RecordDetail.swift */,
+				D7553E981CAA5F73007A323F /* RecordDetailCell.swift */,
+				D7553E991CAA5F73007A323F /* RecordDetailTxt.swift */,
 			);
 			name = Mead;
 			sourceTree = "<group>";
@@ -1113,7 +1122,9 @@
 				D7037A771C58C03F002A955E /* NoDataView.swift in Sources */,
 				D72E981F1C912BA600DA9FA3 /* SysConfigMain.swift in Sources */,
 				D71DFD081C7C0EB40024BB59 /* Stock.swift in Sources */,
+				D7553E9C1CAA5F73007A323F /* RecordDetailTxt.swift in Sources */,
 				D72E982D1C91719900DA9FA3 /* ConfigCourseEdit.swift in Sources */,
+				D7553E9A1CAA5F73007A323F /* RecordDetail.swift in Sources */,
 				D705CE431C8FC85800CC9303 /* AnalyDataDailyCell.swift in Sources */,
 				D74B4B8E1C9FCB14001F1176 /* TestingDevLiist.swift in Sources */,
 				D7496D1A1C5B343200B75D6A /* MainMenuColtViewCell.swift in Sources */,
@@ -1169,6 +1180,7 @@
 				D7BB2AE11C64788700624E08 /* PubMemberSelectCell.swift in Sources */,
 				D74B4B9B1C9FE1C4001F1176 /* BTScaleMainCont.swift in Sources */,
 				D7F092221C896C72005D8C96 /* HealthWitnessList.swift in Sources */,
+				D7553E9B1CAA5F73007A323F /* RecordDetailCell.swift in Sources */,
 				4226BF551C9E73B30096AECA /* CourseReservAdd.swift in Sources */,
 				D74B4B9D1C9FEA1A001F1176 /* TestingMemberSel.swift in Sources */,
 				D709CCA41CA3B36700F85DDF /* HealthTestingValCell.swift in Sources */,
