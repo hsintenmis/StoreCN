@@ -103,8 +103,11 @@ class SaleDetail: UIViewController, SaleDetailCellDelegate, PubClassDelegate {
         
         // 設定選單項目, 對應 ident string
         var aryIdent = ["sale_detailedit", "sale_returnadd"]
+        var hasReturn = false
+        
         if let _ = dictAllData["return"] as? Array<AnyObject> {
             aryIdent.append("sale_returnlist")
+            hasReturn = true
         }
         
         // loop 子選單 ident name, 重新產生 UIAlertController
@@ -117,18 +120,66 @@ class SaleDetail: UIViewController, SaleDetailCellDelegate, PubClassDelegate {
             }))
         }
         
-        // 刪除
-        mAlert.addAction(UIAlertAction(title: pubClass.getLang("sale_delete"), style: UIAlertActionStyle.Destructive, handler:{
-            (alert: UIAlertAction!) -> Void in
-            
-            // 執行刪除程序
-            let aryMsg = [self.pubClass.getLang("systemwarring"), self.pubClass.getLang("sale_delwarringmsg")]
-            self.pubClass.popConfirm(self, aryMsg: aryMsg, withHandlerYes: {}, withHandlerNo: {})
-            
-        }))
+        // 刪除出貨單
+        if (hasReturn != true) {
+            mAlert.addAction(UIAlertAction(title: pubClass.getLang("sale_delete"), style: UIAlertActionStyle.Destructive, handler:{
+                (alert: UIAlertAction!) -> Void in
+                
+                // 執行刪除程序
+                let aryMsg = [self.pubClass.getLang("systemwarring"), self.pubClass.getLang("sale_delwarringmsg")]
+                self.pubClass.popConfirm(self, aryMsg: aryMsg, withHandlerYes: { self.delData() }, withHandlerNo: {})
+                
+            }))
+        }
         
         // 取消
         mAlert.addAction(UIAlertAction(title: pubClass.getLang("cancel"), style: UIAlertActionStyle.Cancel, handler:nil))
+    }
+    
+    /**
+    * 刪除訂單，http 連線儲存
+    */
+    private func delData() {
+        // HTTP 連線參數設定
+        var dictParm: Dictionary<String, String> = [:]
+        dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
+        dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
+        dictParm["page"] = "sale"
+        dictParm["act"] = "sale_editsave_otherdta"
+        
+        var dictArg0: Dictionary<String, AnyObject> = [:]
+        dictArg0["invo_id"] = dictAllData["id"] as? String
+        dictArg0["del_flag"] = "Y"
+        
+        do {
+            let jobjData = try
+                NSJSONSerialization.dataWithJSONObject(dictArg0, options: NSJSONWritingOptions(rawValue: 0))
+            let jsonString = NSString(data: jobjData, encoding: NSUTF8StringEncoding)! as String
+            
+            dictParm["arg0"] = jsonString
+        } catch {
+            pubClass.popIsee(self, Msg: pubClass.getLang("err_data"))
+            
+            return
+        }
+        
+        // 直接執行 http 連線，本頁面結束
+        self.pubClass.HTTPConn(self, ConnParm: dictParm, callBack: {
+            (dictRS: Dictionary<String, AnyObject>) -> Void in
+            
+            // 回傳後跳離
+            var strMsg = self.pubClass.getLang("err_trylatermsg")
+            let bolRS = dictRS["result"] as! Bool
+            if (bolRS == true) {
+                strMsg = self.pubClass.getLang("sale_deletecompleted")
+            }
+            
+            self.pubClass.popIsee(self, Msg: strMsg, withHandler: {
+                // 通知 parent 資料有變動
+                self.dismissViewControllerAnimated(true, completion: {self.delegate?.PageNeedReload!(bolRS)})
+            })
+        })
+
     }
     
     /**
@@ -265,7 +316,6 @@ class SaleDetail: UIViewController, SaleDetailCellDelegate, PubClassDelegate {
      */
     func keyboardWillShow(notification:NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
-            
             var mPoint = keyboardSize.height - 44.0
             if (keyboardHeightQty == keyboardSize.height) {
                 mPoint -= 45
@@ -330,6 +380,7 @@ class SaleDetail: UIViewController, SaleDetailCellDelegate, PubClassDelegate {
      * act, 點取 '選項' button
      */
     @IBAction func actOption(sender: UIBarButtonItem) {
+        keyboardClose()
         self.presentViewController(mAlert, animated: true, completion: nil)
     }
     

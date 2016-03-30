@@ -144,6 +144,9 @@
 "product_selpurchasedate" = "选择进货日期";
 "product_purchasepricecusterr" = "进货实际金额错误!";
 "product_qtyreturneditto0msg" = "无法修改进货数量！\n有退货的商品不能修改进货数量!";
+"product_selpdfirstmsg" = "請选择商品!";
+"product_salerealpriceerr" = "實際出貨金額錯誤!";
+"product_saleselmembermsg" = "請選擇會員!";
 
 "purchase_pruchaseqtyeditmsg" = "进货数量修改，将会影响以下资料：\n1. 该商品的库存数量\n2. 进货总金额\n3. 实际进货金额";
 "purchase_noreturnpdselmsg" = "请选择退货商品与退货数量!";
@@ -411,6 +414,7 @@
 "sale_returnlist" = "退货列表";
 "sale_delete" = "刪除出貨";
 "sale_delwarringmsg" = "删除出货单资料，将影响商品的库存与损益报表! 若为疗程商品, 已完成或预约疗程相关资料将一并删除!\n\n请务必再次确认是否要删除?!";
+"sale_deletecompleted" = "刪除出貨完成!";
 
 "mead_body_FL" = "左足";
 "mead_body_FR" = "右足";

@@ -19,7 +19,6 @@ class Sale: UIViewController, SalePdSeltDelegate, SalePdSeltCellDelegate, PdSale
     
     // common property
     let pubClass: PubClass = PubClass()
-    var dictPref: Dictionary<String, AnyObject>!  // Prefer data
     
     // public, 從 parent 設定
     var strToday = ""
@@ -44,7 +43,6 @@ class Sale: UIViewController, SalePdSeltDelegate, SalePdSeltCellDelegate, PdSale
         super.viewDidLoad()
         
         // 固定初始參數
-        dictPref = pubClass.getPrefData()
         aryPdType = pubClass.aryProductType
         
         // 檢查資料
@@ -244,6 +242,8 @@ class Sale: UIViewController, SalePdSeltDelegate, SalePdSeltCellDelegate, PdSale
                     
                     // dictPd 加到 aryCart
                     dictPd["position"] = String(i)
+                    dictPd["oqty"] = dictPd["qtySel"]  //  server 存擋欄位
+
                     aryCart.append(dictPd)
                 }
             }
@@ -317,7 +317,86 @@ class Sale: UIViewController, SalePdSeltDelegate, SalePdSeltCellDelegate, PdSale
      * act, 點取 '儲存' button
      */
     @IBAction func actSave(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        // 是否有選擇會員
+        if (indexPathMember == nil) {
+            pubClass.popIsee(self, Msg: pubClass.getLang("product_saleselmembermsg"))
+            return
+        }
+        
+        // 檢查是否有商品
+        if (aryCart.count < 1) {
+            pubClass.popIsee(self, Msg: pubClass.getLang("product_selpdfirstmsg"))
+            return
+        }
+        
+        // 檢查實際金額
+        if let intTmp = Int(edRealPrice.text!) {
+            let strTmp = String(intTmp)
+            if (strTmp.characters.count > 8) {
+                pubClass.popIsee(self, Msg: pubClass.getLang("product_salerealpriceerr"))
+                return
+            }
+        } else {
+            pubClass.popIsee(self, Msg: pubClass.getLang("product_salerealpriceerr"))
+            return
+        }
+        
+        // 確認視窗，執行 http 連線資料儲存
+        pubClass.popConfirm(self, aryMsg: [pubClass.getLang("sysprompt"), pubClass.getLang("datasendplzconfirmmsg")], withHandlerYes: { self.saveData() }, withHandlerNo: {})
+        
+        return
+    }
+    
+    /**
+     * http 連線資料儲存
+     */
+    private func saveData() {
+        // 設定 'arg0' dict data
+        var dictArg0: Dictionary<String, AnyObject> = [:]
+        var dictMemo: Dictionary<String, String> = [:]
+        dictMemo["price"] = labTotPrice.text
+        dictMemo["custprice"] = edRealPrice.text
+        dictMemo["memo"] = edMemo.text
+        
+        dictArg0["memo"] = dictMemo["memo"]
+        dictArg0["cart"] = aryCart
+        dictArg0["member"] = aryMember[indexPathMember!.row]
+        
+        // 產生 http post data, http 連線儲存後跳離
+        var dictParm: Dictionary<String, String> = [:]
+        dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
+        dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
+        dictParm["page"] = "sale"
+        dictParm["act"] = "sale_senddata"
+        
+        do {
+            let jobjData = try
+                NSJSONSerialization.dataWithJSONObject(dictArg0, options: NSJSONWritingOptions(rawValue: 0))
+            let jsonString = NSString(data: jobjData, encoding: NSUTF8StringEncoding)! as String
+            
+            dictParm["arg0"] = jsonString
+        } catch {
+            pubClass.popIsee(self, Msg: pubClass.getLang("err_data"))
+            
+            return
+        }
+        
+        // HTTP 連線後取得連線結果
+        self.pubClass.HTTPConn(self, ConnParm: dictParm, callBack: {
+            (dictRS: Dictionary<String, AnyObject>) -> Void in
+            let bolsRS = dictRS["result"] as! Bool
+            let strMsg = (bolsRS != true) ? self.pubClass.getLang("err_trylatermsg") : self.pubClass.getLang("datasavecompleted")
+            
+            // 清除商品資料
+            self.initAllPd()
+            self.resetCartData()
+            self.tableData.reloadData()
+            self.edMemo.text = ""
+            
+            self.pubClass.popIsee(self, Msg: strMsg)
+        })
+        
+        return
     }
     
     /**
