@@ -75,8 +75,8 @@ class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIP
             switch (strMenuName) {
                 
             case "mead":  // Mead 資料 VC
-                let mVC: PubMeadDataSelect = storyboard?.instantiateViewControllerWithIdentifier("PubMeadDataList") as! PubMeadDataSelect
-                
+                let storyboard = UIStoryboard(name: "Testing", bundle: nil)
+                let mVC: PubMeadDataSelect = storyboard.instantiateViewControllerWithIdentifier("PubMeadDataList") as! PubMeadDataSelect
                 if let tmpDict = dictAllData["mead"] as? Array<Dictionary<String, AnyObject>> {
                     mVC.aryMeadData = tmpDict
                 }
@@ -86,7 +86,8 @@ class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIP
                 break
                 
             case "soqibed":  // SoqiBed 資料 VC
-                let mVC: PubSoqibedSelect = storyboard?.instantiateViewControllerWithIdentifier("PubSoqibedSelect") as! PubSoqibedSelect
+                let storyboard = UIStoryboard(name: "Testing", bundle: nil)
+                let mVC: PubSoqibedSelect = storyboard.instantiateViewControllerWithIdentifier("PubSoqibedSelect") as! PubSoqibedSelect
                 
                 if let tmpDict = dictAllData["soqibed"] as? Array<Dictionary<String, AnyObject>> {
                     mVC.arySoqibedData = tmpDict

@@ -6,23 +6,9 @@ import UIKit
 import Foundation
 
 /**
- * protocol, PubSoqibedSelect Delegate
- */
-/*
-protocol PubSoqibedSelectDelegate {
-    /**
-     * Table Cell 點取，點取指定資料，實作點取後相關程序
-     */
-    func SoqibedDataSelected(SoqibedData dictData: Dictionary<String, AnyObject>, indexPath: NSIndexPath)
-}
-*/
-
-/**
  * 會員產生的 SoqiBed 資料選擇 公用 class
  */
 class PubSoqibedSelect: UITableViewController {
-    //var delegate = PubSoqibedSelectDelegate?()
-    
     // @IBOutlet
     @IBOutlet weak var tableData: UITableView!
     @IBOutlet weak var labNoData: UILabel!
@@ -56,9 +42,7 @@ class PubSoqibedSelect: UITableViewController {
      * View DidAppear 程序
      */
     override func viewDidAppear(animated: Bool) {
-        dispatch_async(dispatch_get_main_queue(), {
-            
-        })
+
     }
     
     /**
@@ -108,10 +92,9 @@ class PubSoqibedSelect: UITableViewController {
      * UITableView, Cell 點取
      */
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        //delegate?.SoqibedDataSelected(SoqibedData: arySoqibedData[indexPath.row], indexPath: indexPath)
-        
+
         // 取得選擇的 SOQIBED dict Data, 跳轉編輯頁面
-        self.performSegueWithIdentifier("SoqiBedMember", sender: arySoqibedData[indexPath.row])
+        self.performSegueWithIdentifier("PubSoqibedAdEd", sender: arySoqibedData[indexPath.row])
     }
     
     /**
@@ -121,7 +104,7 @@ class PubSoqibedSelect: UITableViewController {
         let strIdentName = segue.identifier
         
         //  SOQIBED 編輯頁面
-        if (strIdentName == "SoqiBedMember") {
+        if (strIdentName == "PubSoqibedAdEd") {
             let mVC = segue.destinationViewController as! PubSoqibedAdEd
             mVC.dictAllData = sender as! Dictionary<String, AnyObject>
             mVC.strMode = "edit"

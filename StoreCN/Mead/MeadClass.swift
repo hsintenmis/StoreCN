@@ -90,7 +90,7 @@ class MeadClass {
      *
      * @return String: "" or "F522,F222, ..."
      */
-    func GetProblemItem(aryData:Array<Dictionary<String, String>>!)->String {
+    func GetProblemItem(aryData:Array<Dictionary<String, String>>!)->String! {
         let dictAVG = self.GetAvgValue(aryData)
         var strRS = ""
         var intVal = 0

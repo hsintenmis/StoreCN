@@ -55,7 +55,6 @@ class RecordDetailTxt: UIViewController {
         // 取得 mead_db 檔案的 JSON string, 解析為 array or dict
         let mFileMang = FileMang()
         let mJSONClass = JSONClass()
-
         dictMeadDB = mJSONClass.JSONStrToDict(mFileMang.read(pubClass.filenameMEADDB))
 
         if (dictMeadDB.count < 1) {
@@ -65,10 +64,15 @@ class RecordDetailTxt: UIViewController {
             return
         }
         
-        /* 初始與設定 TableView 需要的 datasource */
         // TableCell autoheight
         self.tableList.estimatedRowHeight = 100.0
         self.tableList.rowHeight = UITableViewAutomaticDimension
+
+    }
+    
+    // View DidAppear
+    override func viewDidAppear(animated: Bool){
+        super.viewDidAppear(animated)
         self.initTableDataSource()
         self.tableList.reloadData()
     }
@@ -97,6 +101,7 @@ class RecordDetailTxt: UIViewController {
         
         // 取得有問題的 iNo 代碼 array, 重新整理取得前四筆資料
         var aryOrgData = dictMeadData["problem"]!.componentsSeparatedByString(",")
+        
         for loopi in (0..<aryOrgData.count) {
             if (loopi == mMeadCFG.D_REPORT_ANALY_MAXNUMS) {
                 break
@@ -151,7 +156,7 @@ class RecordDetailTxt: UIViewController {
      * UITableView, 'section' 回傳指定的數量
      */
     func numberOfSectionsInTableView(tableView: UITableView!)->Int {
-        return 2
+        return (aryDataSource_0.count < 1) ? 0 : 2
     }
     
     /**
@@ -160,6 +165,11 @@ class RecordDetailTxt: UIViewController {
      * 可根據 'section' 回傳指定的數量
      */
     func tableView(tableView: UITableView!, numberOfRowsInSection section:Int) -> Int {
+        
+        if (aryDataSource_0.count < 1) {
+            return 0
+        }
+        
         return (section == 0) ? aryDataSource_0.count : 1
     }
     
@@ -168,10 +178,11 @@ class RecordDetailTxt: UIViewController {
      */
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
         
-        let dictItem: Dictionary<String, String> = (indexPath.section == 0) ? aryDataSource_0[indexPath.row] : aryDataSource_1[indexPath.row]
-        if (dictItem.count < 1) {
-            return nil
+        if (aryDataSource_0.count < 1) {
+            return UITableViewCell()
         }
+        
+        let dictItem: Dictionary<String, String> = (indexPath.section == 0) ? aryDataSource_0[indexPath.row] : aryDataSource_1[indexPath.row]
         
         let mCell: RecordDetailCell = tableView.dequeueReusableCellWithIdentifier("cellRecordDetailCell", forIndexPath: indexPath) as! RecordDetailCell
         

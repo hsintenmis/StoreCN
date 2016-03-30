@@ -115,6 +115,7 @@
 "soqibed_actdate" = "建立日期";
 "soqibed_usecount" = "使用次数";
 "soqibed_builddate" = "建立时间";
+"soqibed_titleerr" = "名稱錯誤!";
 
 "bodypoint_0" = "心包经";
 "bodypoint_1" = "肺经";
@@ -474,3 +475,6 @@
 "mead_testingdate" = "檢測日期";
 "mead_selmemberfirst" = "請先選擇會員!";
 "mead_testingvalokmsg" = "檢測結果正常 ！";
+"mead_savefirstmsg" = "請先儲存檢測資料!";
+"mead_valalreadysave" = "檢測資料已經儲存過了!";
+"mead_changmembermsg" = "更改會員, 已檢測的資料將全部清除!\n請再次確認!";

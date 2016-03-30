@@ -53,8 +53,7 @@ class PubMemberSelect: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     
     // common property
-    var mVC: UIViewController!
-    let pubClass: PubClass = PubClass()
+    let pubClass = PubClass()
     
     // Table DataSource, 會員全部資料, parent 設定
     var aryMember: Array<Dictionary<String, AnyObject>> = []
@@ -73,9 +72,6 @@ class PubMemberSelect: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 固定初始參數
-        //mVC = self
-        
         // 加入原始的 position
         for i in (0..<aryMember.count) {
             aryMember[i]["position"] = i
@@ -92,10 +88,6 @@ class PubMemberSelect: UIViewController {
             tableData.reloadData()
             tableData.selectRowAtIndexPath(tmpIndexPath, animated: false, scrollPosition: UITableViewScrollPosition.Middle)
         }
-        
-        dispatch_async(dispatch_get_main_queue(), {
-            
-        })
     }
     
     /**
@@ -170,7 +162,6 @@ class PubMemberSelect: UIViewController {
         let mIndexPath = NSIndexPath(forRow: mRow, inSection: 0)
         
         currIndexPath = mIndexPath
-        
         delegate?.MemberSelected(MemberData: aryNewMember[indexPath.row], indexPath: mIndexPath)
     }
     

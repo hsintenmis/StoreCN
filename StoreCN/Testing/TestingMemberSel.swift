@@ -63,14 +63,13 @@ class TestingMemberSel: UIViewController, PubMemberSelectDelegate {
     }
     
     /**
-     * #mark: PubMemberListDelegate, 會員列表，點取會員後跳離本頁面， parent 執行相關程序
+     * #mark: PubMemberSelectDelegate
+     * 會員列表，點取會員後跳離本頁面， parent 執行相關程序
      */
     func MemberSelected(MemberData dictData: Dictionary<String, AnyObject>, indexPath: NSIndexPath) {
         // delegate 執行相關程序
-        self.dismissViewControllerAnimated(true, completion: {
-            self.delegate?.MemberSeltPageDone(dictData, MemberindexPath: indexPath)
-            }
-        )
+        self.delegate?.MemberSeltPageDone(dictData, MemberindexPath: indexPath)
+        self.dismissViewControllerAnimated(true, completion: {} )
     }
     
     /**

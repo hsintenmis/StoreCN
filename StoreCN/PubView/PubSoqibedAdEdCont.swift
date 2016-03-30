@@ -39,11 +39,20 @@ class PubSoqibedAdEdCont: UITableViewController {
     let aryHotDevMinsVal = PubClass().aryHotDevMinsVal
     let aryS00DevMinsVal = PubClass().aryS00DevMinsVal
     
+    // 其他參數
+    private var strIsDel = "N"
+    
     /**
      * View Load 程序
      */
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // view field 設定
+        if (strMode == "add") {
+            btnDel.enabled = false
+            btnDel.alpha = 0.0
+        }
         
         // 設備 S00, 設定分鐘數
         sliderS00.maximumValue = Float(aryS00DevMinsVal.count - 1)
@@ -132,6 +141,43 @@ class PubSoqibedAdEdCont: UITableViewController {
         
         return true
     }
+    
+    /**
+     * public, parent 調用，回傳本頁面編輯資料
+     */
+    func getPageData()-> Dictionary<String, AnyObject>? {
+        var dictData: Dictionary<String, AnyObject> = [:]
+        
+        // 名稱錯誤
+        if (edTitle.text!.characters.count < 4) {
+            pubClass.popIsee(self, Msg: pubClass.getLang("soqibed_titleerr"))
+            
+            return nil
+        }
+        
+        // hothouse 設備 UISegmentedControl, 取得對應數值
+        for swchDev in swchSoqbed {
+            // 取得欄位名稱, ex. 'H00'
+            let strIdent = swchDev.restorationIdentifier  // ex. 'DevH00'
+            let strKey = strIdent!.stringByReplacingOccurrencesOfString("Dev1", withString: "", range: nil)
+            
+            dictData[strKey] = String(aryHotDevMinsVal[swchDev.selectedSegmentIndex])
+        }
+        
+        dictData["S00"] = String(aryS00DevMinsVal[Int(sliderS00.value)])
+        
+        // 設定回傳資料
+        dictData["mode"] = strMode
+        dictData["del"] = strIsDel
+        dictData["mead_id"] = dictAllData["mead_id"] as? String
+        dictData["memberid"] = dictAllData["memberid"] as? String
+        dictData["membername"] = dictAllData["membername"] as? String
+        dictData["title"] = edTitle.text!
+        dictData["index_id"] = dictAllData["index_id"] as? String
+
+        return dictData
+    }
+
     
     /**
      * act, Slider, S00 分鐘數變動

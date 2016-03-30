@@ -59,20 +59,22 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
      * val : 檢測值, 預設 0, String 型態<br>
      * serial : 身體與方向對應序號, 1 ~ 6<br>
      */
-    var aryTestingData: Array<Dictionary<String, String>> = []
+    private var aryTestingData: Array<Dictionary<String, String>> = []
     
     // 目前檢測資料的 position, 與 CollectionView 的 position 一樣
-    var currDataPosition = 0;
-    var currIndexPath = NSIndexPath(forRow: 0, inSection:0)
+    private var currDataPosition = 0;
+    private var currIndexPath = NSIndexPath(forRow: 0, inSection:0)
     
     // 其他參數
     private var mBTMeadService: BTMeadService!  // 檢測儀藍牙 Service
     private var mMeadCFG = MeadCFG() // MEAD, 設定檔
     private var mMeadClass = MeadClass() // MEAD class
+    private var dictMeadDB: Dictionary<String, AnyObject>? // 96 種結果DB data
     
     private var dictMember: Dictionary<String, AnyObject> = [:]  // 選擇的會員資料
     private var currIndexMember: NSIndexPath? // 已選擇的會員
     private var isDataSave = false  // 檢測資料是否已存檔
+    private var strMeadId: String?  // 已存檔的 Mead index ID
     
     /**
      * View Load 程序
@@ -88,16 +90,35 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
         labBTMsg.text = pubClass.getLang("bt_searching")
         btnConn.alpha = 0.0
         setBtnActive(false)
+        btnConn.layer.cornerRadius = 5
+        btnMember.layer.cornerRadius = 5
+        
+        // 取得 mead_db 檔案的 JSON string, 解析為 array or dict
+        let mFileMang = FileMang()
+        let mJSONClass = JSONClass()
+        dictMeadDB = mJSONClass.JSONStrToDict(mFileMang.read(pubClass.filenameMEADDB))
+        
+        if (dictMeadDB == nil) {
+            pubClass.popIsee(self, Msg: pubClass.getLang("err_data"))
+            self.dismissViewControllerAnimated(true, completion: nil)
+            
+            return
+        }
         
         // 檢測數值 array data 初始與產生
         aryTestingData = mMeadCFG.getAryAllTestData()
     }
     
     /**
-     * View DidAppear 程序
+     * View WillAppear 程序
      */
-    override func viewDidAppear(animated: Bool) {
-        mBTMeadService.BTConnStart()
+    override func viewWillAppear(animated: Bool) {
+        if (mBTMeadService.BT_ISREADYFOTESTING != true) {
+            imgLoading.startAnimating()
+            imgBody.alpha = 0.0
+            btnConn.alpha = 0.0
+            mBTMeadService.BTConnStart()
+        }
     }
     
     /**
@@ -121,19 +142,49 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
     }
     
     /**
+     * 重設本頁面全部資料
+     */
+    private func resetAllData() {
+        self.CURR_STATU = self.STATU_READY
+        self.currValCount = 0  // 目前檢測數值計算加總的次數
+        self.mapTestValCount = [:] // 檢測數值 => 出現次數, 目的取得最多次數的 val
+        self.aryTestingData = self.mMeadCFG.getAryAllTestData()
+        self.moveCollectCell(0)
+        self.isDataSave = false
+        self.strMeadId = nil
+    }
+    
+    /**
      * #mark: TestingMemberSel Delegate
      * 點取會員後執行相關程序
      */
     func MemberSeltPageDone(MemberData: Dictionary<String, AnyObject>, MemberindexPath: NSIndexPath) {
-        currIndexMember = MemberindexPath
         
-        // 重新設定儲存狀態
-        if (dictMember["membeid"] != nil) {
-            if (MemberData["membeid"] as? String != dictMember["membeid"] as? String) {
-                self.isDataSave = false
+        // 更換目前會員，相關資料清除
+        if (dictMember["memberid"] != nil) {
+            if (MemberData["memberid"] as? String != dictMember["memberid"] as? String) {
+                pubClass.popConfirm(self, aryMsg: ["", pubClass.getLang("mead_changmembermsg")], withHandlerYes: {
+                    
+                    // 重設資料
+                    self.resetAllData()
+                    self.resetMemberData(MemberData, IndexPath: MemberindexPath)
+                    
+                    }, withHandlerNo: {}
+                )
+                
+                return
             }
         }
         
+        self.resetMemberData(MemberData, IndexPath: MemberindexPath)
+    }
+    
+    /**
+    * 設定會員相關資料
+    */
+    private func resetMemberData(MemberData: Dictionary<String, AnyObject>!, IndexPath: NSIndexPath) {
+        
+        currIndexMember = IndexPath
         dictMember = MemberData
         
         // 會員名稱與相關資料重新顯示
@@ -246,17 +297,18 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
             
             labBTMsg.text = msg
             
-            // 搜尋不到藍芽設備，int 代碼 1, 手機藍牙未開 = 3
+            // 搜尋不到藍芽設備=1, 手機藍牙未開=3
             if let code = intVal {
                 if (code == 1 || code == 3) {
                     imgLoading.stopAnimating()
                     btnConn.alpha = 1.0
-                    
-                    break
+                    return
                 }
                 
                 // 不能使用藍芽設備，跳離
                 if (code == 2) {
+                    imgLoading.stopAnimating()
+                    btnConn.alpha = 0.0
                     pubClass.popIsee(self, Msg: msg, withHandler: {
                         self.dismissViewControllerAnimated(true, completion: nil)
                     })
@@ -271,7 +323,13 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
             // 有回傳資料 Int val NOT nil
             if (result == true ) {
                 if (intVal! < mMeadCFG.D_VALUE_MAX) {
-                    analyMEADVal(intVal!)
+                    
+                    // 數值介於 1 ~ 最小值，回傳  1
+                    if (intVal! >= 1 && intVal! <= mMeadCFG.D_VALUE_MIN) {
+                        analyMEADVal(1)
+                    } else {
+                        analyMEADVal(intVal!)
+                    }
                 }
             }
             
@@ -303,6 +361,15 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
         if (strIdent == "RecordDetail") {
             let mVC = segue.destinationViewController as! RecordDetail
             mVC.dictMeadData = sender as! Dictionary<String, String>
+            
+            return
+        }
+        
+        //  SOQIBED 編輯頁面
+        if (strIdent == "PubSoqibedAdEd") {
+            let mVC = segue.destinationViewController as! PubSoqibedAdEd
+            mVC.dictAllData = sender as! Dictionary<String, AnyObject>
+            mVC.strMode = "add"
             
             return
         }
@@ -505,6 +572,55 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
     }
     
     /**
+     * act, 跳轉 SOQIBed 專屬模式
+     */
+    @IBAction func actSoqibed(sender: UIBarButtonItem) {
+        /*
+        // 檢查Mead 檢測數值是否存檔，是否有 index id
+        if (isDataSave != true || strMeadId == nil) {
+            pubClass.popIsee(self, Msg: pubClass.getLang("mead_savefirstmsg"))
+            return
+        }
+        */
+        
+        // 初始傳送參數, 傳送本 Mead 檢測結果存檔資料, 欄位: mead_id,
+        var dictParm: Dictionary<String, AnyObject> = [:]
+        dictParm["title"] = []
+        dictParm["times"] = []
+        dictParm["memberid"] = dictMember["memberid"]
+        dictParm["membername"] = dictMember["membername"]
+        
+        // Mead 檢測數值存檔 的該筆資料 index id
+        dictParm["mead_id"] = strMeadId!
+        
+        // 設備預設分鐘數
+        dictParm["S00"] = "0"
+        let aryHotDevCode = PubClass().aryHotDevCode
+        for strDev in aryHotDevCode {
+            dictParm[strDev] = "0"
+        }
+
+        // 有問題的  iNo, 重設 設備對應的分鐘數
+        //let dictRS = self.getPreSaveData(aryTestingData)
+        let dictRS = self.getTestVal()
+        
+        if (dictRS["problem"] != "") {
+            let aryIno = dictRS["problem"]!.componentsSeparatedByString(",")
+            let strIno = aryIno[0]
+            let dictDev = dictMeadDB![strIno] as! Dictionary<String, String>
+            
+            for strDev in aryHotDevCode {
+                dictParm[strDev] = dictDev[strDev]
+            }
+            
+            dictParm["S00"] = dictDev["S00"]
+        }
+        
+        // 跳轉 SOQIBed 頁面
+        self.performSegueWithIdentifier("PubSoqibedAdEd", sender: dictParm)
+    }
+    
+    /**
      * act, UIBarButtonItem, 資料存檔
      */
     @IBAction func actSave(sender: UIBarButtonItem) {
@@ -517,6 +633,11 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
             return
         }
         */
+        
+        if (self.isDataSave == true) {
+            pubClass.popIsee(self, Msg: pubClass.getLang("mead_valalreadysave"))
+            return
+        }
 
         // 檢測數值重新整理為 dict array, key 對應 MeadCFG 的 'D_ARY_MEADDBID'
         //let dictRS = self.getPreSaveData(aryTestingData)
@@ -532,7 +653,9 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
         
         // 產生 'arg0' dict array data
         var dictArg0: Dictionary<String, AnyObject>! = dictRS
-        dictArg0["key"] = aryTmp
+        dictArg0["val"] = aryTmp
+        dictArg0["id"] = dictArg0["memberid"]
+        dictArg0["name"] = dictArg0["membername"]
         
         // http 連線參數設定
         var dictParm: Dictionary<String, String> = [:]
@@ -553,15 +676,17 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
             return
         }
         
-        print(dictParm)
-        return
-        
-        // HTTP 開始連線
+        // HTTP 開始連線, 成功回傳 Mead 的 'id', ex. 'MD000017', 給 'SOQIBed' 編輯用
         self.pubClass.HTTPConn(self, ConnParm: dictParm, callBack: {
             (dictHTTPSRS: Dictionary<String, AnyObject>)->Void in
             
             // 儲存成功
             if (dictHTTPSRS["result"] as! Bool == true) {
+                // 取得該筆資料 index ID
+                let dictData = dictHTTPSRS["data"]!["content"] as! Dictionary<String, AnyObject>
+                self.strMeadId = dictData["id"] as? String
+                self.isDataSave = true
+                
                 self.pubClass.popIsee(self, Msg: self.pubClass.getLang("datasavecompleted"))
                 return
             }
@@ -580,16 +705,7 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
      * act, 點取 '重測' button
      */
     @IBAction func actReset(sender: UIBarButtonItem) {
-        pubClass.popConfirm(self, aryMsg: ["", pubClass.getLang("mead_resetmsg")], withHandlerYes: {
-
-            self.CURR_STATU = self.STATU_READY
-            self.currValCount = 0  // 目前檢測數值計算加總的次數
-            self.mapTestValCount = [:] // 檢測數值 => 出現次數, 目的取得最多次數的 val
-            self.aryTestingData = self.mMeadCFG.getAryAllTestData()
-            self.moveCollectCell(0)
-            self.isDataSave = false
-            
-            }, withHandlerNo: {}
+        pubClass.popConfirm(self, aryMsg: ["", pubClass.getLang("mead_resetmsg")], withHandlerYes: { self.resetAllData() }, withHandlerNo: {}
         )
     }
     
@@ -606,7 +722,7 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
     /**
     * TODO 測試資料
     */
-    private func getTestVal() -> Dictionary<String, String> {
+    private func getTestVal() -> Dictionary<String, String>! {
         var dictRS: Dictionary<String, String> = [:]
             
         dictRS["memberid"] = "MT000081"
@@ -616,7 +732,7 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
         dictRS["age"] = "30"
         dictRS["avg"] = "58"
         dictRS["membername"] = "唐凱文"
-        dictRS["problem"] = "F202,F102,H102,H610,H410"
+        dictRS["problem"] = "H410,F202,F102,H102,H610"
         dictRS["val"] = "60,68,56,40,47,30,88,70,47,48,43,48,48,48,47,48,50,44,107,110,59,62,64,62"
         dictRS["sdate"] = "20160329154836"
         

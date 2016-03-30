@@ -22,20 +22,22 @@ class RecordDetail: UIViewController {
     @IBOutlet weak var labLoading: UILabel!
     
     // common property
-    var pubClass = PubClass()
+    private var pubClass = PubClass()
     
     // 檢測結果的 val 與  key array
-    var aryKey: Array<String> = []
-    var aryVal: Array<String> = []
+    private var aryKey: Array<String> = []
+    private var aryVal: Array<String> = []
     
     // 高低標與平均值
-    var strAvg = "0", strAvgH = "0", strAvgL = "0";
+    private var strAvg = "0", strAvgH = "0", strAvgL = "0";
     
     // 其他 class, property
     private var mMeadCFG = MeadCFG() // MEAD 設定檔
     
     /**
-     * public, 檢測數值相關資料, 由 parent segue 設定資料
+     * public, parent 設定
+     *
+     *   檢測數值相關資料, 由 parent segue 設定資料
      *   格式如下：<BR>
      *  'sdate': 14碼, 作為唯一識別 key<BR>
      *  'memberid': ex. MD000001<BR>
@@ -48,7 +50,9 @@ class RecordDetail: UIViewController {
      */
     var dictMeadData: Dictionary<String, String>!
     
-    // View load
+    /**
+     * View load
+     */
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -230,8 +234,8 @@ class RecordDetail: UIViewController {
         
         // segue 為點取 button '學理分析'
         if (strIdentName == "RecordDetail") {
-            let cvChild = segue.destinationViewController as! RecordDetailTxt
-            cvChild.dictMeadData = dictMeadData
+            let mVC = segue.destinationViewController as! RecordDetailTxt
+            mVC.dictMeadData = dictMeadData
             
             return
         }
