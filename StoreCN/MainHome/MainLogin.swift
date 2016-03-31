@@ -17,12 +17,10 @@ class MainLogin: UIViewController {
     @IBOutlet weak var labVer: UILabel!
     
     // common property
-    var mVCtrl: UIViewController!
-    let pubClass: PubClass = PubClass()
-    let mJSONClass = JSONClass()
-    let mFileMang = FileMang()
-    
-    var dictPref: Dictionary<String, AnyObject>!  // Prefer data
+    private let pubClass: PubClass = PubClass()
+    private let mJSONClass = JSONClass()
+    private let mFileMang = FileMang()
+    private var dictPref: Dictionary<String, AnyObject>!  // Prefer data
     
     /**
      * View Load 程序
@@ -31,7 +29,6 @@ class MainLogin: UIViewController {
         super.viewDidLoad()
         
         // 固定初始參數
-        mVCtrl = self
         dictPref = pubClass.getPrefData()
     }
     
@@ -86,18 +83,18 @@ class MainLogin: UIViewController {
     func StartHTTPConn() {
         // acc, psd 檢查
         if ((edAcc.text?.isEmpty) == true || (edPsd.text?.isEmpty) == true) {
-            pubClass.popIsee(mVCtrl, Msg: pubClass.getLang("err_accpsd"))
+            pubClass.popIsee(self, Msg: pubClass.getLang("err_accpsd"))
             
             return
         }
         
         // 連線 HTTP post/get 參數
-        var dictParm = Dictionary<String, String>()
+        var dictParm: Dictionary<String, String> = [:]
         dictParm["acc"] = edAcc.text?.uppercaseString;
         dictParm["psd"] = edPsd.text;
         
         // HTTP 開始連線
-        pubClass.HTTPConn(mVCtrl, ConnParm: dictParm, callBack: HttpResponChk)
+        pubClass.HTTPConn(self, ConnParm: dictParm, callBack: HttpResponChk)
     }
     
     /**
@@ -110,7 +107,7 @@ class MainLogin: UIViewController {
         // 任何錯誤跳離
         if (dictRS["result"] as! Bool != true) {
             dispatch_async(dispatch_get_main_queue(), {
-                self.pubClass.popIsee(self.mVCtrl, Msg: self.pubClass.getLang(dictRS["msg"] as? String))
+                self.pubClass.popIsee(self, Msg: self.pubClass.getLang(dictRS["msg"] as? String))
             })
             
             return
@@ -151,23 +148,7 @@ class MainLogin: UIViewController {
     * Segue 跳轉頁面
     */
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let strIdent = segue.identifier
-        
-        if (strIdent == "MainMenu") {
-            let mVC = segue.destinationViewController as! MainMenu
-            let dictData = sender as! Dictionary<String, AnyObject>
-            
-            if let aryData = dictData["member"] {
-                mVC.aryMember = aryData as! Array<Dictionary<String, String>>
-            }
-            
-            if let aryData = dictData["pict"] {
-                mVC.aryPict = aryData as! Dictionary<String, String>
-            }
-            
-            return
-        }
-        
+        //let strIdent = segue.identifier
         return
     }
 

@@ -11,7 +11,7 @@ import UIKit
  */
 @objc protocol PubClassDelegate {
     /**
-     * 設定上層 class page 是否需要 reload
+     * PubClassDelegate, 設定上層 class page 是否需要 reload
      */
     optional func PageNeedReload(needReload: Bool)
 }
@@ -61,6 +61,7 @@ class PubClass {
      * 設定 AppDelegate 全域變數的 value
      */
     func getAppDelgVal(strKey: String)->AnyObject {
+        AppDelg = UIApplication.sharedApplication().delegate! as! AppDelegate
         return AppDelg.valueForKey(strKey)!
     }
     

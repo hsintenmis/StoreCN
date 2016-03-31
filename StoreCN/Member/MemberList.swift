@@ -118,7 +118,6 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
     */
     func MemberSelected(MemberData dictData: Dictionary<String, AnyObject>, indexPath: NSIndexPath) {
         currIndexPath = indexPath
-        dictMemberData = dictData
         
         // HTTP 連線取得該會員全部資料(course, mead, soqibed, purchase)
         var dictParm = Dictionary<String, String>()
@@ -141,10 +140,12 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
             }
             
             /* 解析正確的 http 回傳結果，執行後續動作 */
-            let dictData = (dictRS["data"]!["content"]!)!
+            let mDictData = (dictRS["data"]!["content"]!)!
+            let mMemberData = mDictData["datamember"] as! Array<Dictionary<String, AnyObject>>
+            self.dictMemberData = mMemberData[0] as Dictionary<String, AnyObject>
             
             // 將整個回傳資料傳送下個頁面
-            self.performSegueWithIdentifier("MemberMain", sender: dictData)
+            self.performSegueWithIdentifier("MemberMain", sender: mDictData)
         })
     }
     

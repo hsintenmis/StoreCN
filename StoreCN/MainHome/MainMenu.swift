@@ -15,44 +15,28 @@ class MainMenu: UIViewController {
     @IBOutlet weak var colviewMenu: UICollectionView!
 
     // common property
-    //var mVCtrl: UIViewController!
-    let pubClass = PubClass()
-    let mJSONClass = JSONClass()
-    let mFileMang = FileMang()
-    
-    // parent Segue 設定
-    var aryMember: Array<Dictionary<String, String>> = []
-    var aryPict: Dictionary<String, String> = [:]
-    
-    // 產生 UIAlertController (popWindow 資料傳送中)
-    var vcPopLoading: UIAlertController!
-    
-    // 其他參數設定
-    var strToday = ""
-    var strTodayMsg = ""
-    private var currMenuIndexPath: NSIndexPath?
-    
-    // HTTP 連線參數設定
-    private var dictParm: Dictionary<String, String> = [:]
-    
-    // 顏色
-    private let dictColor = ["white":"FFFFFF", "red":"FFCCCC", "gray":"C0C0C0", "silver":"F0F0F0", "blue":"66CCFF", "black":"000000", "green":"99CC33"]
-    
+    private let pubClass = PubClass()
+    private let mJSONClass = JSONClass()
+    private let mFileMang = FileMang()
+
     // 選單相關設定
-    /** 選單代碼："member", "testing", "servicemgr", "product", "staff", "message", "storesheet", "config" */
     private let aryMenuName = ["member", "testing", "servicemgr", "product", "staff", "message", "analydata", "config"]
     
     // 其他參數
+    private var dictParm: Dictionary<String, String> = [:] // HTTP 連線參數設定
     private var bolReload = true  // 本頁面是否重整
-    
+    private var strToday = ""
+    private var strTodayMsg = ""
+    private var currMenuIndexPath: NSIndexPath?
+
     /**
      * View Load 程序
      */
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 選單 coltView
-        colviewMenu.reloadData()
+        // 全域變數 delegate reload
+        //pubClass.ReloadAppDelg()
     }
     
     /**
@@ -68,26 +52,15 @@ class MainMenu: UIViewController {
     override func viewDidAppear(animated: Bool) {
         if (bolReload == true) {
             bolReload = false
+            colviewMenu.reloadData()
             self.StartHTTPConn()
         }
-    }
-    
-    /**
-     * 初始與設定 VCview 內的 field
-     */
-    func initViewField() {
-        labTodayMsg.text = strTodayMsg
-        
-        // 設定 CollectionView, 選單資料
     }
     
     /**
      * 登入後主選單，連線取得資料
      */
     private func StartHTTPConn() {
-        // 全域變數 delegate reload
-        self.pubClass.ReloadAppDelg()
-        
         // HTTP 連線參數設定
         dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
         dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
@@ -462,9 +435,6 @@ class MainMenu: UIViewController {
      */
     @IBAction func actReload(sender: UIBarButtonItem) {
         self.StartHTTPConn()
-        
-        initViewField()
     }
     
-
 }

@@ -14,7 +14,7 @@ import Foundation
  * pager 頁面
  *   疗程纪录/能量检测/SOQIBed/购货纪录/健康纪录
  */
-class MemberMain: UIViewController, MemberMainPagerDelegate {
+class MemberMain: UIViewController, MemberMainPagerDelegate, MemberAdEdDelegate {
     
     // @IBOutlet
     @IBOutlet weak var imgPict: UIImageView!
@@ -44,8 +44,8 @@ class MemberMain: UIViewController, MemberMainPagerDelegate {
     private let aryMenuName = ["course", "mead", "soqibed", "purchase", "health"]
     private var currIndexPath = NSIndexPath(forRow: 0, inSection:0)
     
-    // 顏色
-    private let dictColor = ["white":"FFFFFF", "red":"FFCCCC", "gray":"C0C0C0", "silver":"F0F0F0", "blue":"66CCFF", "black":"000000", "green":"99CC33"]
+    // 其他參數
+    private var bolDataChangMember = true  // 會員資料是否異動
     
     /**
      * View Load 程序
@@ -64,7 +64,26 @@ class MemberMain: UIViewController, MemberMainPagerDelegate {
      * View DidAppear 程序
      */
     override func viewDidAppear(animated: Bool) {
-        // http 連線取得資料
+        if (bolDataChangMember == true) {
+            bolDataChangMember = false
+            initViewField()
+        }
+    }
+    
+    /**
+    * #mark: PubClassDelegate, 資料變動通知
+    */
+    func MemberDataChange(dictData: Dictionary<String, AnyObject>!) {
+        bolDataChangMember = true
+        dictMember = dictData
+        
+        // 缺少欄位重新設定
+        let intYY0 = Int(pubClass.subStr(strToday, strFrom: 0, strEnd: 4))
+        let intYY1 = Int(pubClass.subStr(dictData["birth"] as! String, strFrom: 0, strEnd: 4))
+        dictMember["age"] = String(intYY0! - intYY1!)
+        
+        dictMember["memberid"] = dictData["id"]
+        dictMember["membername"] = dictData["name"]
     }
     
     /**
@@ -119,7 +138,7 @@ class MemberMain: UIViewController, MemberMainPagerDelegate {
         if (indexPath == currIndexPath) {
             strColor = "blue"
         }
-        mCell.backgroundColor = pubClass.ColorHEX(dictColor[strColor])
+        mCell.backgroundColor = pubClass.ColorHEX(pubClass.dictColor[strColor])
         
         return mCell
     }
@@ -173,6 +192,7 @@ class MemberMain: UIViewController, MemberMainPagerDelegate {
             mVC.strToday = strToday
             mVC.strMode = "edit"
             mVC.dictMember = dictMember
+            mVC.delegate = self
             
             return
         }

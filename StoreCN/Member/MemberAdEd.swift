@@ -6,9 +6,21 @@ import UIKit
 import Foundation
 
 /**
+ * protocol, MemberAdEd Delegate
+ */
+protocol MemberAdEdDelegate {
+    /**
+     * MemberAdEdDelegate, 會員資料有變動
+     */
+    func MemberDataChange(dictData: Dictionary<String, AnyObject>!)
+}
+
+/**
  * 會員 新增/編輯
  */
 class MemberAdEd: UIViewController {
+    // delegate
+    var delegate = MemberAdEdDelegate?()
     
     // @IBOutlet
     @IBOutlet weak var containView: UIView!
@@ -58,31 +70,47 @@ class MemberAdEd: UIViewController {
     
     /**
     * 資料儲存程序
+    * @param dictArg0: http 連線　arg0 參數
     */
-    private func svaeData() {
-        /*
-         jobjRequestData.put("id", strMemberId);
-         jobjRequestData.put("mode", strMode);
-         
-         jobjRequestData.put("name", edName.getText().toString());
-         jobjRequestData.put("psd", edPsd.getText().toString());
-         jobjRequestData.put("tel", edTel.getText().toString());
-         jobjRequestData.put("email", edEmail.getText().toString());
-         
-         jobjRequestData.put("hteid", edHteId.getText().toString());
-         jobjRequestData.put("cid", edId.getText().toString());
-         jobjRequestData.put("id_wechat", edWechat.getText().toString());
-         jobjRequestData.put("id_qq", edQQ.getText().toString());
-         jobjRequestData.put("addr", edAddr.getText().toString());
-         
-         jobjRequestData.put("province", edProvince.getText().toString());
-         jobjRequestData.put("zip", edZip.getText().toString());
-         
-         jobjRequestData.put("height", edHeight.getText().toString());
-         jobjRequestData.put("weight", edWeight.getText().toString());
-         jobjRequestData.put("birth", strBirth);
-         jobjRequestData.put("gender", strGender);
-        */
+    private func svaeData(dictArg0: Dictionary<String, AnyObject>!) {
+        // http 連線參數設定, 產生 'arg0' JSON string
+        var dictParm: Dictionary<String, String> = [:]
+        dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
+        dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
+        dictParm["page"] = "member"
+        dictParm["act"] = "member_senddata"
+        
+        do {
+            let jobjData = try
+                NSJSONSerialization.dataWithJSONObject(dictArg0, options: NSJSONWritingOptions(rawValue: 0))
+            let jsonString = NSString(data: jobjData, encoding: NSUTF8StringEncoding)! as String
+            
+            dictParm["arg0"] = jsonString
+        } catch {
+            pubClass.popIsee(self, Msg: pubClass.getLang("err_trylatermsg"), withHandler: {self.dismissViewControllerAnimated(true, completion: nil)})
+            
+            return
+        }
+        
+        // HTTP 開始連線
+        self.pubClass.HTTPConn(self, ConnParm: dictParm, callBack: {
+            (dictHTTPSRS: Dictionary<String, AnyObject>)->Void in
+            
+            let bolRS = dictHTTPSRS["result"] as! Bool
+            let strMsg = (bolRS == true) ? self.pubClass.getLang("datasavecompleted") : self.pubClass.getLang("err_trylatermsg")
+            
+            // 儲存成功，通知 parent 資料變動
+            if (bolRS == true) {
+                self.delegate?.MemberDataChange(dictArg0)
+                self.pubClass.popIsee(self, Msg: strMsg, withHandler: {
+                    self.dismissViewControllerAnimated(true, completion: {})
+                })
+            } else {
+                self.pubClass.popIsee(self, Msg: strMsg)
+            }
+        })
+        
+        return
     }
     
     /**
@@ -101,8 +129,7 @@ class MemberAdEd: UIViewController {
             dictRS!["id"] = dictMember["memberid"] as! String
         }
         
-        print(dictRS)
-        
+        svaeData(dictRS)
     }
     
     @IBAction func actBack(sender: UIBarButtonItem) {

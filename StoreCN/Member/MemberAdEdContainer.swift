@@ -238,8 +238,6 @@ class MemberAdEdContainer: UITableViewController, UITextFieldDelegate {
         }
         
         // 編輯模式, 檢查欄位 '密碼'
-        
-        
         if (strMode == "edit" && txtPsd.text?.characters.count > 0) {
             var errMsg1 = pubClass.getLang("member_err_psd")
             
@@ -256,7 +254,7 @@ class MemberAdEdContainer: UITableViewController, UITextFieldDelegate {
                 return nil
             }
         } else {
-            dictRS["psd"] = ""
+            dictRS["psd"] = dictMember["psd"] as! String
         }
         
         // 必填欄位檢查
