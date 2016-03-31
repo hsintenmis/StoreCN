@@ -97,7 +97,6 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate, BTScaleS
     override func viewDidAppear(animated: Bool) {
         if (bolReload) {
             bolReload = false
-
         }
     }
     
@@ -155,13 +154,47 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate, BTScaleS
     * 點取會員後執行相關程序
     */
     func MemberSeltPageDone(MemberData: Dictionary<String, AnyObject>, MemberindexPath: NSIndexPath) {
+        
+        var strHeight = ""
+        var strAge = ""
+        var strGender = ""
+        
+        // 檢查必要欄位資料, height, gender, age
+        if let mHeight = Float((MemberData["height"] as? String)!) {
+            strHeight = String(Int(mHeight))
+        } else {
+            pubClass.popIsee(self, Msg: pubClass.getLang("member_err_height"))
+            return
+        }
+        
+        if let mAge = Int((MemberData["age"] as? String)!) {
+            if (mAge >= 5 && mAge <= 120) {
+                strAge = String(Int(mAge))
+            }
+        }
+        if (strAge == "") {
+            pubClass.popIsee(self, Msg: pubClass.getLang("member_err_age"))
+            return
+        }
+        
+        if let mGender = MemberData["gender"] as? String {
+            if (mGender == "F" || mGender == "M") {
+               strGender = mGender
+            }
+        }
+        if (strGender == "") {
+            pubClass.popIsee(self, Msg: pubClass.getLang("member_err_gender"))
+            return
+        }
+        
+        // 設定參數 value
         currIndexMember = MemberindexPath
         dictRequest["member"] = MemberData
         
         // 會員名稱與相關資料重新顯示
-        let strGender = pubClass.getLang("gender_" + (dictRequest["member"]!["gender"] as! String))
-        let strAge = dictRequest["member"]!["age"] as! String + pubClass.getLang("name_age")
-        let strHeight = dictRequest["member"]!["height"] as! String + "cm"
+        strGender = pubClass.getLang("gender_" + strGender)
+        strAge += pubClass.getLang("name_age")
+        strHeight += "cm"
         let strMemberInfo = strGender + strAge + ", " + strHeight
         
         labMemberInfo.text = strMemberInfo
@@ -301,11 +334,13 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate, BTScaleS
      * act, 點取 '查看量測結果', 跳轉健康管理月曆主頁面
      */
     @IBAction func actTestExplain(sender: UIButton) {
-        let storyboard = UIStoryboard(name: "Health", bundle: nil)
-        let mVC = storyboard.instantiateViewControllerWithIdentifier("HealthCalendar") as! HealthCalendar
-        mVC.strMemberId = dictRequest["member"]!["memberid"] as! String
-        self.presentViewController(mVC, animated: true, completion: nil)
-        
+        pubClass.popIsee(self, Msg: pubClass.getLang("bt_savefirstseeresultmsg"), withHandler: {
+            let storyboard = UIStoryboard(name: "Health", bundle: nil)
+            let mVC = storyboard.instantiateViewControllerWithIdentifier("HealthCalendar") as! HealthCalendar
+            mVC.strMemberId = self.dictRequest["member"]!["memberid"] as! String
+            self.presentViewController(mVC, animated: true, completion: nil)
+        })
+
         return
     }
     

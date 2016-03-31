@@ -21,6 +21,9 @@ class MemberAdEd: UIViewController {
     var strMode = "add"
     var dictMember: Dictionary<String, AnyObject> = [:]
     
+    // 其他參數
+    private var mMemberAdEdContainer: MemberAdEdContainer!
+    
     /**
      * View Load 程序
      */
@@ -33,16 +36,6 @@ class MemberAdEd: UIViewController {
      * View DidAppear 程序
      */
     override func viewDidAppear(animated: Bool) {
-        
-        dispatch_async(dispatch_get_main_queue(), {
-            
-        })
-    }
-    
-    /**
-     * 初始與設定 VCview 內的 field
-     */
-    func initViewField() {
     }
     
     /**
@@ -52,20 +45,64 @@ class MemberAdEd: UIViewController {
         let strIdent = segue.identifier
         
         if (strIdent == "containerMemberAdEd") {
-            let mVC = segue.destinationViewController as! MemberAdEdContainer
-            mVC.strToday = strToday
-            mVC.strMode = strMode
-            mVC.dictMember = dictMember
+            mMemberAdEdContainer = segue.destinationViewController as! MemberAdEdContainer
+            mMemberAdEdContainer.strToday = strToday
+            mMemberAdEdContainer.strMode = strMode
+            mMemberAdEdContainer.dictMember = dictMember
+            
+            return
         }
         
         return
     }
     
     /**
+    * 資料儲存程序
+    */
+    private func svaeData() {
+        /*
+         jobjRequestData.put("id", strMemberId);
+         jobjRequestData.put("mode", strMode);
+         
+         jobjRequestData.put("name", edName.getText().toString());
+         jobjRequestData.put("psd", edPsd.getText().toString());
+         jobjRequestData.put("tel", edTel.getText().toString());
+         jobjRequestData.put("email", edEmail.getText().toString());
+         
+         jobjRequestData.put("hteid", edHteId.getText().toString());
+         jobjRequestData.put("cid", edId.getText().toString());
+         jobjRequestData.put("id_wechat", edWechat.getText().toString());
+         jobjRequestData.put("id_qq", edQQ.getText().toString());
+         jobjRequestData.put("addr", edAddr.getText().toString());
+         
+         jobjRequestData.put("province", edProvince.getText().toString());
+         jobjRequestData.put("zip", edZip.getText().toString());
+         
+         jobjRequestData.put("height", edHeight.getText().toString());
+         jobjRequestData.put("weight", edWeight.getText().toString());
+         jobjRequestData.put("birth", strBirth);
+         jobjRequestData.put("gender", strGender);
+        */
+    }
+    
+    /**
      * act, 點取 '儲存' button
      */
     @IBAction func actSave(sender: UIBarButtonItem) {
-        print(strMode)
+        var dictRS = mMemberAdEdContainer.getPageData()
+        
+        if (dictRS == nil) {
+            return
+        }
+        
+        dictRS!["mode"] = strMode
+
+        if (strMode == "edit") {
+            dictRS!["id"] = dictMember["memberid"] as! String
+        }
+        
+        print(dictRS)
+        
     }
     
     @IBAction func actBack(sender: UIBarButtonItem) {
@@ -74,4 +111,3 @@ class MemberAdEd: UIViewController {
 
     
 }
-

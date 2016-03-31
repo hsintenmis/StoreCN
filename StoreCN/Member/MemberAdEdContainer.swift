@@ -19,6 +19,8 @@ class MemberAdEdContainer: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var labSdate: UILabel!
     @IBOutlet weak var txtPsd: UITextField!
     @IBOutlet weak var txtRePsd: UITextField!
+
+    @IBOutlet weak var labOrgPsd: UILabel!
     
     @IBOutlet weak var swchGender: UISegmentedControl!
     @IBOutlet weak var txtTEL: UITextField!
@@ -44,6 +46,7 @@ class MemberAdEdContainer: UITableViewController, UITextFieldDelegate {
     // textView array 與 val 值對應的 array data
     private var aryTxtView: Array<UITextField> = []
     private var aryField: Array<String> = []
+    private var dictTxtView: Dictionary<String, UITextField> = [:]
     
     // 點取欄位，彈出虛擬鍵盤視窗
     private var mPickerBirth: PickerDate!
@@ -59,6 +62,26 @@ class MemberAdEdContainer: UITableViewController, UITextFieldDelegate {
     */
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // view field 初始值設定
+        if (strMode == "add") {
+            labOrgPsd.alpha = 0.0
+        } else {
+            let strPsd = dictMember["psd"] as! String
+            labOrgPsd.text = pubClass.getLang("login_psd") + ":  " + strPsd
+        }
+        
+        // 設定 key 對應 editView, 注意順序
+        aryTxtView = [edName, txtTEL, txtBirth, txtHeigh, txtWeight, txtCNID, txtWechat, txtQQ, txtEmail, txtZip, txtCity, txtAddr]
+        aryField = ["name", "tel","birth","height","weight","cid_cn","id_wechat","id_qq","email","zip","province","addr"]
+        
+        for loopi in (0..<aryField.count) {
+            // textView 的 delegate
+            aryTxtView[loopi].delegate = self
+            
+            // 設定到 dictTxtView, key 對應 UITextField
+            dictTxtView[aryField[loopi]] = aryTxtView[loopi]
+        }
         
         // Picker param 初始資料
         dictPickParm["birth_def"] = "19600101"
@@ -86,19 +109,6 @@ class MemberAdEdContainer: UITableViewController, UITextFieldDelegate {
      * 初始與設定 VCview 內的 field
      */
     func initViewField() {
-        // set array, 注意順序
-        aryTxtView = [edName, txtTEL, txtBirth, txtHeigh, txtWeight, txtCNID, txtWechat, txtQQ, txtEmail, txtZip, txtCity, txtAddr]
-        aryField = ["name", "tel","birth","height","weight","cid_cn","id_wechat","id_qq","email","zip","province","addr"]
-        
-        for loopi in (0..<aryField.count) {
-            // textView 的 delegate
-            aryTxtView[loopi].delegate = self
-        }
-        
-        // 手動設定 textView 的 delegate, 密碼欄位
-        txtPsd.delegate = self
-        txtRePsd.delegate = self
-        
         // 編輯模式特殊處理
         if (strMode == "edit") {
             self.procEditMode()
@@ -172,8 +182,6 @@ class MemberAdEdContainer: UITableViewController, UITextFieldDelegate {
                 txtWeight.text = aryVal[0] + aryVal[1] + aryVal[2]
             }
         }
-        
-        
     }
     
     /**
@@ -202,6 +210,82 @@ class MemberAdEdContainer: UITableViewController, UITextFieldDelegate {
         aryTxtView[currIndex + 1].becomeFirstResponder()
         
         return true
+    }
+    
+    /**
+    * public, parent 調用, 本頁面資料整理檢查與回傳
+    */
+    func getPageData() -> Dictionary<String, AnyObject>? {
+        var dictRS: Dictionary<String, AnyObject> = [:]
+        
+        // 新增模式, 檢查欄位 '密碼'
+        var errMsg = pubClass.getLang("member_err_psd")
+        
+        if (strMode == "add") {
+            if (txtPsd.text?.characters.count >= 5 && txtRePsd.text?.characters.count >= 5) {
+                
+                if (txtPsd.text! == txtRePsd.text!) {
+                    errMsg = ""
+                    dictRS["psd"] = txtPsd.text!
+                }
+            }
+            
+            if (errMsg.characters.count > 0) {
+                txtPsd.becomeFirstResponder()
+                pubClass.popIsee(self, Msg: errMsg)
+                return nil
+            }
+        }
+        
+        // 編輯模式, 檢查欄位 '密碼'
+        
+        
+        if (strMode == "edit" && txtPsd.text?.characters.count > 0) {
+            var errMsg1 = pubClass.getLang("member_err_psd")
+            
+            if (txtPsd.text?.characters.count >= 5) {
+                if (txtPsd.text == txtRePsd.text) {
+                    errMsg1 = ""
+                    dictRS["psd"] = txtPsd.text!
+                }
+            }
+            
+            if (errMsg1.characters.count > 0) {
+                txtPsd.becomeFirstResponder()
+                pubClass.popIsee(self, Msg: errMsg)
+                return nil
+            }
+        } else {
+            dictRS["psd"] = ""
+        }
+        
+        // 必填欄位檢查
+        var aryTmpField = ["name", "tel", "birth", "height", "weight"]
+        
+        for strField in aryTmpField {
+            if (dictTxtView[strField]!.text!.characters.count < 2) {
+                dictTxtView[strField]!.becomeFirstResponder()
+                pubClass.popIsee(self, Msg: pubClass.getLang("member_err_" + strField))
+                return nil
+            } else {
+                if (strField == "birth") {
+                    dictRS["birth"] = mPickerBirth.getStrDate()
+                } else {
+                    dictRS[strField] = dictTxtView[strField]!.text
+                }
+            }
+        }
+        
+        // 其他欄位設定
+        dictRS["gender"] = (swchGender.selectedSegmentIndex == 0) ? "M" : "F"
+        
+        aryTmpField = ["cid_cn","id_wechat","id_qq","email","zip","province","addr"]
+        
+        for strField in aryTmpField {
+            dictRS[strField] = dictTxtView[strField]!.text
+        }
+        
+        return dictRS
     }
     
 }

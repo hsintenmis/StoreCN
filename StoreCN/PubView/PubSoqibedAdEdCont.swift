@@ -6,6 +6,16 @@ import UIKit
 import Foundation
 
 /**
+ * protocol, PubSoqibedAdEdCont Delegate
+ */
+protocol PubSoqibedAdEdContDelegate {
+    /**
+     * 本頁面資料有刪除通知
+     */
+    func delData()
+}
+
+/**
  * SOQIBED 編輯主頁面
  * <P>
  * 會員使用模式資料, 新增/編輯刪除<BR>
@@ -17,6 +27,8 @@ import Foundation
  * 3. 自行輸入
  */
 class PubSoqibedAdEdCont: UITableViewController {
+    // delegate
+    var delegate = PubSoqibedAdEdContDelegate?()
 
     // @IBOutlet
     @IBOutlet var tableList: UITableView!
@@ -191,6 +203,8 @@ class PubSoqibedAdEdCont: UITableViewController {
      * act, 點取 '刪除' button, 刪除完成後通知 parent 資料已移除
      */
     @IBAction func actDel(sender: UIButton) {
+        pubClass.popConfirm(self, aryMsg: [self.pubClass.getLang("systemwarring"), self.pubClass.getLang("delconfirmmsg")], withHandlerYes: { self.delegate?.delData() }, withHandlerNo: {})
+        
     }
     
 }

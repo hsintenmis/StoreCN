@@ -12,14 +12,14 @@ import Foundation
     /**
      * 本頁面儲存成功通知
      */
-    optional func isSaveSuccess(isSave: Bool)
- }
+    optional func saveSuccess(dictData: Dictionary<String, AnyObject>)
+}
 
 /**
  * SOQIBED 編輯頁面, containerView, 由會員主頁面/Mead檢測頁面 導入
  * 指定的會員已經購買 / Mead設定的 SOQIBED 編輯
  */
-class PubSoqibedAdEd: UIViewController {
+class PubSoqibedAdEd: UIViewController, PubSoqibedAdEdContDelegate {
     // delegate
     var delegate = PubSoqibedAdEdDelegate?()
     
@@ -28,7 +28,7 @@ class PubSoqibedAdEd: UIViewController {
     
     // public, 本頁面需要的全部資料, parent 設定
     var dictAllData: Dictionary<String, AnyObject> = [:]
-    var strMode: String! // 目前頁面模式, 'add' or 'edit'
+    var strMode: String! // 目前頁面模式, 'add' ,'edit' or 'del'
     
     // 其他參數
     private var mPubSoqibedAdEdCont: PubSoqibedAdEdCont!
@@ -38,6 +38,15 @@ class PubSoqibedAdEd: UIViewController {
      */
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    /**
+     * #mark: PubSoqibedAdEdContDelegate
+     * 資料刪除通知
+     */
+    func delData() {
+        strMode = "del"
+        dataSaveProc()
     }
     
     /**
@@ -51,6 +60,7 @@ class PubSoqibedAdEd: UIViewController {
             mPubSoqibedAdEdCont = segue.destinationViewController as! PubSoqibedAdEdCont
             mPubSoqibedAdEdCont.dictAllData = dictAllData
             mPubSoqibedAdEdCont.strMode = strMode
+            mPubSoqibedAdEdCont.delegate = self
             
             return
         }
@@ -59,14 +69,19 @@ class PubSoqibedAdEd: UIViewController {
     }
     
     /**
-     * act, 點取 '儲存' button
+     * 資料 新增/編輯/刪除 http 連線儲存程序
      */
-    @IBAction func actSave(sender: UIBarButtonItem) {
-        let dictArg0 = mPubSoqibedAdEdCont.getPageData()
-
+    private func dataSaveProc() {
+        var dictArg0 = mPubSoqibedAdEdCont.getPageData()
+        
         // 檢查是否有資料
         if (dictArg0 == nil) {
             return
+        }
+        
+        // 檢查是否標記 '刪除'
+        if (strMode == "del") {
+            dictArg0!["del"] = "Y"
         }
         
         // http 連線參數設定, 產生 'arg0' JSON string
@@ -93,21 +108,42 @@ class PubSoqibedAdEd: UIViewController {
             (dictHTTPSRS: Dictionary<String, AnyObject>)->Void in
             
             let bolRS = dictHTTPSRS["result"] as! Bool
-            self.delegate?.isSaveSuccess!(bolRS)
+            let dictData = dictHTTPSRS["data"]!["content"] as! Dictionary<String, AnyObject>
+            var strMsg = self.pubClass.getLang("err_trylatermsg")
             
-            // 儲存成功
+            // 儲存成功, server 回傳該筆資料, 通知上層, 跳離
             if (bolRS == true) {
-                self.pubClass.popIsee(self, Msg: self.pubClass.getLang("datasavecompleted"))
+                if (self.strMode == "del") {
+                    self.dictAllData = [:]
+                    strMsg = self.pubClass.getLang("datadelcompleted")
+                } else {
+                    self.dictAllData = dictArg0!
+                    self.dictAllData["mode"] = "edit"
+                    self.dictAllData["index_id"] = dictData["index_id"] as! String
+
+                    strMsg = self.pubClass.getLang("datasavecompleted")
+                }
+                
+                self.pubClass.popIsee(self, Msg: strMsg, withHandler: {
+                    self.dismissViewControllerAnimated(true, completion: {self.delegate?.saveSuccess!(self.dictAllData)})
+                })
+                
                 return
             }
             
-            // 儲存失敗，直接跳離
-            self.pubClass.popIsee(self, Msg: self.pubClass.getLang("err_trylatermsg"), withHandler: {
+            self.pubClass.popIsee(self, Msg: strMsg, withHandler: {
                 self.dismissViewControllerAnimated(true, completion: nil)
             })
         })
         
         return
+    }
+    
+    /**
+     * act, 點取 '儲存' button
+     */
+    @IBAction func actSave(sender: UIBarButtonItem) {
+        dataSaveProc()
     }
     
     /**

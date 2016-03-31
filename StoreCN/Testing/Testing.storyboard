@@ -224,7 +224,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="rcr-zN-rSf" kind="show" identifier="TestingMemberSel" id="cg6-no-oln"/>
+                                    <action selector="actMember:" destination="nXi-Nb-BWo" eventType="touchUpInside" id="dl0-UM-vh5"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请先选择会员!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sVF-lt-wrc">
@@ -450,6 +450,7 @@
                         <outlet property="viewCollect" destination="0g7-k1-C7W" id="TLo-bR-R3Q"/>
                         <segue destination="swD-lV-qn9" kind="show" identifier="RecordDetail" id="5El-Wj-aP8"/>
                         <segue destination="w6q-zK-Gsm" kind="show" identifier="PubSoqibedAdEd" id="Fc4-wj-9Ck"/>
+                        <segue destination="rcr-zN-rSf" kind="show" identifier="TestingMemberSel" id="she-bK-abx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XLp-Lj-Q3x" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -541,8 +542,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="请先选择会员!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FGx-wP-SYm">
-                                                    <rect key="frame" x="15" y="13" width="89" height="17"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="请先选择会员, 才能连接体脂计!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FGx-wP-SYm">
+                                                    <rect key="frame" x="15" y="13" width="195" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.18823529410000001" green="0.18823529410000001" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -1849,8 +1850,8 @@
         <image name="testmechine_128.png" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="e11-z0-mzD"/>
         <segue reference="5El-Wj-aP8"/>
         <segue reference="Fc4-wj-9Ck"/>
-        <segue reference="cg6-no-oln"/>
     </inferredMetricsTieBreakers>
 </document>

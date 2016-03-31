@@ -29,6 +29,7 @@
 "selectdate" = "选择日期";
 "datasendplzconfirmmsg" = "资料即将送出!\n请再次确认输入料是否正确?!";
 "delconfirmmsg" = "资料即将删除!\n请再次确认是否要删除选择的资料?!";
+"datadelcompleted" = "资料刪除完成!";
 "selectmember" = "选择会员";
 
 "fieldname_price" = "金额";
@@ -106,6 +107,15 @@
 "member_main_purchase" = "购货纪录";
 "member_main_health" = "健康纪录";
 
+"member_err_name" = "姓名錯誤!";
+"member_err_tel" = "聯絡電話錯誤!";
+"member_err_birth" = "生日錯誤!";
+"member_err_weight" = "體重錯誤!";
+"member_err_psd" = "密碼錯誤!";
+"member_err_height" = "身高錯誤!";
+"member_err_gender" = "性別錯誤!";
+"member_err_age" = "年齡錯誤!";
+
 "course_nodata" = "没有疗程资料";
 "course_nobuy" = "未购买疗程";
 "course_alreadybuy" = "已购买疗程";
@@ -116,6 +126,7 @@
 "soqibed_usecount" = "使用次数";
 "soqibed_builddate" = "建立时间";
 "soqibed_titleerr" = "名稱錯誤!";
+"soqibed_privatemode" = "SOQIBed 專屬模式";
 
 "bodypoint_0" = "心包经";
 "bodypoint_1" = "肺经";
@@ -396,16 +407,16 @@
 "bt_bondcomplete" = "蓝牙设备绑定完成!";
 "bt_plzsearchagain" = "请重新搜寻蓝牙设备. . .";
 "bt_initing" = "蓝牙設備初始中...";
-
 "bt_mobile_off" = "藍牙未開啟";
 "bt_mobile_on" = "藍牙開啟搜尋周邊裝置中...";
 "bt_mobile_resetting" = "藍牙重啟中";
 "bt_mobile_unauthorized" = "藍牙未通過認證";
 "bt_mobile_unknown_stat" = "藍芽為未知狀態";
 "bt_mobile_unsupported" = "藍芽不支援";
-
 "bt_testingvalerr" = "量測數值異常, 請重新量測!";
 "bt_testing_success" = "量測完成!";
+
+"bt_savefirstseeresultmsg" = "量測資料儲存後, 才能看到今日的量測結果說明!";
 
 "sale_pruchaseqtyeditmsg" = "出货数量修改，将会影响以下资料：\n1. 该商品的库存数量\n2. 进货总金额\n3. 实际进货金额\n\n請再次確認是否修改?!";
 "sale_pricecusterr" = "出货实际金额错误!";
@@ -480,5 +491,5 @@
 "mead_selmemberfirst" = "請先選擇會員!";
 "mead_testingvalokmsg" = "檢測結果正常 ！";
 "mead_savefirstmsg" = "請先儲存檢測資料!";
-"mead_valalreadysave" = "檢測資料已經儲存過了!";
+"mead_valalreadysave" = "檢測資料已經儲存過了!\n若要再檢測其他穴位,請點取\n[ 重新檢測 ]";
 "mead_changmembermsg" = "更改會員, 已檢測的資料將全部清除!\n請再次確認!";

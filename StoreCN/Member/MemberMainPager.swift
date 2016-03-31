@@ -119,10 +119,10 @@ class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIP
                 aryPages.append(mVC)
                 break
                 
-            default:
-                let strResorIdent = "Member" + aryVCIdent[i]
-                let mVC = storyboard?.instantiateViewControllerWithIdentifier(strResorIdent)
-                aryPages.append(mVC!)
+            default:  // 健康檢測數值資料
+                let mVC = storyboard?.instantiateViewControllerWithIdentifier("MemberHealth") as! MemberHealth
+                mVC.dictMember = dictMember
+                aryPages.append(mVC)
             }
         }
     }

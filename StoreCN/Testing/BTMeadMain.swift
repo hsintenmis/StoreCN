@@ -10,7 +10,8 @@ import Foundation
  * 1.藍芽設備連接    2.會員選擇(USER資料輸入)
  * 3.測量完後檢測報告 4. 儲存
  */
-class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDelegate {
+class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDelegate, PubSoqibedAdEdDelegate {
+    
     // @IBOutlet
     @IBOutlet weak var labName: UILabel!
     @IBOutlet weak var labGender: UILabel!
@@ -65,14 +66,17 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
     private var currDataPosition = 0;
     private var currIndexPath = NSIndexPath(forRow: 0, inSection:0)
     
-    // 其他參數
+    // class 
     private var mBTMeadService: BTMeadService!  // 檢測儀藍牙 Service
     private var mMeadCFG = MeadCFG() // MEAD, 設定檔
     private var mMeadClass = MeadClass() // MEAD class
-    private var dictMeadDB: Dictionary<String, AnyObject>? // 96 種結果DB data
     
+    // 其他參數
+    private var dictMeadDB: Dictionary<String, AnyObject>? // 96 種結果DB data
     private var dictMember: Dictionary<String, AnyObject> = [:]  // 選擇的會員資料
     private var currIndexMember: NSIndexPath? // 已選擇的會員
+    private var dictSoqibed: Dictionary<String, AnyObject> = [:]  // 已儲存的 soqibed 資料
+    
     private var isDataSave = false  // 檢測資料是否已存檔
     private var strMeadId: String?  // 已存檔的 Mead index ID
     
@@ -152,6 +156,7 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
         self.moveCollectCell(0)
         self.isDataSave = false
         self.strMeadId = nil
+        self.dictSoqibed = [:]
     }
     
     /**
@@ -283,6 +288,12 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
             setBtnActive(result)
             labBTMsg.text = msg
             
+            // 檢查是否有選擇會員
+            if (result == true && dictMember.count < 1) {
+                self.performSegueWithIdentifier("TestingMemberSel", sender: nil)
+                return
+            }
+            
             break
             
         case "BT_statu":
@@ -341,6 +352,15 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
     }
     
     /**
+     * #mark: PubSoqibedAdEdDelegate
+     * SOQIBED 模式 新增/編輯 成功回傳資料
+     */
+    func saveSuccess(dictData: Dictionary<String, AnyObject>) {
+        // SOQIBED 儲存完成的資料 設定到本 class 的 'dictSoqibed'
+        dictSoqibed = dictData
+    }
+    
+    /**
      * Segue 跳轉頁面
      */
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -365,11 +385,13 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
             return
         }
         
-        //  SOQIBED 編輯頁面
+        //  SOQIBED 新增/編輯頁面
         if (strIdent == "PubSoqibedAdEd") {
+            let dictData = sender as! Dictionary<String, AnyObject>
             let mVC = segue.destinationViewController as! PubSoqibedAdEd
-            mVC.dictAllData = sender as! Dictionary<String, AnyObject>
-            mVC.strMode = "add"
+            mVC.dictAllData = dictData
+            mVC.strMode = dictData["mode"] as! String
+            mVC.delegate = self
             
             return
         }
@@ -566,7 +588,7 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
             pubClass.popIsee(self, Msg: pubClass.getLang("mead_selmemberfirst"))
             return
         }
-        
+         
         // 跳轉 MEAD 報告頁面
         self.performSegueWithIdentifier("RecordDetail", sender: self.getPreSaveData(aryTestingData))
     }
@@ -575,17 +597,24 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
      * act, 跳轉 SOQIBed 專屬模式
      */
     @IBAction func actSoqibed(sender: UIBarButtonItem) {
-        /*
         // 檢查Mead 檢測數值是否存檔，是否有 index id
         if (isDataSave != true || strMeadId == nil) {
             pubClass.popIsee(self, Msg: pubClass.getLang("mead_savefirstmsg"))
             return
         }
-        */
         
-        // 初始傳送參數, 傳送本 Mead 檢測結果存檔資料, 欄位: mead_id,
+        // 已新增 soqibed 資料，再點取時為編輯模式
+        if (dictSoqibed.count > 0) {
+            dictSoqibed["mode"] = "edit"
+            self.performSegueWithIdentifier("PubSoqibedAdEd", sender: dictSoqibed)
+            
+            return
+        }
+        
+        // 新增模式，初始傳送參數, 傳送本 Mead 檢測結果存檔資料, 欄位: mead_id,
         var dictParm: Dictionary<String, AnyObject> = [:]
-        dictParm["title"] = []
+        dictParm["mode"] = "add"
+        dictParm["title"] = dictMember["membername"] as! String + " " + pubClass.getLang("soqibed_privatemode")
         dictParm["times"] = []
         dictParm["memberid"] = dictMember["memberid"]
         dictParm["membername"] = dictMember["membername"]
@@ -601,8 +630,8 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
         }
 
         // 有問題的  iNo, 重設 設備對應的分鐘數
-        //let dictRS = self.getPreSaveData(aryTestingData)
-        let dictRS = self.getTestVal()
+        let dictRS = self.getPreSaveData(aryTestingData)
+        //let dictRS = self.getTestVal()
         
         if (dictRS["problem"] != "") {
             let aryIno = dictRS["problem"]!.componentsSeparatedByString(",")
@@ -621,18 +650,15 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
     }
     
     /**
-     * act, UIBarButtonItem, 資料存檔
+     * act, UIBarButtonItem, 檢測數值資料存檔, MEAD val 儲存
      */
     @IBAction func actSave(sender: UIBarButtonItem) {
-        /*
-        if (!self.chkTestingData(showPopMsg: true) || self.isDataSave == true) { return
-        }
+        if (!self.chkTestingData(showPopMsg: true)) { return }
         
         if (dictMember["memberid"] == nil) {
             pubClass.popIsee(self, Msg: pubClass.getLang("mead_selmemberfirst"))
             return
         }
-        */
         
         if (self.isDataSave == true) {
             pubClass.popIsee(self, Msg: pubClass.getLang("mead_valalreadysave"))
@@ -640,8 +666,8 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
         }
 
         // 檢測數值重新整理為 dict array, key 對應 MeadCFG 的 'D_ARY_MEADDBID'
-        //let dictRS = self.getPreSaveData(aryTestingData)
-        let dictRS = self.getTestVal()
+        let dictRS = self.getPreSaveData(aryTestingData)
+        //let dictRS = self.getTestVal()  // 測試資料
         
         var aryTmp: Array<Dictionary<String, String>> = []
         let aryKey = (mMeadCFG.D_ARY_MEADDBID).componentsSeparatedByString(",")
@@ -707,6 +733,14 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
     @IBAction func actReset(sender: UIBarButtonItem) {
         pubClass.popConfirm(self, aryMsg: ["", pubClass.getLang("mead_resetmsg")], withHandlerYes: { self.resetAllData() }, withHandlerNo: {}
         )
+    }
+    
+    /**
+     * act, 點取 '選擇會員' button
+     */
+    @IBAction func actMember(sender: UIButton) {
+        // 跳轉 '會員選擇' 頁面
+        self.performSegueWithIdentifier("TestingMemberSel", sender: nil)
     }
     
     /**

@@ -207,6 +207,20 @@ class PubMemberSelect: UIViewController {
         // 比對字元, 比對欄位: membername, memberid, tel
         let aryField = ["membername", "memberid", "tel"]
         
+        aryNewMember = aryMember.filter({ (dictItem: Dictionary<String, AnyObject>) -> Bool in
+            
+            for strField in aryField {
+                if let strWord: String = dictItem[strField] as? String {
+                    if strWord.lowercaseString.rangeOfString(searchText) != nil {
+                        return true
+                    }
+                }
+            }
+            
+            return false
+        })
+        
+        /*
         aryNewMember = aryMember.filter({ (dictItem) -> Bool in
             for strField in aryField {
                 if let strWord: NSString = dictItem[strField] as! String {
@@ -219,8 +233,9 @@ class PubMemberSelect: UIViewController {
             
             return false
         })
+        */
         
-        if(aryNewMember.count == 0){
+        if( aryNewMember.count == 0 ){
             searchActive = false;
         } else {
             searchActive = true;
