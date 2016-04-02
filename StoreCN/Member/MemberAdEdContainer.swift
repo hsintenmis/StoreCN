@@ -18,10 +18,6 @@ class MemberAdEdContainer: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var labID: UILabel!
     @IBOutlet weak var labSdate: UILabel!
     @IBOutlet weak var txtPsd: UITextField!
-    @IBOutlet weak var txtRePsd: UITextField!
-
-    @IBOutlet weak var labOrgPsd: UILabel!
-    
     @IBOutlet weak var swchGender: UISegmentedControl!
     @IBOutlet weak var txtTEL: UITextField!
     @IBOutlet weak var txtBirth: UITextField!
@@ -48,28 +44,17 @@ class MemberAdEdContainer: UITableViewController, UITextFieldDelegate {
     private var aryField: Array<String> = []
     private var dictTxtView: Dictionary<String, UITextField> = [:]
     
-    // 點取欄位，彈出虛擬鍵盤視窗
+    // 點取欄位，彈出虛擬鍵盤視窗, Picker 需要的資料
+    private var dictPickParm: Dictionary<String, AnyObject> = [:]
     private var mPickerBirth: PickerDate!
     private var mPickerHeigh: PickerNumber!
     private var mPickerWeight: PickerNumber!
-    
-    // 其他參數
-    // Picker 需要的資料
-    private var dictPickParm: Dictionary<String, AnyObject> = [:]
     
     /**
     * View Load 程序
     */
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // view field 初始值設定
-        if (strMode == "add") {
-            labOrgPsd.alpha = 0.0
-        } else {
-            let strPsd = dictMember["psd"] as! String
-            labOrgPsd.text = pubClass.getLang("login_psd") + ":  " + strPsd
-        }
         
         // 設定 key 對應 editView, 注意順序
         aryTxtView = [edName, txtTEL, txtBirth, txtHeigh, txtWeight, txtCNID, txtWechat, txtQQ, txtEmail, txtZip, txtCity, txtAddr]
@@ -132,6 +117,7 @@ class MemberAdEdContainer: UITableViewController, UITextFieldDelegate {
         labID.text = dictMember["memberid"] as? String
         labSdate.text = pubClass.formatDateWithStr(dictMember["sdate"] as! String, type: "8s")
         
+        txtPsd.text = dictMember["psd"] as? String
         txtTEL.text = dictMember["tel"] as? String
         txtCNID.text = dictMember["cid_cn"] as? String
         txtWechat.text = dictMember["id_wechat"] as? String
@@ -191,10 +177,6 @@ class MemberAdEdContainer: UITableViewController, UITextFieldDelegate {
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         // 密碼 txtView
         if textField == txtPsd {
-            txtRePsd.becomeFirstResponder()
-            return true
-        }
-        if textField == txtRePsd {
             textField.resignFirstResponder()
             return true
         }
@@ -218,44 +200,13 @@ class MemberAdEdContainer: UITableViewController, UITextFieldDelegate {
     func getPageData() -> Dictionary<String, AnyObject>? {
         var dictRS: Dictionary<String, AnyObject> = [:]
         
-        // 新增模式, 檢查欄位 '密碼'
-        var errMsg = pubClass.getLang("member_err_psd")
-        
-        if (strMode == "add") {
-            if (txtPsd.text?.characters.count >= 5 && txtRePsd.text?.characters.count >= 5) {
-                
-                if (txtPsd.text! == txtRePsd.text!) {
-                    errMsg = ""
-                    dictRS["psd"] = txtPsd.text!
-                }
-            }
-            
-            if (errMsg.characters.count > 0) {
-                txtPsd.becomeFirstResponder()
-                pubClass.popIsee(self, Msg: errMsg)
-                return nil
-            }
+        // 檢查欄位 '密碼'
+        if (txtPsd.text?.characters.count < 4) {
+            pubClass.popIsee(self, Msg: pubClass.getLang("member_err_psd"))
+            return nil
         }
         
-        // 編輯模式, 檢查欄位 '密碼'
-        if (strMode == "edit" && txtPsd.text?.characters.count > 0) {
-            var errMsg1 = pubClass.getLang("member_err_psd")
-            
-            if (txtPsd.text?.characters.count >= 5) {
-                if (txtPsd.text == txtRePsd.text) {
-                    errMsg1 = ""
-                    dictRS["psd"] = txtPsd.text!
-                }
-            }
-            
-            if (errMsg1.characters.count > 0) {
-                txtPsd.becomeFirstResponder()
-                pubClass.popIsee(self, Msg: errMsg)
-                return nil
-            }
-        } else {
-            dictRS["psd"] = dictMember["psd"] as! String
-        }
+        dictRS["psd"] = txtPsd.text
         
         // 必填欄位檢查
         var aryTmpField = ["name", "tel", "birth", "height", "weight"]
@@ -285,5 +236,6 @@ class MemberAdEdContainer: UITableViewController, UITextFieldDelegate {
         
         return dictRS
     }
+
     
 }

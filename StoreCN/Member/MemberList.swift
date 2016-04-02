@@ -8,54 +8,59 @@ import Foundation
 /**
  * 會員列表 + 新增刪除
  */
-class MemberList: UIViewController, PubMemberSelectDelegate {
+class MemberList: UIViewController, PubMemberSelectDelegate, PubClassDelegate {
     
     // @IBOutlet
     @IBOutlet weak var containerMemberList: UIView!
     
     // common property
     let pubClass: PubClass = PubClass()
-    var reloadMemberList = true
     
     // HTTP 回傳資料設定
     private var aryMember: Array<Dictionary<String, AnyObject>> = []
 
     // 其他參數設定
     private var strToday = ""
-    private var dictMemberData: Dictionary<String, AnyObject> = [:]  // 選擇的會員
     private var currIndexPath: NSIndexPath?  // 目前 TableView 的 IndexPath
     
     // 會員選擇公用 class
     private var mPubMemberSelect: PubMemberSelect!
+    private var mMemberHttpData: MemberHttpData!  // http 連線取得會員全部料
+    
+    // 其他參數
+    private var bolReload = true  // 本頁面是否需要 reload
     
     /**
      * View Load 程序
      */
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // 初始會員選擇公用 class
-        mPubMemberSelect = storyboard!.instantiateViewControllerWithIdentifier("PubMemberList") as! PubMemberSelect
-        mPubMemberSelect.delegate = self
+        mMemberHttpData = MemberHttpData(VC: self)
     }
     
     /**
      * View DidAppear 程序
      */
     override func viewDidAppear(animated: Bool) {
-        if (!reloadMemberList) {
-            return
+        if (bolReload == true) {
+            bolReload = false
+            
+            // 初始會員選擇公用 class
+            mPubMemberSelect = storyboard!.instantiateViewControllerWithIdentifier("PubMemberList") as! PubMemberSelect
+            mPubMemberSelect.delegate = self
+            
+            // HTTP 連線取得資料, 全部會員列表資料
+            HTTPGetMemberList()
         }
-        
-        // HTTP 連線取得資料, 全部會員列表資料
-        HTTPGetMemberList()
-        reloadMemberList = false
     }
     
     /**
-     * 初始與設定 VCview 內的 field
+     * #mark: PubClassDelegate,  child 通知本頁面資料重整
      */
-    func initViewField() {
+    func PageNeedReload(needReload: Bool) {
+        if (needReload == true) {
+            bolReload = true
+        }
     }
     
     /**
@@ -63,7 +68,7 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
      */
     private func HTTPGetMemberList() {
         // 連線 HTTP post/get 參數
-        var dictParm = Dictionary<String, String>()
+        var dictParm: Dictionary<String, String> = [:]
         dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
         dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
         dictParm["page"] = "member"
@@ -117,35 +122,26 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
     * #mark: PubMemberListDelegate, 會員列表，點取會員執行相關程序
     */
     func MemberSelected(MemberData dictData: Dictionary<String, AnyObject>, indexPath: NSIndexPath) {
-        currIndexPath = indexPath
         
-        // HTTP 連線取得該會員全部資料(course, mead, soqibed, purchase)
-        var dictParm = Dictionary<String, String>()
-        dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
-        dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
-        dictParm["page"] = "memberdata"
-        dictParm["act"] = "memberdata_getdata"
-        dictParm["arg0"] = dictData["memberid"] as? String
-        
-        // HTTP 開始連線
-        pubClass.HTTPConn(self, ConnParm: dictParm, callBack: {(dictRS: Dictionary<String, AnyObject>)->Void in
+        // http 連線取得會員全部相關資料
+        mMemberHttpData.connGetData(dictData["memberid"] as! String, connCallBack: {
+            (dictAllMemberData) -> Void in
             
-            // 任何錯誤顯示錯誤訊息
-            if (dictRS["result"] as! Bool != true) {
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.pubClass.popIsee(self, Msg: self.pubClass.getLang(dictRS["msg"] as? String))
-                })
+            // 回傳資料失敗
+            if (dictAllMemberData["result"] as! Bool != true) {
+                var errMsg = dictAllMemberData["err"] as! String
+                if (errMsg.characters.count < 1)  {
+                    errMsg = self.pubClass.getLang("err_systemmaintain")
+                }
+                
+                self.pubClass.popIsee(self, Msg: errMsg)
                 
                 return
             }
             
-            /* 解析正確的 http 回傳結果，執行後續動作 */
-            let mDictData = (dictRS["data"]!["content"]!)!
-            let mMemberData = mDictData["datamember"] as! Array<Dictionary<String, AnyObject>>
-            self.dictMemberData = mMemberData[0] as Dictionary<String, AnyObject>
-            
-            // 將整個回傳資料傳送下個頁面
-            self.performSegueWithIdentifier("MemberMain", sender: mDictData)
+            // 回傳資料設定到傳送下個頁面
+            self.currIndexPath = indexPath
+            self.performSegueWithIdentifier("MemberMain", sender: dictAllMemberData)
         })
     }
     
@@ -169,10 +165,12 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
         
         // 會員主頁面
         if (strIdent == "MemberMain") {
+            let mDictData = sender as! Dictionary<String, AnyObject>
             let mVC = segue.destinationViewController as! MemberMain
             mVC.strToday = strToday
-            mVC.dictMember = dictMemberData
-            mVC.dictAllData = sender as! Dictionary<String, AnyObject>
+            mVC.dictAllData = mDictData
+            mVC.dictMember = (mDictData["datamember"] as! Array<Dictionary<String, AnyObject>>)[0]
+            mVC.delegate = self
             
             return
         }
@@ -204,4 +202,3 @@ class MemberList: UIViewController, PubMemberSelectDelegate {
     }
     
 }
-

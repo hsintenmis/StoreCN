@@ -220,21 +220,6 @@ class PubMemberSelect: UIViewController {
             return false
         })
         
-        /*
-        aryNewMember = aryMember.filter({ (dictItem) -> Bool in
-            for strField in aryField {
-                if let strWord: NSString = dictItem[strField] as! String {
-                    if (strWord.rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch).location != NSNotFound) {
-                        
-                        return true
-                    }
-                }
-            }
-            
-            return false
-        })
-        */
-        
         if( aryNewMember.count == 0 ){
             searchActive = false;
         } else {

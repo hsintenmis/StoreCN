@@ -102,12 +102,9 @@ class MemberAdEd: UIViewController {
             // 儲存成功，通知 parent 資料變動
             if (bolRS == true) {
                 self.delegate?.MemberDataChange(dictArg0)
-                self.pubClass.popIsee(self, Msg: strMsg, withHandler: {
-                    self.dismissViewControllerAnimated(true, completion: {})
-                })
-            } else {
-                self.pubClass.popIsee(self, Msg: strMsg)
             }
+            
+            self.pubClass.popIsee(self, Msg: strMsg)
         })
         
         return

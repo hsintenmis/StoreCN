@@ -31,6 +31,7 @@
 		42E21F131C68E6F500B85EA9 /* CalendarCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E21F121C68E6F500B85EA9 /* CalendarCellData.swift */; };
 		42E2D5A21C99ACBF0075D14B /* PubCourseSaleAdEd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E2D5A11C99ACBF0075D14B /* PubCourseSaleAdEd.swift */; };
 		42E823481CA5859B00893881 /* PubSoqibedAdEdCont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E823471CA5859B00893881 /* PubSoqibedAdEdCont.swift */; };
+		42EFEBE41CAEC6C000DD2C02 /* MemberHttpData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EFEBE31CAEC6C000DD2C02 /* MemberHttpData.swift */; };
 		42F6E3651C6B86AE00C9BB94 /* ReservListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F6E3641C6B86AE00C9BB94 /* ReservListCell.swift */; };
 		42F7532D1CA81CB900637B78 /* SaleDetailEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F7532C1CA81CB900637B78 /* SaleDetailEdit.swift */; };
 		42F7532F1CA81D4100637B78 /* SaleDetailEditCont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F7532E1CA81D4100637B78 /* SaleDetailEditCont.swift */; };
@@ -270,6 +271,7 @@
 		42E21F121C68E6F500B85EA9 /* CalendarCellData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarCellData.swift; path = PubClass/CalendarCellData.swift; sourceTree = "<group>"; };
 		42E2D5A11C99ACBF0075D14B /* PubCourseSaleAdEd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubCourseSaleAdEd.swift; path = PubView/PubCourseSaleAdEd.swift; sourceTree = "<group>"; };
 		42E823471CA5859B00893881 /* PubSoqibedAdEdCont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubSoqibedAdEdCont.swift; path = PubView/PubSoqibedAdEdCont.swift; sourceTree = "<group>"; };
+		42EFEBE31CAEC6C000DD2C02 /* MemberHttpData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberHttpData.swift; path = Member/MemberHttpData.swift; sourceTree = "<group>"; };
 		42F6E3641C6B86AE00C9BB94 /* ReservListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReservListCell.swift; path = ServiceMgr/ReservListCell.swift; sourceTree = "<group>"; };
 		42F7532C1CA81CB900637B78 /* SaleDetailEdit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SaleDetailEdit.swift; path = SaleDetail/SaleDetailEdit.swift; sourceTree = "<group>"; };
 		42F7532E1CA81D4100637B78 /* SaleDetailEditCont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SaleDetailEditCont.swift; path = SaleDetail/SaleDetailEditCont.swift; sourceTree = "<group>"; };
@@ -716,6 +718,7 @@
 		D7496D1B1C5B4D9700B75D6A /* Member */ = {
 			isa = PBXGroup;
 			children = (
+				42EFEBE31CAEC6C000DD2C02 /* MemberHttpData.swift */,
 				D7150E3E1C5C5B8E00C9FE8B /* MemberList.swift */,
 				D7134FF81C5F5A990069ACF1 /* MemberMain.swift */,
 				D7EDE8851C6081B800665542 /* MemberMainColtViewCell.swift */,
@@ -1105,6 +1108,7 @@
 				D7037A731C58C03F002A955E /* CutImage.swift in Sources */,
 				D7BB2ADF1C64788700624E08 /* PubMeadDataSelectCell.swift in Sources */,
 				D72E982B1C916FE900DA9FA3 /* ConfigProfileEdit.swift in Sources */,
+				42EFEBE41CAEC6C000DD2C02 /* MemberHttpData.swift in Sources */,
 				42E21F0F1C68825200B85EA9 /* PickerDate.swift in Sources */,
 				D705CE491C90171200CC9303 /* AnalyDataMonthlyCell.swift in Sources */,
 				D7645BE01C80068400507072 /* PurchaseReturnList.swift in Sources */,

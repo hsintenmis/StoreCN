@@ -15,6 +15,8 @@ import Foundation
  *   疗程纪录/能量检测/SOQIBed/购货纪录/健康纪录
  */
 class MemberMain: UIViewController, MemberMainPagerDelegate, MemberAdEdDelegate {
+    // delegate
+    var delegate = PubClassDelegate?()
     
     // @IBOutlet
     @IBOutlet weak var imgPict: UIImageView!
@@ -28,13 +30,11 @@ class MemberMain: UIViewController, MemberMainPagerDelegate, MemberAdEdDelegate 
     @IBOutlet weak var coltviewMenu: UICollectionView!
     
     // common property
-    var mVCtrl: UIViewController!
     let pubClass: PubClass = PubClass()
-    var dictPref: Dictionary<String, AnyObject>!  // Prefer data
     
     // public, parent 設定
     var strToday = ""
-    var dictMember: Dictionary<String, AnyObject> = [:]
+    var dictMember: Dictionary<String, AnyObject> = [:]  // 會員基本資料
     var dictAllData: Dictionary<String, AnyObject> = [:]  // 該會員全部相關資料
     
     // Container 的 VC, 從 'prepareForSegue' 實體化
@@ -45,7 +45,9 @@ class MemberMain: UIViewController, MemberMainPagerDelegate, MemberAdEdDelegate 
     private var currIndexPath = NSIndexPath(forRow: 0, inSection:0)
     
     // 其他參數
-    private var bolDataChangMember = true  // 會員資料是否異動
+    private var mMemberHttpData: MemberHttpData!  // http 連線取得會員全部料
+    private var bolDataChangMember = false  // 會員資料是否異動
+    private var bolParentReload = false  // 上層是否要更新
     
     /**
      * View Load 程序
@@ -53,11 +55,10 @@ class MemberMain: UIViewController, MemberMainPagerDelegate, MemberAdEdDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 固定初始參數
-        mVCtrl = self
-        dictPref = pubClass.getPrefData()
+        // 會員資料相關參數
+        mMemberHttpData = MemberHttpData(VC: self)
         
-        self.initViewField()
+        self.initMemberProfile()
     }
     
     /**
@@ -66,7 +67,31 @@ class MemberMain: UIViewController, MemberMainPagerDelegate, MemberAdEdDelegate 
     override func viewDidAppear(animated: Bool) {
         if (bolDataChangMember == true) {
             bolDataChangMember = false
-            initViewField()
+            
+            // 重新 http 連線取得會員資料
+            mMemberHttpData.connGetData(dictMember["memberid"] as! String, connCallBack: {
+                (dictAllMemberData) -> Void in
+                
+                // 回傳資料失敗
+                if (dictAllMemberData["result"] as! Bool != true) {
+                    var errMsg = dictAllMemberData["err"] as! String
+                    if (errMsg.characters.count < 1)  {
+                        errMsg = self.pubClass.getLang("err_systemmaintain")
+                    }
+                    
+                    // 跳離本頁面
+                    self.pubClass.popIsee(self, Msg: errMsg, withHandler: {self.dismissViewControllerAnimated(true, completion: nil)})
+                    
+                    return
+                }
+                
+                // 回傳資料重新設定參數
+                self.dictAllData = dictAllMemberData
+                self.dictMember = (dictAllMemberData["datamember"] as! Array<Dictionary<String, AnyObject>>)[0]
+                
+                // 重整上方會員基本資料 view
+                self.initMemberProfile()
+            })
         }
     }
     
@@ -75,21 +100,13 @@ class MemberMain: UIViewController, MemberMainPagerDelegate, MemberAdEdDelegate 
     */
     func MemberDataChange(dictData: Dictionary<String, AnyObject>!) {
         bolDataChangMember = true
-        dictMember = dictData
-        
-        // 缺少欄位重新設定
-        let intYY0 = Int(pubClass.subStr(strToday, strFrom: 0, strEnd: 4))
-        let intYY1 = Int(pubClass.subStr(dictData["birth"] as! String, strFrom: 0, strEnd: 4))
-        dictMember["age"] = String(intYY0! - intYY1!)
-        
-        dictMember["memberid"] = dictData["id"]
-        dictMember["membername"] = dictData["name"]
+        bolParentReload = true
     }
     
     /**
-     * 初始與設定 VCview 內的 field
+     * 初始與設定上方會員基本資料 內的 field
      */
-    func initViewField() {
+    func initMemberProfile() {
         // 設定會員資料
         let strGender = pubClass.getLang("gender_" + (dictMember["gender"] as! String))
         let strAge = (dictMember["age"] as! String) + pubClass.getLang("name_age")
@@ -204,8 +221,12 @@ class MemberMain: UIViewController, MemberMainPagerDelegate, MemberAdEdDelegate 
      * act, 點取 '返回' button
      */
     @IBAction func actBack(sender: UIBarButtonItem) {
+        // 本頁面資料是否有變動
+        if (bolParentReload == true) {
+            delegate?.PageNeedReload!(true)
+        }
+        
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
 }
-
