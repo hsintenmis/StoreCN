@@ -14,7 +14,7 @@ import Foundation
  * pager 頁面
  *   疗程纪录/能量检测/SOQIBed/购货纪录/健康纪录
  */
-class MemberMain: UIViewController, MemberMainPagerDelegate, MemberAdEdDelegate {
+class MemberMain: UIViewController, MemberMainPagerDelegate, PubClassDelegate {
     // delegate
     var delegate = PubClassDelegate?()
     
@@ -68,7 +68,7 @@ class MemberMain: UIViewController, MemberMainPagerDelegate, MemberAdEdDelegate 
         if (bolDataChangMember == true) {
             bolDataChangMember = false
             
-            // 重新 http 連線取得會員資料
+            // 重新 http 連線取指定得會員對應的各項紀錄資料
             mMemberHttpData.connGetData(dictMember["memberid"] as! String, connCallBack: {
                 (dictAllMemberData) -> Void in
                 
@@ -88,6 +88,7 @@ class MemberMain: UIViewController, MemberMainPagerDelegate, MemberAdEdDelegate 
                 // 回傳資料重新設定參數
                 self.dictAllData = dictAllMemberData
                 self.dictMember = (dictAllMemberData["datamember"] as! Array<Dictionary<String, AnyObject>>)[0]
+                self.strToday = dictAllMemberData["today"] as! String
                 
                 // 重整上方會員基本資料 view
                 self.initMemberProfile()
@@ -96,9 +97,9 @@ class MemberMain: UIViewController, MemberMainPagerDelegate, MemberAdEdDelegate 
     }
     
     /**
-    * #mark: PubClassDelegate, 資料變動通知
-    */
-    func MemberDataChange(dictData: Dictionary<String, AnyObject>!) {
+     * #mark: PubClassDelegate,  child 通知本頁面資料重整
+     */
+    func PageNeedReload(needReload: Bool) {
         bolDataChangMember = true
         bolParentReload = true
     }
@@ -199,6 +200,7 @@ class MemberMain: UIViewController, MemberMainPagerDelegate, MemberAdEdDelegate 
             mMemberMainPager.aryMenuName = aryMenuName
             mMemberMainPager.dictAllData = dictAllData
             mMemberMainPager.dictMember = dictMember
+            mMemberMainPager.strToday = strToday
             
             return
         }

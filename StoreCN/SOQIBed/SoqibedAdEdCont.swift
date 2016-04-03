@@ -6,16 +6,6 @@ import UIKit
 import Foundation
 
 /**
- * protocol, PubSoqibedAdEdCont Delegate
- */
-protocol PubSoqibedAdEdContDelegate {
-    /**
-     * 本頁面資料有刪除通知
-     */
-    func delData()
-}
-
-/**
  * SOQIBED 編輯主頁面
  * <P>
  * 會員使用模式資料, 新增/編輯刪除<BR>
@@ -26,13 +16,9 @@ protocol PubSoqibedAdEdContDelegate {
  * 2. 購買療程<br>
  * 3. 自行輸入
  */
-class PubSoqibedAdEdCont: UITableViewController {
-    // delegate
-    var delegate = PubSoqibedAdEdContDelegate?()
-
+class SoqibedAdEdCont: UITableViewController {
     // @IBOutlet
     @IBOutlet var tableList: UITableView!
-    @IBOutlet weak var btnDel: UIButton!
     @IBOutlet weak var edTitle: UITextField!
     @IBOutlet var swchSoqbed: [UISegmentedControl]!  // HotDev 6個 Segment
     @IBOutlet weak var labS00: UILabel!
@@ -59,12 +45,6 @@ class PubSoqibedAdEdCont: UITableViewController {
      */
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // view field 設定
-        if (strMode == "add") {
-            btnDel.enabled = false
-            btnDel.alpha = 0.0
-        }
         
         // 設備 S00, 設定分鐘數
         sliderS00.maximumValue = Float(aryS00DevMinsVal.count - 1)
@@ -197,14 +177,6 @@ class PubSoqibedAdEdCont: UITableViewController {
     @IBAction func actS00(sender: UISlider) {
         let currentValue = aryS00DevMinsVal[Int(sender.value)]
         labS00.text = "\(currentValue)"
-    }
-
-    /**
-     * act, 點取 '刪除' button, 刪除完成後通知 parent 資料已移除
-     */
-    @IBAction func actDel(sender: UIButton) {
-        pubClass.popConfirm(self, aryMsg: [self.pubClass.getLang("systemwarring"), self.pubClass.getLang("delconfirmmsg")], withHandlerYes: { self.delegate?.delData() }, withHandlerNo: {})
-        
     }
     
 }

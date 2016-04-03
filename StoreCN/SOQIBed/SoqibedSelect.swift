@@ -1,14 +1,18 @@
 //
-// UITableViewController, data selected delegate, 直接從 storyboard 設定
+// UITableViewController
 //
 
 import UIKit
 import Foundation
 
 /**
- * 會員產生的 SoqiBed 資料選擇 公用 class
+ * 指定會員的 SOQIBed 列表, 來源: 1.購賣療程附加 2.MEAD檢測附加
+ * 本 class 由 'MemberMainPager' 實體化產生
  */
-class PubSoqibedSelect: UITableViewController {
+class SoqibedSelect: UITableViewController, PubClassDelegate {
+    // delegate
+    var delegate = PubClassDelegate?()
+    
     // @IBOutlet
     @IBOutlet weak var tableData: UITableView!
     @IBOutlet weak var labNoData: UILabel!
@@ -18,10 +22,13 @@ class PubSoqibedSelect: UITableViewController {
     
     // public, paent 設定, Table DataSource, Soqibed 全部的檢測資料
     var arySoqibedData: Array<Dictionary<String, AnyObject>> = []
+    var strMemberId: String!  // 指定會員ID
+    var strToday = ""
     
     // 其他參數設定
-    var strToday = ""
-    private var newIndexPath: NSIndexPath!
+    private var mMemberHttpData: MemberHttpData!  // http 連線取得會員全部資料
+    private var currIndexPath: NSIndexPath?
+    private var bolReload = false  // 本頁面是否需要更新
     
     /**
      * View Load 程序
@@ -30,7 +37,7 @@ class PubSoqibedSelect: UITableViewController {
         super.viewDidLoad()
         
         // 固定初始參數
-        newIndexPath = NSIndexPath(forRow: 0, inSection: 0)
+        mMemberHttpData = MemberHttpData(VC: self)
         labNoData.alpha = 0.0
         
         if (self.arySoqibedData.count < 1) {
@@ -46,9 +53,46 @@ class PubSoqibedSelect: UITableViewController {
     }
     
     /**
-     * 初始與設定 VCview 內的 field
+     * #mark: PubClassDelegate,  child 通知本頁面資料重整
      */
-    func initViewField() {
+    func PageNeedReload(needReload: Bool) {
+        if (needReload == true) {
+            bolReload = false
+            
+            // http 連線取得會員全部相關資料
+            mMemberHttpData.connGetData(strMemberId, connCallBack: {
+                (dictAllMemberData) -> Void in
+                
+                // 回傳資料失敗
+                if (dictAllMemberData["result"] as! Bool != true) {
+                    var errMsg = dictAllMemberData["err"] as! String
+                    if (errMsg.characters.count < 1)  {
+                        errMsg = self.pubClass.getLang("err_systemmaintain")
+                    }
+                    
+                    self.pubClass.popIsee(self, Msg: errMsg)
+                    
+                    return
+                }
+                
+                // 回傳資料成功，本頁面 table reload
+                if let aryTmp = dictAllMemberData["soqibed"] as? Array<Dictionary<String, AnyObject>> {
+                    self.arySoqibedData = aryTmp
+                    self.labNoData.alpha = 0.0
+                } else {
+                    self.arySoqibedData = []
+                    self.labNoData.alpha = 1.0
+                }
+                
+                self.tableData.reloadData()
+                if (self.currIndexPath != nil) {
+                   self.tableData.selectRowAtIndexPath(self.currIndexPath, animated: true, scrollPosition: UITableViewScrollPosition.Middle)
+                }
+                
+                // 通知上層須要更新資料
+                self.delegate?.PageNeedReload!(true)
+            })
+        }
     }
     
     /**
@@ -94,7 +138,8 @@ class PubSoqibedSelect: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 
         // 取得選擇的 SOQIBED dict Data, 跳轉編輯頁面
-        self.performSegueWithIdentifier("PubSoqibedAdEd", sender: arySoqibedData[indexPath.row])
+        currIndexPath = indexPath
+        self.performSegueWithIdentifier("SoqibedAdEd", sender: arySoqibedData[indexPath.row])
     }
     
     /**
@@ -104,10 +149,11 @@ class PubSoqibedSelect: UITableViewController {
         let strIdentName = segue.identifier
         
         //  SOQIBED 編輯頁面
-        if (strIdentName == "PubSoqibedAdEd") {
-            let mVC = segue.destinationViewController as! PubSoqibedAdEd
+        if (strIdentName == "SoqibedAdEd") {
+            let mVC = segue.destinationViewController as! SoqibedAdEd
             mVC.dictAllData = sender as! Dictionary<String, AnyObject>
             mVC.strMode = "edit"
+            mVC.delgPubClass = self
             
             return
         }

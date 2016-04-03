@@ -6,24 +6,16 @@ import UIKit
 import Foundation
 
 /**
- * protocol, MemberAdEd Delegate
- */
-protocol MemberAdEdDelegate {
-    /**
-     * MemberAdEdDelegate, 會員資料有變動
-     */
-    func MemberDataChange(dictData: Dictionary<String, AnyObject>!)
-}
-
-/**
  * 會員 新增/編輯
  */
 class MemberAdEd: UIViewController {
     // delegate
-    var delegate = MemberAdEdDelegate?()
+    var delegate = PubClassDelegate?()
     
     // @IBOutlet
     @IBOutlet weak var containView: UIView!
+    @IBOutlet weak var navyTitle: UINavigationItem!
+    
     
     // common property
     var pubClass: PubClass!
@@ -35,6 +27,7 @@ class MemberAdEd: UIViewController {
     
     // 其他參數
     private var mMemberAdEdContainer: MemberAdEdContainer!
+    private var bolDataSave = false  // 編修模式是否存擋
     
     /**
      * View Load 程序
@@ -42,6 +35,10 @@ class MemberAdEd: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         pubClass = PubClass()
+        
+        if (strMode == "add") {
+            navyTitle.title = pubClass.getLang("member_add")
+        }
     }
     
     /**
@@ -99,9 +96,23 @@ class MemberAdEd: UIViewController {
             let bolRS = dictHTTPSRS["result"] as! Bool
             let strMsg = (bolRS == true) ? self.pubClass.getLang("datasavecompleted") : self.pubClass.getLang("err_trylatermsg")
             
-            // 儲存成功，通知 parent 資料變動
+            // 儲存成功，通知 parent (parent 為 'MemberMain') 資料變動
             if (bolRS == true) {
-                self.delegate?.MemberDataChange(dictArg0)
+                // 編輯模式
+                if (self.strMode == "edit") {
+                    self.pubClass.popIsee(self, Msg: strMsg)
+                    self.bolDataSave = true
+                    return
+                }
+                // 新增模式直接跳離
+                else if (self.strMode == "add") {
+                    self.delegate?.PageNeedReload!(true)
+                    self.pubClass.popIsee(self, Msg: strMsg, withHandler: {
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                    })
+                    
+                    return
+                }
             }
             
             self.pubClass.popIsee(self, Msg: strMsg)
@@ -130,6 +141,10 @@ class MemberAdEd: UIViewController {
     }
     
     @IBAction func actBack(sender: UIBarButtonItem) {
+        if (bolDataSave == true) {
+            self.delegate?.PageNeedReload!(true)
+        }
+        
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 

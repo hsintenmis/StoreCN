@@ -16,16 +16,18 @@ protocol MemberMainPagerDelegate {
 /**
  * 會員主選單下的 資料列表, 使用 pager
  */
-class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
-
+class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, PubClassDelegate {
+    
+    // delegate
     var delegateMemberMainPager = MemberMainPagerDelegate?()
     
     // 各個 pager 對應的代碼, parent 設定, 對應 'aryVCIdent'
     // 參考上層 ["course", "mead", "soqibed", "purchase", "health"]
     var aryMenuName: Array<String>!
     
-    // public, 各個 Pager Table 需要的 datasource, parent 設定
+    // public, parent 設定, 各個 Pager Table 需要的 datasource, parent 設定
     var dictAllData: Dictionary<String, AnyObject>!
+    var strToday: String!
     
     // public, 選擇的會員資料
     var dictMember: Dictionary<String, AnyObject>!
@@ -62,6 +64,18 @@ class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIP
     }
     
     /**
+     * #mark: PubClassDelegate,  child 通知本頁面資料重整
+     */
+    func PageNeedReload(needReload: Bool) {
+        if (needReload == true) {
+            bolReload = false
+            
+            // 通知上層要更新資料
+            //delegate?.PageNeedReload!(true)
+        }
+    }
+    
+    /**
      * 產生各個 page 頁面，加到 'aryPages'
      */
     private func makePages() {
@@ -86,8 +100,12 @@ class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIP
                 break
                 
             case "soqibed":  // SoqiBed 資料 VC
-                let storyboard = UIStoryboard(name: "Testing", bundle: nil)
-                let mVC: PubSoqibedSelect = storyboard.instantiateViewControllerWithIdentifier("PubSoqibedSelect") as! PubSoqibedSelect
+                let storyboard = UIStoryboard(name: "SOQIBed", bundle: nil)
+                let mVC: SoqibedSelect = storyboard.instantiateViewControllerWithIdentifier("PubSoqibedSelect") as! SoqibedSelect
+                
+                mVC.delegate = self
+                mVC.strMemberId = dictMember["memberid"] as! String
+                mVC.strToday = strToday
                 
                 if let tmpDict = dictAllData["soqibed"] as? Array<Dictionary<String, AnyObject>> {
                     mVC.arySoqibedData = tmpDict

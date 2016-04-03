@@ -25,7 +25,7 @@ class MemberList: UIViewController, PubMemberSelectDelegate, PubClassDelegate {
     
     // 會員選擇公用 class
     private var mPubMemberSelect: PubMemberSelect!
-    private var mMemberHttpData: MemberHttpData!  // http 連線取得會員全部料
+    private var mMemberHttpData: MemberHttpData!  // http 連線取得會員全部資料
     
     // 其他參數
     private var bolReload = true  // 本頁面是否需要 reload
@@ -177,6 +177,7 @@ class MemberList: UIViewController, PubMemberSelectDelegate, PubClassDelegate {
         
         // 新增會員
         if (strIdent == "MemberAdd") {
+            currIndexPath = nil
             let mVC = segue.destinationViewController as! MemberAdEd
             mVC.strToday = strToday
             mVC.strMode = "add"
@@ -185,13 +186,6 @@ class MemberList: UIViewController, PubMemberSelectDelegate, PubClassDelegate {
         }
         
         return
-    }
-    
-    /**
-     * act, 點取 '新增' button
-     */
-    @IBAction func actAdd(sender: UIBarButtonItem) {
-        
     }
     
     /**

@@ -1180,10 +1180,9 @@
                                                 <action selector="actBack:" destination="G3L-qr-XgU" id="4NX-U8-sAs"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="新增" id="KTm-0l-q0U">
+                                        <barButtonItem key="rightBarButtonItem" title="会员新增" id="KTm-0l-q0U">
                                             <color key="tintColor" red="0.80000000000000004" green="1" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>
-                                                <action selector="actAdd:" destination="G3L-qr-XgU" id="n6y-5t-be3"/>
                                                 <segue destination="lxC-Ow-JcK" kind="show" identifier="MemberAdd" id="UJs-s6-y71"/>
                                             </connections>
                                         </barButtonItem>
@@ -1229,14 +1228,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="01y-ij-IKb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="553" y="1088"/>
+            <point key="canvasLocation" x="67" y="906"/>
         </scene>
         <!--公用-會員購買療程選擇-->
         <scene sceneID="era-A9-fla">
             <objects>
                 <tableViewController storyboardIdentifier="PubCourseSelect" title="公用-會員購買療程選擇" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Dgt-vK-rZ3" customClass="PubCourseSelect" customModule="StoreCN" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="120" sectionHeaderHeight="1" sectionFooterHeight="1" id="aJh-5r-Bp2">
-                        <rect key="frame" x="0.0" y="0.0" width="324" height="284"/>
+                        <rect key="frame" x="0.0" y="0.0" width="324" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <label key="tableFooterView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="目前无资料" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KRe-6z-fPg" userLabel="LabNoData">
@@ -1397,7 +1396,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zdB-80-1XG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1505" y="1131"/>
+            <point key="canvasLocation" x="1659" y="1011"/>
         </scene>
         <!--會員購買療程編輯-->
         <scene sceneID="aQa-S4-NEw">
@@ -1464,7 +1463,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Of-QS-7Xe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1978" y="1088"/>
+            <point key="canvasLocation" x="2216" y="1011"/>
         </scene>
         <!--公用-會員購貨紀錄選擇-->
         <scene sceneID="kp6-Vi-BYI">
@@ -1630,7 +1629,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3gS-Vg-Q7Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1503" y="1834"/>
+            <point key="canvasLocation" x="1659" y="1687"/>
         </scene>
         <!--公用-會員選擇-->
         <scene sceneID="g3a-NY-msW">
@@ -1895,7 +1894,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="at2-2n-Lca" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1505" y="382"/>
+            <point key="canvasLocation" x="1661" y="284"/>
         </scene>
         <!--個人資料編輯 Container-->
         <scene sceneID="1cc-ib-5ZT">
@@ -1920,7 +1919,9 @@
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </textAttributes>
                                 <items>
-                                    <navigationItem title="个人资料编辑" id="B7v-MU-0en">
+                                    <navigationItem id="B7v-MU-0en">
+                                        <string key="title">会员编辑
+</string>
                                         <barButtonItem key="leftBarButtonItem" title="返回" id="VOM-87-U9O">
                                             <color key="tintColor" red="0.80000000000000004" green="1" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>
@@ -1961,11 +1962,12 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="containView" destination="Gog-Iy-JZ2" id="YNt-dx-4TR"/>
+                        <outlet property="navyTitle" destination="B7v-MU-0en" id="cFh-Pt-dLW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ng0-Xj-SAV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="553" y="1834"/>
+            <point key="canvasLocation" x="67" y="1747"/>
         </scene>
         <!--會員頁面主選單-->
         <scene sceneID="fev-xP-hhM">
@@ -2263,7 +2265,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RFa-9W-LX5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1006" y="1088"/>
+            <point key="canvasLocation" x="620" y="906"/>
         </scene>
         <!--會員主選單-Pager-->
         <scene sceneID="9i7-Rv-Hhd">
@@ -2277,12 +2279,11 @@
                     <size key="freeformSize" width="324" height="284"/>
                     <connections>
                         <segue destination="4Wk-Dt-t5Z" kind="show" identifier="MemberHealthMenu" id="ClX-tv-ALH"/>
-                        <segue destination="Dgt-vK-rZ3" kind="show" identifier="MemberCourseSaleList" id="px2-Qx-HTH"/>
                     </connections>
                 </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GmG-kc-yoi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1008" y="1692"/>
+            <point key="canvasLocation" x="1078" y="901"/>
         </scene>
         <!--個人資料編輯- 輸入頁面-->
         <scene sceneID="x1d-7T-NFk">
@@ -2387,7 +2388,7 @@
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="I5m-OG-rH8" userLabel="txtName" customClass="CustomUITextField" customModule="StoreCN" customModuleProvider="target">
                                                     <rect key="frame" x="88" y="8" width="225" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
                                                     <connections>
                                                         <outlet property="delegate" destination="gnf-V0-ejm" id="xl0-Ov-Nv5"/>
                                                     </connections>
@@ -2818,7 +2819,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DfG-XR-4gt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="553" y="2905"/>
+            <point key="canvasLocation" x="555" y="1794"/>
         </scene>
         <!--會員健康記錄選單-->
         <scene sceneID="Oaq-OS-XuY">
@@ -2914,7 +2915,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iI1-do-mRJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1008" y="2148"/>
+            <point key="canvasLocation" x="1078" y="1386"/>
         </scene>
         <!--健康紀錄-WebView-->
         <scene sceneID="1Wi-4l-xdm">
@@ -2994,7 +2995,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mVU-kS-hKM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1008" y="2739"/>
+            <point key="canvasLocation" x="1078" y="1993"/>
         </scene>
         <!--公用-沒有資料-->
         <scene sceneID="2s1-Vx-ext">
@@ -3045,7 +3046,6 @@
         <image name="user_empty01.png" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="g9E-lV-tef"/>
-        <segue reference="px2-Qx-HTH"/>
+        <segue reference="UJs-s6-y71"/>
     </inferredMetricsTieBreakers>
 </document>

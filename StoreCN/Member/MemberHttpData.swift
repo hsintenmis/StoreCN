@@ -6,7 +6,15 @@ import UIKit
 import Foundation
 
 /**
- * 指定會員, HTTP 連線取得各項資料
+ * protocol, child 資料列表頁面，http 連線重新取得資料, 更新 MemberMain 'dictAllData'
+ */
+protocol MemberHttpDataDelegate {
+    // 若有需要，更新 MemberMain 'dictAllData'
+    func UpDateMemberAllData(newDictAllData: Dictionary<String, AnyObject>!)
+}
+
+/**
+ * 指定會員, HTTP 連線取得會員對應的各項紀錄
  * http 連線參數: 
  *  page => "memberdata",
  *  act  => "memberdata_getdata", arg0 => 會員 ID
@@ -26,7 +34,7 @@ class MemberHttpData {
     /**
      * http 連線取得資料
      * @return: Dictionary<String, AnyObject>, 加入欄位 'result' 判別,
-     * true: 回傳會員全部相關資料, false: 加入錯誤訊息 'err'
+     * true: 回傳會員對應各項紀錄的全部相關資料, false: 加入錯誤訊息 'err'
      */
     func connGetData(MemberId: String!, connCallBack: (dictAllMemberData: Dictionary<String, AnyObject>!)->Void)  {
         var dictAllData: Dictionary<String, AnyObject> = [:]

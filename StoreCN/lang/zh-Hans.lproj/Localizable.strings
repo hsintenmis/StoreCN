@@ -100,6 +100,8 @@
 "menu_analydata_health" = "健康精灵分析";
 
 "member_nodataaddfirst" = "没有会员, 请先新增会员!";
+"member_add" = "会员新增";
+"member_edit" = "会员編輯";
 "member_selectbirth" = "选择生日";
 "member_main_course" = "疗程纪录";
 "member_main_mead" = "能量检测";
