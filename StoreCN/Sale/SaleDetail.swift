@@ -6,8 +6,8 @@ import UIKit
 import Foundation
 
 /**
- * 會員購貨紀錄明細主頁面，由會員管理購貨紀錄 'PubMemberPurchaseSelect' 轉入
- * 提供退貨新增/修改，金額，數量修改等功能
+ * 會員購貨紀錄明細主頁面，本頁面資料有 http 連線儲存, 成功後跳離
+ * 提供 退貨新增/修改，金額，數量修改等功能
  */
 class SaleDetail: UIViewController, SaleDetailCellDelegate, PubClassDelegate {
     // delegate
@@ -33,7 +33,6 @@ class SaleDetail: UIViewController, SaleDetailCellDelegate, PubClassDelegate {
     private var aryPd: Array<Dictionary<String, AnyObject>>!  // 出貨商品 array
     private var mAlert: UIAlertController!  // alertView 功能選單 (ActionSheet menu)
     private var keyboardHeightQty: CGFloat = 0.0  // 自訂的選擇數量鍵盤高度
-    private var bolReload = false // 本頁面是否需要 reload
     
     /**
      * View Load 程序
@@ -66,14 +65,6 @@ class SaleDetail: UIViewController, SaleDetailCellDelegate, PubClassDelegate {
      * View WillAppear 程序
      */
     override func viewWillAppear(animated: Bool) {
-        // 子頁面有資料變動，本頁面結束設定 parent class reload
-        if (bolReload) {
-            self.view.alpha = 0.6
-            self.dismissViewControllerAnimated(false, completion: {self.delegate?.PageNeedReload!(true)})
-            
-            return
-        }
-        
         // 设置监听键盘事件函数
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
     }
@@ -87,11 +78,21 @@ class SaleDetail: UIViewController, SaleDetailCellDelegate, PubClassDelegate {
     }
     
     /**
+    * 本頁面資料有 http 連線儲存, 通知 parent 資料變動，本 class 跳離
+    */
+    private func dataSaveExit() {
+        self.view.alpha = 0.6
+        self.dismissViewControllerAnimated(false, completion: {self.delegate?.PageNeedReload!(true)})
+    }
+    
+    /**
      * #mark: PubClassDelegate
-     * page reload
+     * child 通知資料有變動
      */
     func PageNeedReload(needReload: Bool) {
-        bolReload = needReload
+        if (needReload == true) {
+           dataSaveExit()
+        }
     }
     
     /**
@@ -175,8 +176,8 @@ class SaleDetail: UIViewController, SaleDetailCellDelegate, PubClassDelegate {
             }
             
             self.pubClass.popIsee(self, Msg: strMsg, withHandler: {
-                // 通知 parent 資料有變動
-                self.dismissViewControllerAnimated(true, completion: {self.delegate?.PageNeedReload!(bolRS)})
+                // 通知 parent 資料變動，本 class 跳離
+                self.dataSaveExit()
             })
         })
 
@@ -282,10 +283,10 @@ class SaleDetail: UIViewController, SaleDetailCellDelegate, PubClassDelegate {
                 strMsg = self.pubClass.getLang("datasavecompleted")
             }
             
-            self.pubClass.popIsee(self, Msg: strMsg, withHandler: {self.dismissViewControllerAnimated(true, completion: {
-                // 通知 parent 資料有變動
-                self.delegate?.PageNeedReload!(bolRS)
-            })})
+            self.pubClass.popIsee(self, Msg: strMsg, withHandler: {
+                // 通知 parent 資料變動，本 class 跳離
+                self.dataSaveExit()
+            })
             
             return
             

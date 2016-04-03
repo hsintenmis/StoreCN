@@ -10,7 +10,7 @@ import Foundation
  */
 @objc protocol SoqibedAdEdDelegate {
     /**
-     * 本頁面儲存成功通知, 回傳存的資料
+     * 本頁面儲存成功通知, 回傳本頁面輸入的資料
      */
     optional func saveSuccess(dictData: Dictionary<String, AnyObject>)
 }

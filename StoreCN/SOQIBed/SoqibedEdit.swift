@@ -63,6 +63,7 @@ class SoqibedEdit: UIViewController {
         // 檢查是否標記 '刪除'
         if (strMode == "del") {
             dictArg0!["del"] = "Y"
+            dictArg0!["mode"] = "del"
         }
         
         // http 連線參數設定, 產生 'arg0' JSON string
@@ -97,14 +98,16 @@ class SoqibedEdit: UIViewController {
                 if (self.strMode == "edit") {
                     strMsg = self.pubClass.getLang("datasavecompleted")
                     self.bolDataSave = true
+                    self.pubClass.popIsee(self, Msg: strMsg)
+                    
+                    return
                 }
                 
                 // 刪除完成
                 else if (self.strMode == "del") {
                     strMsg = self.pubClass.getLang("datadelcompleted")
-                    self.delegate?.PageNeedReload!(true)
                     self.pubClass.popIsee(self, Msg: strMsg, withHandler: {
-                        self.dismissViewControllerAnimated(true, completion: nil)
+                        self.dismissViewControllerAnimated(true, completion: {self.delegate?.PageNeedReload!(true)})
                     })
                     
                     return
@@ -124,7 +127,10 @@ class SoqibedEdit: UIViewController {
      */
     @IBAction func actDel(sender: UIBarButtonItem) {
         // 提醒視窗
-        pubClass.popConfirm(self, aryMsg: [pubClass.getLang("systemwarring"), pubClass.getLang("delconfirmmsg")], withHandlerYes: {self.dataSaveProc()}, withHandlerNo: {return})
+        pubClass.popConfirm(self, aryMsg: [pubClass.getLang("systemwarring"), pubClass.getLang("delconfirmmsg")], withHandlerYes: {
+                self.strMode = "del"
+                self.dataSaveProc()
+            }, withHandlerNo: {return})
     }
     
     /**
@@ -138,11 +144,11 @@ class SoqibedEdit: UIViewController {
      * act, 點取 '返回' button
      */
     @IBAction func actBack(sender: UIBarButtonItem) {
-        if (bolDataSave == true) {
-            delegate?.PageNeedReload!(true)
-        }
-        
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismissViewControllerAnimated(true, completion: {
+            if (self.bolDataSave == true) {
+                self.delegate?.PageNeedReload!(true)
+            }
+        })
     }
     
 }

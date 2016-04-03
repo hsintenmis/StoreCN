@@ -46,7 +46,7 @@ class MemberMain: UIViewController, MemberMainPagerDelegate, PubClassDelegate {
     
     // 其他參數
     private var mMemberHttpData: MemberHttpData!  // http 連線取得會員全部料
-    private var bolDataChangMember = false  // 會員資料是否異動
+    private var bolDataChangMember = false  // 會員基本資料是否異動
     private var bolParentReload = false  // 上層是否要更新
     
     /**
@@ -100,7 +100,18 @@ class MemberMain: UIViewController, MemberMainPagerDelegate, PubClassDelegate {
      * #mark: PubClassDelegate,  child 通知本頁面資料重整
      */
     func PageNeedReload(needReload: Bool) {
-        bolDataChangMember = true
+        bolParentReload = true
+    }
+
+    /**
+     * #mark: PubClassDelegate,  child 通知本頁面資料重整
+     * 由 'MemberAdEd' 回傳
+     */
+    func PageNeedReload(needReload: Bool, arg0: String?) {
+        if (arg0 == "memberedit") {
+            bolDataChangMember = true
+        }
+        
         bolParentReload = true
     }
     
@@ -196,11 +207,13 @@ class MemberMain: UIViewController, MemberMainPagerDelegate, PubClassDelegate {
             let mVC = segue.destinationViewController as! MemberMainPager
             
             mMemberMainPager = mVC
-            mMemberMainPager.delegateMemberMainPager = self
             mMemberMainPager.aryMenuName = aryMenuName
             mMemberMainPager.dictAllData = dictAllData
             mMemberMainPager.dictMember = dictMember
             mMemberMainPager.strToday = strToday
+            
+            mMemberMainPager.delegateMemberMainPager = self
+            mMemberMainPager.delegatePubClass = self
             
             return
         }

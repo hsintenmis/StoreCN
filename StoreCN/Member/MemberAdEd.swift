@@ -140,9 +140,12 @@ class MemberAdEd: UIViewController {
         svaeData(dictRS)
     }
     
+    /**
+     * act, 編輯模式點取 '返回' button
+     */
     @IBAction func actBack(sender: UIBarButtonItem) {
         if (bolDataSave == true) {
-            self.delegate?.PageNeedReload!(true)
+            self.delegate?.PageNeedReload!(true, arg0: "memberedit")
         }
         
         self.dismissViewControllerAnimated(true, completion: nil)

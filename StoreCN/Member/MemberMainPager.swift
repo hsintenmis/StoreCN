@@ -16,10 +16,11 @@ protocol MemberMainPagerDelegate {
 /**
  * 會員主選單下的 資料列表, 使用 pager
  */
-class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, PubClassDelegate {
+class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, MemberHttpDataDelegate{
     
-    // delegate
+    // delegate, PagerView 相關
     var delegateMemberMainPager = MemberMainPagerDelegate?()
+    var delegatePubClass = PubClassDelegate?()
     
     // 各個 pager 對應的代碼, parent 設定, 對應 'aryVCIdent'
     // 參考上層 ["course", "mead", "soqibed", "purchase", "health"]
@@ -48,6 +49,7 @@ class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIP
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // UIPageViewController 的 delegate
         self.delegate = self
         self.dataSource = self
     }
@@ -64,15 +66,13 @@ class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIP
     }
     
     /**
-     * #mark: PubClassDelegate,  child 通知本頁面資料重整
+     * #mark: MemberHttpDataDelegate, child 重新 http 連線回傳新資料
      */
-    func PageNeedReload(needReload: Bool) {
-        if (needReload == true) {
-            bolReload = false
-            
-            // 通知上層要更新資料
-            //delegate?.PageNeedReload!(true)
-        }
+    func UpDateMemberAllData(newDictAllData: Dictionary<String, AnyObject>!) {
+        dictAllData = newDictAllData
+        
+        // 通知 parent 資料有變動
+        delegatePubClass?.PageNeedReload!(true)
     }
     
     /**
@@ -101,7 +101,7 @@ class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIP
                 
             case "soqibed":  // SoqiBed 資料 VC
                 let storyboard = UIStoryboard(name: "SOQIBed", bundle: nil)
-                let mVC: SoqibedSelect = storyboard.instantiateViewControllerWithIdentifier("PubSoqibedSelect") as! SoqibedSelect
+                let mVC: SoqibedSelect = storyboard.instantiateViewControllerWithIdentifier("SoqibedSelect") as! SoqibedSelect
                 
                 mVC.delegate = self
                 mVC.strMemberId = dictMember["memberid"] as! String
@@ -116,14 +116,14 @@ class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIP
                 break
                 
             case "purchase":  // 會員購貨資料 VC
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let mVC: PubMemberPurchaseSelect = storyboard.instantiateViewControllerWithIdentifier("PubMemberPurchaseSelect") as! PubMemberPurchaseSelect
+                let storyboard = UIStoryboard(name: "Sale", bundle: nil)
+                let mVC: SaleList = storyboard.instantiateViewControllerWithIdentifier("SaleList") as! SaleList
                 
                 if let tmpDict = dictAllData["purchase"] as? Array<Dictionary<String, AnyObject>> {
                     mVC.aryPurchaseData = tmpDict
                     mVC.strMemberId = dictMember["memberid"] as! String
                     mVC.strToday = dictAllData["today"] as! String
-                    mVC.mParent = self
+                    mVC.delegate = self
                 }
                 
                 aryPages.append(mVC)

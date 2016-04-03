@@ -61,7 +61,7 @@
                     <connections>
                         <outlet property="labNoData" destination="G90-79-oZL" id="sZS-MJ-uJc"/>
                         <outlet property="tableData" destination="d2k-Pj-hXV" id="dv0-R9-FhE"/>
-                        <segue destination="ES7-1z-P7D" kind="show" identifier="SoqibedAdEd" id="8by-OV-poh">
+                        <segue destination="ES7-1z-P7D" kind="show" identifier="SoqibedEdit" id="8by-OV-poh">
                             <nil key="action"/>
                         </segue>
                     </connections>
@@ -85,7 +85,7 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N30-gZ-AbX">
                                 <rect key="frame" x="-2" y="64" width="324" height="504"/>
                                 <connections>
-                                    <segue destination="FIj-5a-D9V" kind="embed" identifier="PubSoqibedAdEdCont" id="Pze-gn-GPM"/>
+                                    <segue destination="FIj-5a-D9V" kind="embed" identifier="SoqibedAdEdCont" id="Pze-gn-GPM"/>
                                 </connections>
                             </containerView>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vhq-hw-usp">
@@ -137,6 +137,7 @@
                     </view>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                 </viewController>
@@ -194,7 +195,7 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tSb-68-DIh">
                                 <rect key="frame" x="-2" y="64" width="324" height="504"/>
                                 <connections>
-                                    <segue destination="FIj-5a-D9V" kind="embed" identifier="PubSoqibedAdEdCont" id="Xgu-bM-t7e"/>
+                                    <segue destination="FIj-5a-D9V" kind="embed" identifier="SoqibedAdEdCont" id="Xgu-bM-t7e"/>
                                 </connections>
                             </containerView>
                         </subviews>

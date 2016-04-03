@@ -10,7 +10,7 @@ import Foundation
  * 1.藍芽設備連接    2.會員選擇(USER資料輸入)
  * 3.測量完後檢測報告 4. 儲存
  */
-class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDelegate, PubSoqibedAdEdDelegate {
+class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDelegate, SoqibedAdEdDelegate {
     
     // @IBOutlet
     @IBOutlet weak var labName: UILabel!
@@ -386,9 +386,9 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
         }
         
         //  SOQIBED 新增/編輯頁面
-        if (strIdent == "PubSoqibedAdEd") {
+        if (strIdent == "SoqibedAdEd") {
             let dictData = sender as! Dictionary<String, AnyObject>
-            let mVC = segue.destinationViewController as! PubSoqibedAdEd
+            let mVC = segue.destinationViewController as! SoqibedAdEd
             mVC.dictAllData = dictData
             mVC.strMode = dictData["mode"] as! String
             mVC.delegate = self

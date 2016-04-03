@@ -9,7 +9,9 @@ import Foundation
  * protocol, child 資料列表頁面，http 連線重新取得資料, 更新 MemberMain 'dictAllData'
  */
 protocol MemberHttpDataDelegate {
-    // 若有需要，更新 MemberMain 'dictAllData'
+    /**
+    * child http 連線取得新資料, parent 原先設定資料需更新
+    */
     func UpDateMemberAllData(newDictAllData: Dictionary<String, AnyObject>!)
 }
 

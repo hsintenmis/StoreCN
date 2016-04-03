@@ -14,6 +14,12 @@ import UIKit
      * PubClassDelegate, 設定上層 class page 是否需要 reload
      */
     optional func PageNeedReload(needReload: Bool)
+    
+    /**
+     * PubClassDelegate, 設定上層 class page 是否需要 reload
+     * arg0, 辨識參數
+     */
+    optional func PageNeedReload(needReload: Bool, arg0: String?)
 }
 
 /**
