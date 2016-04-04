@@ -241,8 +241,14 @@ class MainMenu: UIViewController {
                 /* 直接跳轉 storyborad */
                 var mVC: UIViewController?
                 
+                // 療程列表
+                if (strIdent == "course_list") {
+                    let storyboard = UIStoryboard(name: "CourseMain", bundle: nil)
+                    mVC = storyboard.instantiateViewControllerWithIdentifier("CourseListAll") as UIViewController
+                }
+                
                 // 商品進出貨列表
-                if (strIdent == "product_purchaselist") {
+                else if (strIdent == "product_purchaselist") {
                     let storyboard = UIStoryboard(name: "Product", bundle: nil)
                     mVC = storyboard.instantiateViewControllerWithIdentifier("PurchaseList") as UIViewController
                 }
@@ -288,7 +294,7 @@ class MainMenu: UIViewController {
                     return
                 }
                 
-                /* 判斷是否需要 'prepareForSegue' */
+                /* 判斷是否需要 'prepareForSegue', 資料先由本 class http 連線取得 */
                 var mParam = self.dictParm
                 
                 // 療程銷售
@@ -329,7 +335,6 @@ class MainMenu: UIViewController {
                 
                 /* 直接 performSegueWithIdentifier 跳轉，設定對應 ident */
                 let dictIdentMap = [
-                    "course_list":"PubCourseSelect",
                     "course_reservation":"CourseReserv",
                 ]
                 

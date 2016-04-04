@@ -1768,7 +1768,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellPubCourseSelect" id="DbK-3u-irb" customClass="PubCourseSelectCell" customModule="StoreCN" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellCourseList" id="DbK-3u-irb" customClass="CourseListCell" customModule="StoreCN" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="1" width="320" height="120"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DbK-3u-irb" id="tca-Vp-A4x">
@@ -1996,7 +1996,7 @@
         <!--療程管理-服務管理-->
         <scene sceneID="fC7-Xc-W4V">
             <objects>
-                <viewController title="療程管理-服務管理" id="UUW-y7-RuN" customClass="CourseListAll" customModule="StoreCN" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CourseListAll" title="療程管理-服務管理" id="UUW-y7-RuN" customClass="CourseListAll" customModule="StoreCN" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="CLu-ud-kzc"/>
                         <viewControllerLayoutGuide type="bottom" id="SeR-Vb-WWz"/>
@@ -2274,7 +2274,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="A2i-v6-yxh"/>
-        <segue reference="fvv-s2-gzf"/>
+        <segue reference="CAT-Ik-SOC"/>
+        <segue reference="Q3i-aj-uI5"/>
     </inferredMetricsTieBreakers>
 </document>

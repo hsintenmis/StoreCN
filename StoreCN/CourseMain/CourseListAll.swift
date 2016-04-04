@@ -151,7 +151,7 @@ class CourseListAll: UIViewController {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         currIndexPath = indexPath
         let dictSender = aryCourseData[indexPath.row]
-        self.performSegueWithIdentifier("CourseSaleEdit", sender: dictSender)
+        self.performSegueWithIdentifier("CourseEdit", sender: dictSender)
     }
     
     /**

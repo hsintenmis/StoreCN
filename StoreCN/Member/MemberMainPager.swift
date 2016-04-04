@@ -119,8 +119,8 @@ class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIP
                 let storyboard = UIStoryboard(name: "Sale", bundle: nil)
                 let mVC: SaleList = storyboard.instantiateViewControllerWithIdentifier("SaleList") as! SaleList
                 
-                if let tmpDict = dictAllData["purchase"] as? Array<Dictionary<String, AnyObject>> {
-                    mVC.aryPurchaseData = tmpDict
+                if let aryTmp = dictAllData["purchase"] as? Array<Dictionary<String, AnyObject>> {
+                    mVC.aryPurchaseData = aryTmp
                     mVC.strMemberId = dictMember["memberid"] as! String
                     mVC.strToday = dictAllData["today"] as! String
                     mVC.delegate = self
@@ -135,8 +135,10 @@ class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIP
                 let mVC = storyboard.instantiateViewControllerWithIdentifier("CourseList") as! CourseList
                 
                 // CourseList 設定傳入的資料
-                if let _ = dictAllData["course"] as? Array<Dictionary<String, AnyObject>> {
-                    mVC.dictAllData = dictAllData
+                if let aryTmp = dictAllData["course"] as? Array<Dictionary<String, AnyObject>> {
+                    mVC.aryCourseData = aryTmp
+                    mVC.aryMember = dictAllData["datamember"] as! Array<Dictionary<String, AnyObject>>
+                    mVC.aryCourseDB = dictAllData["datacourse"] as! Array<Dictionary<String, AnyObject>>
                     mVC.strMemberId = dictMember["memberid"] as? String
                     mVC.strToday = dictAllData["today"] as! String
                 }

@@ -73,7 +73,7 @@
         <!--SOQIBED 模式編輯 -  Mead-->
         <scene sceneID="isK-BI-WgR">
             <objects>
-                <viewController title="SOQIBED 模式編輯 -  Mead" id="ekR-em-Lvv" customClass="SoqibedAdEd" customModule="StoreCN" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SoqibedAdEd" title="SOQIBED 模式編輯 -  Mead" id="ekR-em-Lvv" customClass="SoqibedAdEd" customModule="StoreCN" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="h5Y-mE-7Ip"/>
                         <viewControllerLayoutGuide type="bottom" id="6yk-Li-0P8"/>
@@ -559,6 +559,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Xgu-bM-t7e"/>
+        <segue reference="Pze-gn-GPM"/>
     </inferredMetricsTieBreakers>
 </document>

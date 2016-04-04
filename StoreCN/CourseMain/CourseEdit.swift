@@ -23,7 +23,7 @@ class CourseEdit: UIViewController {
     var aryCourseData: Array<Dictionary<String, AnyObject>> = []
     var aryCourseDB: Array<Dictionary<String, AnyObject>> = []
     var aryMember: Array<Dictionary<String, AnyObject>> = []
-    var strToday = ""
+    var strToday: String!
     
     // 公用VC, 療程銷售新增/編輯 class
     var mCourseAdEd: CourseAdEd!
@@ -43,7 +43,7 @@ class CourseEdit: UIViewController {
      */
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let strIdent = segue.identifier
-        
+
         // 療程編輯資料輸入頁面
         if (strIdent == "CourseAdEd") {
             mCourseAdEd = segue.destinationViewController as! CourseAdEd

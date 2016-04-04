@@ -146,19 +146,19 @@ class CourseAdEd: UITableViewController, UITextFieldDelegate, UITextViewDelegate
         swchCardType.selectedSegmentIndex = ((dictSaleData["card_type"] as! String) == "T") ? 0 : 1
         labCardTypeCount.text = dictSaleData["card_times"] as? String
         labTypeUnit.text = ((dictSaleData["card_type"] as! String) == "T") ? aryFixUnit[0] : aryFixUnit[1]
-        
+
         // 次數 + - stepper
         stepCardType.value = Double(dictSaleData["card_times"] as! String)!
-        
+
         // 到期日預設值
         dictPickParm["expire_def"] = pubClass.subStr((dictSaleData["end_date"] as! String), strFrom: 0, strEnd: 8)
         edExpire.text = pubClass.formatDateWithStr(dictSaleData["end_date"] as! String, type: 8)
         mPickerExpire = PickerDate(withUIField: edExpire, PubClass: pubClass, withDefMaxMin: [dictPickParm["expire_def"] as! String, dictPickParm["expire_max"] as! String, dictPickParm["expire_min"] as! String], NavyBarTitle: pubClass.getLang("course_expiredate"))
-        
+
         // 療程建議說明文字
         txtSugst.text = dictSaleData["card_msg"] as! String
-        
-        // 療程步驟文字
+
+        // TODO (修改 server 端) 療程步驟文字
         txtStepPd.text = aryCourseDB[(indexPathPd?.row)!]["steppd"] as! String
     }
     
@@ -395,7 +395,7 @@ class CourseAdEd: UITableViewController, UITextFieldDelegate, UITextViewDelegate
     */
     @IBAction func actAddNewSugst(sender: UIButton) {
         // 療程建議說明編輯頁面
-        self.performSegueWithIdentifier("CourseSaleSugst", sender: nil)
+        self.performSegueWithIdentifier("CourseSugst", sender: nil)
     }
     
     /**
