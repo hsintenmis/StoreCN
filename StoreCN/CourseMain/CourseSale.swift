@@ -6,7 +6,8 @@ import UIKit
 import Foundation
 
 /**
- *  主選單服務管理 - 療程銷售
+ * 療程銷售, container 顯示 '療程編輯' 頁面
+ * 本頁面需要的資料由 parent 傳入
  */
 class CourseSale: UIViewController {
     
@@ -25,7 +26,7 @@ class CourseSale: UIViewController {
     private var aryMember: Array<Dictionary<String, AnyObject>> = []
     
     // 公用VC, 療程銷售新增/編輯 class
-    var mPubCourseSaleAdEd: PubCourseSaleAdEd!
+    var mCourseAdEd: CourseAdEd!
     
     /**
     * View Load 程序
@@ -47,20 +48,22 @@ class CourseSale: UIViewController {
             
             return
         }
+    }
+    
+    /**
+     * Segue 跳轉頁面
+     */
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let strIdent = segue.identifier
         
-        // !! container 直接加入 ViewControler, 切換其他 storyboard
-        let storyboard = UIStoryboard(name: "CourseSaleAdEd", bundle: nil)
-        mPubCourseSaleAdEd = storyboard.instantiateViewControllerWithIdentifier("PubCourseSaleAdEd") as! PubCourseSaleAdEd
-        
-        mPubCourseSaleAdEd.strToday = strToday
-        mPubCourseSaleAdEd.aryCourseDB = aryCourseDB
-        mPubCourseSaleAdEd.aryMember = aryMember
-        
-        let mView = mPubCourseSaleAdEd.view
-        mView.frame.size.height = contviewTable.layer.frame.height
-        mView.frame.size.width = contviewTable.layer.frame.width
-        
-        contviewTable.addSubview(mView)
+        // 療程編輯資料輸入頁面
+        if (strIdent == "CourseAdEd") {
+            mCourseAdEd = segue.destinationViewController as! CourseAdEd
+            mCourseAdEd.strToday = strToday
+            mCourseAdEd.aryCourseDB = aryCourseDB
+            mCourseAdEd.aryMember = aryMember
+            mCourseAdEd.strMode = "add"
+        }
     }
     
     /**
@@ -68,7 +71,7 @@ class CourseSale: UIViewController {
      */
     private func procSave() {
         
-        let dictData = mPubCourseSaleAdEd.saveData()
+        let dictData = mCourseAdEd.getPageData()
         
         if (dictData["rs"] as! Bool != true) {
             pubClass.popIsee(self, Msg: dictData["msg"] as! String)

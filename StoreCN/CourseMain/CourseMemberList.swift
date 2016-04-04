@@ -6,20 +6,20 @@ import UIKit
 import Foundation
 
 /**
- * protocol, CourseSaleMemberSel Delegate
+ * protocol, CourseMemberList Delegate
  */
-protocol CourseSaleMemberSelDelegate {
+protocol CourseMemberListDelegate {
     /**
      * 本頁面點取 '會員 Item'  parent 執行相關程序
      */
-    func MemberSeltPageDone(MemberData: Dictionary<String, AnyObject>, MemberindexPath: NSIndexPath)
+    func MemberSelected(MemberData: Dictionary<String, AnyObject>, MemberindexPath: NSIndexPath)
 }
 
 /**
  * 療程銷售 新增編輯, 會員選擇，從 'PubCourseSaleAdEd' 導入
  */
-class CourseSaleMemberSel: UIViewController, PubMemberSelectDelegate {
-    var delegate = CourseSaleMemberSelDelegate?()
+class CourseMemberList: UIViewController, PubMemberSelectDelegate {
+    var delegate = CourseMemberListDelegate?()
     
     // @IBOutlet
     @IBOutlet weak var contviewTable: UIView!
@@ -60,10 +60,6 @@ class CourseSaleMemberSel: UIViewController, PubMemberSelectDelegate {
         mView.frame.size.height = contviewTable.layer.frame.height
         self.contviewTable.addSubview(mView)
         self.navigationController?.pushViewController(mPubMemberSelect, animated: true)
-        
-        dispatch_async(dispatch_get_main_queue(), {
-            
-        })
     }
     
     /**
@@ -78,7 +74,7 @@ class CourseSaleMemberSel: UIViewController, PubMemberSelectDelegate {
     func MemberSelected(MemberData dictData: Dictionary<String, AnyObject>, indexPath: NSIndexPath) {        
         // delegate 執行相關程序
         self.dismissViewControllerAnimated(true, completion: {
-                self.delegate?.MemberSeltPageDone(dictData, MemberindexPath: indexPath)
+                self.delegate?.MemberSelected(dictData, MemberindexPath: indexPath)
             }
         )
     }
@@ -91,4 +87,3 @@ class CourseSaleMemberSel: UIViewController, PubMemberSelectDelegate {
     }
     
 }
-

@@ -1,26 +1,24 @@
 //
-// UITableViewController
+// 
 //
 
 import UIKit
 import Foundation
 
 /**
- * 公用 class, 會員已購買的療程訂單資料列表
+ * 全部會員已購買療程列表, 服務管理 => 療程管理
  */
-class PubCourseSelect: UITableViewController, PubClassDelegate {
+class CourseListAll: UIViewController {
+    
     // @IBOutlet
-    @IBOutlet weak var tableData: UITableView!
-    @IBOutlet weak var labNoData: UILabel!
+    @IBOutlet weak var tableList: UITableView!
+    @IBOutlet weak var labNodata: UILabel!
     
     // common property
     let pubClass: PubClass = PubClass()
     
-    // public, parent 傳入
-    var dictAllData: Dictionary<String, AnyObject> = [:]
-    var strMemberId: String?  // 若指定會員，表示僅列出該會員的購買療程
-    
-    // 療程訂單資料, 療程DB, 全部會員資料
+    // 本頁面 TableVuew 需要的資料，全部會員訂購的療程
+    private var dictAllData: Dictionary<String, AnyObject> = [:]
     private var aryCourseData: Array<Dictionary<String, AnyObject>> = []
     private var aryCourseDB: Array<Dictionary<String, AnyObject>> = []
     private var aryMember: Array<Dictionary<String, AnyObject>> = []
@@ -31,11 +29,11 @@ class PubCourseSelect: UITableViewController, PubClassDelegate {
     private var bolReload = true
     
     /**
-     * View Load 程序
-     */
+    * View Load 程序
+    */
     override func viewDidLoad() {
-        //super.viewDidLoad()
-        labNoData.alpha = 0.0
+        super.viewDidLoad()
+        labNodata.alpha = 0.0
     }
     
     /**
@@ -49,75 +47,42 @@ class PubCourseSelect: UITableViewController, PubClassDelegate {
     }
     
     /**
-     * #mark: PubClassDelegate
-     * 頁面重整 flag 通知
-     */
-    func PageNeedReload(needReload: Bool) {
-        if (needReload == true) {
-            reConnHTTP()
-        }
-    }
-    
-    /**
      * 檢查是否有資料
      */
     private func chkHaveData() {
-        // 檢查是否有資料
-        var hasErr = false
-        
+        // 全部會員 array data
         if let aryTmp = dictAllData["member"] as? Array<Dictionary<String, AnyObject>> {
             aryMember = aryTmp
         } else {
-            hasErr = true
-        }
-        
-        // 已購買的療程列表
-        if let aryTmp = dictAllData["data"] as? Array<Dictionary<String, AnyObject>> {
-            
-            // 重新整理 array data，若有指定 '會員 ID'
-            if (strMemberId == nil) {
-                aryCourseData = aryTmp
-            } else {
-                aryCourseData = []
-                
-                for dictTmp in aryTmp {
-                    if (dictTmp["memberid"] as? String == strMemberId) {
-                        aryCourseData.append(dictTmp)
-                    }
-                }
-                
-                if (aryCourseData.count < 1) {
-                    hasErr = true
-                }
-            }
-            
-        } else {
-            hasErr = true
+            pubClass.popIsee(self, Msg: pubClass.getLang("member_nodataaddfirst"), withHandler: {self.dismissViewControllerAnimated(true, completion: nil)})
+            return
         }
         
         // 療程 DB 列表
         if let aryTmp = dictAllData["course"] as? Array<Dictionary<String, AnyObject>> {
             aryCourseDB = aryTmp
         } else {
-            hasErr = true
+            pubClass.popIsee(self, Msg: pubClass.getLang("err_trylatermsg"), withHandler: {self.dismissViewControllerAnimated(true, completion: nil)})
+            return
         }
         
-        if (hasErr == true) {
-            labNoData.alpha = 1.0
-            return
+        // 已購買的療程列表
+        if let aryTmp = dictAllData["data"] as? Array<Dictionary<String, AnyObject>> {
+            aryCourseData = aryTmp
+
         } else {
-            labNoData.alpha = 0.0
+            labNodata.alpha = 1.0
         }
         
         // tableview reload
-        tableData.reloadData()
+        tableList.reloadData()
         if let tmpIndexPath = currIndexPath {
-            tableData.selectRowAtIndexPath(tmpIndexPath, animated: true, scrollPosition: UITableViewScrollPosition.None)
+            tableList.selectRowAtIndexPath(tmpIndexPath, animated: true, scrollPosition: UITableViewScrollPosition.Middle)
         }
         
-        bolReload = false
+        return
     }
-    
+
     /**
      * HTTP 重新連線取得資料
      */
@@ -132,9 +97,9 @@ class PubCourseSelect: UITableViewController, PubClassDelegate {
         // HTTP 開始連線
         pubClass.HTTPConn(self, ConnParm: mParam, callBack: {(dictRS: Dictionary<String, AnyObject>)->Void in
             
-            // 任何錯誤, 停留本頁面
+            // 任何錯誤跳離
             if (dictRS["result"] as! Bool != true) {
-                self.labNoData.alpha = 1.0
+                self.pubClass.popIsee(self, Msg: self.pubClass.getLang("err_trylatermsg"), withHandler: {self.dismissViewControllerAnimated(true, completion: nil)})
                 return
             }
             
@@ -150,15 +115,15 @@ class PubCourseSelect: UITableViewController, PubClassDelegate {
      * #mark: UITableView Delegate
      * Section 的數量
      */
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
-
+    
     /**
      * #mark: UITableView Delegate
      * 回傳指定sectiuon的 Row 數量
      */
-    override func tableView(tableView: UITableView, numberOfRowsInSection section:Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section:Int) -> Int {
         return aryCourseData.count
     }
     
@@ -166,13 +131,13 @@ class PubCourseSelect: UITableViewController, PubClassDelegate {
      * #mark: UITableView Delegate
      * UITableView, Cell 內容
      */
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if (aryCourseData.count < 1) {
             return UITableViewCell()
         }
         
         let ditItem = aryCourseData[indexPath.row] as Dictionary<String, AnyObject>
-        let mCell = tableView.dequeueReusableCellWithIdentifier("cellPubCourseSelect", forIndexPath: indexPath) as! PubCourseSelectCell
+        let mCell = tableView.dequeueReusableCellWithIdentifier("cellCourseList", forIndexPath: indexPath) as! CourseListCell
         
         mCell.initView(ditItem, PubClass: pubClass)
         
@@ -183,10 +148,10 @@ class PubCourseSelect: UITableViewController, PubClassDelegate {
      * #mark: UITableView Delegate
      * UITableView, Cell 點取
      */
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         currIndexPath = indexPath
-        let dictSender = aryCourseData[indexPath.row] 
-        self.performSegueWithIdentifier("PubCourseSaleEdit", sender: dictSender)
+        let dictSender = aryCourseData[indexPath.row]
+        self.performSegueWithIdentifier("CourseSaleEdit", sender: dictSender)
     }
     
     /**
@@ -196,14 +161,20 @@ class PubCourseSelect: UITableViewController, PubClassDelegate {
         let strIdent = segue.identifier
         
         // 已購買療程編輯頁面
-        if (strIdent == "PubCourseSaleEdit") {
-            let mVC = segue.destinationViewController as! PubCourseSaleEdit
+        if (strIdent == "CourseEdit") {
+            let mVC = segue.destinationViewController as! CourseEdit
             mVC.strToday = strToday
             mVC.aryCourseDB = aryCourseDB
             mVC.aryMember = aryMember
             mVC.dictSaleData = sender as! Dictionary<String, AnyObject>
-            mVC.delegate = self
         }
+    }
+    
+    /**
+     * act, 點取 '主選單' button
+     */
+    @IBAction func actHome(sender: UIBarButtonItem) {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
 }

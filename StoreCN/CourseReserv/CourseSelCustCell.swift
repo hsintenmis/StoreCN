@@ -6,7 +6,7 @@ import Foundation
 import UIKit
 
 /**
-* 會員已購買的療程 Cell
+* 會員已購買的療程列表 Cell
 */
 class CourseSelCustCell: UITableViewCell {
     @IBOutlet weak var labTitle: UILabel!

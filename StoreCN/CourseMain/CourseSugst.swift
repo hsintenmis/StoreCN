@@ -6,9 +6,21 @@ import UIKit
 import Foundation
 
 /**
- * 療程銷售 新增編輯, 療程建議說明，從 'PubCourseSaleAdEd' 導入
+ * protocol, CourseDBList Delegate
  */
-class CourseSaleSugst: UIViewController, SugstChildPageDelegate {
+protocol CourseSugstDelegate {
+    /**
+     * 建議說明點取'完成', 回傳整理好的文字
+     */
+    func doneSugstTxt(strSugst: String!)
+}
+
+/**
+ * 療程 新增/編輯 資料輸入頁面, '療程建議'說明，從 'CourseAdEd' 導入
+ */
+class CourseSugst: UIViewController, SugstChildPageDelegate {
+    // delegate
+    var delegate = CourseSugstDelegate?()
     
     // @IBOutlet
     @IBOutlet weak var contviewPage: UIView!
@@ -18,8 +30,7 @@ class CourseSaleSugst: UIViewController, SugstChildPageDelegate {
     let pubClass: PubClass = PubClass()
     
     // 其他參數設定
-    var parentClass: PubCourseSaleAdEd!
-    var dictSugstTxt: Dictionary<String, String> = [:]
+    private var dictSugstTxt: Dictionary<String, String> = [:]
 
     // ContainerView 相關參數
     private var dictChildVC: Dictionary<String, UITableViewController> = [:]
@@ -160,7 +171,10 @@ class CourseSaleSugst: UIViewController, SugstChildPageDelegate {
      * act, 點取 '完成' button
      */
     @IBAction func actDone(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true, completion: {self.parentClass.setCourseSugstTxt(self.txtSugst.text)})
+        // 回傳整理好的文字 'txtSugst.text'
+        self.dismissViewControllerAnimated(true, completion: {
+            self.delegate?.doneSugstTxt(self.txtSugst.text)
+        })
     }
 
 }

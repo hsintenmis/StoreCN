@@ -22,7 +22,6 @@ class SugstChildPage: UITableViewController {
     var delegate = SugstChildPageDelegate?()
     
     // @IBOutlet
-    @IBOutlet weak var tableData: UITableView!
     @IBOutlet weak var coltviewPoint: UICollectionView!
     
     @IBOutlet weak var swchEpower: UISwitch!

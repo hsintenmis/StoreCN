@@ -5,7 +5,10 @@
 import Foundation
 import UIKit
 
-class PubCourseSelectCell: UITableViewCell {
+/**
+ * 會員購買療程列表 Table Cell
+ */
+class CourseListCell: UITableViewCell {
     @IBOutlet weak var labName: UILabel!
     @IBOutlet weak var labCourse: UILabel!
     @IBOutlet weak var labCount: UILabel!

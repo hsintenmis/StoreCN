@@ -6,21 +6,21 @@ import UIKit
 import Foundation
 
 /**
- * protocol, CourseSaleCourseSel Delegate
+ * protocol, CourseDBList Delegate
  */
- protocol CourseSaleCourseSelDelegate {
+ protocol CourseDBListDelegate {
     /**
-     * 建議工程(療程DB)，點取指定資料，實作點取後相關程序
+     * 預設建議工程(療程DB)，點取指定資料，實作點取後相關程序
      */
-    func CourseDBDataSelected(CourseData dictData: Dictionary<String, AnyObject>, indexPath: NSIndexPath)
+    func CourseDBSelected(CourseData dictData: Dictionary<String, AnyObject>, indexPath: NSIndexPath)
  }
 
 /**
- * 療程銷售, 建議工程(療程DB) 選擇, 從'PubCourseSaleAdEd' 導入
+ * 療程銷售, 預設建議工程(療程DB)列表
  */
-class CourseSaleCourseSel: UIViewController {
+class CourseDBList: UIViewController {
     // delegate
-    var delegate = CourseSaleCourseSelDelegate?()
+    var delegate = CourseDBListDelegate?()
     
     // @IBOutlet
     @IBOutlet weak var tableData: UITableView!
@@ -79,7 +79,7 @@ class CourseSaleCourseSel: UIViewController {
      * UITableView, Cell 點取
      */
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        delegate?.CourseDBDataSelected(CourseData: aryCourseDB[indexPath.row], indexPath: indexPath)
+        delegate?.CourseDBSelected(CourseData: aryCourseDB[indexPath.row], indexPath: indexPath)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     

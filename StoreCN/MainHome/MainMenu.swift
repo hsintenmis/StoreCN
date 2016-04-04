@@ -367,6 +367,18 @@ class MainMenu: UIViewController {
                 }
             }
             
+            /* 跳轉其他 storyboard */
+            // 療程銷售
+            if (strIdent == "course_sale") {
+                let storyboard = UIStoryboard(name: "CourseMain", bundle: nil)
+                let mVC = storyboard.instantiateViewControllerWithIdentifier("CourseSale") as! CourseSale
+                mVC.strToday = self.strToday
+                mVC.dictAllData = dictData
+                self.presentViewController(mVC, animated: true, completion: nil)
+                
+                return
+            }
+            
             /* 直接跳轉商品 storyborad */
             let storyboardProduct = UIStoryboard(name: "Product", bundle: nil)
                 
@@ -409,16 +421,7 @@ class MainMenu: UIViewController {
      * Segue 跳轉頁面
      */
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let strIdent = segue.identifier
-        
-        // 療程銷售
-        if (strIdent == "course_sale") {
-            let mVC = segue.destinationViewController as! CourseSale
-            mVC.strToday = strToday
-            mVC.dictAllData = sender as! Dictionary<String, AnyObject>
-            
-            return
-        }
+        //let strIdent = segue.identifier
         
         return
     }

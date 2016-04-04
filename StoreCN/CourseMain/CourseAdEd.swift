@@ -6,9 +6,9 @@ import UIKit
 import Foundation
 
 /**
- * 療程銷售 資料新增/編輯 資料上傳, 公用 class
+ * 療程銷售, 資料 新增/編輯, 資料上傳
  */
-class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewDelegate, CourseSaleMemberSelDelegate, CourseSaleCourseSelDelegate {
+class CourseAdEd: UITableViewController, UITextFieldDelegate, UITextViewDelegate, CourseMemberListDelegate, CourseDBListDelegate, CourseSugstDelegate {
     // @IBOutlet
     @IBOutlet var tableList: UITableView!
     @IBOutlet var swchSoqbed: [UISegmentedControl]!  // HotDev 6個 Segment
@@ -135,7 +135,7 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
         
         // SOQI Bed 資料
         if let dictTmp = dictSaleData["soqibed"] as? Dictionary<String, String> {
-            self.CourseDBDataSelected(CourseData: dictTmp, indexPath: indexPathPd!)
+            self.CourseDBSelected(CourseData: dictTmp, indexPath: indexPathPd!)
         } else {
             swchActSoqibed.on = false
         }
@@ -163,10 +163,10 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
     }
     
     /**
-     * public, child class 調用, 設定'療程建議說明' textView 文字資料
+     * #mark: CourseSugstDelegate, 療程建議書說說明文字頁面回傳 string
      */
-    func setCourseSugstTxt(strTxt: String) {
-        txtSugst.text = strTxt
+    func doneSugstTxt(strSugst: String!) {
+        txtSugst.text = strSugst
     }
     
     /**
@@ -178,11 +178,20 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
     }
     
     /**
-     * #mark: CourseSaleCourseSelDelegate,
+     * #mark: CourseMemberListDelegate, 會員列表，點取會員執行相關程序
+     */
+    func MemberSelected(MemberData: Dictionary<String, AnyObject>, MemberindexPath: NSIndexPath) {
+        labMember.text = MemberData["membername"] as? String
+        dictRequest["memberid"] = MemberData["memberid"] as? String
+        dictSaleData["member"] = MemberData
+        indexPathMember = MemberindexPath
+    }
+    
+    /**
+     * #mark: CourseDBListDelegate,
      * 建議工程(療程DB)，點取指定資料，實作點取後相關程序
      */
-    func CourseDBDataSelected(CourseData dictData: Dictionary<String, AnyObject>, indexPath: NSIndexPath) {
-        
+    func CourseDBSelected(CourseData dictData: Dictionary<String, AnyObject>, indexPath: NSIndexPath) {
         indexPathPd = indexPath
         
         // 建議工程名稱, 疗程步骤与产品使用
@@ -222,32 +231,20 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
      * UITableView, Cell 點取
      */
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
         // 取得點取 cell 的 Identifier, 執行 segue 跳轉
         let strIdent = tableView.cellForRowAtIndexPath(indexPath)?.reuseIdentifier
         
         // 會員選擇
-        if (strIdent == "cellCourseSaleMemberSel") {
-            self.performSegueWithIdentifier("CourseSaleMemberSel", sender: nil)
+        if (strIdent == "CourseMemberList") {
+            self.performSegueWithIdentifier("CourseMemberList", sender: nil)
             return
         }
         
         // 療程DB list 選擇
-        if (strIdent == "cellCourseSaleCourseSel") {
-            self.performSegueWithIdentifier("CourseSaleCourseSel", sender: nil)
+        if (strIdent == "CourseDBList") {
+            self.performSegueWithIdentifier("CourseDBList", sender: nil)
             return
         }
-    }
-    
-    /**
-    * #mark: CourseSaleMemberSelDelegate, 會員列表，點取會員執行相關程序
-    */
-    func MemberSeltPageDone(MemberData: Dictionary<String, AnyObject>, MemberindexPath: NSIndexPath) {
-        labMember.text = MemberData["membername"] as? String
-        dictRequest["memberid"] = MemberData["memberid"] as? String
-        
-        dictSaleData["member"] = MemberData
-        indexPathMember = MemberindexPath
     }
     
     /**
@@ -268,8 +265,8 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
         let strIdent = segue.identifier
         
         // 會員選擇
-        if (strIdent == "CourseSaleMemberSel") {
-            let mVC = segue.destinationViewController as! CourseSaleMemberSel
+        if (strIdent == "CourseMemberList") {
+            let mVC = segue.destinationViewController as! CourseMemberList
             mVC.delegate = self
             mVC.strToday = strToday
             mVC.aryMember = aryMember
@@ -279,8 +276,8 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
         }
         
         // 療程 DB list 選擇
-        if (strIdent == "CourseSaleCourseSel") {
-            let mVC = segue.destinationViewController as! CourseSaleCourseSel
+        if (strIdent == "CourseDBList") {
+            let mVC = segue.destinationViewController as! CourseDBList
             mVC.delegate = self
             mVC.strToday = strToday
             mVC.aryCourseDB = aryCourseDB
@@ -290,9 +287,9 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
         }
         
         // 療程建議說明
-        if (strIdent == "CourseSaleSugst") {
-            let mVC = segue.destinationViewController as! CourseSaleSugst
-            mVC.parentClass = self
+        if (strIdent == "CourseSugst") {
+            let mVC = segue.destinationViewController as! CourseSugst
+            mVC.delegate = self
             
             return
         }
@@ -314,11 +311,11 @@ class PubCourseSaleAdEd: UITableViewController, UITextFieldDelegate, UITextViewD
     }
     
     /**
-     * public, parent 調用，本頁面全部欄位資料上傳儲存<BR>
+     * public, parent 調用，回傳本頁面全部欄位資料<BR>
      * 回傳整理好的 dict REQUEST 資料<BR>
      * @return: dict, 'rs'=>Bool, 'data'=>dict data, 'msg'=>"" or msg
      */
-    func saveData() -> Dictionary<String, AnyObject>! {
+    func getPageData() -> Dictionary<String, AnyObject>! {
         var dictResult: Dictionary<String, AnyObject> = [:]
         dictResult["rs"] = false
         dictResult["data"] = [:]

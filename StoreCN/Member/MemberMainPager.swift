@@ -131,8 +131,15 @@ class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIP
                 break
                 
             case "course":  // 已購買療程列表
-                let mVC = storyboard?.instantiateViewControllerWithIdentifier("PubCourseSelect") as! PubCourseSelect
-                mVC.strMemberId = dictMember["memberid"] as? String
+                let storyboard = UIStoryboard(name: "CourseMain", bundle: nil)
+                let mVC = storyboard.instantiateViewControllerWithIdentifier("CourseList") as! CourseList
+                
+                // CourseList 設定傳入的資料
+                if let _ = dictAllData["course"] as? Array<Dictionary<String, AnyObject>> {
+                    mVC.dictAllData = dictAllData
+                    mVC.strMemberId = dictMember["memberid"] as? String
+                    mVC.strToday = dictAllData["today"] as! String
+                }
                 
                 aryPages.append(mVC)
                 break

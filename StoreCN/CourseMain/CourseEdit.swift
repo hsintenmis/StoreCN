@@ -6,9 +6,9 @@ import UIKit
 import Foundation
 
 /**
- * 公用, 會員療程銷售編輯
+ * 療程編輯, Container 跳轉至 'CourseAdEd'
  */
-class PubCourseSaleEdit: UIViewController {
+class CourseEdit: UIViewController {
     // delegate
     var delegate = PubClassDelegate?()
     
@@ -26,7 +26,7 @@ class PubCourseSaleEdit: UIViewController {
     var strToday = ""
     
     // 公用VC, 療程銷售新增/編輯 class
-    var mPubCourseSaleAdEd: PubCourseSaleAdEd!
+    var mCourseAdEd: CourseAdEd!
     
     // 其他參數
     private var bolDataChange = false  // 本頁面資料是否有儲存
@@ -36,22 +36,23 @@ class PubCourseSaleEdit: UIViewController {
      */
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    /**
+     * Segue 跳轉頁面
+     */
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let strIdent = segue.identifier
         
-        // !! container 直接加入 ViewControler
-        let storyboard = UIStoryboard(name: "CourseSaleAdEd", bundle: nil)
-        mPubCourseSaleAdEd = storyboard.instantiateViewControllerWithIdentifier("PubCourseSaleAdEd") as! PubCourseSaleAdEd
-        
-        mPubCourseSaleAdEd.dictSaleData = dictSaleData
-        mPubCourseSaleAdEd.strToday = strToday
-        mPubCourseSaleAdEd.aryCourseDB = aryCourseDB
-        mPubCourseSaleAdEd.aryMember = aryMember
-        mPubCourseSaleAdEd.strMode = "edit"
-        
-        let mView = mPubCourseSaleAdEd.view
-        mView.frame.size.height = contviewTable.layer.frame.height
-        mView.frame.size.width = contviewTable.layer.frame.width
-        
-        contviewTable.addSubview(mView)
+        // 療程編輯資料輸入頁面
+        if (strIdent == "CourseAdEd") {
+            mCourseAdEd = segue.destinationViewController as! CourseAdEd
+            mCourseAdEd.dictSaleData = dictSaleData
+            mCourseAdEd.strToday = strToday
+            mCourseAdEd.aryCourseDB = aryCourseDB
+            mCourseAdEd.aryMember = aryMember
+            mCourseAdEd.strMode = "edit"
+        }
     }
     
     /**
@@ -59,7 +60,7 @@ class PubCourseSaleEdit: UIViewController {
      */
     @IBAction func actSave(sender: UIBarButtonItem) {
         bolDataChange = false
-        let dictData = mPubCourseSaleAdEd.saveData()
+        let dictData = mCourseAdEd.getPageData()
         
         if (dictData["rs"] as! Bool != true) {
             pubClass.popIsee(self, Msg: dictData["msg"] as! String)
