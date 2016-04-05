@@ -8,7 +8,7 @@ import Foundation
 /**
  * 全部會員已購買療程列表, 服務管理 => 療程管理
  */
-class CourseListAll: UIViewController {
+class CourseListAll: UIViewController, PubClassDelegate {
     
     // @IBOutlet
     @IBOutlet weak var tableList: UITableView!
@@ -43,6 +43,17 @@ class CourseListAll: UIViewController {
         if (bolReload == true) {
             bolReload = false
             reConnHTTP()
+        }
+    }
+    
+    /**
+     * #mark: PubClassDelegate,
+     * 重新 http 連線取得資料，本頁面 table reload, 通知 parent 資料變動
+     */
+    func PageNeedReload(needReload: Bool) {
+        if (needReload == true) {
+            reConnHTTP()
+            return
         }
     }
     
@@ -167,6 +178,7 @@ class CourseListAll: UIViewController {
             mVC.aryCourseDB = aryCourseDB
             mVC.aryMember = aryMember
             mVC.dictSaleData = sender as! Dictionary<String, AnyObject>
+            mVC.delegate = self
         }
     }
     

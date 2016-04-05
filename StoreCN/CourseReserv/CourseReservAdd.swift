@@ -8,7 +8,7 @@ import Foundation
 /**
  * 療程預約, 新增頁面
  */
-class CourseReservAdd: UIViewController, CourseReservMemberSelDelegate, PickerDateTimeDelegate {
+class CourseReservAdd: UIViewController, PickerDateTimeDelegate, CourseMemberListDelegate {
     
     // @IBOutlet
     @IBOutlet weak var labMember: UILabel!
@@ -17,6 +17,7 @@ class CourseReservAdd: UIViewController, CourseReservMemberSelDelegate, PickerDa
     @IBOutlet weak var labOdrsId: UILabel!
     @IBOutlet weak var segmCourse: UISegmentedControl!
     @IBOutlet weak var tableList: UITableView!
+    @IBOutlet weak var btnMember: UIButton!
     
     // common property
     let pubClass: PubClass = PubClass()
@@ -40,6 +41,7 @@ class CourseReservAdd: UIViewController, CourseReservMemberSelDelegate, PickerDa
      */
     override func viewDidLoad() {
         super.viewDidLoad()
+        btnMember.layer.cornerRadius = 5
         
         // 預約時間預設值
         dictRequest["time"] = strToday + "1200"
@@ -77,11 +79,12 @@ class CourseReservAdd: UIViewController, CourseReservMemberSelDelegate, PickerDa
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let strIdent = segue.identifier
         
-        if (strIdent == "CourseReservAddMemberSel") {
-            let mVC = segue.destinationViewController as! CourseReservMemberSel
+        if (strIdent == "CourseMemberList") {
+            let mVC = segue.destinationViewController as! CourseMemberList
             mVC.aryMember = aryMember
             mVC.currIndexPath = currIndexMember
             mVC.delegate = self
+            
             return
         }
 
@@ -131,7 +134,7 @@ class CourseReservAdd: UIViewController, CourseReservMemberSelDelegate, PickerDa
         }
         
         /* 預設療程, 使用 tableview Cell 預設樣式 */
-        let mCell = tableView.dequeueReusableCellWithIdentifier("cellCourseCustSel", forIndexPath: indexPath) as! CourseSelCustCell
+        let mCell = tableView.dequeueReusableCellWithIdentifier("cellMemberCourseList", forIndexPath: indexPath) as! MemberCourseListCell
         
         mCell.initView(ditItem)
         
@@ -170,11 +173,7 @@ class CourseReservAdd: UIViewController, CourseReservMemberSelDelegate, PickerDa
         return pubClass.getLang("courseresver_" + strTitle)
     }
     
-    /**
-    * #mark: CourseReservMemberSelDelegate
-    * 會員列表選擇會員完成，執行相關程序
-    */
-    func MemberSeltPageDone(MemberData: Dictionary<String, AnyObject>, MemberindexPath: NSIndexPath) {
+    func MemberSelected(MemberData: Dictionary<String, AnyObject>, MemberindexPath: NSIndexPath) {
         currIndexMember = MemberindexPath
         labMember.text = MemberData["membername"] as? String
         dictRequest["membername"] = MemberData["membername"] as? String

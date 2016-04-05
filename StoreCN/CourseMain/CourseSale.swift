@@ -33,6 +33,12 @@ class CourseSale: UIViewController {
     */
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    /**
+    * 初始與設定本頁面相關參數
+    */
+    private func initData() {
         // 檢查療程DB資料, 全部會員資料
         aryCourseDB = dictAllData["pd"] as! Array<Dictionary<String, AnyObject>>
         strToday = dictAllData["today"] as! String
@@ -40,7 +46,7 @@ class CourseSale: UIViewController {
         if let tmpData = dictAllData["member"] as? Array<Dictionary<String, AnyObject>> {
             aryMember = tmpData
         }
-        
+
         if (aryMember.count < 1) {
             pubClass.popIsee(self, Msg: pubClass.getLang("member_nodataaddfirst"), withHandler: {
                 self.dismissViewControllerAnimated(true, completion: {})
@@ -58,6 +64,7 @@ class CourseSale: UIViewController {
         
         // 療程編輯資料輸入頁面
         if (strIdent == "CourseAdEd") {
+            initData()
             mCourseAdEd = segue.destinationViewController as! CourseAdEd
             mCourseAdEd.strToday = strToday
             mCourseAdEd.aryCourseDB = aryCourseDB
@@ -69,15 +76,7 @@ class CourseSale: UIViewController {
     /**
      * 資料儲存程序
      */
-    private func procSave() {
-        
-        let dictData = mCourseAdEd.getPageData()
-        
-        if (dictData["rs"] as! Bool != true) {
-            pubClass.popIsee(self, Msg: dictData["msg"] as! String)
-            return
-        }
-        
+    private func svaeData(dictArg0: Dictionary<String, AnyObject>!) {
         // 產生 http post data, http 連線儲存
         var dictParm: Dictionary<String, String> = [:]
         dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
@@ -87,7 +86,7 @@ class CourseSale: UIViewController {
         
         do {
             let tmpDictData = try
-                NSJSONSerialization.dataWithJSONObject(dictData["data"] as! Dictionary<String, String>, options: NSJSONWritingOptions(rawValue: 0))
+                NSJSONSerialization.dataWithJSONObject(dictArg0 as! Dictionary<String, String>, options: NSJSONWritingOptions(rawValue: 0))
             let jsonString = NSString(data: tmpDictData, encoding: NSUTF8StringEncoding)! as String
             
             dictParm["arg0"] = jsonString
@@ -121,10 +120,16 @@ class CourseSale: UIViewController {
      * act, 點取 '儲存' button
      */
     @IBAction func actSave(sender: UIBarButtonItem) {
+        let dictData = mCourseAdEd.getPageData()
+        if (dictData["rs"] as! Bool != true) {
+            pubClass.popIsee(self, Msg: dictData["msg"] as! String)
+            return
+        }
+        
         // confirm 彈出視窗
         let aryMsg = ["", pubClass.getLang("datasendplzconfirmmsg")]
         pubClass.popConfirm(self, aryMsg: aryMsg,
-            withHandlerYes:{ self.procSave() }, withHandlerNo: { return })
+            withHandlerYes:{ self.svaeData(dictData["data"] as! Dictionary<String, AnyObject>) }, withHandlerNo: { return })
     }
     
     /**

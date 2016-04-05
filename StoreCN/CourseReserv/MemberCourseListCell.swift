@@ -8,7 +8,7 @@ import UIKit
 /**
 * 會員已購買的療程列表 Cell
 */
-class CourseSelCustCell: UITableViewCell {
+class MemberCourseListCell: UITableViewCell {
     @IBOutlet weak var labTitle: UILabel!
     @IBOutlet weak var labContent: UILabel!
     

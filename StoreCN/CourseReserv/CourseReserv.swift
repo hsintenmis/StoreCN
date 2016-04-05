@@ -6,7 +6,7 @@ import UIKit
 import Foundation
 
 /**
- * 療程預約
+ * 療程預約, 月曆顯示, 下方 table list 顯示當日預約資料
  */
 class CourseReserv: UIViewController {
     
@@ -16,6 +16,7 @@ class CourseReserv: UIViewController {
     @IBOutlet weak var labMM: UILabel!
     @IBOutlet weak var labYY: UILabel!
     @IBOutlet weak var labMMDD: UILabel!
+    @IBOutlet weak var btnAdd: UIButton!
     
     // common property
     private let pubClass: PubClass = PubClass()
@@ -49,8 +50,9 @@ class CourseReserv: UIViewController {
     * View Load 程序
     */
     override func viewDidLoad() {
-        // 固定初始參數
         super.viewDidLoad()
+        
+        btnAdd.layer.cornerRadius = 5
         dictColor = pubClass.dictColor
     }
     

@@ -16,7 +16,7 @@
 		428AA8FE1CB258B700908FB5 /* CourseReserv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428AA8F91CB258B700908FB5 /* CourseReserv.swift */; };
 		428AA8FF1CB258B700908FB5 /* CourseReservAdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428AA8FA1CB258B700908FB5 /* CourseReservAdd.swift */; };
 		428AA9001CB258B700908FB5 /* CourseReservMemberSel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428AA8FB1CB258B700908FB5 /* CourseReservMemberSel.swift */; };
-		428AA9011CB258B700908FB5 /* CourseSelCustCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428AA8FC1CB258B700908FB5 /* CourseSelCustCell.swift */; };
+		428AA9011CB258B700908FB5 /* MemberCourseListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428AA8FC1CB258B700908FB5 /* MemberCourseListCell.swift */; };
 		428AA9021CB258B700908FB5 /* ReservListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428AA8FD1CB258B700908FB5 /* ReservListCell.swift */; };
 		428AA9041CB2BD7400908FB5 /* CourseDBList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428AA9031CB2BD7400908FB5 /* CourseDBList.swift */; };
 		428AA9061CB2BE4300908FB5 /* CourseMemberList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428AA9051CB2BE4300908FB5 /* CourseMemberList.swift */; };
@@ -258,7 +258,7 @@
 		428AA8F91CB258B700908FB5 /* CourseReserv.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CourseReserv.swift; path = CourseReserv/CourseReserv.swift; sourceTree = "<group>"; };
 		428AA8FA1CB258B700908FB5 /* CourseReservAdd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CourseReservAdd.swift; path = CourseReserv/CourseReservAdd.swift; sourceTree = "<group>"; };
 		428AA8FB1CB258B700908FB5 /* CourseReservMemberSel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CourseReservMemberSel.swift; path = CourseReserv/CourseReservMemberSel.swift; sourceTree = "<group>"; };
-		428AA8FC1CB258B700908FB5 /* CourseSelCustCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CourseSelCustCell.swift; path = CourseReserv/CourseSelCustCell.swift; sourceTree = "<group>"; };
+		428AA8FC1CB258B700908FB5 /* MemberCourseListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberCourseListCell.swift; path = CourseReserv/MemberCourseListCell.swift; sourceTree = "<group>"; };
 		428AA8FD1CB258B700908FB5 /* ReservListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReservListCell.swift; path = CourseReserv/ReservListCell.swift; sourceTree = "<group>"; };
 		428AA9031CB2BD7400908FB5 /* CourseDBList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CourseDBList.swift; path = CourseMain/CourseDBList.swift; sourceTree = "<group>"; };
 		428AA9051CB2BE4300908FB5 /* CourseMemberList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CourseMemberList.swift; path = CourseMain/CourseMemberList.swift; sourceTree = "<group>"; };
@@ -779,7 +779,7 @@
 				428AA8F91CB258B700908FB5 /* CourseReserv.swift */,
 				428AA8FA1CB258B700908FB5 /* CourseReservAdd.swift */,
 				428AA8FB1CB258B700908FB5 /* CourseReservMemberSel.swift */,
-				428AA8FC1CB258B700908FB5 /* CourseSelCustCell.swift */,
+				428AA8FC1CB258B700908FB5 /* MemberCourseListCell.swift */,
 				428AA8FD1CB258B700908FB5 /* ReservListCell.swift */,
 			);
 			name = CourseReserv;
@@ -1135,7 +1135,7 @@
 				D74A60591C8D32B300946118 /* MsgAddContainer.swift in Sources */,
 				D72BA3351C8819500028898D /* StaffBenefitColtViewCell.swift in Sources */,
 				D705CE451C8FD1A300CC9303 /* AnalyDataDailyDetail.swift in Sources */,
-				428AA9011CB258B700908FB5 /* CourseSelCustCell.swift in Sources */,
+				428AA9011CB258B700908FB5 /* MemberCourseListCell.swift in Sources */,
 				428AA8F41CB258A500908FB5 /* CourseListAll.swift in Sources */,
 				D74B4B961C9FD41B001F1176 /* BTScaleService.swift in Sources */,
 				D71DFD0C1C7C20180024BB59 /* StockCell.swift in Sources */,
