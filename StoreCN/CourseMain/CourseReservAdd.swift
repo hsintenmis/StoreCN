@@ -41,7 +41,10 @@ class CourseReservAdd: UIViewController, PickerDateTimeDelegate, CourseMemberLis
      */
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // view field value
         btnMember.layer.cornerRadius = 5
+        labCourse.text = ""
         
         // 預約時間預設值
         dictRequest["time"] = strToday + "1200"
@@ -173,6 +176,10 @@ class CourseReservAdd: UIViewController, PickerDateTimeDelegate, CourseMemberLis
         return pubClass.getLang("courseresver_" + strTitle)
     }
     
+    /**
+    * #mark: CourseMemberListDelegate, 會員選擇完成
+    * 療程 table list 重設
+    */
     func MemberSelected(MemberData: Dictionary<String, AnyObject>, MemberindexPath: NSIndexPath) {
         currIndexMember = MemberindexPath
         labMember.text = MemberData["membername"] as? String
@@ -218,7 +225,25 @@ class CourseReservAdd: UIViewController, PickerDateTimeDelegate, CourseMemberLis
      * act, 點取 '儲存' button
      */
     @IBAction func actSave(sender: UIBarButtonItem) {
+        // 輸入資料檢查
+        if (dictRequest["memberid"] == nil) {
+            pubClass.popIsee(self, Msg: pubClass.getLang("coursereserv_err_member"))
+            return
+        }
         
+        if (dictRequest["time"] == nil) {
+            pubClass.popIsee(self, Msg: pubClass.getLang("coursereserv_err_time"))
+            return
+        }
+        
+        if (labCourse.text?.characters.count < 1) {
+            pubClass.popIsee(self, Msg: pubClass.getLang("coursereserv_err_course"))
+            return
+        }
+        
+        dictRequest["mode"] = "add"
+        
+        print(dictRequest)
     }
     
     /**

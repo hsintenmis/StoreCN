@@ -57,6 +57,8 @@ class PickerDateTime: NSObject, KBNavyBarDelegate {
         maxDate = aryDefineDate[1]
         minDate = aryDefineDate[2]
         
+        strCurrDate = defDate
+        
         /**
         * UIDatePicker 初始設定
         * "dd-MM-yyyy HH:mm:ss"
@@ -120,9 +122,9 @@ class PickerDateTime: NSObject, KBNavyBarDelegate {
      * 虛擬自訂鍵盤　toolbar 點取 'cancel'
      */
     func KBBarCancel() {
-        dispatch_async(dispatch_get_main_queue(), {
-            self.mPickField.text = self.pubClass.formatDateWithStr(self.strCurrDate, type: 14)
-        })
+        self.mPickField.text = self.pubClass.formatDateWithStr(self.strCurrDate, type: 14)
+        let mDate = dateFmtYMD.dateFromString(self.strCurrDate)!
+        datePickerView.setDate(mDate, animated: false)
         
         mPickField.resignFirstResponder()
     }

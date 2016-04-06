@@ -114,6 +114,13 @@ class BTMeadService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                 self.mCentMgr.stopScan()
                 self.mCentMgr.connectPeripheral(peripheral, options: nil)
             }
+            
+            // TODO , name like 'EMD'
+            else if (strDevName.uppercaseString.rangeOfString("EMD") != nil) {
+                self.mConnDev = peripheral
+                self.mCentMgr.stopScan()
+                self.mCentMgr.connectPeripheral(peripheral, options: nil)
+            }
         }
     }
     

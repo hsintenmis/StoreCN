@@ -246,6 +246,12 @@ class MainMenu: UIViewController {
                     let storyboard = UIStoryboard(name: "CourseMain", bundle: nil)
                     mVC = storyboard.instantiateViewControllerWithIdentifier("CourseListAll") as UIViewController
                 }
+                    
+                // 療程預約
+                else if (strIdent == "course_reservation") {
+                    let storyboard = UIStoryboard(name: "CourseMain", bundle: nil)
+                    mVC = storyboard.instantiateViewControllerWithIdentifier("CourseReserv") as UIViewController
+                }
                 
                 // 商品進出貨列表
                 else if (strIdent == "product_purchaselist") {
@@ -333,7 +339,8 @@ class MainMenu: UIViewController {
                     return
                 }
                 
-                /* 直接 performSegueWithIdentifier 跳轉，設定對應 ident */
+                /*
+                // 直接 performSegueWithIdentifier 跳轉，設定對應 ident
                 let dictIdentMap = [
                     "course_reservation":"CourseReserv",
                 ]
@@ -341,6 +348,7 @@ class MainMenu: UIViewController {
                 // HTTP 連線取得資料直接由 child 執行　http 連線取得資料
                 self.performSegueWithIdentifier(dictIdentMap[strIdent]!, sender: nil)
                 return
+                */
             }))
         }
         

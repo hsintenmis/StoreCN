@@ -31,6 +31,7 @@
 "delconfirmmsg" = "资料即将删除!\n请再次确认是否要删除选择的资料?!";
 "datadelcompleted" = "资料刪除完成!";
 "selectmember" = "选择会员";
+"plzselectmember" = "請选择会员!";
 
 "fieldname_price" = "金额";
 "fieldname_invoiceid" = "订单编号";
@@ -209,6 +210,12 @@
 "courseresver_selecttime" = "选择预约时间";
 "courseresver_defcourse" = "预设疗程";
 "courseresver_memberbuycourse" = "会员已购买疗程";
+"coursereserv_coursefinishchangmembermsg" = "不能更改會員!\n\n先設定 [本次療程是否完成?] 為 '否',\n儲存後再重新編輯!";
+"coursereserv_finishnochange" = "已完成的療程不能修改!\n\n先設定 [本次療程是否完成?] 為 '否',\n儲存後再重新編輯!";
+
+"coursereserv_err_member" = "會員錯誤";
+"coursereserv_err_time" = "預約時間錯誤";
+"coursereserv_err_course" = "療程選擇錯誤";
 
 "course_fee" = "疗程费用";
 "course_odrstype_M" = "包月";

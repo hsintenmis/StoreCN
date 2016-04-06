@@ -22,13 +22,13 @@ class CourseReserv: UIViewController {
     private let pubClass: PubClass = PubClass()
     
     // 本頁面需要的全部資料, parent 設定, dictAllData => 'data', 'pd', 'member', 'today'
-    private var strToday = ""
+    private var strToday: String!
     private var dictAllData: Dictionary<String, AnyObject> = [:]
     
     // 本 class 需要的資料設定
     private var aryReservData: Array<Dictionary<String, AnyObject>> = []
     private var aryMember: Array<Dictionary<String, AnyObject>> = []
-    private var aryCourse: Array<Dictionary<String, AnyObject>> = []
+    private var aryCourseDB: Array<Dictionary<String, AnyObject>> = []
     private var aryReservDataDay: Array<Dictionary<String, AnyObject>> = [] // 當日預約資料 array
     
     // 其他參數設定
@@ -36,6 +36,7 @@ class CourseReserv: UIViewController {
     private var currYYMM: Dictionary<String, String> = [:]  // 目前選擇的 YYMMDD
     private var aryBlockData: Array<Array<Dictionary<String, AnyObject>>> = []
     private var bolReload = true
+    private var currReservPath: NSIndexPath? // 目前預約列表 cell indexpath
     
     // 本月曆的起始 YYMM, 'aryReservData' 對應的 position
     private var positionReservData = 0
@@ -83,7 +84,7 @@ class CourseReserv: UIViewController {
         
         // 設定預約/療程DB 資料
         aryReservData = dictAllData["data"] as! Array<Dictionary<String, AnyObject>>
-        aryCourse = dictAllData["pd"] as! Array<Dictionary<String, AnyObject>>
+        aryCourseDB = dictAllData["pd"] as! Array<Dictionary<String, AnyObject>>
         
         // 設定今天日期 YYMMDD
         currYYMM = ["YY":pubClass.subStr(strToday, strFrom: 0, strEnd: 4), "MM":pubClass.subStr(strToday, strFrom: 4, strEnd: 6), "DD":pubClass.subStr(strToday, strFrom: 6, strEnd: 8)]
@@ -271,10 +272,14 @@ class CourseReserv: UIViewController {
     
     /**
      * #mark: UITableView Delegate
-     * 當日預約資料: UITableView, Cell 點取
+     * 當日預約資料: UITableView, Cell 點取, 跳轉'預約療程編輯頁面'
      */
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
+        currReservPath = indexPath
+        
+        let ditItem = aryReservDataDay[indexPath.row] as Dictionary<String, AnyObject>
+        self.performSegueWithIdentifier("CourseReservEdit", sender: ditItem)
     }
     
     /**
@@ -287,8 +292,25 @@ class CourseReserv: UIViewController {
         if (strIdent == "CourseReservAdd") {
             let mVC = segue.destinationViewController as! CourseReservAdd
             mVC.strToday = currYYMM["YY"]! + currYYMM["MM"]! + currYYMM["DD"]!
-            mVC.aryCourse = aryCourse
+            mVC.aryCourse = aryCourseDB
             mVC.aryMember = aryMember
+            
+            return
+        }
+        
+        // 療程預約編輯
+        if (strIdent == "CourseReservEdit") {
+            let mVC = segue.destinationViewController as! CourseReservEdit
+            let dictData = sender as! Dictionary<String, AnyObject>
+            
+            mVC.strToday = strToday
+            mVC.aryCourseDB = aryCourseDB
+            mVC.aryMember = aryMember
+            mVC.dictReservData = dictData
+            
+            if let aryTmp = dictData["odrs"] as? Array<Dictionary<String, AnyObject>> {
+                mVC.aryCourseCust = aryTmp
+            }
             
             return
         }

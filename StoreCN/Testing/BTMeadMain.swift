@@ -352,7 +352,7 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
     }
     
     /**
-     * #mark: PubSoqibedAdEdDelegate
+     * #mark: SoqibedAdEdDelegate
      * SOQIBED 模式 新增/編輯 成功回傳資料
      */
     func saveSuccess(dictData: Dictionary<String, AnyObject>) {
@@ -385,17 +385,6 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
             return
         }
         
-        //  SOQIBED 新增/編輯頁面
-        if (strIdent == "SoqibedAdEd") {
-            let dictData = sender as! Dictionary<String, AnyObject>
-            let mVC = segue.destinationViewController as! SoqibedAdEd
-            mVC.dictAllData = dictData
-            mVC.strMode = dictData["mode"] as! String
-            mVC.delegate = self
-            
-            return
-        }
-        
         return
     }
     
@@ -417,8 +406,8 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
         
         let strVal = String(intVal)
         
-        // STATU_READY, 檢測值 = 1, 探針未與任何量測點接觸
-        if (intVal == 1) {
+        // STATU_READY, 檢測值 <= 1, 探針未與任何量測點接觸
+        if (intVal <= 1) {
             
             // 設定目前檢測狀態，顯示提示訊息
             if ( CURR_STATU != STATU_READY ) {
@@ -594,7 +583,7 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
     }
     
     /**
-     * act, 跳轉 SOQIBed 專屬模式
+     * act, 跳轉 SOQIBed 專屬模式, 跳轉 SOQIBed stroryboard
      */
     @IBAction func actSoqibed(sender: UIBarButtonItem) {
         // 檢查Mead 檢測數值是否存檔，是否有 index id
@@ -603,10 +592,17 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
             return
         }
         
-        // 已新增 soqibed 資料，再點取時為編輯模式
+        // 取得 SoqibedAdEd VC
+        let storyboard = UIStoryboard(name: "SOQIBed", bundle: nil)
+        let mVC = storyboard.instantiateViewControllerWithIdentifier("SoqibedAdEd") as! SoqibedAdEd
+        mVC.delegate = self
+        
+        // 已新增 soqibed 資料，再點取時為編輯模式, 跳轉 SOQIBed stroryboard
         if (dictSoqibed.count > 0) {
             dictSoqibed["mode"] = "edit"
-            self.performSegueWithIdentifier("PubSoqibedAdEd", sender: dictSoqibed)
+            mVC.dictAllData = dictSoqibed
+            mVC.strMode = dictSoqibed["mode"] as! String
+            self.presentViewController(mVC, animated: true, completion: nil)
             
             return
         }
@@ -645,8 +641,12 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
             dictParm["S00"] = dictDev["S00"]
         }
         
-        // 跳轉 SOQIBed 頁面
-        self.performSegueWithIdentifier("PubSoqibedAdEd", sender: dictParm)
+        // 跳轉 SOQIBed 頁面, SOQIBed stroryboard
+        mVC.dictAllData = dictParm
+        mVC.strMode = dictParm["mode"] as! String
+        self.presentViewController(mVC, animated: true, completion: nil)
+        
+        return
     }
     
     /**
