@@ -16,17 +16,18 @@ class HealthCalendar: UIViewController {
     @IBOutlet weak var labMM: UILabel!
     @IBOutlet weak var labYY: UILabel!
     @IBOutlet weak var labMMDD: UILabel!
+    @IBOutlet weak var btnToday: UIButton!
     
     // common property
     private let pubClass = PubClass()
     
     // public, parent 傳入
-    var strMemberId: String!
+    var dictMember: Dictionary<String, AnyObject>!
     
     // 本頁面需要的全部資料
     private var strToday = ""
     private var dictAllData: Dictionary<String, AnyObject> = [:]
-    private var dictMember: Dictionary<String, AnyObject>!
+    
     private var dictCalAllData: Dictionary<String, AnyObject> = [:] // 全部月曆的 datasource
     
     // table view 相關
@@ -57,11 +58,13 @@ class HealthCalendar: UIViewController {
         // 固定初始參數
         super.viewDidLoad()
         
+        dictColor = pubClass.dictColor
+        
         mHealthDataInit = HealthDataInit()
         aryTestField = mHealthDataInit.D_HEALTHITEMKEY
         dictTableData = mHealthDataInit.GetAllTestData()
-        
-        dictColor = pubClass.dictColor
+
+        btnToday.layer.cornerRadius = 5
         
         // TableCell autoheight
         tableList.estimatedRowHeight = 120.0
@@ -82,6 +85,7 @@ class HealthCalendar: UIViewController {
      * 檢查是否有資料與頁面重整
      */
     private func chkHaveData() {
+        /*
         // 檢查是否有會員
         if let tmpData = dictAllData["member"] as? Dictionary<String, AnyObject> {
             dictMember = tmpData
@@ -92,6 +96,7 @@ class HealthCalendar: UIViewController {
             
             return
         }
+        */
         
         // 設定月曆各個日期資料
         if let tmpData = dictAllData["data"] as? Dictionary<String, AnyObject> {
@@ -137,7 +142,7 @@ class HealthCalendar: UIViewController {
         mParam["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
         mParam["page"] = "health"
         mParam["act"] = "health_getdatamember"
-        mParam["arg0"] = strMemberId
+        mParam["arg0"] = dictMember["memberid"] as? String
         
         
         // HTTP 開始連線
@@ -312,14 +317,36 @@ class HealthCalendar: UIViewController {
      * 當日健康數值: UITableView, Cell 點取
      */
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+        self.performSegueWithIdentifier("HealthItemEdit", sender: indexPath)
     }
     
     /**
      * Segue 跳轉頁面
      */
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        //let strIdent = segue.identifier
+        let strIdent = segue.identifier
+        
+        if (strIdent == "HealthItemEdit") {
+            let strItemKey = (mHealthDataInit.D_HEALTHITEMKEY)[(sender as! NSIndexPath).row]
+            let mVC = segue.destinationViewController as! HealthItemEdit
+
+            mVC.strItemKey = strItemKey
+            mVC.dictAllData = dictTableData
+            mVC.dictCurrDate = currYYMMDD
+            mVC.dictMember = dictMember as! Dictionary<String, String>
+            
+            return
+        }
+        
+        if (strIdent == "MemberHealthWeb") {
+            let mVC = segue.destinationViewController as! MemberHealthWeb
+
+            mVC.strMemberId = dictMember["memberid"] as! String
+            mVC.strMemberPsd = dictMember["psd"] as! String
+            
+            return
+        }
+        
         return
     }
     

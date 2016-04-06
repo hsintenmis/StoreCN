@@ -139,15 +139,6 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate, BTScaleS
             return
         }
     }
-
-    /**
-     * #mark: UITableView Delegate
-     * UITableView, Cell 點取
-     */
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-
-        /* 第二個 section, 跳轉健康數值 '日曆頁面' */
-    }
     
     /**
     * #mark: TestingMemberSel Delegate
@@ -319,14 +310,6 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate, BTScaleS
             return
         }
         
-        // 健康管理月曆主頁面(公用)
-        if (strIdent == "BTScaleExplain") {
-            let mVC = segue.destinationViewController as! HealthCalendar
-            mVC.strMemberId = dictRequest["member"]!["memberid"] as! String
-
-            return
-        }
-        
         return
     }
     
@@ -335,9 +318,9 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate, BTScaleS
      */
     @IBAction func actTestExplain(sender: UIButton) {
         pubClass.popIsee(self, Msg: pubClass.getLang("bt_savefirstseeresultmsg"), withHandler: {
-            let storyboard = UIStoryboard(name: "Health", bundle: nil)
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let mVC = storyboard.instantiateViewControllerWithIdentifier("HealthCalendar") as! HealthCalendar
-            mVC.strMemberId = self.dictRequest["member"]!["memberid"] as! String
+            mVC.dictMember = self.dictRequest["member"] as! Dictionary<String, AnyObject>
             self.presentViewController(mVC, animated: true, completion: nil)
         })
 

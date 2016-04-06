@@ -1,5 +1,5 @@
 //
-// TablkeView Static
+// static TableView
 //
 
 import UIKit
@@ -33,27 +33,18 @@ class MemberHealth: UITableViewController {
     }
     
     /**
-     * #mark: UITableView Delegate
-     * UITableView, Cell 點取
-     */
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        // 第一個 cell, 跳轉 健康紀錄 calendar
-        if (indexPath.row == 0) {
-            let storyboard = UIStoryboard(name: "Health", bundle: nil)
-            let mVC = storyboard.instantiateViewControllerWithIdentifier("HealthCalendar") as! HealthCalendar
-            mVC.strMemberId = strMemberId
-            self.presentViewController(mVC, animated: true, completion: nil)
-            
-            return
-        }
-    }
-    
-    /**
      * Segue 跳轉頁面
      */
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let strIdent = segue.identifier
+        
+        // 健康管理, 月曆顯示
+        if (strIdent == "HealthCalendar") {
+            let mVC = segue.destinationViewController as! HealthCalendar
+            mVC.dictMember = dictMember
+            
+            return
+        }
         
         // 健康紀錄 WebView
         if (strIdent == "MemberHealthWeb") {

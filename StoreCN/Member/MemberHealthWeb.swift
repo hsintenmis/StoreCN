@@ -1,12 +1,12 @@
 //
-// TablkeView Static
+// Webview
 //
 
 import UIKit
 import Foundation
 
 /**
- * 會員健康紀錄選單，瀏覽紀錄，記錄分析
+ * 會員健康紀錄 chart 圖表
  */
 class MemberHealthWeb: UIViewController {
     // web 連線固定參數

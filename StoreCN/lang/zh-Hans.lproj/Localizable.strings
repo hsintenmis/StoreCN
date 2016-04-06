@@ -398,6 +398,21 @@
 "caloryval_F_004" = "(女)50~69岁, 标准值 1100Kcal";
 "caloryval_F_005" = "(女)69岁以上, 标准值 1010Kcal";
 
+"healthgroup_bmi" = "BMI / 身高體重";
+"healthgroup_whr" = "腰臀比";
+"healthgroup_bp" = "血壓";
+"healthgroup_sugar" = "血糖";
+"healthgroup_fat" = "體脂率";
+"healthgroup_water" = "含水量";
+"healthgroup_calory" = "基礎代謝";
+"healthgroup_bone" = "骨骼";
+"healthgroup_muscle" = "肌肉";
+"healthgroup_vfat" = "內臟脂肪";
+"healthgroup_heartbeat" = "心跳";
+"healthgroup_temperature" = "體溫";
+"healthvalinputerr" = "量測數值資料錯誤!";
+"healthvalsavecompleted" = "量測數值儲存完成!";
+
 "err_bt_connect" = "系统错误:蓝牙资料连线建立失败!";
 "err_connectlost" = "蓝牙连线訊號遺失!";
 "bt_founddev" = "找到蓝牙設備!";
