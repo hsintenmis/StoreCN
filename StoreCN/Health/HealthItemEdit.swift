@@ -35,7 +35,7 @@ class HealthItemEdit: UIViewController, UITextFieldDelegate {
     
     // public parent 設定, 日期資料, 會員資料
     var dictCurrDate: Dictionary<String, String> = [:]
-    var dictMember: Dictionary<String, String> = [:]
+    var dictMember: Dictionary<String, AnyObject> = [:]
     
     // 其他參數設定: group key, 本頁面資料是否有上傳變動，上層 class 刷新
     private var strGroup = ""
@@ -114,7 +114,7 @@ class HealthItemEdit: UIViewController, UITextFieldDelegate {
             if (dictItem["field"] == "height") {
                 let intValue: Int = NSString(string: dictItem["val"]!).integerValue
                 if (intValue < 1) {
-                    txtVal[loopi].text = dictMember["height"]
+                    txtVal[loopi].text = dictMember["height"] as? String
                 }
             }
         }
@@ -164,6 +164,16 @@ class HealthItemEdit: UIViewController, UITextFieldDelegate {
     }
     
     /**
+     * #mark: UITextFieldDelegate
+     * KB 點取 'return'
+     */
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        
+        return true
+    }
+    
+    /**
      * btn '儲存' 點取
      */
     @IBAction func actSave(sender: UIBarButtonItem) {
@@ -175,23 +185,28 @@ class HealthItemEdit: UIViewController, UITextFieldDelegate {
         // 健康測量, key, val 加入新的 dict, 檢查輸入的資料
         var dictItemNew: Dictionary<String, String> = [:]
         for loopi in (0..<dictCurrHealth.count) {
-            if (txtVal[loopi].text == "") {
+            
+            if let _ = Float(txtVal[loopi].text!) {
+                // 加入 健康測量, key, val
+                let dictTmp = dictCurrHealth[loopi]
+                dictItemNew[dictTmp["field"]!] = txtVal[loopi].text
+            } else {
                 pubClass.popIsee(self, Msg: pubClass.getLang("healthvalinputerr"))
-                
                 return
             }
             
-            // 嚴格檢查數值資料，一定為數字與 '.'
-            
-            // 加入 健康測量, key, val
-            let dictTmp = dictCurrHealth[loopi]
-            dictItemNew[dictTmp["field"]!] = txtVal[loopi].text
+            /*
+            if (txtVal[loopi].text == "") {
+                pubClass.popIsee(self, Msg: pubClass.getLang("healthvalinputerr"))
+                return
+            }
+            */
         }
         
         // 特殊欄位需要計算, group='bmi', 'whr', 的數值顯示於 textView
         if (strGroup == "bmi" || strGroup == "whr") {
             dictItemNew = mHealthExplainTestData.CalHealthData(strGroup, jobjItem: dictItemNew)
-            
+
             // 重新顯示 TextView 欄位
             for loopi in (0..<dictCurrHealth.count) {
                 let strField = dictCurrHealth[loopi]["field"]!
@@ -213,6 +228,7 @@ class HealthItemEdit: UIViewController, UITextFieldDelegate {
         dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
         dictParm["page"] = "health"
         dictParm["act"] = "health_savehealthdata"
+        dictParm["arg1"] = dictMember["memberid"] as? String
         
         do {
             let jobjData = try
@@ -251,7 +267,7 @@ class HealthItemEdit: UIViewController, UITextFieldDelegate {
      * btn '返回' 點取
      */
     @IBAction func actBack(sender: UIBarButtonItem) {
-        // TODO 本頁面資料有儲存，通知 parent
+        // 本頁面資料有儲存，通知 parent
         if (isDataSave) {
             delegate?.PageNeedReload!(true)
         }

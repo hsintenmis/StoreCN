@@ -9,6 +9,8 @@ import Foundation
  * 療程預約, 新增頁面
  */
 class CourseReservAdd: UIViewController, PickerDateTimeDelegate, CourseMemberListDelegate {
+    // delegate
+    var delegate = PubClassDelegate?()
     
     // @IBOutlet
     @IBOutlet weak var labMember: UILabel!
@@ -34,7 +36,7 @@ class CourseReservAdd: UIViewController, PickerDateTimeDelegate, CourseMemberLis
     // 其他參數
     private var currIndexMember: NSIndexPath? // 已選擇的會員
     private var mPickerDateTime: PickerDateTime!  // 預約日期 Picker
-    private var dictRequest: Dictionary<String, String> = [:]  // 資料儲存 request 參數
+    private var dictRequest: Dictionary<String, AnyObject> = [:]  // 資料儲存 request 參數
 
     /**
      * View Load 程序
@@ -164,7 +166,7 @@ class CourseReservAdd: UIViewController, PickerDateTimeDelegate, CourseMemberLis
         }
         
         labCourse.text = ditItem["pdname"] as? String
-        labOdrsId.text = dictRequest["odrs_id"]
+        labOdrsId.text = dictRequest["odrs_id"] as? String
     }
 
     /**
@@ -223,6 +225,7 @@ class CourseReservAdd: UIViewController, PickerDateTimeDelegate, CourseMemberLis
     
     /**
      * act, 點取 '儲存' button
+     * 結束後跳離, 成功通知 parent 資料變動
      */
     @IBAction func actSave(sender: UIBarButtonItem) {
         // 輸入資料檢查
@@ -243,7 +246,44 @@ class CourseReservAdd: UIViewController, PickerDateTimeDelegate, CourseMemberLis
         
         dictRequest["mode"] = "add"
         
-        print(dictRequest)
+        // 產生 http post data, http 連線儲存
+        var dictParm: Dictionary<String, String> = [:]
+        dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
+        dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
+        dictParm["page"] = "course"
+        dictParm["act"] = "course_senddata"
+        
+        do {
+            let tmpDictData = try
+                NSJSONSerialization.dataWithJSONObject(dictRequest as! Dictionary<String, String>, options: NSJSONWritingOptions(rawValue: 0))
+            let jsonString = NSString(data: tmpDictData, encoding: NSUTF8StringEncoding)! as String
+            
+            dictParm["arg0"] = jsonString
+        } catch {
+            pubClass.popIsee(self, Msg: pubClass.getLang("err_trylatermsg"), withHandler: {self.dismissViewControllerAnimated(true, completion: nil)})
+            
+            return
+        }
+        
+        // HTTP 開始連線, 結束跳離本頁面
+        var errMsg = self.pubClass.getLang("err_trylatermsg")
+        
+        self.pubClass.HTTPConn(self, ConnParm: dictParm, callBack: {
+            (dictHTTPSRS: Dictionary<String, AnyObject>)->Void in
+            
+            let bolRS = dictHTTPSRS["result"] as! Bool
+            
+            if (bolRS == true) {
+                self.delegate?.PageNeedReload!(true)
+                errMsg = self.pubClass.getLang("datasavecompleted")
+            }
+            
+            self.pubClass.popIsee(self, Msg: errMsg, withHandler: {
+                self.dismissViewControllerAnimated(true, completion: {})
+            })
+        })
+        
+        return
     }
     
     /**

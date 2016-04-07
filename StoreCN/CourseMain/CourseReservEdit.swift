@@ -10,9 +10,8 @@ import Foundation
  * 預約療程月曆頁面, 點取下方會員預約的療程, Container 跳轉主編輯界面
  */
 class CourseReservEdit: UIViewController {
-    
-    // @IBOutlet
-    
+    // delegate
+    var delegate = PubClassDelegate?()
     
     // common property
     private let pubClass: PubClass = PubClass()
@@ -62,6 +61,43 @@ class CourseReservEdit: UIViewController {
         if (dictReq == nil) {
             return
         }
+        
+        // 產生 http post data, http 連線儲存
+        var dictParm: Dictionary<String, String> = [:]
+        dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
+        dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
+        dictParm["page"] = "course"
+        dictParm["act"] = "course_senddata"
+        
+        do {
+            let tmpDictData = try
+                NSJSONSerialization.dataWithJSONObject(dictReq as! Dictionary<String, String>, options: NSJSONWritingOptions(rawValue: 0))
+            let jsonString = NSString(data: tmpDictData, encoding: NSUTF8StringEncoding)! as String
+            
+            dictParm["arg0"] = jsonString
+        } catch {
+            pubClass.popIsee(self, Msg: pubClass.getLang("err_trylatermsg"), withHandler: {self.dismissViewControllerAnimated(true, completion: nil)})
+            
+            return
+        }
+        
+        // HTTP 開始連線, 結束跳離本頁面
+        var errMsg = self.pubClass.getLang("err_trylatermsg")
+        
+        self.pubClass.HTTPConn(self, ConnParm: dictParm, callBack: {
+            (dictHTTPSRS: Dictionary<String, AnyObject>)->Void in
+            
+            let bolRS = dictHTTPSRS["result"] as! Bool
+            
+            if (bolRS == true) {
+                self.delegate?.PageNeedReload!(true)
+                errMsg = self.pubClass.getLang("datasavecompleted")
+            }
+            
+            self.pubClass.popIsee(self, Msg: errMsg, withHandler: {
+                self.dismissViewControllerAnimated(true, completion: {})
+            })
+        })
         
         return
     }

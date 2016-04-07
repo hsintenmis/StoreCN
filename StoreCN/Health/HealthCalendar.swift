@@ -8,7 +8,7 @@ import Foundation
 /**
  * 健康管理, 月曆主頁面
  */
-class HealthCalendar: UIViewController {
+class HealthCalendar: UIViewController, PubClassDelegate {
     
     // @IBOutlet
     @IBOutlet weak var coltviewCalendar: UICollectionView!
@@ -48,7 +48,8 @@ class HealthCalendar: UIViewController {
     private var currYYMMDD: Dictionary<String, String>!  // 目前選擇的 YYMMDD
     private var aryBlockData: Array<Array<Dictionary<String, AnyObject>>> = [] // 指定月份全部的 'block' 資料
     
-    // 顏色
+    // 其他參數
+    private var bolFirsyEnter = true  // 本頁面首次進入標記
     private var dictColor: Dictionary<String, String>!
     
     /**
@@ -105,7 +106,12 @@ class HealthCalendar: UIViewController {
         
         // 設定今天日期相關參數
         lastYYMM = pubClass.subStr(strToday, strFrom: 0, strEnd: 6)  // 最後一天
-        currYYMMDD = ["YY":pubClass.subStr(strToday, strFrom: 0, strEnd: 4), "MM":pubClass.subStr(strToday, strFrom: 4, strEnd: 6), "DD":pubClass.subStr(strToday, strFrom: 6, strEnd: 8)]
+        
+        // 首次進入才設定目前選擇的日期
+        if (bolFirsyEnter == true) {
+            bolFirsyEnter = false
+            currYYMMDD = ["YY":pubClass.subStr(strToday, strFrom: 0, strEnd: 4), "MM":pubClass.subStr(strToday, strFrom: 4, strEnd: 6), "DD":pubClass.subStr(strToday, strFrom: 6, strEnd: 8)]
+        }
         
         // 初始 VC view 內的 field
         initViewField()
@@ -143,7 +149,6 @@ class HealthCalendar: UIViewController {
         mParam["page"] = "health"
         mParam["act"] = "health_getdatamember"
         mParam["arg0"] = dictMember["memberid"] as? String
-        
         
         // HTTP 開始連線
         pubClass.HTTPConn(self, ConnParm: mParam, callBack: {(dictRS: Dictionary<String, AnyObject>)->Void in
@@ -313,6 +318,17 @@ class HealthCalendar: UIViewController {
     }
     
     /**
+     * #mark: PubClass Delegate
+     * 資料變動頁面重整
+     */
+    func PageNeedReload(needReload: Bool) {
+        if (needReload == true) {
+            bolReload = true
+            return
+        }
+    }
+    
+    /**
      * #mark: UITableView Delegate
      * 當日健康數值: UITableView, Cell 點取
      */
@@ -329,11 +345,12 @@ class HealthCalendar: UIViewController {
         if (strIdent == "HealthItemEdit") {
             let strItemKey = (mHealthDataInit.D_HEALTHITEMKEY)[(sender as! NSIndexPath).row]
             let mVC = segue.destinationViewController as! HealthItemEdit
-
+            
+            mVC.delegate = self
             mVC.strItemKey = strItemKey
             mVC.dictAllData = dictTableData
             mVC.dictCurrDate = currYYMMDD
-            mVC.dictMember = dictMember as! Dictionary<String, String>
+            mVC.dictMember = dictMember
             
             return
         }

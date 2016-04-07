@@ -16,7 +16,7 @@ protocol MemberMainPagerDelegate {
 /**
  * 會員主選單下的 資料列表, 使用 pager
  */
-class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, MemberHttpDataDelegate{
+class MemberMainPager: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, MemberHttpDataDelegate {
     
     // delegate, PagerView 相關
     var delegateMemberMainPager = MemberMainPagerDelegate?()

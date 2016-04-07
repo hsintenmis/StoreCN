@@ -39,9 +39,10 @@ class CourseReservEditCont: UITableViewController, PickerDateTimeDelegate, Cours
     private var allowCancel = true  // 是否可點取 switch btn 'cancel'
     private var currIndexMember: NSIndexPath?  // 選擇的會員 indexpath
     private var currIndexCourse: NSIndexPath?  // 選擇的療程 indexpath
+    private var hasFinishTime = false  // 預約的療程是否有完成時間
     
     private var mPickerDateTime: PickerDateTime!  // 預約日期 Picker
-    private var dictRequest: Dictionary<String, String> = [:]  // 資料儲存 request 參數
+    private var dictReq: Dictionary<String, String> = [:]  // 資料儲存 request 參數
     
     /**
      * View Load 程序
@@ -58,26 +59,43 @@ class CourseReservEditCont: UITableViewController, PickerDateTimeDelegate, Cours
         txtviewMemo.layer.backgroundColor = (pubClass.ColorHEX(pubClass.dictColor["white"]!)).CGColor
         
         // 目前會員的 indexPath
+        dictReq["memberid"] = dictData["memberid"] as? String
+        dictReq["membername"] = dictData["membername"] as? String
+        
         for i in (0..<aryMember.count) {
-            if ((aryMember[i]["memberid"] as! String) == dictData["memberid"] as! String ) {
+            if ((aryMember[i]["memberid"] as! String) == dictReq["memberid"]!) {
                 currIndexMember = NSIndexPath(forItem: i, inSection: 0)
+                
+                // 取得該會員的 '已購買療程' array data
+                if let dictTmp = aryMember[i]["odrs"] as? Array<Dictionary<String, AnyObject>> {
+                    aryCourseCust = dictTmp
+                }
+                
                 break
             }
         }
         
         // 預約時間預設值
-        dictRequest["time"] = (dictData["yymm"] as! String) + (dictData["dd"] as! String) + (dictData["hh"] as! String) + (dictData["min"] as! String)
-        edDate.text = pubClass.formatDateWithStr(dictRequest["time"], type: 14)
+        dictReq["time"] = (dictData["yymm"] as! String) + (dictData["dd"] as! String) + (dictData["hh"] as! String) + (dictData["min"] as! String)
+        edDate.text = pubClass.formatDateWithStr(dictReq["time"], type: 14)
         
         /* Picker 設定 */
         // 預約日期
         var dictPickParm: Dictionary<String, AnyObject> = [:] // 日期 picker
-        dictPickParm["def"] = dictRequest["time"]
+        dictPickParm["def"] = dictReq["time"]
         dictPickParm["min"] = "201501010001"
         dictPickParm["max"] = "203512312359"
         
         mPickerDateTime = PickerDateTime(withUIField: edDate, withDefMaxMin: [dictPickParm["def"] as! String, dictPickParm["max"] as! String, dictPickParm["min"] as! String], NavyBarTitle: pubClass.getLang("courseresver_selecttime"))
         mPickerDateTime.delegate = self
+        
+        // 其他 dictReq 初始 value
+        dictReq["course_id"] = dictData["course_id"] as? String  // 療程商品編號
+        dictReq["pdid"] = dictData["pdid"] as? String // 療程商品編號
+        dictReq["odrs_id"] = dictData["odrs_id"] as? String // 已經購買療程的 invo_id
+        dictReq["id"] = dictData["id"] as? String
+        dictReq["memo"] = dictData["memo"] as? String
+        dictReq["issale"] = "N"
         
         // 初始/重設 本頁面 field value
         initViewField()
@@ -90,6 +108,7 @@ class CourseReservEditCont: UITableViewController, PickerDateTimeDelegate, Cours
         // 療程完成時間
         let strFinishTime = dictData["used_time"] as! String
         if (strFinishTime.characters.count > 0) {
+            hasFinishTime = true
             allowCancel = false
             lab_used_time.text = pubClass.formatDateWithStr(strFinishTime, type: 14)
             swchFinish.on = true
@@ -152,10 +171,10 @@ class CourseReservEditCont: UITableViewController, PickerDateTimeDelegate, Cours
             return
         }
         
-        // 標示 '療程完成', 不能更改會員, 必須先取消 '療程完成'
+        // 標示 '有療程完成的時間', 不能更改會員, 必須先取消 '療程完成'
         // 選擇會員 Cell
         if (indexPath.row == 0) {
-            if (allowFinish == true) {
+            if (hasFinishTime == true) {
                 pubClass.popIsee(self, Msg: pubClass.getLang("coursereserv_finishnochange"))
                 return
             }
@@ -166,7 +185,7 @@ class CourseReservEditCont: UITableViewController, PickerDateTimeDelegate, Cours
         
         // 選擇療程 Cell
         if (indexPath.row == 1) {
-            if (allowFinish == true) {
+            if (hasFinishTime == true) {
                 pubClass.popIsee(self, Msg: pubClass.getLang("coursereserv_finishnochange"))
                 return
             }
@@ -178,11 +197,11 @@ class CourseReservEditCont: UITableViewController, PickerDateTimeDelegate, Cours
     
     /**
      * #mark: textViewDidBeginEditing
-     * 建議療程輸入文字框，點取執行相關程序
+     * 預約日期 edit field，點取執行相關程序
      */
     func textFieldDidBeginEditing(textField: UITextField) {
         if (textField == edDate) {
-            if (allowFinish == true) {
+            if (hasFinishTime == true) {
                 textField.resignFirstResponder()
                 pubClass.popIsee(self, Msg: pubClass.getLang("coursereserv_finishnochange"))
                 return
@@ -209,8 +228,8 @@ class CourseReservEditCont: UITableViewController, PickerDateTimeDelegate, Cours
         currIndexMember = MemberindexPath
         labMemberName.text = MemberData["membername"] as? String
         
-        dictRequest["membername"] = MemberData["membername"] as? String
-        dictRequest["memberid"] = MemberData["memberid"] as? String
+        dictReq["membername"] = MemberData["membername"] as? String
+        dictReq["memberid"] = MemberData["memberid"] as? String
         
         // 重設該會員的 '已購買療程' array data
         if let dictTmp = MemberData["odrs"] as? Array<Dictionary<String, AnyObject>> {
@@ -220,9 +239,9 @@ class CourseReservEditCont: UITableViewController, PickerDateTimeDelegate, Cours
         }
         
         // 頁面資料重整，相關 Request 資料重設
-        dictRequest["course_id"] = ""  // 療程商品編號
-        dictRequest["pdid"] = "" // 療程商品編號
-        dictRequest["odrs_id"] = "" // 已經購買療程的 invo_id
+        dictReq["course_id"] = ""  // 療程商品編號
+        dictReq["pdid"] = "" // 療程商品編號
+        dictReq["odrs_id"] = "" // 已經購買療程的 invo_id
         currIndexCourse = nil
         
         labCourseName.text = ""
@@ -230,23 +249,27 @@ class CourseReservEditCont: UITableViewController, PickerDateTimeDelegate, Cours
     }
     
     /**
-     * #mark: CourseMemberListDelegate, 會員選擇完成
+     * #mark: CourseMemberListDelegate, 療程選擇完成
      * 部分欄位 value 需要重設
      */
     func CourseSelected(CourseData: Dictionary<String, AnyObject>, CourseIndexPath: NSIndexPath) {
         currIndexCourse = CourseIndexPath
         
-        dictRequest["course_id"] = CourseData["pdid"] as? String
-        dictRequest["pdid"] = CourseData["pdid"] as? String
+        dictReq["course_id"] = CourseData["pdid"] as? String
+        dictReq["pdid"] = CourseData["pdid"] as? String
         
         if let strTmp = CourseData["invo_id"] as? String {
-            dictRequest["odrs_id"] = strTmp
+            dictReq["odrs_id"] = strTmp
         } else {
-            dictRequest["odrs_id"] = ""
+            dictReq["odrs_id"] = ""
         }
         
         labCourseName.text = CourseData["pdname"] as? String
-        labOdrsId.text = dictRequest["odrs_id"]
+        labOdrsId.text = dictReq["odrs_id"]
+        
+        // 有購買療程(訂單編號) 才能點取 '療程完成' switch btn
+        swchFinish.on = false
+        swchFinish.enabled = (dictReq["odrs_id"] != "") ? true : false
     }
     
     /**
@@ -254,7 +277,7 @@ class CourseReservEditCont: UITableViewController, PickerDateTimeDelegate, Cours
      * 日期時間選擇完成，執行相關程序
      */
     func doneSelectDateTime(strDateTime: String) {
-        dictRequest["time"] = strDateTime
+        dictReq["time"] = strDateTime
     }
 
     /**
@@ -294,12 +317,12 @@ class CourseReservEditCont: UITableViewController, PickerDateTimeDelegate, Cours
      */
     func getPageData() -> Dictionary<String, AnyObject>? {
         // 輸入資料檢查
-        if (dictRequest["memberid"] == nil) {
+        if (dictReq["memberid"] == nil) {
             pubClass.popIsee(self, Msg: pubClass.getLang("coursereserv_err_member"))
             return nil
         }
         
-        if (dictRequest["time"] == nil) {
+        if (dictReq["time"] == nil) {
             pubClass.popIsee(self, Msg: pubClass.getLang("coursereserv_err_time"))
             return nil
         }
@@ -309,11 +332,18 @@ class CourseReservEditCont: UITableViewController, PickerDateTimeDelegate, Cours
             return nil
         }
         
-        dictRequest["mode"] = "edit"
+        // 標記 '刪除' (預約的療程取消)
+        dictReq["mode"] = "edit"
+        dictReq["del"] = "N"
+        if (swchCancel.on == true) {
+            dictReq["del"] = "Y"
+            return dictReq
+        }
         
-        print(dictRequest)
+        // 標記 '本次療程完成'
+        dictReq["issale"] = (swchFinish.on == true) ? "Y" : "N"
         
-        return dictRequest
+        return dictReq
     }
 
     /**

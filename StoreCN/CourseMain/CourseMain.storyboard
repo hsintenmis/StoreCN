@@ -2727,7 +2727,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
-                            <tableViewSection headerTitle="預約療程選項" id="TR9-1P-ZoN">
+                            <tableViewSection headerTitle="预约疗程选项" id="TR9-1P-ZoN">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="Q7s-c9-Q94">
                                         <rect key="frame" x="0.0" y="50" width="324" height="44"/>
@@ -2736,7 +2736,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="324" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="療程完成時間:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0a1-Ms-FUG">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="疗程完成时间:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0a1-Ms-FUG">
                                                     <rect key="frame" x="18" y="15" width="100" height="14"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="14" id="IrT-n4-TDx"/>
@@ -2771,7 +2771,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="324" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="本次療程是否完成?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OB6-fo-F0a">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="本次疗程是否完成?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OB6-fo-F0a">
                                                     <rect key="frame" x="18" y="15" width="120" height="14"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="14" id="fvh-0Z-dYa"/>
@@ -2824,7 +2824,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="324" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="是否取消預約?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cha-9B-wf6">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="是否取消预约?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cha-9B-wf6">
                                                     <rect key="frame" x="18" y="15" width="92" height="14"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="14" id="BkS-X0-ldD"/>
@@ -2872,7 +2872,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="預約療程資料" id="kbT-FU-93x">
+                            <tableViewSection headerTitle="预约疗程资料" id="kbT-FU-93x">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="9KF-kd-Ytu" userLabel="Member select">
                                         <rect key="frame" x="0.0" y="233" width="324" height="44"/>
@@ -2881,7 +2881,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="291" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="會員名稱" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ECw-DP-lHS">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="会员名称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ECw-DP-lHS">
                                                     <rect key="frame" x="18" y="15" width="70" height="14"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="14" id="npB-0b-W9E"/>
@@ -2916,7 +2916,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="291" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="療程" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R2b-21-pXF">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="疗程" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R2b-21-pXF">
                                                     <rect key="frame" x="18" y="15" width="70" height="14"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="14" id="TfB-7c-tYg"/>
@@ -2951,7 +2951,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="324" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="預約日期" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E2z-A0-rG1">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="预约日期" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E2z-A0-rG1">
                                                     <rect key="frame" x="18" y="15" width="70" height="14"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="14" id="AJA-ur-PYf"/>
@@ -2986,7 +2986,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="324" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="療程購買單號" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="45l-LH-CbH">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="疗程购买单号" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="45l-LH-CbH">
                                                     <rect key="frame" x="18" y="15" width="100" height="14"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="14" id="CvS-SR-HTr"/>
@@ -3016,7 +3016,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="本次療程備註" id="dkk-wp-3A3">
+                            <tableViewSection headerTitle="本次疗程备注" id="dkk-wp-3A3">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="200" id="EVd-b1-Nyg">
                                         <rect key="frame" x="0.0" y="460" width="324" height="200"/>
@@ -3113,7 +3113,7 @@
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </textAttributes>
                                 <items>
-                                    <navigationItem title="選擇療程" id="WnY-eA-rNw">
+                                    <navigationItem title="选择疗程" id="WnY-eA-rNw">
                                         <barButtonItem key="leftBarButtonItem" title="取消" id="ajv-dl-wX7">
                                             <color key="tintColor" red="0.80000000000000004" green="1" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>
@@ -3404,7 +3404,7 @@
                                     <segue destination="j04-6x-Jdp" kind="show" identifier="CourseMemberList" id="ajf-NM-4Bl"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="預約時間" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nA4-n7-Wqc">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="预约时间" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nA4-n7-Wqc">
                                 <rect key="frame" x="8" y="119" width="80" height="14"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="80" id="gQj-fv-tvK"/>
@@ -3425,7 +3425,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qTV-rf-eSZ">
                                 <rect key="frame" x="-2" y="149" width="324" height="65"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="選擇的療程:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MKF-21-FJz">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="选择的疗程:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MKF-21-FJz">
                                         <rect key="frame" x="15" y="15" width="80" height="14"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="14" id="Ni4-1Y-noh"/>
@@ -3435,7 +3435,7 @@
                                         <color key="textColor" red="0.56470588239999997" green="0.56470588239999997" blue="0.56470588239999997" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="單號:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="faB-eV-cPL">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="单号:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="faB-eV-cPL">
                                         <rect key="frame" x="15" y="39" width="28" height="14"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="14" id="26g-uM-Af6"/>
@@ -3726,7 +3726,7 @@
         <image name="arrow_right02.png" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="fgs-08-uuZ"/>
+        <segue reference="ajf-NM-4Bl"/>
         <segue reference="Q3i-aj-uI5"/>
         <segue reference="CAT-Ik-SOC"/>
     </inferredMetricsTieBreakers>

@@ -137,7 +137,8 @@ class SoqibedEdit: UIViewController {
      * act, 點取 '儲存' button
      */
     @IBAction func actSave(sender: UIBarButtonItem) {
-        dataSaveProc()
+        // 提醒視窗
+        pubClass.popConfirm(self, aryMsg: [pubClass.getLang("sysprompt"), pubClass.getLang("datasendplzconfirmmsg")], withHandlerYes: {self.dataSaveProc()}, withHandlerNo: {return})
     }
     
     /**

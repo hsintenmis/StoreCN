@@ -455,7 +455,7 @@
                                                 <action selector="actHome:" destination="c1H-Tu-J8i" id="Wrq-Gs-F5u"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="確定退貨" id="sBl-Qm-NtB">
+                                        <barButtonItem key="rightBarButtonItem" title="确定退货" id="sBl-Qm-NtB">
                                             <color key="tintColor" red="1" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>
                                                 <action selector="actSave:" destination="c1H-Tu-J8i" id="HWS-HD-po7"/>
@@ -544,7 +544,7 @@
                                         </constraints>
                                         <color key="textColor" red="0.18823529410000001" green="0.18823529410000001" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
                                         <connections>
                                             <outlet property="delegate" destination="c1H-Tu-J8i" id="Oe6-MC-Lln"/>
                                         </connections>
@@ -834,7 +834,7 @@
                                                     </constraints>
                                                     <color key="textColor" red="0.80000000000000004" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
                                                     <connections>
                                                         <outlet property="delegate" destination="VPi-SP-xig" id="Dnv-a6-p01"/>
                                                     </connections>
@@ -899,7 +899,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="PubPurReturnPdList" title="公用 - 退貨商品列表" useStoryboardIdentifierAsRestorationIdentifier="YES" id="2Zd-Zs-Y93" customClass="SaleReturnPdList" customModule="StoreCN" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="130" sectionHeaderHeight="1" sectionFooterHeight="1" id="M7p-QS-9UB">
-                        <rect key="frame" x="0.0" y="0.0" width="324" height="369"/>
+                        <rect key="frame" x="0.0" y="0.0" width="324" height="364"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -1046,7 +1046,7 @@
         <!--商品管理-退货明细-->
         <scene sceneID="tnR-q8-tiU">
             <objects>
-                <viewController title="商品管理-退货明细" id="d8P-de-dPC" customClass="PurchaseReturnList" customModule="StoreCN" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="商品管理-退货明细" id="d8P-de-dPC" customClass="SaleReturnList" customModule="StoreCN" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="IAP-SC-JqY"/>
                         <viewControllerLayoutGuide type="bottom" id="UuI-Nb-7bB"/>
@@ -1133,7 +1133,7 @@
                                 <rect key="frame" x="-2" y="109" width="324" height="386"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cellPurchaseReturnList" id="cYa-Gr-dL3" customClass="PurchaseReturnListCell" customModule="StoreCN" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cellSaleReturnList" id="cYa-Gr-dL3" customClass="SaleReturnListCell" customModule="StoreCN" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="1" width="324" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cYa-Gr-dL3" id="hfV-ik-Lce">
@@ -1273,7 +1273,7 @@
                         <outlet property="labPrice" destination="vuk-fw-HFc" id="YN7-TO-smX"/>
                         <outlet property="labPriceCust" destination="hud-Sw-xi4" id="CQo-90-OyV"/>
                         <outlet property="tableData" destination="fat-ra-6yp" id="JRJ-W4-Ca8"/>
-                        <segue destination="9mL-ZR-9yo" kind="show" identifier="PurchaseReturnEdit" id="KGe-Jt-ciQ">
+                        <segue destination="9mL-ZR-9yo" kind="show" identifier="SaleReturnEdit" id="KGe-Jt-ciQ">
                             <nil key="action"/>
                         </segue>
                     </connections>
@@ -1285,7 +1285,7 @@
         <!--退货編輯-->
         <scene sceneID="tDl-Ui-E7f">
             <objects>
-                <viewController title="退货編輯" id="9mL-ZR-9yo" customClass="PurchaseReturnEdit" customModule="StoreCN" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="退货編輯" id="9mL-ZR-9yo" customClass="SaleReturnEdit" customModule="StoreCN" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="emM-j0-ajV"/>
                         <viewControllerLayoutGuide type="bottom" id="de6-yF-OBS"/>
@@ -1312,7 +1312,7 @@
                                                 <action selector="actBack:" destination="9mL-ZR-9yo" id="afb-w3-sp8"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="儲存" id="cGy-of-NrP">
+                                        <barButtonItem key="rightBarButtonItem" title="储存" id="cGy-of-NrP">
                                             <color key="tintColor" red="1" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>
                                                 <action selector="actSave:" destination="9mL-ZR-9yo" id="3LF-dM-8ve"/>
@@ -1356,7 +1356,10 @@
                                         </constraints>
                                         <color key="textColor" red="0.18823529410000001" green="0.18823529410000001" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="9mL-ZR-9yo" id="nwQ-Bb-12D"/>
+                                        </connections>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="实际退货金额:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="loP-Sw-n3j">
                                         <rect key="frame" x="133" y="58" width="76" height="12"/>
@@ -1660,6 +1663,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="8GU-KC-iYX"/>
+        <segue reference="oIL-Cq-4gy"/>
     </inferredMetricsTieBreakers>
 </document>

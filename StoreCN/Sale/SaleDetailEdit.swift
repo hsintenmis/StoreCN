@@ -86,8 +86,7 @@ class SaleDetailEdit: UIViewController {
             let bolRS = dictRS["result"] as! Bool
             let strMsg = (bolRS != true) ? self.pubClass.getLang("err_trylatermsg") : self.pubClass.getLang("datasavecompleted")
             
-            self.delegate?.PageNeedReload!(bolRS)
-            self.pubClass.popIsee(self, Msg: strMsg, withHandler: {self.dismissViewControllerAnimated(true, completion: nil)})
+            self.pubClass.popIsee(self, Msg: strMsg, withHandler: {self.dismissViewControllerAnimated(true, completion: {self.delegate?.PageNeedReload!(bolRS)})})
             
         })}, withHandlerNo: {})
 
@@ -106,6 +105,5 @@ class SaleDetailEdit: UIViewController {
     @IBAction func actBack(sender: UIBarButtonItem) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-    
     
 }

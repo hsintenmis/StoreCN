@@ -236,6 +236,9 @@
 		D7BB2AE11C64788700624E08 /* PubMemberSelectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7BB2ADB1C64788700624E08 /* PubMemberSelectCell.swift */; };
 		D7EDE8841C60733200665542 /* MemberMainPager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EDE8831C60733200665542 /* MemberMainPager.swift */; };
 		D7EDE8861C6081B800665542 /* MemberMainColtViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EDE8851C6081B800665542 /* MemberMainColtViewCell.swift */; };
+		D7EF7CA51CB62D5A00A7C1FF /* SaleReturnList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EF7CA41CB62D5A00A7C1FF /* SaleReturnList.swift */; };
+		D7EF7CA71CB6304500A7C1FF /* SaleReturnEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EF7CA61CB6304500A7C1FF /* SaleReturnEdit.swift */; };
+		D7EF7CA91CB6308C00A7C1FF /* SaleReturnListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EF7CA81CB6308C00A7C1FF /* SaleReturnListCell.swift */; };
 		D7F0921E1C891900005D8C96 /* StaffBenefitDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F0921D1C891900005D8C96 /* StaffBenefitDetailCell.swift */; };
 		D7F092201C895E07005D8C96 /* CustomUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F0921F1C895E07005D8C96 /* CustomUITextField.swift */; };
 		D7F092221C896C72005D8C96 /* HealthWitnessList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F092211C896C72005D8C96 /* HealthWitnessList.swift */; };
@@ -485,6 +488,9 @@
 		D7BB2ADB1C64788700624E08 /* PubMemberSelectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubMemberSelectCell.swift; path = PubView/PubMemberSelectCell.swift; sourceTree = "<group>"; };
 		D7EDE8831C60733200665542 /* MemberMainPager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberMainPager.swift; path = Member/MemberMainPager.swift; sourceTree = "<group>"; };
 		D7EDE8851C6081B800665542 /* MemberMainColtViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberMainColtViewCell.swift; path = Member/MemberMainColtViewCell.swift; sourceTree = "<group>"; };
+		D7EF7CA41CB62D5A00A7C1FF /* SaleReturnList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SaleReturnList.swift; path = Sale/SaleReturnList.swift; sourceTree = "<group>"; };
+		D7EF7CA61CB6304500A7C1FF /* SaleReturnEdit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SaleReturnEdit.swift; path = Sale/SaleReturnEdit.swift; sourceTree = "<group>"; };
+		D7EF7CA81CB6308C00A7C1FF /* SaleReturnListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SaleReturnListCell.swift; path = Sale/SaleReturnListCell.swift; sourceTree = "<group>"; };
 		D7F0921D1C891900005D8C96 /* StaffBenefitDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StaffBenefitDetailCell.swift; path = Staff/StaffBenefitDetailCell.swift; sourceTree = "<group>"; };
 		D7F0921F1C895E07005D8C96 /* CustomUITextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomUITextField.swift; path = PubClass/CustomUITextField.swift; sourceTree = "<group>"; };
 		D7F092211C896C72005D8C96 /* HealthWitnessList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HealthWitnessList.swift; path = Message/HealthWitnessList.swift; sourceTree = "<group>"; };
@@ -561,6 +567,9 @@
 				4298BE991CB16EAD007EE389 /* SaleDetailReturnAdd.swift */,
 				4298BE9C1CB16EAD007EE389 /* SaleReturnPdCell.swift */,
 				4298BE9D1CB16EAD007EE389 /* SaleReturnPdList.swift */,
+				D7EF7CA41CB62D5A00A7C1FF /* SaleReturnList.swift */,
+				D7EF7CA81CB6308C00A7C1FF /* SaleReturnListCell.swift */,
+				D7EF7CA61CB6304500A7C1FF /* SaleReturnEdit.swift */,
 			);
 			name = Sale;
 			sourceTree = "<group>";
@@ -1126,6 +1135,7 @@
 				D7FB953C1C59F58C00B48F57 /* MainMenu.swift in Sources */,
 				D70FCC271C86CF1D0035D1B6 /* StaffAdEd.swift in Sources */,
 				D70854471C7D622500861694 /* PurchaseListCell.swift in Sources */,
+				D7EF7CA71CB6304500A7C1FF /* SaleReturnEdit.swift in Sources */,
 				D7037A751C58C03F002A955E /* ImageClass.swift in Sources */,
 				4298BEA31CB16EAD007EE389 /* SaleDetailReturnAdd.swift in Sources */,
 				D72BA3331C8814FA0028898D /* StaffBenefitCell.swift in Sources */,
@@ -1149,12 +1159,14 @@
 				4298BEA01CB16EAD007EE389 /* SaleDetailCell.swift in Sources */,
 				D7553E9A1CAA5F73007A323F /* RecordDetail.swift in Sources */,
 				D705CE431C8FC85800CC9303 /* AnalyDataDailyCell.swift in Sources */,
+				D7EF7CA51CB62D5A00A7C1FF /* SaleReturnList.swift in Sources */,
 				D74B4B8E1C9FCB14001F1176 /* TestingDevLiist.swift in Sources */,
 				428AA90D1CB2C86500908FB5 /* SugstChildColtCell.swift in Sources */,
 				D7496D1A1C5B343200B75D6A /* MainMenuColtViewCell.swift in Sources */,
 				4298BE911CB14CF9007EE389 /* SoqibedSelect.swift in Sources */,
 				4298BE931CB15457007EE389 /* SoqibedEdit.swift in Sources */,
 				D71DFD121C7C53A10024BB59 /* PurchaseList.swift in Sources */,
+				D7EF7CA91CB6308C00A7C1FF /* SaleReturnListCell.swift in Sources */,
 				D708544B1C7DA3D600861694 /* PurchaseReturnAdd.swift in Sources */,
 				42E21F111C68826500B85EA9 /* PubCalendarCell.swift in Sources */,
 				D7645BE61C802D8000507072 /* PubPurReturnPdList.swift in Sources */,
@@ -1318,7 +1330,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;

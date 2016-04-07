@@ -8,7 +8,7 @@ import Foundation
 /**
  * 療程預約, 月曆顯示, 下方 table list 顯示當日預約資料
  */
-class CourseReserv: UIViewController {
+class CourseReserv: UIViewController, PubClassDelegate {
     
     // @IBOutlet
     @IBOutlet weak var coltviewCalendar: UICollectionView!
@@ -86,11 +86,14 @@ class CourseReserv: UIViewController {
         aryReservData = dictAllData["data"] as! Array<Dictionary<String, AnyObject>>
         aryCourseDB = dictAllData["pd"] as! Array<Dictionary<String, AnyObject>>
         
-        // 設定今天日期 YYMMDD
-        currYYMM = ["YY":pubClass.subStr(strToday, strFrom: 0, strEnd: 4), "MM":pubClass.subStr(strToday, strFrom: 4, strEnd: 6), "DD":pubClass.subStr(strToday, strFrom: 6, strEnd: 8)]
+        // 設定目前的日期 YYMMDD, 首次進入才設定
+        if (currYYMM.count < 1) {
+            currYYMM = ["YY":pubClass.subStr(strToday, strFrom: 0, strEnd: 4), "MM":pubClass.subStr(strToday, strFrom: 4, strEnd: 6), "DD":pubClass.subStr(strToday, strFrom: 6, strEnd: 8)]
+        }
         
         // 設定 aryReservData data position
-        let strYYMM = pubClass.subStr(strToday, strFrom: 0, strEnd: 6)
+        //let strYYMM = pubClass.subStr(strToday, strFrom: 0, strEnd: 6)
+        let strYYMM = currYYMM["YY"]! + currYYMM["MM"]!
         
         for i in (0..<aryReservData.count) {
             if (strYYMM == aryReservData[i]["yymm"] as! String) {
@@ -283,6 +286,17 @@ class CourseReserv: UIViewController {
     }
     
     /**
+     * #mark: PubClass Delegate
+     * child 頁面預約的療程有新增 or 編修, http 連線重新取得資料
+     */
+    func PageNeedReload(needReload: Bool) {
+        if (needReload == true) {
+            bolReload = true
+            return
+        }
+    }
+    
+    /**
      * Segue 跳轉頁面
      */
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -294,6 +308,7 @@ class CourseReserv: UIViewController {
             mVC.strToday = currYYMM["YY"]! + currYYMM["MM"]! + currYYMM["DD"]!
             mVC.aryCourse = aryCourseDB
             mVC.aryMember = aryMember
+            mVC.delegate = self
             
             return
         }
@@ -307,6 +322,7 @@ class CourseReserv: UIViewController {
             mVC.aryCourseDB = aryCourseDB
             mVC.aryMember = aryMember
             mVC.dictReservData = dictData
+            mVC.delegate = self
             
             if let aryTmp = dictData["odrs"] as? Array<Dictionary<String, AnyObject>> {
                 mVC.aryCourseCust = aryTmp

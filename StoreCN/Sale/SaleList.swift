@@ -27,6 +27,7 @@ class SaleList: UITableViewController, PubClassDelegate {
     // 其他參數設定
     private var mMemberHttpData: MemberHttpData!  // http 連線取得會員全部資料
     private var currIndexPath: NSIndexPath?
+    private var bolReload = false  // 本頁面需要 reload 標記
     
     /**
      * View Load 程序
@@ -132,6 +133,7 @@ class SaleList: UITableViewController, PubClassDelegate {
             let mVC = segue.destinationViewController as! SaleDetail
             mVC.dictAllData = sender as! Dictionary<String, AnyObject>
             mVC.delegate = self
+            mVC.strToday = strToday
             
             return
         }

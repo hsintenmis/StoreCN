@@ -232,6 +232,10 @@ class MemberMain: UIViewController, MemberMainPagerDelegate, PubClassDelegate {
         return
     }
     
+    @IBAction func actPict(sender: UIButton) {
+        print("btn")
+    }
+    
     /**
      * act, 點取 '返回' button
      */

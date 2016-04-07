@@ -26,7 +26,7 @@ class SaleDetail: UIViewController, SaleDetailCellDelegate, PubClassDelegate {
     let pubClass: PubClass = PubClass()
     
     // public, 本頁面需要的全部資料, parent 設定
-    var strToday = ""
+    var strToday: String!
     var dictAllData: Dictionary<String, AnyObject> = [:]
     
     // 其他參數設定
@@ -70,7 +70,7 @@ class SaleDetail: UIViewController, SaleDetailCellDelegate, PubClassDelegate {
     }
     
     /**
-     * View DidAppear 程序
+     * View viewWillDisappear 程序
      */
     override func viewWillDisappear(animated: Bool) {
         // 註銷銷鍵盤監聽
@@ -82,7 +82,7 @@ class SaleDetail: UIViewController, SaleDetailCellDelegate, PubClassDelegate {
     */
     private func dataSaveExit() {
         self.view.alpha = 0.6
-        self.dismissViewControllerAnimated(false, completion: {self.delegate?.PageNeedReload!(true)})
+        self.dismissViewControllerAnimated(true, completion: {self.delegate?.PageNeedReload!(true)})
     }
     
     /**
@@ -362,17 +362,15 @@ class SaleDetail: UIViewController, SaleDetailCellDelegate, PubClassDelegate {
             return
         }
         
-        /*
         // 退貨明細
         if (strIdent == "sale_returnlist") {
-            let mVC = segue.destinationViewController as! PurchaseReturnList
+            let mVC = segue.destinationViewController as! SaleReturnList
             mVC.dictAllData = dictAllData
             mVC.strToday = strToday
             mVC.delegate = self
             
             return
         }
-        */
         
         return
     }

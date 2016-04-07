@@ -426,7 +426,7 @@ class HealthExplainTestData {
      *            : ex. {"bmi":"0.0","height":"168.0","weight":"0.0"}
      */
     func CalHealthData(strGroup: String, jobjItem: Dictionary<String, String>)->Dictionary<String, String> {
-        var mJobItem = jobjItem
+        var mJobItem: Dictionary<String, String> = jobjItem
         
         // 計算 BMI
         if (strGroup == "bmi") {
@@ -441,7 +441,7 @@ class HealthExplainTestData {
             let dbBMI = Double(dbWeight / (dbHeight * dbHeight))
             mJobItem["bmi"] = String(format: "%.1f", dbBMI)
             
-            return jobjItem
+            return mJobItem
         }
         
         // 計算腰臀比

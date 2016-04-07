@@ -185,8 +185,7 @@ class SaleDetailReturnAdd: UIViewController, SaleReturnPdListDelegate, PickerDat
             let bolRS = dictRS["result"] as! Bool
             let strMsg = (bolRS != true) ? self.pubClass.getLang("err_trylatermsg") : self.pubClass.getLang("datasavecompleted")
             
-            self.delegate?.PageNeedReload!(bolRS)
-            self.pubClass.popIsee(self, Msg: strMsg, withHandler: {self.dismissViewControllerAnimated(true, completion: nil)})
+            self.pubClass.popIsee(self, Msg: strMsg, withHandler: {self.dismissViewControllerAnimated(true, completion: {self.delegate?.PageNeedReload!(bolRS)})})
             
         })}, withHandlerNo: {})
         

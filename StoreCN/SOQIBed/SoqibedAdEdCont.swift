@@ -23,7 +23,7 @@ class SoqibedAdEdCont: UITableViewController {
     @IBOutlet var swchSoqbed: [UISegmentedControl]!  // HotDev 6個 Segment
     @IBOutlet weak var labS00: UILabel!
     @IBOutlet weak var sliderS00: UISlider!
-    @IBOutlet weak var labRecord: UILabel!
+    @IBOutlet weak var txtRecord: UITextView!
  
     // common property
     private let pubClass = PubClass()
@@ -46,13 +46,15 @@ class SoqibedAdEdCont: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // textView 外觀樣式
+        txtRecord.layer.cornerRadius = 5
+        txtRecord.layer.borderWidth = 1
+        txtRecord.layer.borderColor = (pubClass.ColorHEX(pubClass.dictColor["gray"]!)).CGColor
+        txtRecord.layer.backgroundColor = (pubClass.ColorHEX(pubClass.dictColor["white"]!)).CGColor
+        
         // 設備 S00, 設定分鐘數
         sliderS00.maximumValue = Float(aryS00DevMinsVal.count - 1)
         sliderS00.minimumValue = 0
-        
-        // TableCell 自動調整高度
-        tableList.estimatedRowHeight = 80.0
-        tableList.rowHeight = UITableViewAutomaticDimension
     }
     
     /**
@@ -103,12 +105,12 @@ class SoqibedAdEdCont: UITableViewController {
                 strRecords += pubClass.formatDateWithStr(dictItem["sdate"], type: 14)
                 
                 if (i < aryItems.count - 1) {
-                    strRecords += "\n";
+                        strRecords += "\n";
                 }
             }
         }
 
-        labRecord.text = strRecords
+        txtRecord.text = strRecords
         
         // 設備 S00 slider 預設值
         for loopi in (0..<aryS00DevMinsVal.count) {
