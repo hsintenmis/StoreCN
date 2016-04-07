@@ -9,15 +9,18 @@ import CoreGraphics
 /**
 * protocol
 */
-protocol ClipViewControllerDelegate {
-    func ClipViewController(clipViewController: CutImage, FinishClipImage editImage: UIImage)
+protocol CutImageDelegate {
+    /**
+     * 選擇的圖片裁切完成
+     */
+    func imageCutDone(vcCutImage: CutImage, FinishCutImage editImage: UIImage)
 }
 
 /**
  * Class, 裁切圖片，指定方形/圓形，指定固定長寬
  */
 class CutImage: UIViewController, UIGestureRecognizerDelegate {
-    var delegate: ClipViewControllerDelegate?
+    var delegate = CutImageDelegate?()
     
     /** 顯示'裁剪' 字串 */
     var D_CUTTRANLANG = "OK"
@@ -120,7 +123,7 @@ class CutImage: UIViewController, UIGestureRecognizerDelegate {
     * Button '裁剪' 點取, 取得裁剪的圖片，本 VC 結束
     */
     func clipBtnSelected() {
-        delegate?.ClipViewController(self, FinishClipImage: self.getSmallImage())
+        delegate?.imageCutDone(self, FinishCutImage: self.getSmallImage())
     }
     
     /**

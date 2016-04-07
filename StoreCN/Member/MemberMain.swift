@@ -229,11 +229,17 @@ class MemberMain: UIViewController, MemberMainPagerDelegate, PubClassDelegate {
             return
         }
         
+        // 會員大頭照
+        if (strIdentName == "MemberPict") {
+            let mVC = segue.destinationViewController as! MemberPict
+            mVC.strMemberID = dictMember["memberid"] as! String
+            
+            //mVC.delegate = self
+            
+            return
+        }
+        
         return
-    }
-    
-    @IBAction func actPict(sender: UIButton) {
-        print("btn")
     }
     
     /**

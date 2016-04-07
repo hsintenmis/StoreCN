@@ -41,6 +41,7 @@
 		42CD2E9D1CA661E50041B44B /* Product.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42CD2E9C1CA661E50041B44B /* Product.storyboard */; };
 		42CD2E9F1CA6623D0041B44B /* Staff.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42CD2E9E1CA6623D0041B44B /* Staff.storyboard */; };
 		42CD2EA11CA664870041B44B /* Message.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42CD2EA01CA664870041B44B /* Message.storyboard */; };
+		42DF5CD41CB6B0E900EB7B34 /* MemberPict.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DF5CD31CB6B0E900EB7B34 /* MemberPict.swift */; };
 		42E21F0F1C68825200B85EA9 /* PickerDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E21F0E1C68825200B85EA9 /* PickerDate.swift */; };
 		42E21F111C68826500B85EA9 /* PubCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E21F101C68826500B85EA9 /* PubCalendarCell.swift */; };
 		42E21F131C68E6F500B85EA9 /* CalendarCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E21F121C68E6F500B85EA9 /* CalendarCellData.swift */; };
@@ -288,6 +289,7 @@
 		42CD2E9C1CA661E50041B44B /* Product.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Product.storyboard; path = Product/Product.storyboard; sourceTree = "<group>"; };
 		42CD2E9E1CA6623D0041B44B /* Staff.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Staff.storyboard; path = Staff/Staff.storyboard; sourceTree = "<group>"; };
 		42CD2EA01CA664870041B44B /* Message.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Message.storyboard; path = Message/Message.storyboard; sourceTree = "<group>"; };
+		42DF5CD31CB6B0E900EB7B34 /* MemberPict.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberPict.swift; path = Member/MemberPict.swift; sourceTree = "<group>"; };
 		42E21F0E1C68825200B85EA9 /* PickerDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PickerDate.swift; path = PubClass/PickerDate.swift; sourceTree = "<group>"; };
 		42E21F101C68826500B85EA9 /* PubCalendarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubCalendarCell.swift; path = PubView/PubCalendarCell.swift; sourceTree = "<group>"; };
 		42E21F121C68E6F500B85EA9 /* CalendarCellData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarCellData.swift; path = PubClass/CalendarCellData.swift; sourceTree = "<group>"; };
@@ -481,7 +483,7 @@
 		D7645BE31C801FA900507072 /* PurchaseReturnEdit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchaseReturnEdit.swift; path = Product/PurchaseReturnEdit.swift; sourceTree = "<group>"; };
 		D7645BE51C802D8000507072 /* PubPurReturnPdList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubPurReturnPdList.swift; path = PubView/PubPurReturnPdList.swift; sourceTree = "<group>"; };
 		D7645BE71C802EFC00507072 /* PubPurReturnPdListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubPurReturnPdListCell.swift; path = PubView/PubPurReturnPdListCell.swift; sourceTree = "<group>"; };
-		D7B29F781C5C712E0025C53A /* MemberAdEdContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberAdEdContainer.swift; path = Member/MemberAdEdContainer.swift; sourceTree = "<group>"; };
+		D7B29F781C5C712E0025C53A /* MemberAdEdContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberAdEdContainer.swift; path = Member/MemberAdEdContainer.swift; sourceTree = "<group>"; usesTabs = 0; };
 		D7BB2AD81C64788700624E08 /* PubMeadDataSelect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubMeadDataSelect.swift; path = PubView/PubMeadDataSelect.swift; sourceTree = "<group>"; };
 		D7BB2AD91C64788700624E08 /* PubMeadDataSelectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubMeadDataSelectCell.swift; path = PubView/PubMeadDataSelectCell.swift; sourceTree = "<group>"; };
 		D7BB2ADA1C64788700624E08 /* PubMemberSelect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubMemberSelect.swift; path = PubView/PubMemberSelect.swift; sourceTree = "<group>"; };
@@ -771,6 +773,7 @@
 				D7B29F781C5C712E0025C53A /* MemberAdEdContainer.swift */,
 				D74BC2B51CACF165000828D5 /* MemberHealth.swift */,
 				D74BC2B71CACF613000828D5 /* MemberHealthWeb.swift */,
+				42DF5CD31CB6B0E900EB7B34 /* MemberPict.swift */,
 			);
 			name = Member;
 			sourceTree = "<group>";
@@ -1213,6 +1216,7 @@
 				D7037A761C58C03F002A955E /* JSONClass.swift in Sources */,
 				D7B29F791C5C712E0025C53A /* MemberAdEdContainer.swift in Sources */,
 				D7134FF91C5F5A990069ACF1 /* MemberMain.swift in Sources */,
+				42DF5CD41CB6B0E900EB7B34 /* MemberPict.swift in Sources */,
 				D710A07F1C8EA50200264CEB /* CellSheetInvoice.swift in Sources */,
 				D7BB2AE11C64788700624E08 /* PubMemberSelectCell.swift in Sources */,
 				D74B4B9B1C9FE1C4001F1176 /* BTScaleMainCont.swift in Sources */,
