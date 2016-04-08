@@ -19,6 +19,7 @@ class PurchaseReturnEdit: UIViewController, PubPurReturnPdListDelegate , PickerD
     @IBOutlet weak var swchDelAll: UISwitch!
     @IBOutlet weak var btnDelAll: UIButton!
     @IBOutlet weak var btnSave: UIBarButtonItem!
+    @IBOutlet weak var labHteId: UILabel!
 
     @IBOutlet weak var containView: UIView!
     
@@ -30,6 +31,7 @@ class PurchaseReturnEdit: UIViewController, PubPurReturnPdListDelegate , PickerD
     var dictReturn: Dictionary<String, AnyObject>!  // 退貨單資料
     var dictPurchasePd: Dictionary<String, AnyObject>!  // 進貨商品資料
     var purchaseDate: String!  // 進貨日期
+    var hteid: String!  // 美利銷貨單號
     
     // 其他參數
     private var aryReturnPd: Array<Dictionary<String, AnyObject>>!  // 退貨商品 array
@@ -74,6 +76,7 @@ class PurchaseReturnEdit: UIViewController, PubPurReturnPdListDelegate , PickerD
         btnDelAll.alpha = 0.0
         labAmount.text = dictReturn["price"] as? String
         edCustPrice.text = dictReturn["custprice"] as? String
+        labHteId.text = hteid
     }
     
     /**
@@ -92,21 +95,6 @@ class PurchaseReturnEdit: UIViewController, PubPurReturnPdListDelegate , PickerD
         mView.frame.size.height = containView.layer.frame.height
         self.containView.addSubview(mView)
         self.navigationController?.pushViewController(mPubPurReturnPdList, animated: true)
-    }
-    
-    /**
-     * 初始與設定 VCview 內的 field
-     */
-    func initViewField() {
-    }
-    
-    /**
-     * Segue 跳轉頁面
-     */
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        //let strIdent = segue.identifier
-        
-        return
     }
     
     /**
@@ -134,6 +122,18 @@ class PurchaseReturnEdit: UIViewController, PubPurReturnPdListDelegate , PickerD
     }
     
     /**
+     * #mark: UITextFieldDelegate
+     * 虛擬鍵盤: 'Return' key 型態與動作
+     */
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if (textField == edCustPrice) {
+            textField.resignFirstResponder()
+        }
+        
+        return true
+    }
+    
+    /**
      * act, switch 退貨全部取消
      */
     @IBAction func actSwchDelAll(sender: UISwitch) {
@@ -154,13 +154,13 @@ class PurchaseReturnEdit: UIViewController, PubPurReturnPdListDelegate , PickerD
         dictParm["arg0"] = dictReturn["id"] as? String
         
         // HTTP 開始連線
-        pubClass.popConfirm(self, aryMsg: [pubClass.getLang("systemwarring"), pubClass.getLang("purchase_returndelmsg")], withHandlerYes: {self.pubClass.HTTPConn(self, ConnParm: dictParm, callBack: self.HttpSaveResponChk)}, withHandlerNo: {return})
+        pubClass.popConfirm(self, aryMsg: [pubClass.getLang("systemwarring"), pubClass.getLang("purchase_returndelmsg")], withHandlerYes: {self.pubClass.HTTPConn(self, ConnParm: dictParm, callBack: self.HttpDelResponChk)}, withHandlerNo: {return})
     }
     
     /**
-     * HTTP 連線後取得連線結果
+     * HTTP 連線後取得連線結果, 標記資料刪除程序
      */
-    private func HttpSaveResponChk(dictRS: Dictionary<String, AnyObject>) {
+    private func HttpDelResponChk(dictRS: Dictionary<String, AnyObject>) {
         // 回傳後跳離, 通知 parent 資料 reload
         let strMsg = (dictRS["result"] as! Bool != true) ? pubClass.getLang("err_trylatermsg") : pubClass.getLang("purchase_returndatadelcomplete")
         
@@ -172,7 +172,90 @@ class PurchaseReturnEdit: UIViewController, PubPurReturnPdListDelegate , PickerD
      * act, 點取 '儲存' button
      */
     @IBAction func actSave(sender: UIBarButtonItem) {
-
+        // 檢查實際退貨金額
+        if let intTmp = Int(edCustPrice.text!) {
+            let strTmp = String(intTmp)
+            if (strTmp.characters.count <= 8) {
+                edCustPrice.text = strTmp
+            }
+        } else {
+            pubClass.popIsee(self, Msg: pubClass.getLang("product_returnpricecusterr"))
+            
+            return
+        }
+        
+        // 商品退貨的總數量 > 0
+        var totRQty = 0
+        for dictTmp in aryReturnPd as Array<Dictionary<String, AnyObject>> {
+            let strNums = dictTmp["selQty"] as! String
+            totRQty += Int(strNums)!
+        }
+        
+        if (totRQty < 1) {
+            pubClass.popIsee(self, Msg: pubClass.getLang("sale_pleselreturnpdnumber"))
+            return
+        }
+        
+        // 彈出確認視窗
+        pubClass.popConfirm(self, aryMsg: [pubClass.getLang("systemwarring"), pubClass.getLang("sale_mksurepurchasereturnmsg")], withHandlerYes: { self.saveData()}, withHandlerNo: {return})
+        
+        return
+    }
+    
+    /**
+     * 退貨資料編輯儲存程序
+     */
+    private func saveData() {
+        // aryReturnPd 新增欄位 'rqty', server 端使用
+        var aryPd: Array<Dictionary<String, AnyObject>> = []
+        for dictTmp in aryReturnPd as Array<Dictionary<String, AnyObject>> {
+            var dictPd = dictTmp
+            dictPd["rqty"] = dictTmp["selQty"] as! String
+            aryPd.append(dictPd)
+        }
+        
+        // 產生 _REQUEST dict data
+        var dictArg0: Dictionary<String, AnyObject> = [:]
+        
+        dictArg0["return_id"] = dictReturn["id"] as? String
+        dictArg0["custprice"] = edCustPrice.text
+        dictArg0["pd"] = aryPd
+        dictArg0["sdate"] = strCurrDate + "01"  // 14碼
+        
+        // http 連線參數設定, 產生 'arg0' JSON string
+        var dictParm: Dictionary<String, String> = [:]
+        dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
+        dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
+        dictParm["page"] = "purchase"
+        dictParm["act"] = "purchase_returneditsave"
+        
+        do {
+            let jobjData = try
+                NSJSONSerialization.dataWithJSONObject(dictArg0, options: NSJSONWritingOptions(rawValue: 0))
+            let jsonString = NSString(data: jobjData, encoding: NSUTF8StringEncoding)! as String
+            
+            dictParm["arg0"] = jsonString
+        } catch {
+            pubClass.popIsee(self, Msg: pubClass.getLang("err_trylatermsg"), withHandler: {self.dismissViewControllerAnimated(true, completion: nil)})
+            
+            return
+        }
+        
+        // HTTP 開始連線
+        self.pubClass.HTTPConn(self, ConnParm: dictParm, callBack: {
+            (dictHTTPSRS: Dictionary<String, AnyObject>)->Void in
+            
+            let bolRS = dictHTTPSRS["result"] as! Bool
+            let strMsg = (bolRS == true) ? "datasavecompleted" : "err_trylatermsg"
+            
+            //self.delegate?.PageNeedReload!(bolRS)
+            self.pubClass.popIsee(self, Msg: self.pubClass.getLang(strMsg), withHandler: {
+                self.delegate?.PageNeedReload!(bolRS)
+                self.dismissViewControllerAnimated(true, completion: nil)
+            })
+        })
+        
+        return
     }
     
     /**
@@ -184,4 +267,3 @@ class PurchaseReturnEdit: UIViewController, PubPurReturnPdListDelegate , PickerD
     
     
 }
-

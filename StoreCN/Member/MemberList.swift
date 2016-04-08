@@ -109,12 +109,14 @@ class MemberList: UIViewController, PubMemberSelectDelegate, PubClassDelegate {
         }
         
         // !! container 直接加入 'PubMemberList'
+        mPubMemberSelect.removeFromParentViewController()
+        
         mPubMemberSelect.aryMember = aryMember
         mPubMemberSelect.currIndexPath = currIndexPath
-        
         let mView = mPubMemberSelect.view
         mView.frame.size.height = containerMemberList.layer.frame.height
         self.containerMemberList.addSubview(mView)
+        
         self.navigationController?.pushViewController(mPubMemberSelect, animated: true)
     }
     

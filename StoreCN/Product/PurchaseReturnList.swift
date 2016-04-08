@@ -134,6 +134,7 @@ class PurchaseReturnList: UIViewController, PubClassDelegate {
             mVC.dictPurchasePd = dictPurchasePd
             mVC.purchaseDate = dictAllData["sdate"] as! String
             mVC.delegate = self
+            mVC.hteid = dictAllData["hte_id"] as! String
             
             return
         }

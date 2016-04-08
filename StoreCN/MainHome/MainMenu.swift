@@ -397,7 +397,7 @@ class MainMenu: UIViewController {
                 
             // 商品入庫
             if (strIdent == "product_purchase") {
-                let mVC = storyboardProduct.instantiateViewControllerWithIdentifier("PurchaseList") as! PurchaseList
+                let mVC = storyboardProduct.instantiateViewControllerWithIdentifier("Purchase") as! Purchase
                 mVC.strToday = self.strToday
                 mVC.dictAllData = dictData
                 self.presentViewController(mVC, animated: true, completion: nil)

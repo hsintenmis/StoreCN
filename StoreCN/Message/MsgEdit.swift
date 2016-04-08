@@ -34,9 +34,9 @@ class MsgEdit: UIViewController {
     }
     
     /**
-     * act, 點取 '主選單' button
+     * act, 點取 '返回' button
      */
-    @IBAction func actHome(sender: UIBarButtonItem) {
+    @IBAction func actBack(sender: UIBarButtonItem) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 }

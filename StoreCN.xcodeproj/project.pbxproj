@@ -181,6 +181,7 @@
 		D71DFD0E1C7C39630024BB59 /* StockHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71DFD0D1C7C39630024BB59 /* StockHistory.swift */; };
 		D71DFD101C7C397A0024BB59 /* StockHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71DFD0F1C7C397A0024BB59 /* StockHistoryCell.swift */; };
 		D71DFD121C7C53A10024BB59 /* PurchaseList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71DFD111C7C53A10024BB59 /* PurchaseList.swift */; };
+		D71E0EA91CB7A78300F6B851 /* ConfigPsd.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71E0EA81CB7A78300F6B851 /* ConfigPsd.swift */; };
 		D720FBA11C7458F000AE640C /* Purchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D720FBA01C7458F000AE640C /* Purchase.swift */; };
 		D728A26C1C8138B100B93B38 /* PurchaseListDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D728A26B1C8138B100B93B38 /* PurchaseListDetailCell.swift */; };
 		D72BA3311C8813450028898D /* StaffBenefit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72BA3301C8813450028898D /* StaffBenefit.swift */; };
@@ -434,6 +435,7 @@
 		D71DFD0D1C7C39630024BB59 /* StockHistory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StockHistory.swift; path = Product/StockHistory.swift; sourceTree = "<group>"; };
 		D71DFD0F1C7C397A0024BB59 /* StockHistoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StockHistoryCell.swift; path = Product/StockHistoryCell.swift; sourceTree = "<group>"; };
 		D71DFD111C7C53A10024BB59 /* PurchaseList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchaseList.swift; path = Product/PurchaseList.swift; sourceTree = "<group>"; };
+		D71E0EA81CB7A78300F6B851 /* ConfigPsd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfigPsd.swift; path = SysConfig/ConfigPsd.swift; sourceTree = "<group>"; };
 		D720FBA01C7458F000AE640C /* Purchase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Purchase.swift; path = Product/Purchase.swift; sourceTree = "<group>"; };
 		D728A26B1C8138B100B93B38 /* PurchaseListDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchaseListDetailCell.swift; path = Product/PurchaseListDetailCell.swift; sourceTree = "<group>"; };
 		D72BA3301C8813450028898D /* StaffBenefit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StaffBenefit.swift; path = Staff/StaffBenefit.swift; sourceTree = "<group>"; };
@@ -889,6 +891,7 @@
 				D72E98241C9154B500DA9FA3 /* ConfigCourse.swift */,
 				D72E982C1C91719900DA9FA3 /* ConfigCourseEdit.swift */,
 				D72E98261C91551F00DA9FA3 /* ConfigBTScale.swift */,
+				D71E0EA81CB7A78300F6B851 /* ConfigPsd.swift */,
 			);
 			name = SysConfig;
 			sourceTree = "<group>";
@@ -1110,6 +1113,7 @@
 				D713FCB11CB4AB7C0015434E /* ReservListCell.swift in Sources */,
 				D72BA3311C8813450028898D /* StaffBenefit.swift in Sources */,
 				42FA49C81C931AA3001C6AEE /* KBNavyBar.swift in Sources */,
+				D71E0EA91CB7A78300F6B851 /* ConfigPsd.swift in Sources */,
 				42E21F131C68E6F500B85EA9 /* CalendarCellData.swift in Sources */,
 				D713FCB51CB4B8DE0015434E /* MemberAllCourseList.swift in Sources */,
 				D75F0F711CA9127D009287A7 /* BTMeadMainCell.swift in Sources */,

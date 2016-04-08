@@ -358,7 +358,7 @@ class Sale: UIViewController, SalePdSeltDelegate, SalePdSeltCellDelegate, PdSale
         dictMemo["custprice"] = edRealPrice.text
         dictMemo["memo"] = edMemo.text
         
-        dictArg0["memo"] = dictMemo["memo"]
+        dictArg0["memo"] = dictMemo
         dictArg0["cart"] = aryCart
         dictArg0["member"] = aryMember[indexPathMember!.row]
         

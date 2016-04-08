@@ -16,10 +16,10 @@ class Purchase: UIViewController, PurchasePdSeltDelegate, PurchasePdSeltCellDele
     @IBOutlet weak var labTotPrice: UILabel!
     @IBOutlet weak var edRealPrice: UITextField!
     @IBOutlet weak var edMemo: UITextField!
+    @IBOutlet weak var edHteId: UITextField!
     
     // common property
     let pubClass: PubClass = PubClass()
-    var dictPref: Dictionary<String, AnyObject>!  // Prefer data
     
     // public, 從 parent 設定
     var strToday = ""
@@ -32,7 +32,7 @@ class Purchase: UIViewController, PurchasePdSeltDelegate, PurchasePdSeltCellDele
     
     // 其他 property
     private var keyboardHeightQty: CGFloat = 0.0  // 自訂的選擇數量鍵盤高度
-    private var currIndexPath: NSIndexPath?
+    private var currIndexPath: NSIndexPath?  // cart 商品 item indexpath
     
     /**
      * View Load 程序
@@ -41,7 +41,6 @@ class Purchase: UIViewController, PurchasePdSeltDelegate, PurchasePdSeltCellDele
         super.viewDidLoad()
         
         // 固定初始參數
-        dictPref = pubClass.getPrefData()
         aryPdType = pubClass.aryProductType
         
         // 重設商品分類 array data
@@ -60,9 +59,6 @@ class Purchase: UIViewController, PurchasePdSeltDelegate, PurchasePdSeltCellDele
      * View DidAppear 程序
      */
     override func viewDidAppear(animated: Bool) {
-        dispatch_async(dispatch_get_main_queue(), {
-            
-        })
     }
     
     /**
@@ -254,36 +250,6 @@ class Purchase: UIViewController, PurchasePdSeltDelegate, PurchasePdSeltCellDele
     }
     
     /**
-     * act, 點取 '清空商品' button
-     */
-    @IBAction func actEmpty(sender: UIButton) {
-        initAllPd()
-        resetCartData()
-        tableData.reloadData()
-    }
-    
-    /**
-     * act, 點取 '選擇商品' button, 跳轉'選擇商品'頁面
-     */
-    @IBAction func actPdSelt(sender: UIBarButtonItem) {
-        self.performSegueWithIdentifier("PurchasePdSelt", sender: dictCategoryPd)
-    }
-    
-    /**
-     * act, 點取 '儲存' button
-     */
-    @IBAction func actSave(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    /**
-     * act, 點取 '返回' button
-     */
-    @IBAction func actBack(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    /**
      * #mark: UITextFieldDelegate
      * 虛擬鍵盤: 'Return' key 型態與動作
      */
@@ -306,6 +272,11 @@ class Purchase: UIViewController, PurchasePdSeltDelegate, PurchasePdSeltCellDele
         }
         else if textField == edMemo {
             edMemo.resignFirstResponder()
+        }
+        
+        // 美利出貨單號
+        else if (textField == edHteId) {
+            edHteId.resignFirstResponder()
         }
         
         // 關閉鍵盤, View 設定回原位置
@@ -343,5 +314,118 @@ class Purchase: UIViewController, PurchasePdSeltDelegate, PurchasePdSeltCellDele
         }
     }
     
+    /**
+     * act, 點取 '清空商品' button
+     */
+    @IBAction func actEmpty(sender: UIButton) {
+        initAllPd()
+        resetCartData()
+        tableData.reloadData()
+    }
+    
+    /**
+     * act, 點取 '選擇商品' button, 跳轉'選擇商品'頁面
+     */
+    @IBAction func actPdSelt(sender: UIBarButtonItem) {
+        self.performSegueWithIdentifier("PurchasePdSelt", sender: dictCategoryPd)
+    }
+    
+    /**
+     * act, 點取 '儲存' button
+     */
+    @IBAction func actSave(sender: UIBarButtonItem) {
+        keyboardClose()
+        
+        // 檢查是否有商品
+        if (aryCart.count < 1) {
+            pubClass.popIsee(self, Msg: pubClass.getLang("product_selpdfirstmsg"))
+            return
+        }
+        
+        // 檢查實際金額
+        if let intTmp = Int(edRealPrice.text!) {
+            let strTmp = String(intTmp)
+            if (strTmp.characters.count > 8) {
+                pubClass.popIsee(self, Msg: pubClass.getLang("product_salerealpriceerr"))
+                return
+            }
+        } else {
+            pubClass.popIsee(self, Msg: pubClass.getLang("product_salerealpriceerr"))
+            return
+        }
+        
+        // 確認視窗，執行 http 連線資料儲存
+        pubClass.popConfirm(self, aryMsg: [pubClass.getLang("sysprompt"), pubClass.getLang("datasendplzconfirmmsg")], withHandlerYes: { self.saveData() }, withHandlerNo: {})
+        
+        return
+    }
+    
+    /**
+     * http 連線資料儲存
+     */
+    private func saveData() {
+        // 購物車 pd 'qtySel' 欄位重新處理, server 端為 'oqty'
+        var aryNewCart: Array<Dictionary<String, AnyObject>> = []
+        for i in (0..<aryCart.count) {
+            var dictTmp = aryCart[i]
+            dictTmp["oqty"] = aryCart[i]["qtySel"]
+            aryNewCart.append(dictTmp)
+        }
+        
+        // 設定 'arg0' dict data
+        var dictArg0: Dictionary<String, AnyObject> = [:]
+        var dictMemo: Dictionary<String, String> = [:]
+        dictMemo["price"] = labTotPrice.text
+        dictMemo["custprice"] = edRealPrice.text
+        dictMemo["memo"] = edMemo.text
+        dictMemo["hte_id"] = edHteId.text
+        
+        dictArg0["memo"] = dictMemo
+        dictArg0["cart"] = aryNewCart
+        
+        // 產生 http post data, http 連線儲存後跳離
+        var dictParm: Dictionary<String, String> = [:]
+        dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
+        dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
+        dictParm["page"] = "purchase"
+        dictParm["act"] = "purchase_senddata"
+        
+        do {
+            let jobjData = try
+                NSJSONSerialization.dataWithJSONObject(dictArg0, options: NSJSONWritingOptions(rawValue: 0))
+            let jsonString = NSString(data: jobjData, encoding: NSUTF8StringEncoding)! as String
+            
+            dictParm["arg0"] = jsonString
+        } catch {
+            pubClass.popIsee(self, Msg: pubClass.getLang("err_data"))
+            
+            return
+        }
+        
+        // HTTP 連線後取得連線結果
+        self.pubClass.HTTPConn(self, ConnParm: dictParm, callBack: {
+            (dictRS: Dictionary<String, AnyObject>) -> Void in
+            let bolsRS = dictRS["result"] as! Bool
+            let strMsg = (bolsRS != true) ? self.pubClass.getLang("err_trylatermsg") : self.pubClass.getLang("datasavecompleted")
+            
+            // 清除商品資料
+            self.initAllPd()
+            self.resetCartData()
+            self.tableData.reloadData()
+            self.edMemo.text = ""
+            self.edHteId.text = ""
+            
+            self.pubClass.popIsee(self, Msg: strMsg)
+        })
+        
+        return
+    }
+    
+    /**
+     * act, 點取 '返回' button
+     */
+    @IBAction func actBack(sender: UIBarButtonItem) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
 }
-

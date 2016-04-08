@@ -18,7 +18,6 @@ class StaffAdEdContainer: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var labID: UILabel!
     @IBOutlet weak var labSdate: UILabel!
     @IBOutlet weak var txtPsd: UITextField!
-    @IBOutlet weak var txtRePsd: UITextField!
     
     @IBOutlet weak var swchGender: UISegmentedControl!
     @IBOutlet weak var txtTEL: UITextField!
@@ -34,9 +33,7 @@ class StaffAdEdContainer: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var txtAddr: UITextField!
     
     // common property
-    var mVCtrl: UIViewController!
-    var pubClass: PubClass!
-    var dictPref: Dictionary<String, AnyObject>!  // Prefer data
+    var pubClass = PubClass()
     
     // public property, 上層 parent 設定
     var strMode: String!
@@ -45,6 +42,7 @@ class StaffAdEdContainer: UITableViewController, UITextFieldDelegate {
     // textView array 與 val 值對應的 array data
     private var aryTxtView: Array<UITextField> = []
     private var aryField: Array<String> = []
+    private var dictTxtView: Dictionary<String, UITextField> = [:]
     
     // 點取欄位，彈出虛擬鍵盤視窗
     private var mPickerBirth: PickerDate!
@@ -63,9 +61,6 @@ class StaffAdEdContainer: UITableViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         // 固定初始參數
-        mVCtrl = self
-        pubClass = PubClass()
-        dictPref = pubClass.getPrefData()
         strToday = pubClass.getDevToday()
 
         // Picker param 初始資料
@@ -96,16 +91,16 @@ class StaffAdEdContainer: UITableViewController, UITextFieldDelegate {
     func initViewField() {
         // set array, 注意順序
         aryTxtView = [edName, txtTEL, txtBirth, txtHeigh, txtWeight, txtCNID, txtWechat, txtQQ, txtEmail, txtZip, txtCity, txtAddr]
-        aryField = ["name", "tel","birth","height","weight","cid_cn","id_wechat","id_qq","email","zip","province","addr"]
+        aryField = ["name", "tel","birth","height","weight","cid","id_wechat","id_qq","email","zip","province","addr"]
         
         for loopi in (0..<aryField.count) {
             // textView 的 delegate
             aryTxtView[loopi].delegate = self
+            dictTxtView[aryField[loopi]] = aryTxtView[loopi]
         }
         
         // 手動設定 textView 的 delegate, 密碼欄位
         txtPsd.delegate = self
-        txtRePsd.delegate = self
         
         // 編輯模式特殊處理
         if (strMode == "edit") {
@@ -138,6 +133,7 @@ class StaffAdEdContainer: UITableViewController, UITextFieldDelegate {
         txtZip.text = dictMember["zip"] as? String
         txtCity.text = dictMember["province"] as? String
         txtAddr.text = dictMember["addr"] as? String
+        txtPsd.text = dictMember["psd"] as? String
         
         let strGender = dictMember["gender"] as! String
         swchGender.selectedSegmentIndex = (strGender == "M") ? 0 : 1
@@ -189,10 +185,6 @@ class StaffAdEdContainer: UITableViewController, UITextFieldDelegate {
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         // 密碼 txtView
         if textField == txtPsd {
-            txtRePsd.becomeFirstResponder()
-            return true
-        }
-        if textField == txtRePsd {
             textField.resignFirstResponder()
             return true
         }
@@ -211,10 +203,49 @@ class StaffAdEdContainer: UITableViewController, UITextFieldDelegate {
     }
     
     /**
-    * 取得本頁面欄位資料, parent 調用
-    */
-    func getPageData()->Dictionary<String, String>! {
-        var dictRS: Dictionary<String, String> = [:]
+     * public, parent 調用, 本頁面資料整理檢查與回傳
+     */
+    func getPageData() -> Dictionary<String, AnyObject>? {
+        var dictRS: Dictionary<String, AnyObject> = [:]
+
+        // 檢查欄位 '密碼'
+        if (txtPsd.text?.characters.count < 4) {
+            pubClass.popIsee(self, Msg: pubClass.getLang("member_err_psd"))
+            
+            return nil
+        }
+        dictRS["psd"] = txtPsd.text
+        
+        // 必填欄位檢查
+        var errMsgCode = ""
+        
+        if (edName.text!.characters.count < 2) {
+            errMsgCode = "name"
+        }
+        if (txtTEL.text!.characters.count < 2) {
+            errMsgCode = "tel"
+        }
+        
+        let strBirth = mPickerBirth.getStrDate()
+        if (strBirth.characters.count < 2) {
+            errMsgCode = "birth"
+        }
+        
+        if (errMsgCode != "") {
+            pubClass.popIsee(self, Msg: pubClass.getLang("member_err_" + errMsgCode))
+            
+            return nil
+        }
+        
+        // 其他欄位設定
+        dictRS["gender"] = (swchGender.selectedSegmentIndex == 0) ? "M" : "F"
+        dictRS["birth"] = strBirth
+        
+        let aryTmpField = ["name", "tel", "height","weight", "cid","id_wechat","id_qq","email","zip","province","addr"]
+        
+        for strField in aryTmpField {
+            dictRS[strField] = dictTxtView[strField]!.text
+        }
         
         return dictRS
     }

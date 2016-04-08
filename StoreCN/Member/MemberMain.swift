@@ -105,14 +105,22 @@ class MemberMain: UIViewController, MemberMainPagerDelegate, PubClassDelegate {
 
     /**
      * #mark: PubClassDelegate,  child 通知本頁面資料重整
-     * 由 'MemberAdEd' 回傳
+     * child 傳送 arg0, 根據 arg0 執行相關程序
      */
     func PageNeedReload(needReload: Bool, arg0: String?) {
+        // 會員基本資料變動
         if (arg0 == "memberedit") {
             bolDataChangMember = true
+            bolParentReload = true
+            return
         }
         
-        bolParentReload = true
+        // 會員大頭照變動
+        if (arg0 == "memberpict") {
+            let imgURL = pubClass.D_WEBURL + "upload/HP_" + (dictMember["memberid"] as! String) + ".png"
+            imgPict.downloadImageFrom(link: imgURL, contentMode: UIViewContentMode.ScaleAspectFit)
+            return
+        }
     }
     
     /**
@@ -233,8 +241,7 @@ class MemberMain: UIViewController, MemberMainPagerDelegate, PubClassDelegate {
         if (strIdentName == "MemberPict") {
             let mVC = segue.destinationViewController as! MemberPict
             mVC.strMemberID = dictMember["memberid"] as! String
-            
-            //mVC.delegate = self
+            mVC.delegate = self
             
             return
         }

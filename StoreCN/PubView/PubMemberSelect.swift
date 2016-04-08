@@ -16,7 +16,7 @@ protocol PubMemberSelectDelegate {
 }
 
 /**
- * 顯示 URL 圖片, UIImageView extension
+ * 顯示會員大頭照, from URL 圖片, UIImageView extension
  */
 extension UIImageView {
     func downloadImageFrom(link link:String, contentMode: UIViewContentMode) {

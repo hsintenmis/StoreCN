@@ -70,7 +70,11 @@ class SysConfigMainContainer: UITableViewController, ConfigBTScaleDelegate {
         if (strIdent == "ConfigBTScale") {
             mConfigBTScale = segue.destinationViewController as! ConfigBTScale
             mConfigBTScale.delegate = self
+            
+            return
         }
+        
+        return
     }
     
     /**

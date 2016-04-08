@@ -14,14 +14,13 @@ class SysConfigMain: UIViewController {
     @IBOutlet weak var containView: UIView!
     
     // common property
-    var pubClass: PubClass!
+    var pubClass = PubClass()
     
     /**
      * View Load 程序
      */
     override func viewDidLoad() {
         super.viewDidLoad()
-        pubClass = PubClass()
     }
     
     @IBAction func actBack(sender: UIBarButtonItem) {

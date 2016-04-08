@@ -282,6 +282,7 @@ class PurchaseListDetail: UIViewController, PurchaseListDetailCellDelegate, PubC
      * act, 點取 '選項' button
      */
     @IBAction func actOption(sender: UIBarButtonItem) {
+        keyboardClose()
         self.presentViewController(mAlert, animated: true, completion: nil)
     }
     

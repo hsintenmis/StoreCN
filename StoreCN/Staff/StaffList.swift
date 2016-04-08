@@ -8,7 +8,7 @@ import Foundation
 /**
  * 營養師列表
  */
-class StaffList: UIViewController {
+class StaffList: UIViewController, PubClassDelegate {
     
     // @IBOutlet
     @IBOutlet weak var tableData: UITableView!
@@ -39,10 +39,22 @@ class StaffList: UIViewController {
         tableData.rowHeight = UITableViewAutomaticDimension
     }
     
+    /**
+     * viewDidAppear 程序
+     */
     override func viewDidAppear(animated: Bool) {
         if (bolReload) {
-            reConnHTTP()
             bolReload = false
+            reConnHTTP()
+        }
+    }
+    
+    /**
+     * #mark: PubClassDelegate,  child 通知本頁面資料重整
+     */
+    func PageNeedReload(needReload: Bool) {
+        if (needReload == true) {
+            bolReload = true
         }
     }
     
@@ -62,7 +74,7 @@ class StaffList: UIViewController {
         // tableview reload
         tableData.reloadData()
         if let tmpIndexPath = currIndexPath {
-            tableData.selectRowAtIndexPath(tmpIndexPath, animated: true, scrollPosition: UITableViewScrollPosition.None)
+            tableData.selectRowAtIndexPath(tmpIndexPath, animated: true, scrollPosition: UITableViewScrollPosition.Middle)
         }
     }
     
@@ -154,18 +166,19 @@ class StaffList: UIViewController {
         if editingStyle == UITableViewCellEditingStyle.Delete {
             
             // 彈出 confirm 視窗, 點取 'OK' 執行實際刪除資料程序
-            pubClass.popConfirm(self, aryMsg: [self.pubClass.getLang("systemwarring"), self.pubClass.getLang("purchase_delwarringmsg")], withHandlerYes: {
+            pubClass.popConfirm(self, aryMsg: [self.pubClass.getLang("systemwarring"), self.pubClass.getLang("delconfirmmsg")], withHandlerYes: {
                 
                 // 產生 http post data, http 連線儲存後跳離
                 var dictParm: Dictionary<String, String> = [:]
                 dictParm["acc"] = self.pubClass.getAppDelgVal("V_USRACC") as? String
                 dictParm["psd"] = self.pubClass.getAppDelgVal("V_USRPSD") as? String
-                dictParm["page"] = "purchase"
-                dictParm["act"] = "purchase_editsave"
+                dictParm["page"] = "staff"
+                dictParm["act"] = "staff_senddata"
                 
                 var dictArg0: Dictionary<String, AnyObject> = [:]
-                dictArg0["del_flag"] = "Y"
-                dictArg0["invo_id"] = self.aryData[indexPath.row]["id"] as! String
+                dictArg0["mode"] = "edit"
+                dictArg0["del"] = "Y"
+                dictArg0["id"] = self.aryData[indexPath.row]["id"] as! String
                 
                 do {
                     let jobjData = try
@@ -182,10 +195,10 @@ class StaffList: UIViewController {
                 self.pubClass.HTTPConn(self, ConnParm: dictParm,
                     callBack: { (dictRS: Dictionary<String, AnyObject>) in
                         // 回傳 page reload
-                        let strMsg = (dictRS["result"] as! Bool != true) ? self.pubClass.getLang("err_trylatermsg") : self.pubClass.getLang("purchase_returndatadelcomplete")
+                        let strMsg = (dictRS["result"] as! Bool != true) ? self.pubClass.getLang("err_trylatermsg") : self.pubClass.getLang("datadelcompleted")
                         
                         self.pubClass.popIsee(self, Msg: strMsg, withHandler: {
-                            self.currIndexPath = NSIndexPath(forRow: -1, inSection: 0)
+                            self.currIndexPath = nil
                             self.reConnHTTP()
                         })
                     }
@@ -210,6 +223,7 @@ class StaffList: UIViewController {
         let mVC = segue.destinationViewController as! StaffAdEd
         mVC.strMode = strMode
         mVC.dictMember = sender as! Dictionary<String, AnyObject>
+        mVC.delegate = self
     }
     
     /**

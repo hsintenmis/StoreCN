@@ -236,6 +236,5 @@ class MemberAdEdContainer: UITableViewController, UITextFieldDelegate {
         
         return dictRS
     }
-
     
 }

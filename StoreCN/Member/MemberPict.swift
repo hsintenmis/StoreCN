@@ -9,6 +9,8 @@ import Foundation
  * 會員新增/編輯, 文字/圖片 資料儲存
  */
 class MemberPict: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CutImageDelegate {
+    // delegate
+    var delegate = PubClassDelegate?()
     
     // @IBOutlet
     @IBOutlet weak var imgTarget: UIImageView!
@@ -21,7 +23,8 @@ class MemberPict: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     
     // 檔案存取/圖片處理
     private var mImgPicker: UIImagePickerController!
-    private var isNewPict = false
+    private var mImageClass = ImageClass()
+    private var hasNewPict = false  // 是否有新圖片
     private let sizeZoom: CGFloat = 3.0  // 图片缩放的最大倍数
     private let sizeCute: CGFloat = 120.0  // 裁剪框的長寬
     private let typeCut: Int = 1; // 裁剪框的形狀, 0=圓, 1=方
@@ -89,7 +92,7 @@ class MemberPict: UIViewController, UIImagePickerControllerDelegate, UINavigatio
      */
     func imageCutDone(vcCutImage: CutImage, FinishCutImage editImage: UIImage) {
         vcCutImage.dismissViewControllerAnimated(true, completion: {
-            self.isNewPict = true
+            self.hasNewPict = true
             self.imgTarget.image = editImage
         })
     }
@@ -118,8 +121,64 @@ class MemberPict: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     
     /**
      * Action, 點取 '儲存'
+     * 圖片 ImgToBase64 string, http 上傳儲存
      */
     @IBAction func actSave(sender: UIBarButtonItem) {
+        if (hasNewPict != true) {
+            pubClass.popIsee(self, Msg: pubClass.getLang("member_err_selpictfirst"))
+            return
+        }
+        
+        // 圖片尺寸重新調整
+        let mCGSize = CGSize(width: 128.0, height: 128.0)
+        let mImg = mImageClass.ResizeImage(imgTarget.image!, targetSize: mCGSize)
+        
+        // agr0 參數設定
+        var dictArg0: Dictionary<String, AnyObject> = [:]
+        dictArg0["filename"] = "HP_" + strMemberID + ".png"
+        dictArg0["type"] = "head"
+        dictArg0["mime"] = "png"
+        
+        // http 連線參數設定, 產生 'arg0' JSON string
+        var dictParm: Dictionary<String, String> = [:]
+        dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
+        dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
+        dictParm["page"] = "member"
+        dictParm["act"] = "member_sendpict"
+        dictParm["arg1"] = mImageClass.ImgToBase64(mImg)
+        
+        do {
+            let jobjData = try
+                NSJSONSerialization.dataWithJSONObject(dictArg0, options: NSJSONWritingOptions(rawValue: 0))
+            let jsonString = NSString(data: jobjData, encoding: NSASCIIStringEncoding)! as String
+            
+            dictParm["arg0"] = jsonString
+        } catch {
+            pubClass.popIsee(self, Msg: pubClass.getLang("err_trylatermsg"), withHandler: {self.dismissViewControllerAnimated(true, completion: nil)})
+            
+            return
+        }
+        
+        // HTTP 開始連線
+        self.pubClass.HTTPConn(self, ConnParm: dictParm, callBack: {
+            (dictHTTPSRS: Dictionary<String, AnyObject>)->Void in
+            
+            let bolRS = dictHTTPSRS["result"] as! Bool
+            
+            // 儲存成功，通知 parent (parent 為 'MemberMain') 資料變動, 跳離
+            if (bolRS == true) {
+                self.pubClass.popIsee(self, Msg: self.pubClass.getLang("member_headpcituploadok"), withHandler: {self.dismissViewControllerAnimated(true, completion: {
+                    self.delegate?.PageNeedReload!(true, arg0: "memberpict")
+                })})
+                
+                
+                return
+            }
+            
+            self.pubClass.popIsee(self, Msg: self.pubClass.getLang("err_trylatermsg"))
+        })
+        
+        return
     }
     
     /**
