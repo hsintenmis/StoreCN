@@ -273,7 +273,7 @@ class PubClass {
         
         // 產生 'task' 使用閉包
         let task = NSURLSession.sharedSession().dataTaskWithRequest(mRequest) {
-            data, response, error in
+            (data, response, error) -> Void in
             var dictRS = Dictionary<String, AnyObject>();
             
             if error != nil {

@@ -9,6 +9,9 @@ import UIKit
  * 圖片影像 Class
  */
 class ImageClass {
+    // common property
+    private var pubClass = PubClass()
+    
     /**
     * init
     */
@@ -42,15 +45,15 @@ class ImageClass {
     }
     
     /**
-    * 指定 SIZE, 回傳正方形影像
-    */
+     * 指定 SIZE, 回傳正方形影像
+     */
     func SquareImageTo(image: UIImage, size: CGSize) -> UIImage {
         return ResizeImage(SquareImage(image), targetSize: size)
     }
     
     /**
-    * 回傳正方形影像
-    */
+     * 回傳正方形影像
+     */
     func SquareImage(image: UIImage) -> UIImage {
         let originalWidth  = image.size.width
         let originalHeight = image.size.height
@@ -62,8 +65,8 @@ class ImageClass {
     }
     
     /**
-    * 指定 SIZE, 回傳影像
-    */
+     * 指定 SIZE, 回傳影像
+     */
     func ResizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
         // 壓縮比, 壓縮圖片
         let fltZipRate: CGFloat = 0.7
@@ -96,5 +99,53 @@ class ImageClass {
         
         return newImage
     }
+    
+    /**
+     * 讀取指定 URL 圖片, HTTP 連線, 開啟 'PopLoading' AlertView
+     */
+    func HTTPConn(mVC: UIViewController, strURL: String!, callBack: (NewImage: UIImage?)->Void) {
+        let vcPopLoading = pubClass.getPopLoading(nil)
+        mVC.presentViewController(vcPopLoading, animated: true, completion:{
+            self.taskHTTPConn(strURL, AlertVC: vcPopLoading, callBack: callBack)
+        })
+    }
+    
+    /**
+     * 讀取指定 URL 圖片, HTTP 連線, 產生 'task' 使用閉包, 回傳 UIImage 於 CallBack()使用
+     */
+    private func taskHTTPConn(strURL: String!, AlertVC vcPopLoading: UIAlertController, callBack: (NewImage: UIImage?)->Void) {
+        
+        // 產生 'task' 使用閉包
+        let task = NSURLSession.sharedSession().dataTaskWithURL( NSURL(string: strURL)!, completionHandler:{ (mNSData, mRespon, mNSErr) -> Void in
+            
+            // http 回傳代碼, 200=OK
+            var mImage = UIImage()
+            
+            if let httpResponse = mRespon as? NSHTTPURLResponse {
+                if (Int(httpResponse.statusCode) == 200) {
+                    
+                    // 若取得 'stream' data, 設定到 imageView
+                    if let imgTmp = UIImage(data: mNSData!) {
+                        mImage = imgTmp
+                    }
+                    /*
+                    if let mData = mNSData {
+                        mImage = UIImage(data: mData)!
+                    }
+                    */
+                }
+            }
+            
+            // 關閉 'vcPopLoading'
+            dispatch_async(dispatch_get_main_queue(), {
+                vcPopLoading.dismissViewControllerAnimated(true, completion: {
+                    callBack(NewImage: mImage)
+                })
+            })
+        })
+        
+        task.resume()
+    }
+
     
 }

@@ -183,6 +183,7 @@
 
 "message_type_pub" = "公开";
 "message_type_draft" = "草稿";
+"message_err_title" = "標題錯誤!";
 
 "analydata_today" = "今日收入";
 "analydata_daily" = "每日收入";

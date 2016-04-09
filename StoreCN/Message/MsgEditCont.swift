@@ -6,9 +6,9 @@ import UIKit
 import Foundation
 
 /**
- * 訊息新增 輸入頁面
+ * 訊息編輯 輸入頁面
  */
-class MsgAddContainer: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class MsgEditCont: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     // @IBOutlet
     @IBOutlet var tableList: UITableView!
@@ -17,8 +17,10 @@ class MsgAddContainer: UITableViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var edTitle: UITextField!
     @IBOutlet weak var txtContent: UITextView!
     @IBOutlet weak var imgPict: UIImageView!
+    @IBOutlet weak var btnPreview: UIButton!
     @IBOutlet weak var btnKBClose: UIButton!
-
+    @IBOutlet weak var btnRecover: UIButton!
+    
     @IBOutlet weak var cellImage: UITableViewCell!
     
     // common property
@@ -26,12 +28,21 @@ class MsgAddContainer: UITableViewController, UIImagePickerControllerDelegate, U
     
     // public property, 上層 parent 設定
     var strToday: String!
+    var dictData: Dictionary<String, AnyObject>!
     
-    // 其他參數
+    // 圖片相關參數
     private let mImageClass = ImageClass()
     private let imagePicker = UIImagePickerController()  // 圖片選取 class
     private let maxWidth:CGFloat  = 320.0  // 圖片最大寬度
     private var imgNewSize: CGSize = CGSizeMake(0.0, 0.0)
+    
+    private var strURL: String = ""  // 原始圖片 URL
+    private var imgOrg = UIImage() // 原始圖片
+    private var bolReloadImg = true  // 首次進入頁面，圖片 http URL 讀取
+    private var strImgStat = "none"  // 原始org /空白none /新圖片new
+    
+    // 其他參數
+    private var bolReload = true
     
     /**
      * View Load 程序
@@ -40,27 +51,83 @@ class MsgAddContainer: UITableViewController, UIImagePickerControllerDelegate, U
         super.viewDidLoad()
 
         imagePicker.delegate = self
-
-        // 初始與設定 VCview 內的 field
-        labDate.text = pubClass.formatDateWithStr(strToday, type: 14)
+        
+        // 圖片相關, URL
+        if (dictData["pict"] as! String != "") {
+            strURL = pubClass.D_WEBURL + "upload/" + (dictData["pict"] as! String)
+        }
         imgPict.contentMode = .ScaleAspectFit
+        
+        // 初始與設定 VCview 內的 field
+        labDate.text = pubClass.formatDateWithStr(dictData["sdate"] as! String, type: 14)
+        edTitle.text = dictData["title"] as? String
+        txtContent.text = dictData["content"] as? String
+        swchType.on = (dictData["pict"] as! String == "pub") ? true : false
         
         // textView 外觀樣式
         txtContent.layer.cornerRadius = 5
         txtContent.layer.borderWidth = 1
         txtContent.layer.borderColor = (pubClass.ColorHEX(pubClass.dictColor["gray"]!)).CGColor
         txtContent.layer.backgroundColor = (pubClass.ColorHEX(pubClass.dictColor["white"]!)).CGColor
+        
+        btnPreview.layer.cornerRadius = 5
         btnKBClose.alpha = 0.0
+        btnRecover.alpha = (strURL != "") ? 1.0 : 0.0
     }
-
+    
     /**
-    * #mark: UITableViewController
-    * 動態指定 Table Cell height
+    * view DidAppear
     */
+    override func viewDidAppear(animated: Bool) {
+        // 首次進入本頁面, 讀取 URL 圖片顯示
+        if (bolReloadImg == true) {
+            bolReloadImg = false
+            
+            if (strURL != "") {
+                mImageClass.HTTPConn(self, strURL: strURL, callBack: { (mNewImage) in
+                    if (mNewImage != nil) {
+                        self.imgOrg = mNewImage!
+                        self.recoverOrgImg()
+                    }
+                })
+            }
+            
+            return
+        }
+    }
+    
+    /**
+    * 初始/重設 圖片
+    */
+    private func recoverOrgImg() {
+        strImgStat = "org"
+        self.imgPict.image = imgOrg
+        
+        // 選擇的圖片寬高
+        var newW = imgOrg.size.width
+        var newH = imgOrg.size.height
+        
+        // 重新取得寬高
+        if (newW >= maxWidth) {
+            let mRatio = (maxWidth / newW)
+            newW = CGFloat(Int(newW * mRatio))
+            newH = CGFloat(Int(newH * mRatio))
+        }
+        self.imgNewSize = CGSizeMake(newW, newH)
+        
+        // 根據比例產生新圖片
+        tableList.reloadData()
+        self.imgPict.frame.size = CGSizeMake(newW, newH)
+    }
+    
+    /**
+     * #mark: UITableViewController
+     * 動態指定 Table Cell height
+     */
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         switch (indexPath.section) {
         case 0:
-            if (indexPath.row == 3) {
+            if (indexPath.row == 4) {
                 return 150.0
             }
         case 1:
@@ -79,9 +146,9 @@ class MsgAddContainer: UITableViewController, UIImagePickerControllerDelegate, U
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             // 選擇的圖片寬高
-            let imgNew = info["UIImagePickerControllerOriginalImage"] as! UIImage
-            var newW = imgNew.size.width
-            var newH = imgNew.size.height
+            let newImg = info["UIImagePickerControllerOriginalImage"] as! UIImage
+            var newW = newImg.size.width
+            var newH = newImg.size.height
             
             // 重新取得寬高
             if (newW > maxWidth) {
@@ -106,9 +173,9 @@ class MsgAddContainer: UITableViewController, UIImagePickerControllerDelegate, U
         
         dismissViewControllerAnimated(true, completion: {
             // Image 重整
+            self.strImgStat = "new"
             self.tableList.reloadData()
             self.imgPict.frame.size = self.imgNewSize
-            
         })
     }
     
@@ -145,27 +212,8 @@ class MsgAddContainer: UITableViewController, UIImagePickerControllerDelegate, U
     /**
      * 取得本頁面欄位資料, parent 調用
      */
-    func getPageData()->Dictionary<String, AnyObject>? {
+    func getPageData()->Dictionary<String, AnyObject>! {
         var dictRS: Dictionary<String, AnyObject> = [:]
-        dictRS["del"] = "N"
-        dictRS["image"] = ""
-        
-        // 檢查欄位
-        if (edTitle.text == "") {
-            pubClass.popIsee(self, Msg: pubClass.getLang("message_err_title"))
-            return nil
-        }
-        
-        // 設定回傳資料
-        dictRS["title"] = edTitle.text
-        dictRS["content"] = txtContent.text
-        dictRS["type"] = (swchType.on == true) ? "pub" : "draft"
-        dictRS["title"] = edTitle.text
-        dictRS["image"] = ""
-        
-        if let imgTmp = imgPict.image {
-             dictRS["image"] = mImageClass.ImgToBase64(imgTmp)
-        }
         
         return dictRS
     }
@@ -173,7 +221,7 @@ class MsgAddContainer: UITableViewController, UIImagePickerControllerDelegate, U
     /**
      * act, 點取 '關閉鍵盤'
      */
-    @IBAction func actKBClose(sender: UIButton) {
+    @IBAction func actCloseKB(sender: UIButton) {
         btnKBClose.alpha = 0.0
         txtContent.resignFirstResponder()
     }
@@ -191,10 +239,27 @@ class MsgAddContainer: UITableViewController, UIImagePickerControllerDelegate, U
      * act, 點取 '清除圖片'
      */
     @IBAction func actClearPict(sender: UIButton) {
-        imgNewSize = CGSizeMake(0.0, 0.0)
+        strImgStat = "none"
         self.imgPict.image = nil
-        self.imgPict.frame.size = imgNewSize
+        self.imgNewSize = CGSizeMake(0.0, 0.0)
+        self.imgPict.frame.size = self.imgNewSize
         tableList.reloadData()
+    }
+    
+    /**
+     * act, 點取 '回復圖片'
+     */
+    @IBAction func actRecoverPict(sender: UIButton) {
+        if (strImgStat == "org") {
+            return
+        }
+        self.recoverOrgImg()
+    }
+    
+    /**
+     * act, 點取 '發送預覽'
+     */
+    @IBAction func actPreview(sender: UIButton) {
     }
     
 }
