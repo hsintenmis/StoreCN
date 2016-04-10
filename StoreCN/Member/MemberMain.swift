@@ -7,6 +7,7 @@
 
 import UIKit
 import Foundation
+import MessageUI  // SMS
 
 /**
  * 會員主頁面，編輯/刪除, 提供該會員各項資料檢視
@@ -14,7 +15,7 @@ import Foundation
  * pager 頁面
  *   疗程纪录/能量检测/SOQIBed/购货纪录/健康纪录
  */
-class MemberMain: UIViewController, MemberMainPagerDelegate, PubClassDelegate {
+class MemberMain: UIViewController, MFMessageComposeViewControllerDelegate, MemberMainPagerDelegate, PubClassDelegate {
     // delegate
     var delegate = PubClassDelegate?()
     
@@ -247,6 +248,33 @@ class MemberMain: UIViewController, MemberMainPagerDelegate, PubClassDelegate {
         }
         
         return
+    }
+    
+    /**
+     * act, 點取 '短訊發送密碼' button, import 'MessageUI'
+     */
+    @IBAction func actSMS(sender: UIButton) {
+        if (MFMessageComposeViewController.canSendText()) {
+            let mVCSMS = MFMessageComposeViewController()
+            mVCSMS.body = "Message Body"
+            mVCSMS.recipients = ["123456789"]
+            mVCSMS.messageComposeDelegate = self
+            
+            self.presentViewController(mVCSMS, animated: true, completion: nil)
+        }
+        else {
+            print("not support SMS ...")
+        }
+        
+        return
+    }
+    
+    /**
+     * @mark: MFMessageComposeViewController Delegate
+     */
+    func messageComposeViewController(controller: MFMessageComposeViewController, didFinishWithResult result: MessageComposeResult) {
+        //... handle sms screen actions
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     /**

@@ -431,6 +431,13 @@ class MainMenu: UIViewController {
     }
     
     /**
+     * act, 點取 '今日提醒' button
+     */
+    @IBAction func actRemind(sender: UIButton) {
+        print("actRemind")
+    }
+    
+    /**
      * act, 點取 '登出' button
      */
     @IBAction func actLogout(sender: UIBarButtonItem) {

@@ -204,13 +204,15 @@ class PurchaseList: UIViewController, PubClassDelegate {
                         let strMsg = (dictRS["result"] as! Bool != true) ? self.pubClass.getLang("err_trylatermsg") : self.pubClass.getLang("purchase_returndatadelcomplete")
                         
                         self.pubClass.popIsee(self, Msg: strMsg, withHandler: {
-                            self.currIndexPath = NSIndexPath(forRow: -1, inSection: 0)
+                            //self.currIndexPath = NSIndexPath(forRow: -1, inSection: 0)
+                            self.currIndexPath = nil
                             self.reConnHTTP()
                         })
                     }
                 )
                 
-                }, withHandlerNo: {return})
+                }, withHandlerNo: {return}
+            )
         }
     }
     
