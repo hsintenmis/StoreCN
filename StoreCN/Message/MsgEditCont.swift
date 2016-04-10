@@ -86,8 +86,7 @@ class MsgEditCont: UITableViewController, UIImagePickerControllerDelegate, UINav
             if (strURL != "") {
                 mImageClass.HTTPConn(self, strURL: strURL, callBack: { (mNewImage) in
                     if (mNewImage != nil) {
-                        self.imgOrg = mNewImage!
-                        self.recoverOrgImg()
+                        self.recoverOrgImg(mNewImage!)
                     }
                 })
             }
@@ -99,13 +98,12 @@ class MsgEditCont: UITableViewController, UIImagePickerControllerDelegate, UINav
     /**
     * 初始/重設 圖片
     */
-    private func recoverOrgImg() {
+    private func recoverOrgImg(mImage: UIImage!) {
         strImgStat = "org"
-        self.imgPict.image = imgOrg
         
         // 選擇的圖片寬高
-        var newW = imgOrg.size.width
-        var newH = imgOrg.size.height
+        var newW = mImage.size.width
+        var newH = mImage.size.height
         
         // 重新取得寬高
         if (newW >= maxWidth) {
@@ -113,11 +111,22 @@ class MsgEditCont: UITableViewController, UIImagePickerControllerDelegate, UINav
             newW = CGFloat(Int(newW * mRatio))
             newH = CGFloat(Int(newH * mRatio))
         }
+
+        // UIImage 圖片尺寸重新處理
         self.imgNewSize = CGSizeMake(newW, newH)
+        let mRect = CGRectMake(0, 0, newW, newH)  // 座標尺寸
+        UIGraphicsBeginImageContextWithOptions(self.imgNewSize, false, 1.0)
+        mImage.drawInRect(mRect)
+
+        let mNewImg = UIGraphicsGetImageFromCurrentImageContext()
+        let nsData = UIImageJPEGRepresentation(mNewImg, 1.0)
+        UIGraphicsEndImageContext()
+        imgOrg = UIImage(data: nsData!)!
         
-        // 根據比例產生新圖片
+        // TableView 重整
         tableList.reloadData()
-        self.imgPict.frame.size = CGSizeMake(newW, newH)
+        self.imgPict.image = imgOrg
+        //self.imgPict.frame.size = CGSizeMake(newW, newH)
     }
     
     /**
@@ -166,9 +175,10 @@ class MsgEditCont: UITableViewController, UIImagePickerControllerDelegate, UINav
             pickedImage.drawInRect(mRect)
             
             // 重新設定 UIImage
-            self.imgPict.image = UIGraphicsGetImageFromCurrentImageContext()
-            UIImageJPEGRepresentation(self.imgPict.image!, fltZipRate)
+            let mNewImg = UIGraphicsGetImageFromCurrentImageContext()
+            let nsData = UIImageJPEGRepresentation(mNewImg, fltZipRate)
             UIGraphicsEndImageContext()
+            self.imgPict.image = UIImage(data: nsData!)
         }
         
         dismissViewControllerAnimated(true, completion: {
@@ -210,10 +220,42 @@ class MsgEditCont: UITableViewController, UIImagePickerControllerDelegate, UINav
     }
     
     /**
+     * Segue 跳轉頁面
+     */
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "MsgPreview") {
+            let mVC = segue.destinationViewController as! MsgPreview
+            mVC.dictData = sender as! Dictionary<String, AnyObject>
+            mVC.strToday = strToday
+            
+            return
+        }
+        
+        return
+    }
+    
+    /**
      * 取得本頁面欄位資料, parent 調用
      */
-    func getPageData()->Dictionary<String, AnyObject>! {
+    func getPageData()->Dictionary<String, AnyObject>? {
         var dictRS: Dictionary<String, AnyObject> = [:]
+        
+        // 檢查欄位
+        if (edTitle.text == "") {
+            pubClass.popIsee(self, Msg: pubClass.getLang("message_err_title"))
+            return nil
+        }
+        
+        // 設定回傳資料
+        dictRS["sdate"] = dictData["sdate"]
+        dictRS["title"] = edTitle.text
+        dictRS["content"] = txtContent.text
+        dictRS["image"] = nil
+        
+        if let imgTmp = imgPict.image {
+            //dictRS["image"] = mImageClass.ImgToBase64(imgTmp)
+            dictRS["image"] = imgTmp
+        }
         
         return dictRS
     }
@@ -253,13 +295,18 @@ class MsgEditCont: UITableViewController, UIImagePickerControllerDelegate, UINav
         if (strImgStat == "org") {
             return
         }
-        self.recoverOrgImg()
+        self.recoverOrgImg(imgOrg)
     }
     
     /**
      * act, 點取 '發送預覽'
      */
     @IBAction func actPreview(sender: UIButton) {
+        let dictRS = getPageData()
+        
+        if (dictRS != nil) {
+            self.performSegueWithIdentifier("MsgPreview", sender: dictRS)
+        }
     }
     
 }

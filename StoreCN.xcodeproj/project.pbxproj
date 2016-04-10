@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4202ED3E1CBA067700C52F14 /* MsgPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4202ED3D1CBA067700C52F14 /* MsgPreview.swift */; };
+		4202ED401CBA091700C52F14 /* MsgPreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4202ED3F1CBA091700C52F14 /* MsgPreviewCell.swift */; };
+		4202ED421CBA345300C52F14 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4202ED411CBA345300C52F14 /* Social.framework */; };
 		420607B91CB569B30081999A /* HealthItemEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420607B81CB569B30081999A /* HealthItemEdit.swift */; };
 		428AA8F31CB258A500908FB5 /* CourseList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428AA8ED1CB258A500908FB5 /* CourseList.swift */; };
 		428AA8F41CB258A500908FB5 /* CourseListAll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428AA8EE1CB258A500908FB5 /* CourseListAll.swift */; };
@@ -257,6 +260,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4202ED3D1CBA067700C52F14 /* MsgPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MsgPreview.swift; path = Message/MsgPreview.swift; sourceTree = "<group>"; };
+		4202ED3F1CBA091700C52F14 /* MsgPreviewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MsgPreviewCell.swift; path = Message/MsgPreviewCell.swift; sourceTree = "<group>"; };
+		4202ED411CBA345300C52F14 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		420607B81CB569B30081999A /* HealthItemEdit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HealthItemEdit.swift; path = Health/HealthItemEdit.swift; sourceTree = "<group>"; };
 		428AA8ED1CB258A500908FB5 /* CourseList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CourseList.swift; path = CourseMain/CourseList.swift; sourceTree = "<group>"; };
 		428AA8EE1CB258A500908FB5 /* CourseListAll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CourseListAll.swift; path = CourseMain/CourseListAll.swift; sourceTree = "<group>"; };
@@ -516,6 +522,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4202ED421CBA345300C52F14 /* Social.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -584,6 +591,7 @@
 			isa = PBXGroup;
 			children = (
 				D7037A511C58BB8B002A955E /* StoreCN */,
+				4202ED411CBA345300C52F14 /* Social.framework */,
 				D7037A501C58BB8B002A955E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -858,6 +866,8 @@
 				D74A60581C8D32B300946118 /* MsgAddContainer.swift */,
 				D74A60561C8D17F600946118 /* MsgEdit.swift */,
 				42EB21A61CB803A000D71A8C /* MsgEditCont.swift */,
+				4202ED3D1CBA067700C52F14 /* MsgPreview.swift */,
+				4202ED3F1CBA091700C52F14 /* MsgPreviewCell.swift */,
 			);
 			name = Message;
 			sourceTree = "<group>";
@@ -1123,6 +1133,7 @@
 				D7150E431C5C6E8000C9FE8B /* MemberAdEd.swift in Sources */,
 				D713FCB01CB4AB7C0015434E /* MemberCourseListCell.swift in Sources */,
 				42FD09E11C841E0D00ADAD4C /* PickerDateTime.swift in Sources */,
+				4202ED3E1CBA067700C52F14 /* MsgPreview.swift in Sources */,
 				D72E98251C9154B500DA9FA3 /* ConfigCourse.swift in Sources */,
 				D74A60551C8D165D00946118 /* MsgAdd.swift in Sources */,
 				D74652071C5CA85900190EF6 /* PickerNumber.swift in Sources */,
@@ -1205,6 +1216,7 @@
 				D7F092261C89782E005D8C96 /* HealthWitnessListColtViewCell.swift in Sources */,
 				D710A0871C8EC3A900264CEB /* AnalyDataMain.swift in Sources */,
 				D728A26C1C8138B100B93B38 /* PurchaseListDetailCell.swift in Sources */,
+				4202ED401CBA091700C52F14 /* MsgPreviewCell.swift in Sources */,
 				D74A60531C8D11D500946118 /* MsgListCell.swift in Sources */,
 				D72E98231C91523300DA9FA3 /* ConfigProfile.swift in Sources */,
 				D74B4B921C9FCBE0001F1176 /* TestingContMain.swift in Sources */,
