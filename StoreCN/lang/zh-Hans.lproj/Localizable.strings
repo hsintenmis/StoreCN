@@ -121,6 +121,7 @@
 "member_err_age" = "年龄错误!";
 "member_err_selpictfirst" = "請選擇圖片!";
 "member_headpcituploadok" = "會員圖片上傳完成!";
+"member_delalertmsg" = "該會員相關的療程,購貨等等的資料會全部刪除!\n請再次確認是否刪除指定的會員?!";
 
 "course_nodata" = "没有疗程资料";
 "course_nobuy" = "未购买疗程";

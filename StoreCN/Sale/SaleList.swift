@@ -75,6 +75,7 @@ class SaleList: UITableViewController, PubClassDelegate {
             } else {
                 self.aryPurchaseData = []
                 self.labNoData.alpha = 1.0
+                self.currIndexPath = nil
             }
             
             self.tableData.reloadData()

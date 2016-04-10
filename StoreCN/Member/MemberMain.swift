@@ -250,6 +250,70 @@ class MemberMain: UIViewController, MemberMainPagerDelegate, PubClassDelegate {
     }
     
     /**
+     * act, 點取 '刪除會員' button
+     */
+    @IBAction func actDel(sender: UIButton) {
+        pubClass.popConfirm(self, aryMsg: [pubClass.getLang("systemwarring"), pubClass.getLang("member_delalertmsg")], withHandlerYes: {self.delMember()}, withHandlerNo: {})
+        
+        return
+    }
+    
+    /**
+    * 刪除會員程序
+    */
+    private func delMember() {
+        var dictArg0: Dictionary<String, String> = [:]
+        dictArg0["id"] = dictMember["memberid"] as? String
+        dictArg0["mode"] = "edit"
+        dictArg0["del"] = "Y"
+
+        // http 連線參數設定, 產生 'arg0' JSON string
+        var dictParm: Dictionary<String, String> = [:]
+        dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
+        dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
+        dictParm["page"] = "member"
+        dictParm["act"] = "member_senddata"
+        
+        do {
+            let jobjData = try
+                NSJSONSerialization.dataWithJSONObject(dictArg0, options: NSJSONWritingOptions(rawValue: 0))
+            let jsonString = NSString(data: jobjData, encoding: NSUTF8StringEncoding)! as String
+            
+            dictParm["arg0"] = jsonString
+        } catch {
+            pubClass.popIsee(self, Msg: pubClass.getLang("err_trylatermsg"), withHandler: {self.dismissViewControllerAnimated(true, completion: nil)})
+            
+            return
+        }
+        
+        // HTTP 開始連線, 連線完成後跳離
+        self.pubClass.HTTPConn(self, ConnParm: dictParm, callBack: {
+            (dictHTTPSRS: Dictionary<String, AnyObject>)->Void in
+           
+            let bolRS = dictHTTPSRS["result"] as! Bool
+            let dictData = dictHTTPSRS["data"]!["content"]!
+            var strMsg = self.pubClass.getLang("err_trylatermsg")
+            
+            
+            if (bolRS == true) {
+                strMsg = self.pubClass.getLang("datadelcompleted")
+                if let strTmp = dictData!["msg"] as? String {
+                    if (strTmp != "") {
+                        strMsg = strTmp
+                    }
+                }
+            }
+
+            self.delegate?.PageNeedReload!(true)
+            self.pubClass.popIsee(self, Msg: strMsg, withHandler: {
+                self.dismissViewControllerAnimated(true, completion: nil)
+            })
+        })
+        
+        return
+    }
+    
+    /**
      * act, 點取 '返回' button
      */
     @IBAction func actBack(sender: UIBarButtonItem) {

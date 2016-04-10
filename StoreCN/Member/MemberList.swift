@@ -103,6 +103,7 @@ class MemberList: UIViewController, PubMemberSelectDelegate, PubClassDelegate {
         if let tmpData = dictData["data"] as? Array<Dictionary<String, AnyObject>> {
             aryMember = tmpData
         } else {
+            currIndexPath = nil
             pubClass.popIsee(self, Msg: pubClass.getLang("member_nodataaddfirst"))
             
             return

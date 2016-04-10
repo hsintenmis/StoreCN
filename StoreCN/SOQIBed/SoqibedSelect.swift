@@ -78,6 +78,7 @@ class SoqibedSelect: UITableViewController, PubClassDelegate {
             } else {
                 self.arySoqibedData = []
                 self.labNoData.alpha = 1.0
+                self.currIndexPath = nil
             }
             
             self.tableData.reloadData()

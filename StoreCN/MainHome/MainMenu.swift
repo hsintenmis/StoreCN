@@ -174,16 +174,7 @@ class MainMenu: UIViewController {
 
         // 會員列表
         if (strItem == "member") {
-            var strIdentName = ""
-            if (strItem == "member") {
-                strIdentName = "member_list"
-            } else if (strItem == "config") {
-                strIdentName = "SysConfigMain"
-            } else {
-                return
-            }
-            
-            self.performSegueWithIdentifier(strIdentName, sender: nil)
+            self.performSegueWithIdentifier("MemberList", sender: nil)
             return
         }
         
