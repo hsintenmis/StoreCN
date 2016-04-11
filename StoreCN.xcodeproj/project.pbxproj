@@ -220,6 +220,16 @@
 		D74B4B9D1C9FEA1A001F1176 /* TestingMemberSel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74B4B9C1C9FEA1A001F1176 /* TestingMemberSel.swift */; };
 		D74BC2B61CACF165000828D5 /* MemberHealth.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74BC2B51CACF165000828D5 /* MemberHealth.swift */; };
 		D74BC2B81CACF613000828D5 /* MemberHealthWeb.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74BC2B71CACF613000828D5 /* MemberHealthWeb.swift */; };
+		D7527BB91CBB47C20061D70E /* RemindList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7527BB81CBB47C20061D70E /* RemindList.swift */; };
+		D7527BBB1CBB50930061D70E /* RemindCourseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7527BBA1CBB50930061D70E /* RemindCourseCell.swift */; };
+		D7527BBD1CBB50AC0061D70E /* RemindStockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7527BBC1CBB50AC0061D70E /* RemindStockCell.swift */; };
+		D7527BBF1CBB67680061D70E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7527BBE1CBB67680061D70E /* SystemConfiguration.framework */; };
+		D7527BCA1CBB68660061D70E /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D7527BC51CBB68660061D70E /* libWeChatSDK.a */; };
+		D7527BCB1CBB68660061D70E /* read_me.txt in Resources */ = {isa = PBXBuildFile; fileRef = D7527BC61CBB68660061D70E /* read_me.txt */; };
+		D7527BCE1CBB6CF10061D70E /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7527BCD1CBB6CF10061D70E /* CoreTelephony.framework */; };
+		D7527BD01CBB6D1E0061D70E /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D7527BCF1CBB6D1E0061D70E /* libc++.tbd */; };
+		D7527BD21CBB6D510061D70E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D7527BD11CBB6D510061D70E /* libz.tbd */; };
+		D7527BD41CBB6D610061D70E /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D7527BD31CBB6D610061D70E /* libsqlite3.0.tbd */; };
 		D7553E9A1CAA5F73007A323F /* RecordDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7553E971CAA5F73007A323F /* RecordDetail.swift */; };
 		D7553E9B1CAA5F73007A323F /* RecordDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7553E981CAA5F73007A323F /* RecordDetailCell.swift */; };
 		D7553E9C1CAA5F73007A323F /* RecordDetailTxt.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7553E991CAA5F73007A323F /* RecordDetailTxt.swift */; };
@@ -478,6 +488,20 @@
 		D74B4B9C1C9FEA1A001F1176 /* TestingMemberSel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestingMemberSel.swift; path = Testing/TestingMemberSel.swift; sourceTree = "<group>"; };
 		D74BC2B51CACF165000828D5 /* MemberHealth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberHealth.swift; path = Member/MemberHealth.swift; sourceTree = "<group>"; };
 		D74BC2B71CACF613000828D5 /* MemberHealthWeb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberHealthWeb.swift; path = Member/MemberHealthWeb.swift; sourceTree = "<group>"; };
+		D7527BB81CBB47C20061D70E /* RemindList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RemindList.swift; path = MainHome/RemindList.swift; sourceTree = "<group>"; };
+		D7527BBA1CBB50930061D70E /* RemindCourseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RemindCourseCell.swift; path = MainHome/RemindCourseCell.swift; sourceTree = "<group>"; };
+		D7527BBC1CBB50AC0061D70E /* RemindStockCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RemindStockCell.swift; path = MainHome/RemindStockCell.swift; sourceTree = "<group>"; };
+		D7527BBE1CBB67680061D70E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		D7527BC51CBB68660061D70E /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		D7527BC61CBB68660061D70E /* read_me.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = read_me.txt; sourceTree = "<group>"; };
+		D7527BC71CBB68660061D70E /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
+		D7527BC81CBB68660061D70E /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		D7527BC91CBB68660061D70E /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		D7527BCC1CBB6B480061D70E /* bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = bridge.h; path = LibThirdPart/bridge.h; sourceTree = "<group>"; };
+		D7527BCD1CBB6CF10061D70E /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		D7527BCF1CBB6D1E0061D70E /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		D7527BD11CBB6D510061D70E /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		D7527BD31CBB6D610061D70E /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		D7553E971CAA5F73007A323F /* RecordDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecordDetail.swift; path = Mead/RecordDetail.swift; sourceTree = "<group>"; };
 		D7553E981CAA5F73007A323F /* RecordDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecordDetailCell.swift; path = Mead/RecordDetailCell.swift; sourceTree = "<group>"; };
 		D7553E991CAA5F73007A323F /* RecordDetailTxt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecordDetailTxt.swift; path = Mead/RecordDetailTxt.swift; sourceTree = "<group>"; };
@@ -522,7 +546,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7527BD41CBB6D610061D70E /* libsqlite3.0.tbd in Frameworks */,
+				D7527BD21CBB6D510061D70E /* libz.tbd in Frameworks */,
+				D7527BD01CBB6D1E0061D70E /* libc++.tbd in Frameworks */,
+				D7527BCE1CBB6CF10061D70E /* CoreTelephony.framework in Frameworks */,
+				D7527BBF1CBB67680061D70E /* SystemConfiguration.framework in Frameworks */,
 				4202ED421CBA345300C52F14 /* Social.framework in Frameworks */,
+				D7527BCA1CBB68660061D70E /* libWeChatSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -591,7 +621,6 @@
 			isa = PBXGroup;
 			children = (
 				D7037A511C58BB8B002A955E /* StoreCN */,
-				4202ED411CBA345300C52F14 /* Social.framework */,
 				D7037A501C58BB8B002A955E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -627,6 +656,7 @@
 				D7037A861C58C726002A955E /* image */,
 				D7037A7B1C58C4DA002A955E /* lang */,
 				D7037A641C58BCB0002A955E /* SysFile */,
+				D7527BC31CBB68490061D70E /* LibThirdPart */,
 				D75F0F6A1CA90248009287A7 /* pict_testing */,
 				D7072BA11C62F04D00A6DDF5 /* html */,
 			);
@@ -668,6 +698,9 @@
 				D7037A691C58BFB5002A955E /* MainLogin.swift */,
 				D7FB953B1C59F58C00B48F57 /* MainMenu.swift */,
 				D7496D191C5B343200B75D6A /* MainMenuColtViewCell.swift */,
+				D7527BB81CBB47C20061D70E /* RemindList.swift */,
+				D7527BBA1CBB50930061D70E /* RemindCourseCell.swift */,
+				D7527BBC1CBB50AC0061D70E /* RemindStockCell.swift */,
 			);
 			name = MainHome;
 			sourceTree = "<group>";
@@ -921,6 +954,34 @@
 			name = Health;
 			sourceTree = "<group>";
 		};
+		D7527BC31CBB68490061D70E /* LibThirdPart */ = {
+			isa = PBXGroup;
+			children = (
+				D7527BCC1CBB6B480061D70E /* bridge.h */,
+				D7527BCF1CBB6D1E0061D70E /* libc++.tbd */,
+				D7527BD11CBB6D510061D70E /* libz.tbd */,
+				D7527BD31CBB6D610061D70E /* libsqlite3.0.tbd */,
+				D7527BCD1CBB6CF10061D70E /* CoreTelephony.framework */,
+				D7527BBE1CBB67680061D70E /* SystemConfiguration.framework */,
+				4202ED411CBA345300C52F14 /* Social.framework */,
+				D7527BC41CBB68660061D70E /* WeChat */,
+			);
+			name = LibThirdPart;
+			sourceTree = "<group>";
+		};
+		D7527BC41CBB68660061D70E /* WeChat */ = {
+			isa = PBXGroup;
+			children = (
+				D7527BC51CBB68660061D70E /* libWeChatSDK.a */,
+				D7527BC61CBB68660061D70E /* read_me.txt */,
+				D7527BC71CBB68660061D70E /* WechatAuthSDK.h */,
+				D7527BC81CBB68660061D70E /* WXApi.h */,
+				D7527BC91CBB68660061D70E /* WXApiObject.h */,
+			);
+			name = WeChat;
+			path = LibThirdPart/WeChat;
+			sourceTree = "<group>";
+		};
 		D75F0F721CA915D8009287A7 /* Mead */ = {
 			isa = PBXGroup;
 			children = (
@@ -1036,6 +1097,7 @@
 				D7037AEE1C58C726002A955E /* camera_shutter.png in Resources */,
 				D7037AE01C58C726002A955E /* arrow_left02.png in Resources */,
 				D7037B281C58C726002A955E /* menu_testing.png in Resources */,
+				D7527BCB1CBB68660061D70E /* read_me.txt in Resources */,
 				D710A07B1C8E8B6B00264CEB /* menu_analydata.png in Resources */,
 				D7037B011C58C726002A955E /* homelogo_002.png in Resources */,
 				D7037A811C58C4DA002A955E /* Localizable.strings in Resources */,
@@ -1176,9 +1238,11 @@
 				D71DFD081C7C0EB40024BB59 /* Stock.swift in Sources */,
 				D7553E9C1CAA5F73007A323F /* RecordDetailTxt.swift in Sources */,
 				4298BEA21CB16EAD007EE389 /* SaleDetailEditCont.swift in Sources */,
+				D7527BBD1CBB50AC0061D70E /* RemindStockCell.swift in Sources */,
 				D72E982D1C91719900DA9FA3 /* ConfigCourseEdit.swift in Sources */,
 				4298BEA01CB16EAD007EE389 /* SaleDetailCell.swift in Sources */,
 				D7553E9A1CAA5F73007A323F /* RecordDetail.swift in Sources */,
+				D7527BB91CBB47C20061D70E /* RemindList.swift in Sources */,
 				D705CE431C8FC85800CC9303 /* AnalyDataDailyCell.swift in Sources */,
 				D7EF7CA51CB62D5A00A7C1FF /* SaleReturnList.swift in Sources */,
 				D74B4B8E1C9FCB14001F1176 /* TestingDevLiist.swift in Sources */,
@@ -1226,6 +1290,7 @@
 				D705CE411C8FC2FF00CC9303 /* PubYYMMColtCell.swift in Sources */,
 				D72BA3371C882EE80028898D /* StaffBenefitDetail.swift in Sources */,
 				D74B4B991C9FD4DA001F1176 /* HealthDataInit.swift in Sources */,
+				D7527BBB1CBB50930061D70E /* RemindCourseCell.swift in Sources */,
 				D7EDE8861C6081B800665542 /* MemberMainColtViewCell.swift in Sources */,
 				D7EDE8841C60733200665542 /* MemberMainPager.swift in Sources */,
 				D710A0851C8EB9F700264CEB /* AnalyDataDaily.swift in Sources */,
@@ -1380,10 +1445,24 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/StoreCN/LibThirdPart/ShareSDK",
+					"$(PROJECT_DIR)/StoreCN/LibThirdPart/ShareSDK/Support/Optional",
+					"$(PROJECT_DIR)/StoreCN/LibThirdPart/ShareSDK/Support/PlatformSDK/QQSDK",
+					"$(PROJECT_DIR)/StoreCN/LibThirdPart/ShareSDK/Support/Required",
+				);
 				INFOPLIST_FILE = StoreCN/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/StoreCN/LibThirdPart/WeChat",
+					"$(PROJECT_DIR)/StoreCN/LibThirdPart/ShareSDK/Support/PlatformSDK/SinaWeiboSDK",
+					"$(PROJECT_DIR)/StoreCN/LibThirdPart/ShareSDK/Support/PlatformSDK/WeChatSDK",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = mysoqi.com.StoreCN;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = StoreCN/LibThirdPart/bridge.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -1393,10 +1472,24 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/StoreCN/LibThirdPart/ShareSDK",
+					"$(PROJECT_DIR)/StoreCN/LibThirdPart/ShareSDK/Support/Optional",
+					"$(PROJECT_DIR)/StoreCN/LibThirdPart/ShareSDK/Support/PlatformSDK/QQSDK",
+					"$(PROJECT_DIR)/StoreCN/LibThirdPart/ShareSDK/Support/Required",
+				);
 				INFOPLIST_FILE = StoreCN/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/StoreCN/LibThirdPart/WeChat",
+					"$(PROJECT_DIR)/StoreCN/LibThirdPart/ShareSDK/Support/PlatformSDK/SinaWeiboSDK",
+					"$(PROJECT_DIR)/StoreCN/LibThirdPart/ShareSDK/Support/PlatformSDK/WeChatSDK",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = mysoqi.com.StoreCN;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = StoreCN/LibThirdPart/bridge.h;
 			};
 			name = Release;
 		};

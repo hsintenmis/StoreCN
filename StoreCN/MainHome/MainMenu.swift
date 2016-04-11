@@ -13,6 +13,7 @@ class MainMenu: UIViewController {
     // @IBOutlet
     @IBOutlet weak var labTodayMsg: UILabel!
     @IBOutlet weak var colviewMenu: UICollectionView!
+    @IBOutlet weak var btnRemind: UIButton!
 
     // common property
     private let pubClass = PubClass()
@@ -28,6 +29,7 @@ class MainMenu: UIViewController {
     private var strToday = ""
     private var strTodayMsg = ""
     private var currMenuIndexPath: NSIndexPath?
+    private var dictRemind: Dictionary<String, AnyObject> = [:]  // 今日提醒全部資料
 
     /**
      * View Load 程序
@@ -71,6 +73,7 @@ class MainMenu: UIViewController {
         mParam["act"] = "homepage_remindall"
         
         // HTTP 開始連線
+        btnRemind.enabled = false
         pubClass.HTTPConn(self, ConnParm: mParam, callBack: HttpResponChk)
     }
     
@@ -105,6 +108,13 @@ class MainMenu: UIViewController {
         // 產生'今日提醒文字'
         strTodayMsg = String(format: pubClass.getLang("FMT_todayinfo"), arguments: [aryTodayCourse.count, aryExpire.count, aryStock.count])
         labTodayMsg.text = strTodayMsg
+        
+        // 產生今日提醒全部資料的 dict array data
+        dictRemind["reser"] = aryTodayCourse
+        dictRemind["course"] = aryExpire
+        dictRemind["stock"] = aryStock
+        
+        btnRemind.enabled = true
     }
     
     /**
@@ -425,7 +435,15 @@ class MainMenu: UIViewController {
      * Segue 跳轉頁面
      */
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        //let strIdent = segue.identifier
+        let strIdent = segue.identifier
+        
+        // 今日提醒列表
+        if (strIdent == "RemindList") {
+            let mVC = segue.destinationViewController as! RemindList
+            mVC.dictAllData = self.dictRemind
+            mVC.strToday = strToday
+            return
+        }
         
         return
     }

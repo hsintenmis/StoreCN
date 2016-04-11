@@ -247,10 +247,13 @@ class MsgEditCont: UITableViewController, UIImagePickerControllerDelegate, UINav
         }
         
         // 設定回傳資料
+        dictRS["index_id"] = dictData["index_id"]
         dictRS["sdate"] = dictData["sdate"]
         dictRS["title"] = edTitle.text
         dictRS["content"] = txtContent.text
+        dictRS["type"] = (swchType.on == true) ? "pub" : "draft"
         dictRS["image"] = nil
+        dictRS["mime"] = "png"
         
         if let imgTmp = imgPict.image {
             //dictRS["image"] = mImageClass.ImgToBase64(imgTmp)

@@ -8,7 +8,7 @@ import Foundation
 /**
  * 訊息發布列表
  */
-class MsgList: UIViewController {
+class MsgList: UIViewController, PubClassDelegate {
     
     // @IBOutlet
     @IBOutlet weak var tableData: UITableView!
@@ -28,8 +28,8 @@ class MsgList: UIViewController {
     private var bolReload = true // 頁面是否需要 http reload
     
     /**
-    * View Load 程序
-    */
+     * View Load 程序
+     */
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,11 +38,21 @@ class MsgList: UIViewController {
         tableData.rowHeight = UITableViewAutomaticDimension
     }
     
+    /**
+     * viewDidAppear 程序
+     */
     override func viewDidAppear(animated: Bool) {
         if (bolReload) {
-            reConnHTTP()
             bolReload = false
+            reConnHTTP()
         }
+    }
+    
+    /**
+     * #mark: PubClassDelegate
+     */
+    func PageNeedReload(needReload: Bool) {
+        bolReload = true
     }
     
     /**
@@ -213,6 +223,7 @@ class MsgList: UIViewController {
         if (segue.identifier == "MsgAdd") {
             let mVC = segue.destinationViewController as! MsgAdd
             mVC.strToday = strToday
+            mVC.delegate = self
             
             return
         }
@@ -221,6 +232,7 @@ class MsgList: UIViewController {
             let mVC = segue.destinationViewController as! MsgEdit
             mVC.strToday = strToday
             mVC.dictData = sender as! Dictionary<String, AnyObject>
+            mVC.delegate = self
             
             return
         }

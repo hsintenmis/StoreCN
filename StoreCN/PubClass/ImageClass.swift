@@ -119,27 +119,25 @@ class ImageClass {
         let task = NSURLSession.sharedSession().dataTaskWithURL( NSURL(string: strURL)!, completionHandler:{ (mNSData, mRespon, mNSErr) -> Void in
             
             // http 回傳代碼, 200=OK
-            var mImage = UIImage()
-            
             if let httpResponse = mRespon as? NSHTTPURLResponse {
                 if (Int(httpResponse.statusCode) == 200) {
                     
                     // 若取得 'stream' data, 設定到 imageView
                     if let imgTmp = UIImage(data: mNSData!) {
-                        mImage = imgTmp
+                        // 關閉 'vcPopLoading'
+                        dispatch_async(dispatch_get_main_queue(), {
+                            vcPopLoading.dismissViewControllerAnimated(true, completion: {
+                                callBack(NewImage: imgTmp)
+                            })
+                        })
                     }
-                    /*
-                    if let mData = mNSData {
-                        mImage = UIImage(data: mData)!
-                    }
-                    */
                 }
             }
             
             // 關閉 'vcPopLoading'
             dispatch_async(dispatch_get_main_queue(), {
                 vcPopLoading.dismissViewControllerAnimated(true, completion: {
-                    callBack(NewImage: mImage)
+                    callBack(NewImage: nil)
                 })
             })
         })

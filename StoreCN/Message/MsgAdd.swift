@@ -9,6 +9,8 @@ import Foundation
  * 最新消息，社群發佈訊息新增程序，有上傳圖片
  */
 class MsgAdd: UIViewController {
+    // delegate
+    var delegate = PubClassDelegate?()
     
     // @IBOutlet
     @IBOutlet weak var contView: UIView!
@@ -74,7 +76,8 @@ class MsgAdd: UIViewController {
         do {
             let jobjData = try
                 NSJSONSerialization.dataWithJSONObject(dictArg0, options: NSJSONWritingOptions(rawValue: 0))
-            let jsonString = NSString(data: jobjData, encoding: NSUTF8StringEncoding)! as String
+            //let jsonString = NSString(data: jobjData, encoding: NSUTF8StringEncoding)! as String
+            let jsonString = NSString(data: jobjData, encoding: NSASCIIStringEncoding)! as String
             
             dictParm["arg0"] = jsonString
         } catch {
@@ -90,6 +93,7 @@ class MsgAdd: UIViewController {
             let bolRS = dictHTTPSRS["result"] as! Bool
             let strMsg = (bolRS == true) ? self.pubClass.getLang("datasavecompleted") : self.pubClass.getLang("err_trylatermsg")
             
+            self.delegate?.PageNeedReload!(true)
             self.pubClass.popIsee(self, Msg: strMsg, withHandler: {
                 self.dismissViewControllerAnimated(true, completion: nil)
             })

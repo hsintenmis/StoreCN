@@ -161,10 +161,11 @@ class MsgAddContainer: UITableViewController, UIImagePickerControllerDelegate, U
         dictRS["content"] = txtContent.text
         dictRS["type"] = (swchType.on == true) ? "pub" : "draft"
         dictRS["title"] = edTitle.text
+        dictRS["mime"] = "png"
         dictRS["image"] = ""
         
         if let imgTmp = imgPict.image {
-             dictRS["image"] = mImageClass.ImgToBase64(imgTmp)
+            dictRS["image"] = mImageClass.ImgToBase64(imgTmp)
         }
         
         return dictRS

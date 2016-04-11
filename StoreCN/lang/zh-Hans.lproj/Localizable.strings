@@ -520,7 +520,11 @@
 "mead_guestcantsave" = "访客资料不能储存!";
 "mead_testingdate" = "检测日期";
 "mead_selmemberfirst" = "请先选择会员!";
-"mead_testingvalokmsg" = "检测结果正常 ！";
+"mead_testingvalokmsg" = "检测结果正常!";
 "mead_savefirstmsg" = "请先储存检测资料!";
 "mead_valalreadysave" = "检测资料已经储存过了!\n若要再检测其他穴位,请点取\n[ 重新检测 ]";
 "mead_changmembermsg" = "更改会员, 已检测的资料将全部清除!\n请再次确认!";
+
+"remind_title_reser" = "今日預約療程";
+"remind_title_course" = "會員購買療程快到期";
+"remind_title_stock" = "庫存不足商品";
