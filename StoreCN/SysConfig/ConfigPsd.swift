@@ -1,5 +1,5 @@
 //
-//
+// http:// cnwww.mysoqi.com/merit_game/API.php?data[func]=change_pass&data[acc]=ASH00100000&data[psd]=hsinten&data[newpsd]=newpassword
 //
 
 import UIKit
@@ -74,7 +74,16 @@ class ConfigPsd: UIViewController {
      * 資料儲存程序，完成後跳離
      */
     private func saveData() {
-        // http 連線
+        // 產生 http post data, http 連線儲存後跳離
+        var dictParm: Dictionary<String, String> = [:]
+        dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
+        dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
+        dictParm["newpsd"] = edNew.text
+        
+        // HTTP 開始連線
+        let strURL = http:// cnwww.mysoqi.com/merit_game/API.php?
+            
+        self.pubClass.HTTPConnWithURL(self, , withURL: ConnParm: dictParm, callBack: self.HttpSaveResponChk)
         
         // 儲存成功，重新設定 app 全域/prefer密碼
         /*

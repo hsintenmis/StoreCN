@@ -772,6 +772,9 @@
                                     <constraint firstAttribute="height" constant="48" id="SuU-Lp-3Jz"/>
                                 </constraints>
                                 <state key="normal" image="msgicon_line.png"/>
+                                <connections>
+                                    <action selector="actLine:" destination="AM2-Gr-9Pi" eventType="touchUpInside" id="99C-Se-8zB"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Line" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8gX-52-FcH">
                                 <rect key="frame" x="251" y="135" width="24" height="15"/>

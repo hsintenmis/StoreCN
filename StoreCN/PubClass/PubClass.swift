@@ -33,6 +33,9 @@ class PubClass {
     /** HTE 網站 http://cnwww.mysoqi.com/storecn/ */
     let D_CNWWWURL = "http://cnwww.mysoqi.com/storecn/"
     
+    /** 直銷商修改密碼，php server 連線 PGSQL */
+    let D_PSDURL = "http://cnwww.mysoqi.com/merit_game/"
+    
     // AppDelegate
     var AppDelg: AppDelegate!
     
@@ -239,19 +242,32 @@ class PubClass {
     
     /**
      * HTTP 連線, 開啟 'PopLoading' AlertView
+     * 使用 APP 預設 URL: 'D_WEBURL'
      */
     func HTTPConn(mVC: UIViewController, ConnParm dictParm: Dictionary<String, String>, callBack: (Dictionary<String, AnyObject>)->Void) {
         
         let vcPopLoading = self.getPopLoading(nil)
         mVC.presentViewController(vcPopLoading, animated: true, completion:{
-            self.taskHTTPConn(dictParm, AlertVC: vcPopLoading, callBack: callBack, VC: mVC)
+            self.taskHTTPConn(dictParm, mURL: nil, AlertVC: vcPopLoading, callBack: callBack, VC: mVC)
+        })
+    }
+    
+    /**
+     * HTTP 連線, 開啟 'PopLoading' AlertView
+     * 帶入自訂的 URL
+     */
+    func HTTPConnWithURL(mVC: UIViewController, withURL strURL: String!, ConnParm dictParm: Dictionary<String, String>, callBack: (Dictionary<String, AnyObject>)->Void) {
+        
+        let vcPopLoading = self.getPopLoading(nil)
+        mVC.presentViewController(vcPopLoading, animated: true, completion:{
+            self.taskHTTPConn(dictParm, mURL: strURL, AlertVC: vcPopLoading, callBack: callBack, VC: mVC)
         })
     }
     
     /**
      * HTTP 連線, 使用 post 方式, 產生 'task' 使用閉包
      */
-    private func taskHTTPConn(dictParm: Dictionary<String, String>!, AlertVC vcPopLoading: UIAlertController, callBack: (Dictionary<String, AnyObject>)->Void, VC mVC: UIViewController) {
+    private func taskHTTPConn(dictParm: Dictionary<String, String>!, mURL: String?, AlertVC vcPopLoading: UIAlertController, callBack: (Dictionary<String, AnyObject>)->Void, VC mVC: UIViewController) {
         // 將 dict 參數轉為 string
         var strConnParm: String = "";
         var loopi = 0
@@ -265,7 +281,9 @@ class PubClass {
             }
         }
         // 產生 http Request
-        let mRequest = NSMutableURLRequest(URL: NSURL(string: self.D_WEBURL)!)
+        let strURL = (mURL != nil) ? mURL! : self.D_WEBURL
+        let mRequest = NSMutableURLRequest(URL: NSURL(string: strURL)!)
+        
         mRequest.HTTPBody = strConnParm.dataUsingEncoding(NSUTF8StringEncoding)
         mRequest.HTTPMethod = "POST"
         mRequest.timeoutInterval = 60

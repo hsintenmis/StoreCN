@@ -14,4 +14,9 @@
 #import "WXApi.h"
 #import "WXApiObject.h"
 
+// QQ SDK Lib
+#import <TencentOpenAPI/TencentOAuth.h>
+#import <TencentOpenAPI/QQApiInterface.h>
+#import <TencentOpenAPI/QQApiInterfaceObject.h>
+
 #endif /* bridge_h */

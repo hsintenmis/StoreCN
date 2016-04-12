@@ -178,6 +178,11 @@
 		D713FCB11CB4AB7C0015434E /* ReservListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D713FCAD1CB4AB7C0015434E /* ReservListCell.swift */; };
 		D713FCB31CB4AD170015434E /* CourseReservEditCont.swift in Sources */ = {isa = PBXBuildFile; fileRef = D713FCB21CB4AD170015434E /* CourseReservEditCont.swift */; };
 		D713FCB51CB4B8DE0015434E /* MemberAllCourseList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D713FCB41CB4B8DE0015434E /* MemberAllCourseList.swift */; };
+		D714C0351CBCC52A00FAAF60 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D714C0341CBCC52A00FAAF60 /* TencentOpenAPI.framework */; };
+		D714C0371CBCC56C00FAAF60 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D714C0361CBCC56C00FAAF60 /* libstdc++.tbd */; };
+		D714C0391CBCC59400FAAF60 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D714C0381CBCC59400FAAF60 /* CoreGraphics.framework */; };
+		D714C03B1CBCC5B400FAAF60 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D714C03A1CBCC5B400FAAF60 /* libiconv.tbd */; };
+		D714C03D1CBCC5C400FAAF60 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D714C03C1CBCC5C400FAAF60 /* Security.framework */; };
 		D7150E3F1C5C5B8E00C9FE8B /* MemberList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7150E3E1C5C5B8E00C9FE8B /* MemberList.swift */; };
 		D7150E431C5C6E8000C9FE8B /* MemberAdEd.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7150E421C5C6E8000C9FE8B /* MemberAdEd.swift */; };
 		D71DFD081C7C0EB40024BB59 /* Stock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71DFD071C7C0EB40024BB59 /* Stock.swift */; };
@@ -448,6 +453,11 @@
 		D713FCAD1CB4AB7C0015434E /* ReservListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReservListCell.swift; path = CourseMain/ReservListCell.swift; sourceTree = "<group>"; };
 		D713FCB21CB4AD170015434E /* CourseReservEditCont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CourseReservEditCont.swift; path = CourseMain/CourseReservEditCont.swift; sourceTree = "<group>"; };
 		D713FCB41CB4B8DE0015434E /* MemberAllCourseList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberAllCourseList.swift; path = CourseMain/MemberAllCourseList.swift; sourceTree = "<group>"; };
+		D714C0341CBCC52A00FAAF60 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
+		D714C0361CBCC56C00FAAF60 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
+		D714C0381CBCC59400FAAF60 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		D714C03A1CBCC5B400FAAF60 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
+		D714C03C1CBCC5C400FAAF60 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		D7150E3E1C5C5B8E00C9FE8B /* MemberList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberList.swift; path = Member/MemberList.swift; sourceTree = "<group>"; };
 		D7150E421C5C6E8000C9FE8B /* MemberAdEd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberAdEd.swift; path = Member/MemberAdEd.swift; sourceTree = "<group>"; };
 		D71DFD071C7C0EB40024BB59 /* Stock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Stock.swift; path = Product/Stock.swift; sourceTree = "<group>"; };
@@ -550,7 +560,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D714C03D1CBCC5C400FAAF60 /* Security.framework in Frameworks */,
+				D714C03B1CBCC5B400FAAF60 /* libiconv.tbd in Frameworks */,
+				D714C0391CBCC59400FAAF60 /* CoreGraphics.framework in Frameworks */,
+				D714C0371CBCC56C00FAAF60 /* libstdc++.tbd in Frameworks */,
 				D7527BD41CBB6D610061D70E /* libsqlite3.0.tbd in Frameworks */,
+				D714C0351CBCC52A00FAAF60 /* TencentOpenAPI.framework in Frameworks */,
 				D7527BD21CBB6D510061D70E /* libz.tbd in Frameworks */,
 				D7527BD01CBB6D1E0061D70E /* libc++.tbd in Frameworks */,
 				D7527BCE1CBB6CF10061D70E /* CoreTelephony.framework in Frameworks */,
@@ -812,6 +827,19 @@
 			path = image;
 			sourceTree = "<group>";
 		};
+		D714C0331CBCC52A00FAAF60 /* QQSDK2.9.5 */ = {
+			isa = PBXGroup;
+			children = (
+				D714C03A1CBCC5B400FAAF60 /* libiconv.tbd */,
+				D714C0361CBCC56C00FAAF60 /* libstdc++.tbd */,
+				D714C03C1CBCC5C400FAAF60 /* Security.framework */,
+				D714C0381CBCC59400FAAF60 /* CoreGraphics.framework */,
+				D714C0341CBCC52A00FAAF60 /* TencentOpenAPI.framework */,
+			);
+			name = QQSDK2.9.5;
+			path = LibThirdPart/QQSDK2.9.5;
+			sourceTree = "<group>";
+		};
 		D7496D1B1C5B4D9700B75D6A /* Member */ = {
 			isa = PBXGroup;
 			children = (
@@ -963,6 +991,7 @@
 		D7527BC31CBB68490061D70E /* LibThirdPart */ = {
 			isa = PBXGroup;
 			children = (
+				D714C0331CBCC52A00FAAF60 /* QQSDK2.9.5 */,
 				D7527BCC1CBB6B480061D70E /* bridge.h */,
 				D7527BCF1CBB6D1E0061D70E /* libc++.tbd */,
 				D7527BD11CBB6D510061D70E /* libz.tbd */,
@@ -1405,6 +1434,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				"OTHER_LDFLAGS[arch=*]" = "-fobjc-arc";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -1443,6 +1473,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				"OTHER_LDFLAGS[arch=*]" = "-fobjc-arc";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1459,6 +1490,7 @@
 					"$(PROJECT_DIR)/StoreCN/LibThirdPart/ShareSDK/Support/Optional",
 					"$(PROJECT_DIR)/StoreCN/LibThirdPart/ShareSDK/Support/PlatformSDK/QQSDK",
 					"$(PROJECT_DIR)/StoreCN/LibThirdPart/ShareSDK/Support/Required",
+					"$(PROJECT_DIR)/StoreCN/LibThirdPart/QQSDK2.9.5",
 				);
 				INFOPLIST_FILE = StoreCN/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1486,6 +1518,7 @@
 					"$(PROJECT_DIR)/StoreCN/LibThirdPart/ShareSDK/Support/Optional",
 					"$(PROJECT_DIR)/StoreCN/LibThirdPart/ShareSDK/Support/PlatformSDK/QQSDK",
 					"$(PROJECT_DIR)/StoreCN/LibThirdPart/ShareSDK/Support/Required",
+					"$(PROJECT_DIR)/StoreCN/LibThirdPart/QQSDK2.9.5",
 				);
 				INFOPLIST_FILE = StoreCN/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

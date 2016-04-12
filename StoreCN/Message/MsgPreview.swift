@@ -10,7 +10,7 @@ import Social
 /**
  * 最新消息，發送預覽，分享第三方社群app
  */
-class MsgPreview: UIViewController, UIDocumentInteractionControllerDelegate, WXApiDelegate {
+class MsgPreview: UIViewController, WXApiDelegate, TencentSessionDelegate {
     
     // @IBOutlet
     @IBOutlet weak var tableList: UITableView!
@@ -23,9 +23,13 @@ class MsgPreview: UIViewController, UIDocumentInteractionControllerDelegate, WXA
     var dictData: Dictionary<String, AnyObject> = [:]
     
     // 其他參數設定
+    private let mImageClass = ImageClass()
     private var mVCDocument: UIDocumentInteractionController!
     
     // WeChat 相關參數
+    
+    // QQ 相關參數
+    private var tencentOAuth: TencentOAuth!
     
     /**
      * View Load 程序
@@ -35,6 +39,9 @@ class MsgPreview: UIViewController, UIDocumentInteractionControllerDelegate, WXA
         
         // WeChat 相關參數, 注册 app
         WXApi.registerApp("wxb4ba3c02aa476ea1", withDescription: "demo 2.0")
+        
+        // QQ 相關參數, 注册 app
+        tencentOAuth = TencentOAuth(appId: "222222", andDelegate: self)
         
         // TableCell 自動調整高度
         tableList.estimatedRowHeight = 200.0
@@ -88,10 +95,6 @@ class MsgPreview: UIViewController, UIDocumentInteractionControllerDelegate, WXA
      * Segue 跳轉頁面
      */
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if (segue.identifier == "MsgAddContainer") {
-            return
-        }
-        
         return
     }
     
@@ -101,13 +104,14 @@ class MsgPreview: UIViewController, UIDocumentInteractionControllerDelegate, WXA
     private func getCellViewImage() -> UIImage! {
         // 取得 'Cell' frame to Image
         let mCell = tableList.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0))!
-        //UIGraphicsBeginImageContext(mCell.frame.size)
         
         UIGraphicsBeginImageContextWithOptions(mCell.frame.size, false, 1.0)
         mCell.layer.renderInContext(UIGraphicsGetCurrentContext()!)
         
         let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIImageJPEGRepresentation(image, 1.0)
+        //UIImageJPEGRepresentation(image, 1.0)
+        UIImagePNGRepresentation(image)
+        
         UIGraphicsEndImageContext()
         
         return image
@@ -143,16 +147,51 @@ class MsgPreview: UIViewController, UIDocumentInteractionControllerDelegate, WXA
      * act, 點取 'QQ' button
      */
     @IBAction func actQQ(sender: UIButton) {
+        // 發送圖片
+        let image = self.getCellViewImage()
+        let imgPre = UIImageJPEGRepresentation(image!, 0)
+        let imgOrg = UIImageJPEGRepresentation(image, 1.0)
         
-        let activityViewController = UIActivityViewController(activityItems: [self.getCellViewImage()], applicationActivities: nil)
-        presentViewController(activityViewController, animated: true, completion: {})
+        // 分享到QQ
+        let imgObj = QQApiImageObject.objectWithData(imgOrg, previewImageData: imgPre, title: "Share", description: "Image") as! QQApiObject
+        let req = SendMessageToQQReq(content: imgObj)
+        QQApiInterface.sendReq(req)
+    }
+    
+    // MARK: QQ分享代理
+    /**
+     * #mark: TencentSessionDelegate
+     */
+    func tencentDidLogin() {
+        print("登录AccessToken : \(tencentOAuth.accessToken)")
+    }
+    
+    /**
+     * #mark: TencentSessionDelegate
+     */
+    func tencentDidNotLogin(cancelled: Bool) {
+        if cancelled { print("用户取消登录") }
+        else { print("等录失败") }
+    }
+    
+    /**
+     * #mark: TencentSessionDelegate
+     */
+    func tencentDidNotNetWork() {
+        print("无网络连接，请设置网络")
     }
     
     /**
      * act, 點取 'Line' button
      */
     @IBAction func actLine(sender: UIButton) {
-        
+        let image = self.getCellViewImage()
+        let data = NSData(data: UIImagePNGRepresentation(image!)! )
+        let mPastBD = UIPasteboard.generalPasteboard()
+        mPastBD.setData(data, forPasteboardType: "public.png")
+        let mNSURL = NSURL(string: "line://msg/image/" + mPastBD.name)
+        UIApplication.sharedApplication().openURL(mNSURL!)
+
         return
     }
     
@@ -162,5 +201,10 @@ class MsgPreview: UIViewController, UIDocumentInteractionControllerDelegate, WXA
     @IBAction func actBack(sender: UIBarButtonItem) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    /** QQ SDK use **/
+     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+        return TencentOAuth.HandleOpenURL(url)
+     }
     
 }
