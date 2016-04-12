@@ -35,7 +35,7 @@
 "fieldname_price" = "金额";
 "fieldname_invoiceid" = "订单编号";
 "fieldname_membername" = "会员名称";
-
+"device_cannotdial" = "您的設備無法撥號!";
 "password_err_org" = "原始密碼錯誤!";
 "password_err_new" = "新密碼錯誤!";
 
@@ -528,3 +528,5 @@
 "remind_title_reser" = "今日預約療程";
 "remind_title_course" = "會員購買療程快到期";
 "remind_title_stock" = "庫存不足商品";
+"FMT_remindsms_resver" = "今日预约的疗程提醒!时间为:%@,详细资料请开启健康精灵查看";
+"FMT_remindsms_course" = "疗程即将到期提醒!到期日为:%@,详细资料请开启健康精灵查看";

@@ -714,20 +714,45 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="微信" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L3L-I0-LDj">
-                                <rect key="frame" x="38" y="135" width="28" height="14"/>
+                            <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="btnWeChatFriend" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m7C-xe-31C" userLabel="btnWecaht0">
+                                <rect key="frame" x="101" y="79" width="48" height="48"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="14" id="geJ-pZ-FLe"/>
+                                    <constraint firstAttribute="height" constant="48" id="RCi-l8-LQu"/>
+                                    <constraint firstAttribute="width" constant="48" id="SMj-kc-jz6"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" image="msgicon_wechat.png"/>
+                                <connections>
+                                    <action selector="actWechat:" destination="AM2-Gr-9Pi" eventType="touchUpInside" id="7xs-ga-tvB"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="微信好友" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L3L-I0-LDj">
+                                <rect key="frame" x="101" y="135" width="48" height="15"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" red="0.18823529410000001" green="0.18823529410000001" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fnR-lN-gvI">
-                                <rect key="frame" x="136" y="79" width="48" height="48"/>
+                            <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="btnWeChatTimeLine" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="akB-ea-paO" userLabel="btnWecaht1">
+                                <rect key="frame" x="171" y="79" width="48" height="48"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="48" id="FO2-T2-69R"/>
-                                    <constraint firstAttribute="width" constant="48" id="hx9-os-2H6"/>
+                                    <constraint firstAttribute="height" constant="48" id="AM8-1b-JRS"/>
+                                    <constraint firstAttribute="width" constant="48" id="CgN-tl-Jhq"/>
+                                </constraints>
+                                <state key="normal" image="msgicon_wechat.png"/>
+                                <connections>
+                                    <action selector="actWechat:" destination="AM2-Gr-9Pi" eventType="touchUpInside" id="F3b-2v-e3g"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="微信朋友圈" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vfd-hd-I4W">
+                                <rect key="frame" x="165" y="135" width="60" height="15"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.18823529410000001" green="0.18823529410000001" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fnR-lN-gvI" userLabel="btnQQ">
+                                <rect key="frame" x="33" y="79" width="48" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="2In-cw-2wf"/>
+                                    <constraint firstAttribute="width" constant="48" id="Sjq-qd-OaS"/>
                                 </constraints>
                                 <state key="normal" image="msgicon_qq.png"/>
                                 <connections>
@@ -735,28 +760,22 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="QQ" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gmc-bD-iew">
-                                <rect key="frame" x="149" y="135" width="22" height="14"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="14" id="fCj-95-wA5"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <rect key="frame" x="48" y="135" width="19" height="15"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" red="0.18823529410000001" green="0.18823529410000001" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rfB-gh-zMb">
-                                <rect key="frame" x="244" y="79" width="48" height="48"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rfB-gh-zMb" userLabel="btnLine">
+                                <rect key="frame" x="239" y="79" width="48" height="48"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="48" id="XOD-fk-hd0"/>
-                                    <constraint firstAttribute="width" constant="48" id="s3S-8e-7tn"/>
+                                    <constraint firstAttribute="width" constant="48" id="G20-ZG-syZ"/>
+                                    <constraint firstAttribute="height" constant="48" id="SuU-Lp-3Jz"/>
                                 </constraints>
                                 <state key="normal" image="msgicon_line.png"/>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Line" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8gX-52-FcH">
-                                <rect key="frame" x="255" y="135" width="27" height="14"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="14" id="37h-Mf-vRU"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <rect key="frame" x="251" y="135" width="24" height="15"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" red="0.18823529410000001" green="0.18823529410000001" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -828,39 +847,32 @@
                                     <outlet property="delegate" destination="AM2-Gr-9Pi" id="NHf-99-htJ"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m7C-xe-31C">
-                                <rect key="frame" x="28" y="79" width="48" height="48"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="48" id="12H-Yv-gm6"/>
-                                    <constraint firstAttribute="height" constant="48" id="qC7-gk-7S2"/>
-                                </constraints>
-                                <state key="normal" image="msgicon_wechat.png"/>
-                                <connections>
-                                    <action selector="actWechat:" destination="AM2-Gr-9Pi" eventType="touchUpInside" id="7xs-ga-tvB"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="L3L-I0-LDj" firstAttribute="centerX" secondItem="m7C-xe-31C" secondAttribute="centerX" id="0Tu-Na-ovz"/>
+                            <constraint firstItem="vfd-hd-I4W" firstAttribute="centerY" secondItem="L3L-I0-LDj" secondAttribute="centerY" id="11G-OH-z89"/>
                             <constraint firstItem="LzV-sv-pZM" firstAttribute="trailing" secondItem="CKi-x0-1Fu" secondAttribute="trailing" id="1eJ-uu-3OU"/>
-                            <constraint firstItem="m7C-xe-31C" firstAttribute="centerY" secondItem="fnR-lN-gvI" secondAttribute="centerY" id="6LR-Hs-ZWY"/>
                             <constraint firstItem="CKi-x0-1Fu" firstAttribute="leading" secondItem="Qli-WX-TYq" secondAttribute="leadingMargin" constant="-18" id="7nL-fK-AEe"/>
-                            <constraint firstItem="fnR-lN-gvI" firstAttribute="centerX" secondItem="Qli-WX-TYq" secondAttribute="centerX" id="B03-vv-STR"/>
-                            <constraint firstItem="Gmc-bD-iew" firstAttribute="centerX" secondItem="fnR-lN-gvI" secondAttribute="centerX" id="Ddg-7x-AZl"/>
-                            <constraint firstItem="8gX-52-FcH" firstAttribute="centerX" secondItem="rfB-gh-zMb" secondAttribute="centerX" id="HxQ-D5-qZo"/>
-                            <constraint firstItem="rfB-gh-zMb" firstAttribute="trailing" secondItem="CKi-x0-1Fu" secondAttribute="trailing" constant="-30" id="MCa-W9-ohW"/>
+                            <constraint firstItem="8gX-52-FcH" firstAttribute="centerY" secondItem="L3L-I0-LDj" secondAttribute="centerY" id="B4b-m2-Chl"/>
+                            <constraint firstItem="akB-ea-paO" firstAttribute="centerX" secondItem="Qli-WX-TYq" secondAttribute="centerX" constant="35" id="ClB-iR-bfZ"/>
+                            <constraint firstItem="akB-ea-paO" firstAttribute="centerY" secondItem="m7C-xe-31C" secondAttribute="centerY" id="QQe-eE-ADQ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="CKi-x0-1Fu" secondAttribute="trailing" constant="-18" id="Qlx-4n-Veh"/>
+                            <constraint firstItem="m7C-xe-31C" firstAttribute="leading" secondItem="fnR-lN-gvI" secondAttribute="trailing" constant="20" id="Ry1-Gc-pNJ"/>
+                            <constraint firstItem="Gmc-bD-iew" firstAttribute="centerX" secondItem="fnR-lN-gvI" secondAttribute="centerX" id="S6j-EG-cwy"/>
                             <constraint firstItem="LzV-sv-pZM" firstAttribute="leading" secondItem="CKi-x0-1Fu" secondAttribute="leading" id="WMT-3D-ft2"/>
-                            <constraint firstItem="Gmc-bD-iew" firstAttribute="top" secondItem="fnR-lN-gvI" secondAttribute="bottom" constant="8" id="Xz9-9j-4gr"/>
-                            <constraint firstItem="m7C-xe-31C" firstAttribute="leading" secondItem="CKi-x0-1Fu" secondAttribute="leading" constant="30" id="aIc-fe-J5Z"/>
-                            <constraint firstItem="rfB-gh-zMb" firstAttribute="centerY" secondItem="fnR-lN-gvI" secondAttribute="centerY" id="beW-ox-LHI"/>
-                            <constraint firstItem="LzV-sv-pZM" firstAttribute="top" secondItem="Gmc-bD-iew" secondAttribute="bottom" constant="20" id="cAY-1E-MJF"/>
-                            <constraint firstItem="L3L-I0-LDj" firstAttribute="centerY" secondItem="Gmc-bD-iew" secondAttribute="centerY" id="cDR-AE-lfk"/>
-                            <constraint firstItem="fnR-lN-gvI" firstAttribute="top" secondItem="CKi-x0-1Fu" secondAttribute="bottom" constant="15" id="czj-Oy-yuR"/>
+                            <constraint firstItem="8gX-52-FcH" firstAttribute="centerX" secondItem="rfB-gh-zMb" secondAttribute="centerX" id="bK0-OR-hPV"/>
+                            <constraint firstItem="m7C-xe-31C" firstAttribute="centerX" secondItem="Qli-WX-TYq" secondAttribute="centerX" constant="-35" id="ctw-6p-UkT"/>
                             <constraint firstItem="CKi-x0-1Fu" firstAttribute="top" secondItem="cjS-iK-4rm" secondAttribute="bottom" id="fYv-wV-3kH"/>
+                            <constraint firstItem="rfB-gh-zMb" firstAttribute="centerY" secondItem="akB-ea-paO" secondAttribute="centerY" id="iKd-eV-qbv"/>
                             <constraint firstItem="jV2-fx-ggp" firstAttribute="top" secondItem="LzV-sv-pZM" secondAttribute="bottom" id="pLO-1N-oUH"/>
-                            <constraint firstItem="L3L-I0-LDj" firstAttribute="centerX" secondItem="m7C-xe-31C" secondAttribute="centerX" id="qUh-V6-MCD"/>
-                            <constraint firstItem="8gX-52-FcH" firstAttribute="centerY" secondItem="Gmc-bD-iew" secondAttribute="centerY" id="tFu-Sw-sMX"/>
+                            <constraint firstItem="m7C-xe-31C" firstAttribute="top" secondItem="CKi-x0-1Fu" secondAttribute="bottom" constant="15" id="pPv-gZ-84d"/>
+                            <constraint firstItem="vfd-hd-I4W" firstAttribute="centerX" secondItem="akB-ea-paO" secondAttribute="centerX" id="pgd-LL-pwi"/>
+                            <constraint firstItem="LzV-sv-pZM" firstAttribute="top" secondItem="L3L-I0-LDj" secondAttribute="bottom" constant="19" id="rN4-oR-n4l"/>
+                            <constraint firstItem="L3L-I0-LDj" firstAttribute="top" secondItem="m7C-xe-31C" secondAttribute="bottom" constant="8" id="uuJ-xS-F0F"/>
+                            <constraint firstItem="Gmc-bD-iew" firstAttribute="centerY" secondItem="L3L-I0-LDj" secondAttribute="centerY" id="wZI-4x-apt"/>
+                            <constraint firstItem="rfB-gh-zMb" firstAttribute="leading" secondItem="akB-ea-paO" secondAttribute="trailing" constant="20" id="xSH-d6-VgM"/>
+                            <constraint firstItem="fnR-lN-gvI" firstAttribute="centerY" secondItem="m7C-xe-31C" secondAttribute="centerY" id="y1V-LV-f19"/>
                         </constraints>
                     </view>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>

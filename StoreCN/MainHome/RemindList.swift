@@ -120,19 +120,29 @@ class RemindList: UIViewController {
      * UITableView, Cell 點取
      */
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
- 
-        //self.performSegueWithIdentifier("StaffAdEd", sender: aryData[indexPath.row])
+        if (strPageName == "stock") {
+            return
+        }
+        
+        self.performSegueWithIdentifier("RemindContact", sender: currTableData[indexPath.row])
     }
     
     /**
      * Segue 跳轉頁面
      */
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        /*
-        let mVC = segue.destinationViewController as! StaffAdEd
-        mVC.strMode = strMode
-        mVC.dictMember = sender as! Dictionary<String, AnyObject>
-        */
+        let strIdent = segue.identifier
+        
+        if (strIdent == "RemindContact") {
+            let mVC = segue.destinationViewController as! RemindContact
+            mVC.dictAllData = sender as! Dictionary<String, AnyObject>
+            mVC.strToday = strToday
+            mVC.strType = strPageName  // 辨識標記, 預約/到期 
+            
+            return
+        }
+        
+        return
     }
     
     /**

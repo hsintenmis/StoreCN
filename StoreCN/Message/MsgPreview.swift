@@ -26,8 +26,6 @@ class MsgPreview: UIViewController, UIDocumentInteractionControllerDelegate, WXA
     private var mVCDocument: UIDocumentInteractionController!
     
     // WeChat 相關參數
-    // WXSceneSession = 好友, WXSceneTimeline = 朋友圈
-    private var _scene = Int32(WXSceneSession.rawValue) //发送给好友还是朋友圈
     
     /**
      * View Load 程序
@@ -117,8 +115,11 @@ class MsgPreview: UIViewController, UIDocumentInteractionControllerDelegate, WXA
     
     /**
      * act, 點取 '微信' button
+     * 'WXSceneSession' = 好友, 'WXSceneTimeline' = 朋友圈
      */
     @IBAction func actWechat(sender: UIButton) {
+        let objType = (sender.restorationIdentifier == "btnWeChatFriend") ? WXSceneSession : WXSceneTimeline
+        
         let message =  WXMediaMessage()
         
         // 取得 'Cell' frame to Image
@@ -132,7 +133,7 @@ class MsgPreview: UIViewController, UIDocumentInteractionControllerDelegate, WXA
         let req =  SendMessageToWXReq()
         req.bText = false
         req.message = message
-        req.scene = _scene
+        req.scene = Int32(objType.rawValue)
         WXApi.sendReq(req)
         
         return

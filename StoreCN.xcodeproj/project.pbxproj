@@ -245,6 +245,8 @@
 		D7645BE41C801FA900507072 /* PurchaseReturnEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7645BE31C801FA900507072 /* PurchaseReturnEdit.swift */; };
 		D7645BE61C802D8000507072 /* PubPurReturnPdList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7645BE51C802D8000507072 /* PubPurReturnPdList.swift */; };
 		D7645BE81C802EFC00507072 /* PubPurReturnPdListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7645BE71C802EFC00507072 /* PubPurReturnPdListCell.swift */; };
+		D7AEB7FA1CBC7E5B00AD9606 /* RemindContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7AEB7F91CBC7E5B00AD9606 /* RemindContact.swift */; };
+		D7AEB7FE1CBC7F4000AD9606 /* RemindContactCont.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7AEB7FD1CBC7F4000AD9606 /* RemindContactCont.swift */; };
 		D7B29F791C5C712E0025C53A /* MemberAdEdContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B29F781C5C712E0025C53A /* MemberAdEdContainer.swift */; };
 		D7BB2ADE1C64788700624E08 /* PubMeadDataSelect.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7BB2AD81C64788700624E08 /* PubMeadDataSelect.swift */; };
 		D7BB2ADF1C64788700624E08 /* PubMeadDataSelectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7BB2AD91C64788700624E08 /* PubMeadDataSelectCell.swift */; };
@@ -517,6 +519,8 @@
 		D7645BE31C801FA900507072 /* PurchaseReturnEdit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchaseReturnEdit.swift; path = Product/PurchaseReturnEdit.swift; sourceTree = "<group>"; };
 		D7645BE51C802D8000507072 /* PubPurReturnPdList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubPurReturnPdList.swift; path = PubView/PubPurReturnPdList.swift; sourceTree = "<group>"; };
 		D7645BE71C802EFC00507072 /* PubPurReturnPdListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubPurReturnPdListCell.swift; path = PubView/PubPurReturnPdListCell.swift; sourceTree = "<group>"; };
+		D7AEB7F91CBC7E5B00AD9606 /* RemindContact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RemindContact.swift; path = MainHome/RemindContact.swift; sourceTree = "<group>"; };
+		D7AEB7FD1CBC7F4000AD9606 /* RemindContactCont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RemindContactCont.swift; path = MainHome/RemindContactCont.swift; sourceTree = "<group>"; };
 		D7B29F781C5C712E0025C53A /* MemberAdEdContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberAdEdContainer.swift; path = Member/MemberAdEdContainer.swift; sourceTree = "<group>"; usesTabs = 0; };
 		D7BB2AD81C64788700624E08 /* PubMeadDataSelect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubMeadDataSelect.swift; path = PubView/PubMeadDataSelect.swift; sourceTree = "<group>"; };
 		D7BB2AD91C64788700624E08 /* PubMeadDataSelectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubMeadDataSelectCell.swift; path = PubView/PubMeadDataSelectCell.swift; sourceTree = "<group>"; };
@@ -701,6 +705,8 @@
 				D7527BB81CBB47C20061D70E /* RemindList.swift */,
 				D7527BBA1CBB50930061D70E /* RemindCourseCell.swift */,
 				D7527BBC1CBB50AC0061D70E /* RemindStockCell.swift */,
+				D7AEB7F91CBC7E5B00AD9606 /* RemindContact.swift */,
+				D7AEB7FD1CBC7F4000AD9606 /* RemindContactCont.swift */,
 			);
 			name = MainHome;
 			sourceTree = "<group>";
@@ -1224,6 +1230,7 @@
 				D72BA3331C8814FA0028898D /* StaffBenefitCell.swift in Sources */,
 				D710A0831C8EA80F00264CEB /* CellSheetPd.swift in Sources */,
 				D74A60591C8D32B300946118 /* MsgAddContainer.swift in Sources */,
+				D7AEB7FE1CBC7F4000AD9606 /* RemindContactCont.swift in Sources */,
 				D72BA3351C8819500028898D /* StaffBenefitColtViewCell.swift in Sources */,
 				D705CE451C8FD1A300CC9303 /* AnalyDataDailyDetail.swift in Sources */,
 				428AA8F41CB258A500908FB5 /* CourseListAll.swift in Sources */,
@@ -1278,6 +1285,7 @@
 				D7FB953A1C59F17F00B48F57 /* FileMang.swift in Sources */,
 				4298BEA11CB16EAD007EE389 /* SaleDetailEdit.swift in Sources */,
 				D7F092261C89782E005D8C96 /* HealthWitnessListColtViewCell.swift in Sources */,
+				D7AEB7FA1CBC7E5B00AD9606 /* RemindContact.swift in Sources */,
 				D710A0871C8EC3A900264CEB /* AnalyDataMain.swift in Sources */,
 				D728A26C1C8138B100B93B38 /* PurchaseListDetailCell.swift in Sources */,
 				4202ED401CBA091700C52F14 /* MsgPreviewCell.swift in Sources */,
