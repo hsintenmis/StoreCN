@@ -117,6 +117,15 @@ class TestingContMain: UITableViewController {
             
             return
         }
+        
+        // 血壓計主頁面
+        if (strIdent == "BTBPMain") {
+            let mVC = segue.destinationViewController as! BTBPMain
+            mVC.strToday = self.strToday
+            mVC.aryMember = self.aryMember
+            
+            return
+        }
 
         return
     }

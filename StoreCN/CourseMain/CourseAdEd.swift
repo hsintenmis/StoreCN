@@ -142,13 +142,20 @@ class CourseAdEd: UITableViewController, UITextFieldDelegate, UITextViewDelegate
         
         labCourseName.text = aryCourseDB[indexPathPd!.row]["name"] as? String
         
+        // 次數 + - stepper
+        if let dbTmp = Double(dictSaleData["card_times"] as! String) {
+            stepCardType.value = dbTmp
+        }
+        else {
+            dictSaleData["card_times"] = "1"
+            stepCardType.value = 1.0
+        }
+        //stepCardType.value = Double(dictSaleData["card_times"] as! String)!
+        
         // card 療程型態
         swchCardType.selectedSegmentIndex = ((dictSaleData["card_type"] as! String) == "T") ? 0 : 1
         labCardTypeCount.text = dictSaleData["card_times"] as? String
         labTypeUnit.text = ((dictSaleData["card_type"] as! String) == "T") ? aryFixUnit[0] : aryFixUnit[1]
-
-        // 次數 + - stepper
-        stepCardType.value = Double(dictSaleData["card_times"] as! String)!
 
         // 到期日預設值
         dictPickParm["expire_def"] = pubClass.subStr((dictSaleData["end_date"] as! String), strFrom: 0, strEnd: 8)

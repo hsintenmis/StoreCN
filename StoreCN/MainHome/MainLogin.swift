@@ -15,6 +15,7 @@ class MainLogin: UIViewController {
     @IBOutlet weak var edPsd: UITextField!
     @IBOutlet weak var swchSave: UISwitch!
     @IBOutlet weak var labVer: UILabel!
+    @IBOutlet weak var btnLogin: UIButton!
     
     // common property
     private let pubClass: PubClass = PubClass()
@@ -30,6 +31,8 @@ class MainLogin: UIViewController {
         
         // 固定初始參數
         dictPref = pubClass.getPrefData()
+        
+        btnLogin.layer.cornerRadius = 5
     }
     
     /**

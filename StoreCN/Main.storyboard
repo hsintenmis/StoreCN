@@ -130,6 +130,7 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="btnLogin" destination="jX0-EW-RiQ" id="aeS-rw-SHz"/>
                         <outlet property="edAcc" destination="nW0-VB-8ei" id="5YW-F7-2gH"/>
                         <outlet property="edPsd" destination="1L0-W3-TJX" id="IwQ-Yq-EqI"/>
                         <outlet property="labVer" destination="CXu-SI-Rbg" id="c2B-4E-5km"/>

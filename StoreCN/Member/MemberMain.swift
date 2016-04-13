@@ -267,7 +267,7 @@ class MemberMain: UIViewController, MFMessageComposeViewControllerDelegate, Memb
             self.presentViewController(mVCSMS, animated: true, completion: nil)
         }
         else {
-            print("not support SMS ...")
+            pubClass.popIsee(self, Msg: pubClass.getLang("device_cannotdial"))
         }
         
         return
