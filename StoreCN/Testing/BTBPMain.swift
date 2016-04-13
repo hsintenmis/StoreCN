@@ -15,7 +15,8 @@ class BTBPMain: UIViewController, TestingMemberSelDelegate, BTBPServiceDelegate 
     @IBOutlet weak var labMember: UILabel!
     @IBOutlet weak var labVal_H: UILabel!
     @IBOutlet weak var labVal_L: UILabel!
-    @IBOutlet weak var labVal_Heart: UILabel!
+    @IBOutlet weak var labVal_Beat: UILabel!
+    @IBOutlet weak var btnConn: UIButton!
 
     // common property
     let pubClass: PubClass = PubClass()
@@ -45,10 +46,13 @@ class BTBPMain: UIViewController, TestingMemberSelDelegate, BTBPServiceDelegate 
         mBTBPService.delegate = self
         
         // 選擇的會員資料初始值, 欄位資料初始
+        btnConn.alpha = 0.0
+        btnConn.enabled = false
+        
         dictRequest["member"] = [:]
         dictTestUILabel["sbp"] = labVal_H
         dictTestUILabel["dbp"] = labVal_L
-        dictTestUILabel["heartbeat"] = labVal_Heart
+        dictTestUILabel["heartbeat"] = labVal_Beat
         
         // 數值清除設定為 '0'
         clearTestingVal()
@@ -125,20 +129,24 @@ class BTBPMain: UIViewController, TestingMemberSelDelegate, BTBPServiceDelegate 
         // 量測值全部歸0
         clearTestingVal()
         
-        // 其他 filed 設定
+        // 其他 filed 設定, 顯示 BT conn button
         if (mBTBPService.BT_ISREADYFOTESTING == true) {
             labBTStat.text = pubClass.getLang("bt_btdeviceready")  // BT stat 訊息
+            
+            btnConn.alpha = 0.0
+            btnConn.enabled = false
+        } else {
+            btnConn.alpha = 1.0
+            btnConn.enabled = true
         }
-        
-        //btnBTConn.alpha = 1.0  // button, 藍芽連線
-        //labBTStat.alpha = 1.0
+
     }
     
     /**
      * #mark: BTBPServiceDelegate
      * BT Device Service class, handler
      */
-    func handlerBLE(identCode: String!, result: Bool!, msg: String!, dictData: Dictionary<String, String>?) {
+    func handlerBLE(identCode: String!, result: Bool!, msg: String!, dictData: Dictionary<String, AnyObject>?) {
         
         switch (identCode) {
         case "BT_conn":
@@ -164,21 +172,34 @@ class BTBPMain: UIViewController, TestingMemberSelDelegate, BTBPServiceDelegate 
             
             labBTStat.text = msg
             
+            // 搜尋不到藍芽設備=1, 手機藍牙未開=3
+            if let code = dictData!["code"] as? Int {
+                if (code == 1 || code == 3) {
+                    btnConn.alpha = 1.0
+                    return
+                }
+                
+                // 不能使用藍芽設備，跳離
+                if (code == 2) {
+                    btnConn.alpha = 0.0
+                    pubClass.popIsee(self, Msg: msg, withHandler: {
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                    })
+                    return
+                }
+            }
+            
             break
             
         // 藍芽設備回傳資料
         case "BT_data":
-            // 回傳資料重新設定到 'dictTableData'
+            // 接收藍芽設備回傳數值，設定到 UILabel val_H/val_L/beat, String
             if (result == true) {
-                for strScaleField in aryTestingField {
-                    dictRequest[strScaleField] = dictData![strScaleField]
-                }
-            } else {
-                // 量測值全部歸0
-                clearTestingVal()
+                dictTestUILabel["sbp"]!.text = dictData!["val_H"] as? String
+                dictTestUILabel["dbp"]!.text = dictData!["val_L"] as? String
+                dictTestUILabel["heartbeat"]!.text = dictData!["beat"] as? String
             }
             
-            // TODO, 接收藍芽設備回傳數值，設定到本頁面 field
             print(dictData)
             labBTStat.text = msg
             
@@ -235,6 +256,13 @@ class BTBPMain: UIViewController, TestingMemberSelDelegate, BTBPServiceDelegate 
      * act, 點取 '查看量測結果', 跳轉健康管理月曆主頁面
      */
     @IBAction func actToday(sender: UIBarButtonItem) {
+        // 檢查有無選擇會員
+        if (currIndexMember == nil) {
+            pubClass.popIsee(self, Msg: pubClass.getLang("product_saleselmembermsg"))
+            return
+        }
+        
+        // 跳轉其他 storyboard VC
         pubClass.popIsee(self, Msg: pubClass.getLang("bt_savefirstseeresultmsg"), withHandler: {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let mVC = storyboard.instantiateViewControllerWithIdentifier("HealthCalendar") as! HealthCalendar

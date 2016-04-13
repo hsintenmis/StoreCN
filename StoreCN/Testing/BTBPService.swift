@@ -15,8 +15,9 @@ protocol BTBPServiceDelegate {
      * @parm: result, boolean<BR>
      * @parm: msgCode, 訊息
      * @parm: dictData, 藍芽設備回傳量測數值
+     * @parm: intVal, 辨識碼詳細代碼
      */
-    func handlerBLE(identCode: String!, result: Bool!, msg: String!, dictData: Dictionary<String, String>?)
+    func handlerBLE(identCode: String!, result: Bool!, msg: String!, dictData: Dictionary<String, AnyObject>?)
 }
 
 /**
@@ -117,13 +118,8 @@ class BTBPService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                 self.mConnDev = peripheral
                 self.mCentMgr.stopScan()
                 self.mCentMgr.connectPeripheral(peripheral, options: nil)
-            }
                 
-                // TODO , name like 'EMD'
-            else if (strDevName.uppercaseString.rangeOfString("EMD") != nil) {
-                self.mConnDev = peripheral
-                self.mCentMgr.stopScan()
-                self.mCentMgr.connectPeripheral(peripheral, options: nil)
+                break
             }
         }
     }
@@ -137,7 +133,7 @@ class BTBPService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         if (IS_DEBUG) { print("\(peripheral.name): Start discover Device channel ...") }
         
         // 通知上層開始查詢藍牙設備 channel, 標記：'BT_statu', 顯示 '設備初始化訊息'
-        delegate?.handlerBLE("BT_statu", result: true, msg: pubClass.getLang("bt_initing"), intVal: nil)
+        delegate?.handlerBLE("BT_statu", result: true, msg: pubClass.getLang("bt_initing"),dictData: nil)
         
         // 開始執行 CBPeripheral Delegate 相關程序
         self.mConnDev?.delegate = self
@@ -154,7 +150,7 @@ class BTBPService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         
         // 本 class 執行相關 BLE 中斷程序, 標記：'BT_conn'
         BTDisconn()
-        delegate?.handlerBLE("BT_conn", result: false, msg: pubClass.getLang("bt_connect_break"), intVal: nil)
+        delegate?.handlerBLE("BT_conn", result: false, msg: pubClass.getLang("bt_connect_break"), dictData: nil)
     }
     
     /**
@@ -174,7 +170,7 @@ class BTBPService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             bolRS = true
             
             // parent 顯示藍牙開啟搜尋周邊訊息
-            delegate?.handlerBLE("BT_statu", result: true, msg: pubClass.getLang(msg), intVal: nil)
+            delegate?.handlerBLE("BT_statu", result: true, msg: pubClass.getLang(msg), dictData: nil)
             
             // CBCentralManager 開始執行搜索藍牙 Device
             mCentMgr.scanForPeripheralsWithServices(nil, options: nil)
@@ -205,7 +201,7 @@ class BTBPService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                 code = 3
             }
             
-            delegate?.handlerBLE("BT_statu", result: true, msg: pubClass.getLang(msg), intVal: code)
+            delegate?.handlerBLE("BT_statu", result: true, msg: pubClass.getLang(msg), dictData: ["code":code])
         }
     }
     
@@ -219,7 +215,7 @@ class BTBPService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         
         // 連接不到裝置，顯示找不到裝置, 回傳 int 代碼 1
         if (mConnDev == nil) {
-            delegate?.handlerBLE("BT_statu", result: true, msg: pubClass.getLang("bt_cantfindbtdevice"), intVal: 1)
+            delegate?.handlerBLE("BT_statu", result: true, msg: pubClass.getLang("bt_cantfindbtdevice"), dictData: ["code":1])
         }
     }
     
@@ -289,7 +285,7 @@ class BTBPService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             if (IS_DEBUG) { print("BT Device Notify OK!!") }
             
             // 通知上層可以開始使用藍芽設備, 設定 'handler', 標記：'BT_conn'
-            delegate?.handlerBLE("BT_conn", result: true, msg: pubClass.getLang("bt_btdeviceready"), intVal: nil)
+            delegate?.handlerBLE("BT_conn", result: true, msg: pubClass.getLang("bt_btdeviceready"), dictData: nil)
             
             BT_ISREADYFOTESTING = true
         }
@@ -300,6 +296,13 @@ class BTBPService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
      * Dev 的 Characteristi 有資料變動通知
      *
      * BT 有資料更新，傳送到本機 BT 顯示
+     *
+     * 主 Service 數值回傳：血壓計回傳如下：
+     *
+     *  0  1   2   3   4   5   6   7   8   9   10  11   12  13  14  15  16 17 18 19
+     * ----------------------------------------------------------------------------
+     *            YY  MM  DD  HH  mm  ss      Val      Val  Ht
+     * [0, 5, 12, 15, 08, 20, 21, 46, 18, 00, 125, 00, 077, 88, 255, 0, 0, 0, 0, 0]
      */
     func peripheral(peripheral: CBPeripheral, didUpdateValueForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
         
@@ -312,24 +315,27 @@ class BTBPService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             var mIntVal = [UInt8](count:mNSData.length, repeatedValue:0)
             mNSData.getBytes(&mIntVal, length:mNSData.length)
             
-            self.analyRespon(mIntVal)
-            
             if (IS_DEBUG) { print("int val: \(mIntVal)") }
+            
+            // parent handler
+            let dictRS = self.getTestingResult(mIntVal)
+            delegate?.handlerBLE("BT_data", result: true, msg: pubClass.getLang("bt_testing_success"), dictData: dictRS)
+            
+            return
         }
     }
     
     /**
-     * 將傳回的 bit array , 一個一個拆解並回傳至 hanlder
+     * 將血壓計傳回的 bit array 轉為可閱讀的 Dictionary<String, String>
+     * 規格參考 'didUpdateValueForCharacteristic'
      */
-    private func analyRespon(aryRS: Array<UInt8>) {
-        if (aryRS.count < 1) {
-            return
-        }
+    private func getTestingResult(aryRS: Array<UInt8>)-> Dictionary<String, String>! {
+        var dictRS: Dictionary<String, String> = [:]
+        dictRS["val_H"] = String(aryRS[10])
+        dictRS["val_L"] = String(aryRS[12])
+        dictRS["beat"] = String(aryRS[13])
         
-        for intVal in aryRS {
-            // 通知上層 class 'BTScaleMain' 執行頁面更新
-            delegate?.handlerBLE("BT_data", result: true, msg: pubClass.getLang("bt_testing_success"), intVal: Int(intVal))
-        }
+        return dictRS
     }
     
     
