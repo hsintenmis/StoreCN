@@ -75,6 +75,7 @@
 "FMT_MTInvoId" = "美利销货单号: %@";
 "FMT_returnmsg" = "退货金额: %@, 实际退货金额: %@";
 "FMT_alreadyrqty" = "已退货数量: %@";
+"FMT_smsaccpsd" = "以下是您健康精灵的帐号与密码:\n会员编号:%@\n密码:%@";
 
 "menu_member" = "会员管理";
 "menu_testing" = "健康检测";

@@ -256,8 +256,12 @@ class MemberMain: UIViewController, MFMessageComposeViewControllerDelegate, Memb
     @IBAction func actSMS(sender: UIButton) {
         if (MFMessageComposeViewController.canSendText()) {
             let mVCSMS = MFMessageComposeViewController()
-            mVCSMS.body = "Message Body"
-            mVCSMS.recipients = ["123456789"]
+            let acc = dictMember["id"] as! String
+            let psd = dictMember["psd"] as! String
+            let tel = dictMember["tel"] as! String
+
+            mVCSMS.body = String(format: pubClass.getLang("FMT_smsaccpsd"), arguments: [acc, psd])
+            mVCSMS.recipients = [tel]
             mVCSMS.messageComposeDelegate = self
             
             self.presentViewController(mVCSMS, animated: true, completion: nil)
@@ -271,6 +275,7 @@ class MemberMain: UIViewController, MFMessageComposeViewControllerDelegate, Memb
     
     /**
      * @mark: MFMessageComposeViewController Delegate
+     * 簡訊發送頁面完成返回
      */
     func messageComposeViewController(controller: MFMessageComposeViewController, didFinishWithResult result: MessageComposeResult) {
         //... handle sms screen actions

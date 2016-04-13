@@ -74,24 +74,39 @@ class ConfigPsd: UIViewController {
      * 資料儲存程序，完成後跳離
      */
     private func saveData() {
+        let strPsd = edNew.text!
+        
         // 產生 http post data, http 連線儲存後跳離
         var dictParm: Dictionary<String, String> = [:]
-        dictParm["acc"] = pubClass.getAppDelgVal("V_USRACC") as? String
-        dictParm["psd"] = pubClass.getAppDelgVal("V_USRPSD") as? String
-        dictParm["newpsd"] = edNew.text
-        
+        dictParm["data[acc]"] = pubClass.getAppDelgVal("V_USRACC") as? String
+        dictParm["data[psd]"] = pubClass.getAppDelgVal("V_USRPSD") as? String
+        dictParm["data[func]"] = "change_pass"
+        dictParm["data[newpsd]"] = strPsd
+
         // HTTP 開始連線
-        let strURL = http:// cnwww.mysoqi.com/merit_game/API.php?
+        self.pubClass.HTTPConnWithURL(self, withURL: pubClass.D_PSDURL, ConnParm: dictParm, callBack: {
+            (dictRS: Dictionary<String, AnyObject>) -> Void in
             
-        self.pubClass.HTTPConnWithURL(self, , withURL: ConnParm: dictParm, callBack: self.HttpSaveResponChk)
+            // 回傳後跳離, 通知 parent 資料 reload
+            let bolRS = dictRS["result"] as! Bool
+            var strMsg = self.pubClass.getLang("err_trylatermsg")
+            
+            if (bolRS == true) {
+                strMsg = self.pubClass.getLang("datasavecompleted")
+                
+                // 儲存成功，重新設定 app 全域/prefer密碼
+                let mPref = NSUserDefaults(suiteName: "standardUserDefaults")!
+                mPref.setObject(strPsd, forKey: "psd")
+                mPref.synchronize()
+                self.pubClass.setAppDelgVal("V_USRPSD", withVal: strPsd)
+            }
+            
+            self.pubClass.popIsee(self, Msg: strMsg, withHandler: {
+                self.dismissViewControllerAnimated(true, completion: nil)
+            })
+        })
         
-        // 儲存成功，重新設定 app 全域/prefer密碼
-        /*
-        let mPref = NSUserDefaults(suiteName: "standardUserDefaults")!
-        mPref.setObject(edNew.text, forKey: "psd")
-        pubClass.setAppDelgVal("V_USRPSD", withVal: edNew.text!)
-        */
-        
+        return
     }
     
     /**

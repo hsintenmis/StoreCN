@@ -23,18 +23,19 @@ import UIKit
 }
 
 /**
-* 本專案所有的設定檔與公用 method
-*/
+ * 本專案所有的設定檔與公用 method
+ */
 class PubClass {
     // public
     /** 伺服器/網站 URL: http://pub.mysoqi.com/store_cn/001/ */
     let D_WEBURL = "http://pub.mysoqi.com/store_cn/001/"
+    //let D_WEBURL = "http://cn.mysoqi.com/store_cn/001/"
     
     /** HTE 網站 http://cnwww.mysoqi.com/storecn/ */
     let D_CNWWWURL = "http://cnwww.mysoqi.com/storecn/"
     
     /** 直銷商修改密碼，php server 連線 PGSQL */
-    let D_PSDURL = "http://cnwww.mysoqi.com/merit_game/"
+    let D_PSDURL = "http://cnwww.mysoqi.com/merit_game/API.php"
     
     // AppDelegate
     var AppDelg: AppDelegate!
@@ -67,7 +68,7 @@ class PubClass {
     }
     
     /**
-     * 設定 AppDelegate 全域變數的 value
+     * 取得 AppDelegate 全域變數的 value
      */
     func getAppDelgVal(strKey: String)->AnyObject {
         AppDelg = UIApplication.sharedApplication().delegate! as! AppDelegate
@@ -82,9 +83,9 @@ class PubClass {
     }
     
     /**
-    * 取得 prefer data, NSUserDefaults<br>
-    * ex. key: acc, psd, save(登入頁面儲存 switch), lang
-    */
+     * 取得 prefer data, NSUserDefaults<br>
+     * ex. key: acc, psd, save(登入頁面儲存 switch), lang
+     */
     func getPrefData(strKey: String)->AnyObject? {
         let mPref = self.getPrefData()
         return mPref[strKey]
@@ -129,8 +130,8 @@ class PubClass {
     }
     
     /**
-    * 輸入字串轉換為指定語系文字, 點取 'Localizable' 語系檔查看'?'
-    */
+     * 輸入字串轉換為指定語系文字, 點取 'Localizable' 語系檔查看'?'
+     */
     func getLang(strCode: String!)->String {
         let strLang = AppDelg.V_LANGCODE + ".lproj/Localizable"
         
@@ -138,8 +139,8 @@ class PubClass {
     }
     
     /**
-    * SubString
-    */
+     * SubString
+     */
     func subStr(mStr: String, strFrom: Int, strEnd: Int)->String {
         let nsStr = mStr as NSString
         return nsStr.substringWithRange(NSRange(location: strFrom, length: (strEnd - strFrom))) as String
@@ -148,8 +149,8 @@ class PubClass {
     }
     
     /**
-    * 取得 prefer 的 user data, ex. acc, psd ...
-    */
+     * 取得 prefer 的 user data, ex. acc, psd ...
+     */
     func getUserData()->[String : String] {
         var aryUser = Dictionary<String, String>()
         aryUser["acc"] = "kevin"
@@ -227,8 +228,8 @@ class PubClass {
     }
     
     /**
-    * 產生 UIAlertController (popWindow 資料傳送中)
-    */
+     * 產生 UIAlertController (popWindow 資料傳送中)
+     */
     func getPopLoading(msg: String?) -> UIAlertController {
         var mPopLoading: UIAlertController
         let strMsg = (msg == nil) ? self.getLang("datatranplzwait") : msg

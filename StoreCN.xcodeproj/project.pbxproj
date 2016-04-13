@@ -453,7 +453,7 @@
 		D713FCAD1CB4AB7C0015434E /* ReservListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReservListCell.swift; path = CourseMain/ReservListCell.swift; sourceTree = "<group>"; };
 		D713FCB21CB4AD170015434E /* CourseReservEditCont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CourseReservEditCont.swift; path = CourseMain/CourseReservEditCont.swift; sourceTree = "<group>"; };
 		D713FCB41CB4B8DE0015434E /* MemberAllCourseList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberAllCourseList.swift; path = CourseMain/MemberAllCourseList.swift; sourceTree = "<group>"; };
-		D714C0341CBCC52A00FAAF60 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
+		D714C0341CBCC52A00FAAF60 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TencentOpenAPI.framework; path = LibThirdPart/QQSDK2.9.5/TencentOpenAPI.framework; sourceTree = "<group>"; };
 		D714C0361CBCC56C00FAAF60 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		D714C0381CBCC59400FAAF60 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		D714C03A1CBCC5B400FAAF60 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
@@ -830,11 +830,6 @@
 		D714C0331CBCC52A00FAAF60 /* QQSDK2.9.5 */ = {
 			isa = PBXGroup;
 			children = (
-				D714C03A1CBCC5B400FAAF60 /* libiconv.tbd */,
-				D714C0361CBCC56C00FAAF60 /* libstdc++.tbd */,
-				D714C03C1CBCC5C400FAAF60 /* Security.framework */,
-				D714C0381CBCC59400FAAF60 /* CoreGraphics.framework */,
-				D714C0341CBCC52A00FAAF60 /* TencentOpenAPI.framework */,
 			);
 			name = QQSDK2.9.5;
 			path = LibThirdPart/QQSDK2.9.5;
@@ -991,14 +986,19 @@
 		D7527BC31CBB68490061D70E /* LibThirdPart */ = {
 			isa = PBXGroup;
 			children = (
-				D714C0331CBCC52A00FAAF60 /* QQSDK2.9.5 */,
 				D7527BCC1CBB6B480061D70E /* bridge.h */,
 				D7527BCF1CBB6D1E0061D70E /* libc++.tbd */,
 				D7527BD11CBB6D510061D70E /* libz.tbd */,
 				D7527BD31CBB6D610061D70E /* libsqlite3.0.tbd */,
+				D714C03A1CBCC5B400FAAF60 /* libiconv.tbd */,
+				D714C0361CBCC56C00FAAF60 /* libstdc++.tbd */,
 				D7527BCD1CBB6CF10061D70E /* CoreTelephony.framework */,
 				D7527BBE1CBB67680061D70E /* SystemConfiguration.framework */,
 				4202ED411CBA345300C52F14 /* Social.framework */,
+				D714C03C1CBCC5C400FAAF60 /* Security.framework */,
+				D714C0381CBCC59400FAAF60 /* CoreGraphics.framework */,
+				D714C0341CBCC52A00FAAF60 /* TencentOpenAPI.framework */,
+				D714C0331CBCC52A00FAAF60 /* QQSDK2.9.5 */,
 				D7527BC41CBB68660061D70E /* WeChat */,
 			);
 			name = LibThirdPart;
