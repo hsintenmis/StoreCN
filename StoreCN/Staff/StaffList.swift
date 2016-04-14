@@ -14,7 +14,7 @@ class StaffList: UIViewController, PubClassDelegate {
     @IBOutlet weak var tableData: UITableView!
     
     // common property
-    private var pubClass: PubClass!
+    private var pubClass = PubClass()
     
     // public, 本頁面需要的全部資料, parent 設定
     var dictAllData: Dictionary<String, AnyObject> = [:]
@@ -32,7 +32,6 @@ class StaffList: UIViewController, PubClassDelegate {
     */
     override func viewDidLoad() {
         super.viewDidLoad()
-        pubClass = PubClass()
         
         // TableCell 自動調整高度
         tableData.estimatedRowHeight = 100.0

@@ -140,7 +140,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BId-fq-vca" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="122" y="-18"/>
+            <point key="canvasLocation" x="-342" y="-78"/>
         </scene>
         <!--主選單-->
         <scene sceneID="faF-PR-qfF">
@@ -313,12 +313,12 @@
                         <outlet property="btnRemind" destination="VIH-p0-50k" id="elP-a0-t1Q"/>
                         <outlet property="colviewMenu" destination="dE8-ew-PUv" id="PxS-JG-w2k"/>
                         <outlet property="labTodayMsg" destination="LvG-gM-OL3" id="JcS-WI-LYo"/>
-                        <segue destination="G3L-qr-XgU" kind="presentation" identifier="MemberList" modalTransitionStyle="crossDissolve" id="zu1-aT-Ghz"/>
+                        <segue destination="dtY-e1-fEK" kind="presentation" identifier="MemberList" modalTransitionStyle="crossDissolve" id="NmV-fx-1Sn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5cf-sk-tSV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="577" y="-18"/>
+            <point key="canvasLocation" x="433" y="-78"/>
         </scene>
         <!--Remind List-->
         <scene sceneID="HC8-KS-DH4">
@@ -714,7 +714,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cpf-xF-lPF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1081" y="-1046"/>
+            <point key="canvasLocation" x="933" y="-1054"/>
         </scene>
         <!--联络会员 - 電話簡訊-->
         <scene sceneID="kTZ-3G-h8m">
@@ -998,74 +998,6 @@
             </objects>
             <point key="canvasLocation" x="2081" y="-1046"/>
         </scene>
-        <!--會員列表-->
-        <scene sceneID="SOb-nS-CSy">
-            <objects>
-                <viewController title="會員列表" id="G3L-qr-XgU" customClass="MemberList" customModule="StoreCN" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="We3-hU-kn1"/>
-                        <viewControllerLayoutGuide type="bottom" id="GFI-st-fpJ"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="2LK-Tr-rhh">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EXq-YI-ZlN">
-                                <rect key="frame" x="-2" y="20" width="324" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="9Gf-3f-Avf"/>
-                                </constraints>
-                                <color key="barTintColor" red="0.37647058820000001" green="0.37647058820000001" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <textAttributes key="titleTextAttributes">
-                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </textAttributes>
-                                <items>
-                                    <navigationItem title="会员列表" id="ta6-yn-gBQ">
-                                        <barButtonItem key="leftBarButtonItem" title="主选单" id="gtc-Vj-gbb">
-                                            <color key="tintColor" red="0.80000000000000004" green="1" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
-                                            <connections>
-                                                <action selector="actBack:" destination="G3L-qr-XgU" id="4NX-U8-sAs"/>
-                                            </connections>
-                                        </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="会员新增" id="KTm-0l-q0U">
-                                            <color key="tintColor" red="0.80000000000000004" green="1" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
-                                            <connections>
-                                                <segue destination="lxC-Ow-JcK" kind="show" identifier="MemberAdd" id="UJs-s6-y71"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dvx-PL-FoV">
-                                <rect key="frame" x="-2" y="64" width="324" height="504"/>
-                            </containerView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="EXq-YI-ZlN" secondAttribute="trailing" constant="-18" id="IlW-7d-tYD"/>
-                            <constraint firstItem="dvx-PL-FoV" firstAttribute="top" secondItem="EXq-YI-ZlN" secondAttribute="bottom" id="JlW-46-ryP"/>
-                            <constraint firstItem="EXq-YI-ZlN" firstAttribute="leading" secondItem="2LK-Tr-rhh" secondAttribute="leadingMargin" constant="-18" id="QBL-8J-cgw"/>
-                            <constraint firstItem="EXq-YI-ZlN" firstAttribute="top" secondItem="We3-hU-kn1" secondAttribute="bottom" id="a2z-eu-k6T"/>
-                            <constraint firstItem="dvx-PL-FoV" firstAttribute="leading" secondItem="2LK-Tr-rhh" secondAttribute="leadingMargin" constant="-18" id="gzH-hC-l1j"/>
-                            <constraint firstItem="GFI-st-fpJ" firstAttribute="top" secondItem="dvx-PL-FoV" secondAttribute="bottom" id="wun-AT-Iml"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="dvx-PL-FoV" secondAttribute="trailing" constant="-18" id="xfa-Wa-lVU"/>
-                        </constraints>
-                    </view>
-                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
-                    <nil key="simulatedTopBarMetrics"/>
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-                    <connections>
-                        <outlet property="containerMemberList" destination="dvx-PL-FoV" id="I7C-vV-bOa"/>
-                        <segue destination="rZi-Yf-gg8" kind="presentation" identifier="MemberMain" modalTransitionStyle="crossDissolve" id="z1E-HS-fn9"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="01y-ij-IKb" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1081" y="-358"/>
-        </scene>
         <!--公用-會員選擇-->
         <scene sceneID="g3a-NY-msW">
             <objects>
@@ -1265,7 +1197,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="48l-4J-XGB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-401" y="-8"/>
+            <point key="canvasLocation" x="-342" y="-836"/>
         </scene>
         <!--個人資料編輯 Container-->
         <scene sceneID="1cc-ib-5ZT">
@@ -1340,10 +1272,10 @@
             </objects>
             <point key="canvasLocation" x="1562" y="-358"/>
         </scene>
-        <!--View Controller-->
+        <!--会员列表-->
         <scene sceneID="zqc-Yz-OIw">
             <objects>
-                <viewController id="dtY-e1-fEK" sceneMemberID="viewController">
+                <viewController title="会员列表" id="dtY-e1-fEK" customClass="MemberList" customModule="StoreCN" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0ht-0b-cWs"/>
                         <viewControllerLayoutGuide type="bottom" id="zpc-1X-gtO"/>
@@ -1367,28 +1299,44 @@
                                         <barButtonItem key="leftBarButtonItem" title="主选单" id="ZoV-cF-O76">
                                             <color key="tintColor" red="0.80000000000000004" green="1" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>
-                                                <action selector="actBack:" destination="G3L-qr-XgU" id="TTK-dv-WDb"/>
+                                                <action selector="actHome:" destination="dtY-e1-fEK" id="8vN-S0-tSW"/>
                                             </connections>
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" title="会员新增" id="68p-gB-MDa">
                                             <color key="tintColor" red="0.80000000000000004" green="1" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                            <connections>
+                                                <segue destination="lxC-Ow-JcK" kind="show" identifier="MemberAdd" id="fsu-FV-TqP"/>
+                                            </connections>
                                         </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <searchBar contentMode="redraw" placeholder="搜尋會員" translatesAutoresizingMaskIntoConstraints="NO" id="Qby-dD-FWQ">
-                                <rect key="frame" x="-2" y="64" width="324" height="44"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="选择项目向左滑动可以删除该笔资料" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wgp-U9-SML" userLabel="delInfo">
+                                <rect key="frame" x="8" y="74" width="304" height="12"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="12" id="pyZ-h7-VXY"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.56470588239999997" green="0.56470588239999997" blue="0.56470588239999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <searchBar contentMode="redraw" placeholder="搜寻会员姓名,电话,会员编号" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qby-dD-FWQ">
+                                <rect key="frame" x="-2" y="91" width="324" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="RbA-OJ-cas"/>
                                 </constraints>
-                                <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
+                                <scopeButtonTitles>
+                                    <string>Title</string>
+                                    <string>Title</string>
+                                </scopeButtonTitles>
                                 <connections>
-                                    <outlet property="delegate" destination="Hq9-Eb-ui6" id="vdo-lR-j9c"/>
+                                    <outlet property="delegate" destination="dtY-e1-fEK" id="AvW-ih-hef"/>
                                 </connections>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="140" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="6zv-JK-4tn">
-                                <rect key="frame" x="-2" y="108" width="324" height="460"/>
+                                <rect key="frame" x="-2" y="135" width="324" height="433"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cellPubMemberList" rowHeight="145" id="foZ-mn-CyO" customClass="PubMemberSelectCell" customModule="StoreCN" customModuleProvider="target">
@@ -1535,23 +1483,26 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="Hq9-Eb-ui6" id="vI4-jz-GGJ"/>
-                                    <outlet property="delegate" destination="Hq9-Eb-ui6" id="D1x-4l-3t9"/>
+                                    <outlet property="dataSource" destination="dtY-e1-fEK" id="JtV-pt-kPz"/>
+                                    <outlet property="delegate" destination="dtY-e1-fEK" id="J7B-zU-a17"/>
                                 </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="6zv-JK-4tn" firstAttribute="top" secondItem="Qby-dD-FWQ" secondAttribute="bottom" id="2Gl-B0-FYc"/>
+                            <constraint firstItem="Qby-dD-FWQ" firstAttribute="top" secondItem="Wgp-U9-SML" secondAttribute="bottom" constant="5" id="5yN-rC-1Mc"/>
+                            <constraint firstItem="Wgp-U9-SML" firstAttribute="leading" secondItem="h19-aR-WIj" secondAttribute="leading" constant="10" id="6dX-e1-xHr"/>
                             <constraint firstItem="Qby-dD-FWQ" firstAttribute="trailing" secondItem="h19-aR-WIj" secondAttribute="trailing" id="BaB-OY-7Wq"/>
                             <constraint firstItem="zpc-1X-gtO" firstAttribute="top" secondItem="6zv-JK-4tn" secondAttribute="bottom" id="E0d-1B-QJb"/>
-                            <constraint firstItem="Qby-dD-FWQ" firstAttribute="top" secondItem="h19-aR-WIj" secondAttribute="bottom" id="IJr-JT-yUe"/>
                             <constraint firstItem="h19-aR-WIj" firstAttribute="leading" secondItem="1K3-Ou-sbI" secondAttribute="leadingMargin" constant="-18" id="MBq-mT-VYH"/>
                             <constraint firstItem="h19-aR-WIj" firstAttribute="top" secondItem="0ht-0b-cWs" secondAttribute="bottom" id="QcT-ZI-4Q0"/>
+                            <constraint firstItem="Wgp-U9-SML" firstAttribute="trailing" secondItem="h19-aR-WIj" secondAttribute="trailing" constant="-10" id="QtD-ZF-Rzi"/>
                             <constraint firstItem="6zv-JK-4tn" firstAttribute="trailing" secondItem="h19-aR-WIj" secondAttribute="trailing" id="SqD-Id-Nju"/>
                             <constraint firstAttribute="trailingMargin" secondItem="h19-aR-WIj" secondAttribute="trailing" constant="-18" id="cA7-Tk-KJO"/>
                             <constraint firstItem="6zv-JK-4tn" firstAttribute="leading" secondItem="h19-aR-WIj" secondAttribute="leading" id="gVg-Kv-nBT"/>
                             <constraint firstItem="Qby-dD-FWQ" firstAttribute="leading" secondItem="h19-aR-WIj" secondAttribute="leading" id="kug-0j-MWL"/>
+                            <constraint firstItem="Wgp-U9-SML" firstAttribute="top" secondItem="h19-aR-WIj" secondAttribute="bottom" constant="10" id="wQU-EY-1pA"/>
                         </constraints>
                     </view>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
@@ -1559,10 +1510,15 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="searchBar" destination="Qby-dD-FWQ" id="Tqy-t1-zCL"/>
+                        <outlet property="tableData" destination="6zv-JK-4tn" id="1er-TV-KzX"/>
+                        <segue destination="rZi-Yf-gg8" kind="show" identifier="MemberMain" id="5h3-S8-1Y6"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wOj-AS-9aD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="577" y="682"/>
+            <point key="canvasLocation" x="933" y="-358"/>
         </scene>
         <!--會員頁面主選單-->
         <scene sceneID="fev-xP-hhM">
@@ -1880,7 +1836,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RFa-9W-LX5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1081" y="373"/>
+            <point key="canvasLocation" x="933" y="426"/>
         </scene>
         <!--Member Pict-->
         <scene sceneID="Qa5-zW-FHm">
@@ -2740,7 +2696,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dgj-wU-ATj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-850" y="-8"/>
+            <point key="canvasLocation" x="-866" y="-836"/>
         </scene>
         <!--健康管理 - 月曆-->
         <scene sceneID="Gqh-j8-iea">
@@ -3345,7 +3301,7 @@
         <image name="user_empty01.png" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="UJs-s6-y71"/>
+        <segue reference="fsu-FV-TqP"/>
         <segue reference="U16-vd-XLy"/>
     </inferredMetricsTieBreakers>
 </document>
