@@ -705,6 +705,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="btnConn" destination="Xv2-xL-Nu3" id="cmK-Ii-7vo"/>
+                        <outlet property="btnMember" destination="YjY-oY-bfX" id="u7B-6b-Psl"/>
                         <outlet property="labBTStat" destination="t0v-zQ-doH" id="qjj-WQ-4y7"/>
                         <outlet property="labMember" destination="4wK-TC-AR5" id="vQa-Eq-OTv"/>
                         <outlet property="labVal_Beat" destination="2of-tg-Ekl" id="k7w-q5-0Zf"/>

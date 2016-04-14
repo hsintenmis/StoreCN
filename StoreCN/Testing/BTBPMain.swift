@@ -17,6 +17,7 @@ class BTBPMain: UIViewController, TestingMemberSelDelegate, BTBPServiceDelegate 
     @IBOutlet weak var labVal_L: UILabel!
     @IBOutlet weak var labVal_Beat: UILabel!
     @IBOutlet weak var btnConn: UIButton!
+    @IBOutlet weak var btnMember: UIButton!
 
     // common property
     let pubClass: PubClass = PubClass()
@@ -45,9 +46,11 @@ class BTBPMain: UIViewController, TestingMemberSelDelegate, BTBPServiceDelegate 
         mBTBPService = BTBPService()
         mBTBPService.delegate = self
         
-        // 選擇的會員資料初始值, 欄位資料初始
+        // 欄位資料初始, 選擇的會員資料初始值 
         btnConn.alpha = 0.0
         btnConn.enabled = false
+        btnConn.layer.cornerRadius = 5
+        btnMember.layer.cornerRadius = 5
         
         dictRequest["member"] = [:]
         dictTestUILabel["sbp"] = labVal_H
@@ -157,7 +160,6 @@ class BTBPMain: UIViewController, TestingMemberSelDelegate, BTBPServiceDelegate 
             }
             
             labBTStat.text = msg
-            
             break
             
         case "BT_statu":
@@ -173,9 +175,10 @@ class BTBPMain: UIViewController, TestingMemberSelDelegate, BTBPServiceDelegate 
             labBTStat.text = msg
             
             // 搜尋不到藍芽設備=1, 手機藍牙未開=3
-            if let code = dictData!["code"] as? Int {
+            if let code = dictData?["code"] as? Int {
                 if (code == 1 || code == 3) {
                     btnConn.alpha = 1.0
+                    btnConn.enabled = true
                     return
                 }
                 
@@ -249,6 +252,9 @@ class BTBPMain: UIViewController, TestingMemberSelDelegate, BTBPServiceDelegate 
      * act, 點取藍芽 '連線' button
      */
     @IBAction func actBTConn(sender: UIButton) {
+        btnConn.alpha = 0.0
+        btnConn.enabled = false
+        
         mBTBPService.BTConnStart()
     }
     

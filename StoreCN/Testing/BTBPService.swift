@@ -1,5 +1,6 @@
 //
 // 藍芽血壓計
+// 藍牙預設 NOTIFY: "00002902-0000-1000-8000-00805f9b34fb" (Descriptor)
 //
 
 import CoreBluetooth
@@ -35,7 +36,7 @@ protocol BTBPServiceDelegate {
  *
  */
 class BTBPService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
-    private let IS_DEBUG = false
+    private let IS_DEBUG = true
     
     // protocol BTBPService Delegate
     var delegate: BTBPServiceDelegate?
@@ -50,7 +51,7 @@ class BTBPService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     private let UID_SERV: CBUUID = CBUUID(string: "FC00")
     private let UID_CHAR_W: CBUUID = CBUUID(string: "FCA0")
     private let UID_CHAR_I: CBUUID = CBUUID(string: "FCA1")
-    
+
     // BT service 相關參數
     private var mCentMgr: CBCentralManager! // BT CentralManager
     private var mConnDev: CBPeripheral?  // 已連線的藍牙周邊設備
@@ -133,7 +134,7 @@ class BTBPService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         if (IS_DEBUG) { print("\(peripheral.name): Start discover Device channel ...") }
         
         // 通知上層開始查詢藍牙設備 channel, 標記：'BT_statu', 顯示 '設備初始化訊息'
-        delegate?.handlerBLE("BT_statu", result: true, msg: pubClass.getLang("bt_initing"),dictData: nil)
+        delegate?.handlerBLE("BT_statu", result: true, msg: pubClass.getLang("bt_initing"), dictData: nil)
         
         // 開始執行 CBPeripheral Delegate 相關程序
         self.mConnDev?.delegate = self
@@ -282,7 +283,9 @@ class BTBPService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         
         // 連接的 BT device, 讀寫通知更新開關已開啟，設備可以開始使用
         if (characteristic.isNotifying == true) {
-            if (IS_DEBUG) { print("BT Device Notify OK!!") }
+            if (IS_DEBUG) {
+                print("BT Device Notify OK!!")
+            }
             
             // 通知上層可以開始使用藍芽設備, 設定 'handler', 標記：'BT_conn'
             delegate?.handlerBLE("BT_conn", result: true, msg: pubClass.getLang("bt_btdeviceready"), dictData: nil)
@@ -305,7 +308,7 @@ class BTBPService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
      * [0, 5, 12, 15, 08, 20, 21, 46, 18, 00, 125, 00, 077, 88, 255, 0, 0, 0, 0, 0]
      */
     func peripheral(peripheral: CBPeripheral, didUpdateValueForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
-        
+        print(characteristic.value)
         // 有資料
         if (characteristic.value?.length > 0) {
             if (IS_DEBUG) {print("chart update:\n\(characteristic.value!)")}
