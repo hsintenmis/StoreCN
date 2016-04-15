@@ -60,10 +60,12 @@ class PubPurReturnPdListCell: UITableViewCell, UIPickerViewDelegate, UIPickerVie
         currIndexPath = indexPath
         
         // 設定每個 Picker row 的 array data
-        aryMaxMin[1] = Int(ditItem["maxqty"] as! String)!
+        aryMaxMin[1] = 0
+        if let intTmp = Int(ditItem["maxqty"] as! String) {
+            aryMaxMin[1] = intTmp
+        }
         
         for i in (aryMaxMin[0]..<(aryMaxMin[1] + 1)) {
-        //for (var i = aryMaxMin[0]; i <= aryMaxMin[1]; i++) {
             aryRowVal.append(String(i))
         }
         

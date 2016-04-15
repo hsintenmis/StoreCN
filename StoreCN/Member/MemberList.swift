@@ -127,7 +127,6 @@ class MemberList: UIViewController, PubClassDelegate {
             for i in (0..<self.aryMember.count) {
                 self.aryMember[i]["position"] = i
             }
-            
             self.aryNewMember = self.aryMember
             
             // tableview reload
@@ -253,11 +252,12 @@ class MemberList: UIViewController, PubClassDelegate {
             (dictHTTPSRS: Dictionary<String, AnyObject>)->Void in
             
             let bolRS = dictHTTPSRS["result"] as! Bool
-            let dictData = dictHTTPSRS["data"]!["content"]!
             var strMsg = self.pubClass.getLang("err_trylatermsg")
             
             if (bolRS == true) {
+                let dictData = dictHTTPSRS["data"]!["content"]!
                 strMsg = self.pubClass.getLang("datadelcompleted")
+                
                 if let strTmp = dictData!["msg"] as? String {
                     if (strTmp != "") {
                         strMsg = strTmp

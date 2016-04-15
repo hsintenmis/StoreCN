@@ -29,6 +29,7 @@ class CourseAdEd: UITableViewController, UITextFieldDelegate, UITextViewDelegate
     @IBOutlet weak var sliderS00: UISlider!
     @IBOutlet weak var labTypeUnit: UILabel!
     @IBOutlet weak var btnCloseKB: UIButton!
+    @IBOutlet weak var labUseTimes: UILabel!
     
     // common property
     let pubClass: PubClass = PubClass()
@@ -165,8 +166,13 @@ class CourseAdEd: UITableViewController, UITextFieldDelegate, UITextViewDelegate
         // 療程建議說明文字
         txtSugst.text = dictSaleData["card_msg"] as! String
 
-        // TODO (修改 server 端) 療程步驟文字
+        // 療程步驟文字
         txtStepPd.text = aryCourseDB[(indexPathPd?.row)!]["steppd"] as! String
+        
+        // 使用次數
+        if let aryTmp = dictSaleData["uselist"] as? Array<Dictionary<String, AnyObject>> {
+            labUseTimes.text = String(aryTmp.count)
+        }
     }
     
     /**
@@ -252,6 +258,17 @@ class CourseAdEd: UITableViewController, UITextFieldDelegate, UITextViewDelegate
             self.performSegueWithIdentifier("CourseDBList", sender: nil)
             return
         }
+        
+        // 療程使用記錄 list 選擇
+        if (strIdent == "CourseUseList") {
+            // 檢查欄位 'uselist'
+            if let aryTmp = dictSaleData["uselist"] as? Array<Dictionary<String, AnyObject>> {
+                self.performSegueWithIdentifier("CourseUseList", sender: aryTmp)
+                return
+            }
+            
+            return
+        }
     }
     
     /**
@@ -297,6 +314,14 @@ class CourseAdEd: UITableViewController, UITextFieldDelegate, UITextViewDelegate
         if (strIdent == "CourseSugst") {
             let mVC = segue.destinationViewController as! CourseSugst
             mVC.delegate = self
+            
+            return
+        }
+        
+        // 療程建議說明
+        if (strIdent == "CourseUseList") {
+            let mVC = segue.destinationViewController as! CourseUseList
+            mVC.aryAllData = sender as! Array<Dictionary<String, AnyObject>>
             
             return
         }

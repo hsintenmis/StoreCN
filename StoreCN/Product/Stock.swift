@@ -104,6 +104,12 @@ class Stock: UIViewController {
      * UITableView, Cell 點取
      */
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        // 身份為員工, 不允許點入
+        if ((self.pubClass.getAppDelgVal("V_USRROLE") as! Int) < 9) {
+            return
+        }
+    
         self.performSegueWithIdentifier("StockHistory", sender: aryStock[indexPath.row])
     }
     

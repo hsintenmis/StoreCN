@@ -143,6 +143,14 @@ class MainLogin: UIViewController {
         pubClass.setAppDelgVal("V_USRACC", withVal: edAcc.text!)
         pubClass.setAppDelgVal("V_USRPSD", withVal: edPsd.text!)
         
+        if let intTmp = dictRS["data"]!["role"] as? Int {
+            pubClass.setAppDelgVal("V_USRROLE", withVal: intTmp)
+        } else {
+            self.pubClass.popIsee(self, Msg: pubClass.getLang("err_trylatermsg"))
+            
+            return
+        }
+        
         // 跳轉至指定的名稱的Segue頁面, 傳遞參數
         self.performSegueWithIdentifier("MainMenu", sender: dictData)
     }
@@ -204,7 +212,4 @@ class MainLogin: UIViewController {
         StartHTTPConn()
     }
     
-
-    
 }
-

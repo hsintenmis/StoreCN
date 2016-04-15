@@ -11,8 +11,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     // 全域參數
-    var V_USRACC: String?
-    var V_USRPSD: String?
+    var V_USRACC: String?  // 登入帳號
+    var V_USRPSD: String?  // 登入密碼
+    var V_USRROLE: Int = 0  // 0=member, 1=Staff, 9=Agent
+    
     var V_LANGCODE: String = "zh-Hans"
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -44,6 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     /** QQ SDK use **/
+    /*
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         return TencentOAuth.HandleOpenURL(url)
     }
@@ -52,5 +55,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
         return TencentOAuth.HandleOpenURL(url)
     }
+    */
     
 }

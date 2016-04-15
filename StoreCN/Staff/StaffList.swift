@@ -32,7 +32,7 @@ class StaffList: UIViewController, PubClassDelegate {
     */
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // TableCell 自動調整高度
         tableData.estimatedRowHeight = 100.0
         tableData.rowHeight = UITableViewAutomaticDimension

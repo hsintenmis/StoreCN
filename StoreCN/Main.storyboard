@@ -77,8 +77,8 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ver" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CXu-SI-Rbg">
-                                <rect key="frame" x="151" y="543" width="18" height="15"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <rect key="frame" x="152" y="546" width="16" height="12"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <color key="textColor" red="0.56470588239999997" green="0.56470588239999997" blue="0.56470588239999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -193,9 +193,9 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="点取查看详细资料" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D1j-Zq-q8c">
-                                <rect key="frame" x="83" y="74" width="96" height="15"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="( 点取查看详细资料 )" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D1j-Zq-q8c">
+                                <rect key="frame" x="83" y="75" width="94" height="12"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <color key="textColor" red="0.56470588239999997" green="0.56470588239999997" blue="0.56470588239999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -265,11 +265,11 @@
                                 </connections>
                             </collectionView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4CR-gQ-KCA" userLabel="bottom msg">
-                                <rect key="frame" x="16" y="542" width="288" height="18"/>
+                                <rect key="frame" x="16" y="542" width="12" height="18"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="18" id="bQo-qp-gZe"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" red="0.18823529410000001" green="0.18823529410000001" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -298,7 +298,6 @@
                             <constraint firstItem="dE8-ew-PUv" firstAttribute="top" secondItem="LvG-gM-OL3" secondAttribute="bottom" constant="15" id="tkX-Kw-gMC"/>
                             <constraint firstItem="VIH-p0-50k" firstAttribute="leading" secondItem="k8L-6G-4aT" secondAttribute="leading" id="uHT-Wl-Ee8"/>
                             <constraint firstItem="VIH-p0-50k" firstAttribute="trailing" secondItem="k8L-6G-4aT" secondAttribute="trailing" id="uk2-4w-gcd"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="4CR-gQ-KCA" secondAttribute="trailing" id="vZV-bG-jaf"/>
                             <constraint firstItem="LvG-gM-OL3" firstAttribute="trailing" secondItem="k8L-6G-4aT" secondAttribute="trailing" id="yOR-1p-85h"/>
                             <constraint firstItem="k8L-6G-4aT" firstAttribute="top" secondItem="HGP-XM-ynq" secondAttribute="bottom" constant="10" id="zJe-sT-2lq"/>
                             <constraint firstItem="HGP-XM-ynq" firstAttribute="leading" secondItem="HsA-j5-2UI" secondAttribute="leadingMargin" constant="-18" id="zp6-JJ-IuU"/>
@@ -312,6 +311,7 @@
                     <connections>
                         <outlet property="btnRemind" destination="VIH-p0-50k" id="elP-a0-t1Q"/>
                         <outlet property="colviewMenu" destination="dE8-ew-PUv" id="PxS-JG-w2k"/>
+                        <outlet property="labMsg" destination="4CR-gQ-KCA" id="aCV-kP-veB"/>
                         <outlet property="labTodayMsg" destination="LvG-gM-OL3" id="JcS-WI-LYo"/>
                         <segue destination="dtY-e1-fEK" kind="presentation" identifier="MemberList" modalTransitionStyle="crossDissolve" id="NmV-fx-1Sn"/>
                     </connections>
@@ -784,7 +784,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="Hq6-7T-Igb">
                         <rect key="frame" x="0.0" y="0.0" width="324" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
                             <tableViewSection headerTitle="电话联络会员" id="kxU-Y0-aPz">
                                 <cells>
@@ -1010,12 +1010,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" placeholder="搜尋會員" translatesAutoresizingMaskIntoConstraints="NO" id="bSw-h7-IHh">
-                                <rect key="frame" x="6" y="0.0" width="308" height="44"/>
+                            <searchBar contentMode="redraw" placeholder="搜寻会员姓名,电话,会员编号" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bSw-h7-IHh">
+                                <rect key="frame" x="-2" y="0.0" width="324" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="0N9-wR-0ra"/>
                                 </constraints>
-                                <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                                 <connections>
                                     <outlet property="delegate" destination="Hq9-Eb-ui6" id="Xsi-uj-f3m"/>
@@ -1177,10 +1177,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Feu-3t-szY" firstAttribute="top" secondItem="crh-Sh-6DJ" secondAttribute="bottom" id="42C-Rw-XDs"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="bSw-h7-IHh" secondAttribute="trailing" constant="-10" id="9OR-66-du6"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="bSw-h7-IHh" secondAttribute="trailing" constant="-18" id="9OR-66-du6"/>
                             <constraint firstItem="crh-Sh-6DJ" firstAttribute="top" secondItem="bSw-h7-IHh" secondAttribute="bottom" id="H7E-2u-MhE"/>
                             <constraint firstItem="crh-Sh-6DJ" firstAttribute="leading" secondItem="vXM-AJ-x86" secondAttribute="leadingMargin" constant="-18" id="dzQ-iN-fDY"/>
-                            <constraint firstItem="bSw-h7-IHh" firstAttribute="leading" secondItem="vXM-AJ-x86" secondAttribute="leadingMargin" constant="-10" id="hqK-Q4-hzH"/>
+                            <constraint firstItem="bSw-h7-IHh" firstAttribute="leading" secondItem="vXM-AJ-x86" secondAttribute="leadingMargin" constant="-18" id="hqK-Q4-hzH"/>
                             <constraint firstItem="bSw-h7-IHh" firstAttribute="top" secondItem="9R8-tN-ce3" secondAttribute="bottom" id="vJh-ww-8uj"/>
                             <constraint firstAttribute="trailingMargin" secondItem="crh-Sh-6DJ" secondAttribute="trailing" constant="-18" id="yrc-eH-Ne3"/>
                         </constraints>
@@ -1320,7 +1320,7 @@
                                 <color key="textColor" red="0.56470588239999997" green="0.56470588239999997" blue="0.56470588239999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <searchBar contentMode="redraw" placeholder="搜寻会员姓名,电话,会员编号" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qby-dD-FWQ">
+                            <searchBar contentMode="redraw" text="" placeholder="搜寻会员姓名,电话,会员编号" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qby-dD-FWQ">
                                 <rect key="frame" x="-2" y="91" width="324" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="RbA-OJ-cas"/>

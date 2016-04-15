@@ -64,7 +64,7 @@ class BTScaleMain: UIViewController {
         dictArg0["age"] = dictRequest["member"]!["age"] as! String
         dictArg0["gender"] = dictRequest["member"]!["gender"] as! String
         
-        // loop 以量測回傳的 val
+        // loop 已量測回傳的 val
         var dictTestingVal: Dictionary<String, String> = [:]
         dictTestingVal["height"] = dictRequest["member"]!["height"] as? String
         

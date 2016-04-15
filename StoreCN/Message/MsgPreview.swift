@@ -10,7 +10,7 @@ import Social
 /**
  * 最新消息，發送預覽，分享第三方社群app
  */
-class MsgPreview: UIViewController, WXApiDelegate, TencentSessionDelegate {
+class MsgPreview: UIViewController, WXApiDelegate, TencentSessionDelegate, UIApplicationDelegate {
     
     // @IBOutlet
     @IBOutlet weak var tableList: UITableView!
@@ -202,9 +202,20 @@ class MsgPreview: UIViewController, WXApiDelegate, TencentSessionDelegate {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    /** QQ SDK use **/
-     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+    /**
+     * #mark: UIApplicationDelegate
+     * QQ SDK use
+     */
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         return TencentOAuth.HandleOpenURL(url)
-     }
+    }
     
+    /**
+     * #mark: UIApplicationDelegate
+     * QQ SDK use
+     */
+    func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
+        return TencentOAuth.HandleOpenURL(url)
+    }
+ 
 }

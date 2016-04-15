@@ -257,6 +257,8 @@
 		D7BB2ADF1C64788700624E08 /* PubMeadDataSelectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7BB2AD91C64788700624E08 /* PubMeadDataSelectCell.swift */; };
 		D7BB2AE01C64788700624E08 /* PubMemberSelect.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7BB2ADA1C64788700624E08 /* PubMemberSelect.swift */; };
 		D7BB2AE11C64788700624E08 /* PubMemberSelectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7BB2ADB1C64788700624E08 /* PubMemberSelectCell.swift */; };
+		D7BFD50B1CC0BD7300F6E39E /* CourseUseList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7BFD50A1CC0BD7300F6E39E /* CourseUseList.swift */; };
+		D7BFD50D1CC0BEB500F6E39E /* CourseUseListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7BFD50C1CC0BEB500F6E39E /* CourseUseListCell.swift */; };
 		D7EDE8841C60733200665542 /* MemberMainPager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EDE8831C60733200665542 /* MemberMainPager.swift */; };
 		D7EDE8861C6081B800665542 /* MemberMainColtViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EDE8851C6081B800665542 /* MemberMainColtViewCell.swift */; };
 		D7EF7CA51CB62D5A00A7C1FF /* SaleReturnList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EF7CA41CB62D5A00A7C1FF /* SaleReturnList.swift */; };
@@ -536,6 +538,8 @@
 		D7BB2AD91C64788700624E08 /* PubMeadDataSelectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubMeadDataSelectCell.swift; path = PubView/PubMeadDataSelectCell.swift; sourceTree = "<group>"; };
 		D7BB2ADA1C64788700624E08 /* PubMemberSelect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubMemberSelect.swift; path = PubView/PubMemberSelect.swift; sourceTree = "<group>"; };
 		D7BB2ADB1C64788700624E08 /* PubMemberSelectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PubMemberSelectCell.swift; path = PubView/PubMemberSelectCell.swift; sourceTree = "<group>"; };
+		D7BFD50A1CC0BD7300F6E39E /* CourseUseList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CourseUseList.swift; path = CourseMain/CourseUseList.swift; sourceTree = "<group>"; };
+		D7BFD50C1CC0BEB500F6E39E /* CourseUseListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CourseUseListCell.swift; path = CourseMain/CourseUseListCell.swift; sourceTree = "<group>"; };
 		D7EDE8831C60733200665542 /* MemberMainPager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberMainPager.swift; path = Member/MemberMainPager.swift; sourceTree = "<group>"; };
 		D7EDE8851C6081B800665542 /* MemberMainColtViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberMainColtViewCell.swift; path = Member/MemberMainColtViewCell.swift; sourceTree = "<group>"; };
 		D7EF7CA41CB62D5A00A7C1FF /* SaleReturnList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SaleReturnList.swift; path = Sale/SaleReturnList.swift; sourceTree = "<group>"; };
@@ -598,6 +602,8 @@
 				D713FCA81CB4A9980015434E /* CourseReservEdit.swift */,
 				D713FCB21CB4AD170015434E /* CourseReservEditCont.swift */,
 				D713FCB41CB4B8DE0015434E /* MemberAllCourseList.swift */,
+				D7BFD50A1CC0BD7300F6E39E /* CourseUseList.swift */,
+				D7BFD50C1CC0BEB500F6E39E /* CourseUseListCell.swift */,
 			);
 			name = CourseMain;
 			sourceTree = "<group>";
@@ -1352,6 +1358,7 @@
 				428AA8F51CB258A500908FB5 /* CourseListCell.swift in Sources */,
 				D720FBA11C7458F000AE640C /* Purchase.swift in Sources */,
 				D70854491C7D69C400861694 /* PurchaseListDetail.swift in Sources */,
+				D7BFD50B1CC0BD7300F6E39E /* CourseUseList.swift in Sources */,
 				428AA8F81CB258A500908FB5 /* CourseEdit.swift in Sources */,
 				D70E57931CBE38AC00CF613E /* BTBPService.swift in Sources */,
 				D72E98271C91551F00DA9FA3 /* ConfigBTScale.swift in Sources */,
@@ -1359,6 +1366,7 @@
 				4298BEA61CB16EAD007EE389 /* SaleReturnPdCell.swift in Sources */,
 				D7037A781C58C03F002A955E /* PubClass.swift in Sources */,
 				D70FCC251C86CCD80035D1B6 /* StaffList.swift in Sources */,
+				D7BFD50D1CC0BEB500F6E39E /* CourseUseListCell.swift in Sources */,
 				4298BEA71CB16EAD007EE389 /* SaleReturnPdList.swift in Sources */,
 				D7037A681C58BF32002A955E /* AppDelegate.swift in Sources */,
 				D72F26431C7AA60100717394 /* Sale.swift in Sources */,

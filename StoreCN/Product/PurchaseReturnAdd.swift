@@ -65,7 +65,7 @@ class PurchaseReturnAdd: UIViewController, PubPurReturnPdListDelegate, PickerDat
     }
     
     /**
-     * View WillAppear 程序
+     * View didAppear 程序
      */
     override func viewDidAppear(animated: Bool) {
         // 初始公用 class 退貨商品列表 'PubPurReturnPdList'

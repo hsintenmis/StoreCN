@@ -24,7 +24,7 @@
 "gender_F" = "女性";
 "done" = "完成";
 "select_ok" = "確定";
-"systemwarring" = "系統警告";
+"systemwarring" = "[ 系統警告! ]";
 "pricemaxovermsg" = "金額超過系統限制";
 "selectdate" = "選擇日期";
 "datasendplzconfirmmsg" = "資料即將送出!\n請再次確認輸入料是否正確?!";
@@ -32,10 +32,13 @@
 "datadelcompleted" = "資料刪除完成!";
 "selectmember" = "選擇會員";
 "plzselectmember" = "請選擇會員!";
-
 "fieldname_price" = "金額";
 "fieldname_invoiceid" = "訂單編號";
 "fieldname_membername" = "會員名稱";
+"device_cannotdial" = "您的設備無法撥號!";
+"password_err_org" = "原始密碼錯誤!";
+"password_err_new" = "新密碼錯誤!";
+"fundonotallowuse" = "本功能不開放使用!";
 
 "week_0" = "日";
 "week_1" = "一";
@@ -73,6 +76,8 @@
 "FMT_MTInvoId" = "美利銷貨單號: %@";
 "FMT_returnmsg" = "退貨金額: %@, 實際退貨金額: %@";
 "FMT_alreadyrqty" = "已退貨數量: %@";
+"FMT_smsaccpsd" = "以下是您健康精靈的帳號與密碼:\n會員編號:%@\n密碼:%@";
+"FMT_currentloginname" = "目前登入身份: %@";
 
 "menu_member" = "會員管理";
 "menu_testing" = "健康檢測";
@@ -109,7 +114,6 @@
 "member_main_soqibed" = "SOQIBed";
 "member_main_purchase" = "購貨紀錄";
 "member_main_health" = "健康紀錄";
-
 "member_err_name" = "姓名錯誤!";
 "member_err_tel" = "聯絡電話錯誤!";
 "member_err_birth" = "生日錯誤!";
@@ -118,6 +122,9 @@
 "member_err_height" = "身高錯誤!";
 "member_err_gender" = "性別錯誤!";
 "member_err_age" = "年齡錯誤!";
+"member_err_selpictfirst" = "請選擇圖片!";
+"member_headpcituploadok" = "會員圖片上傳完成!";
+"member_delalertmsg" = "該會員相關的療程,購貨等等的資料會全部刪除!\n請再次確認是否刪除指定的會員?!";
 
 "course_nodata" = "沒有療程資料";
 "course_nobuy" = "未購買療程";
@@ -180,6 +187,7 @@
 
 "message_type_pub" = "公開";
 "message_type_draft" = "草稿";
+"message_err_title" = "標題錯誤!";
 
 "analydata_today" = "今日收入";
 "analydata_daily" = "每日收入";
@@ -206,6 +214,7 @@
 "coursesale_err_coursename" = "建議工程錯誤!";
 "coursesale_err_coursexpiredate" = "療程到期日錯誤!";
 "coursesale_err_fee" = "療程費用錯誤!";
+"coursesale_delalertmsg" = "確定要刪除選擇的療程資料嗎?!\n\n相關的療程付款紀錄與療程預約時間都會全部刪除!\請再次確認是否要刪除?!";
 
 "courseresver_selecttime" = "選擇預約時間";
 "courseresver_defcourse" = "預設療程";
@@ -450,6 +459,8 @@
 "sale_delete" = "刪除出貨";
 "sale_delwarringmsg" = "刪除出貨單資料，將影響商品的庫存與損益報表! 若為療程商品, 已完成或預約療程相關資料將一並刪除!\n\n請務必再次確認是否要刪除?!";
 "sale_deletecompleted" = "刪除出貨完成!";
+"sale_mksurepurchasereturnmsg" = "確定退貨?!\n請再次確認退貨資料是否正確!";
+"sale_pleselreturnpdnumber" = "退貨商品的數量必須大於 0 !";
 
 "mead_body_FL" = "左足";
 "mead_body_FR" = "右足";
@@ -513,7 +524,13 @@
 "mead_guestcantsave" = "訪客資料不能儲存!";
 "mead_testingdate" = "檢測日期";
 "mead_selmemberfirst" = "請先選擇會員!";
-"mead_testingvalokmsg" = "檢測結果正常 ！";
+"mead_testingvalokmsg" = "檢測結果正常!";
 "mead_savefirstmsg" = "請先儲存檢測資料!";
 "mead_valalreadysave" = "檢測資料已經儲存過了!\n若要再檢測其他穴位,請點取\n[ 重新檢測 ]";
 "mead_changmembermsg" = "更改會員, 已檢測的資料將全部清除!\n請再次確認!";
+
+"remind_title_reser" = "今日預約療程";
+"remind_title_course" = "會員購買療程快到期";
+"remind_title_stock" = "庫存不足商品";
+"FMT_remindsms_resver" = "今日預約的療程提醒!時間為:%@,詳細資料請開啟健康精靈查看";
+"FMT_remindsms_course" = "療程即將到期提醒!到期日為:%@,詳細資料請開啟健康精靈查看";

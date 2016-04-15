@@ -14,6 +14,7 @@ class MainMenu: UIViewController {
     @IBOutlet weak var labTodayMsg: UILabel!
     @IBOutlet weak var colviewMenu: UICollectionView!
     @IBOutlet weak var btnRemind: UIButton!
+    @IBOutlet weak var labMsg: UILabel!
 
     // common property
     private let pubClass = PubClass()
@@ -113,8 +114,10 @@ class MainMenu: UIViewController {
         dictRemind["reser"] = aryTodayCourse
         dictRemind["course"] = aryExpire
         dictRemind["stock"] = aryStock
-        
         btnRemind.enabled = true
+        
+        // 目前登入者名稱
+        labMsg.text = String(format: pubClass.getLang("FMT_currentloginname"), dictRS["data"]!["name"] as! String)
     }
     
     /**
@@ -315,6 +318,13 @@ class MainMenu: UIViewController {
                 
                 // 商品入庫
                 if (strIdent == "product_purchase") {
+                    
+                    // 商品進貨，身份為員工
+                    if ((self.pubClass.getAppDelgVal("V_USRROLE") as! Int) < 9) {
+                        self.pubClass.popIsee(self, Msg: self.pubClass.getLang("fundonotallowuse"))
+                        return
+                    }
+                    
                     mParam["page"] = "purchase"
                     mParam["act"] = "purchase_getdata"
                     self.MenuItemSelect(strIdent, HTTPParam: mParam)

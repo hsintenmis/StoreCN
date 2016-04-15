@@ -202,11 +202,11 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate, BTScaleS
         mBTScaleService.setUserData(dictUser)
         
         // 其他 filed 設定
-        btnBTConn.alpha = 1.0  // button, 藍芽連線
-        btnTestExplain.alpha = 1.0
-        
         if (mBTScaleService.BT_ISREADYFOTESTING == true) {
             labBTStat.text = pubClass.getLang("bt_btdeviceready")  // BT stat 訊息
+        } else {
+            btnBTConn.alpha = 1.0  // button, 藍芽連線
+            btnTestExplain.alpha = 1.0
         }
     }
     
@@ -239,6 +239,8 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate, BTScaleS
                 })
             }
             
+            btnBTConn.alpha = 0.0
+            btnBTConn.enabled = false
             labBTStat.text = msg
             
             break

@@ -161,10 +161,12 @@ class PubMemberSelect: UIViewController {
     
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
         searchActive = false;
+        searchBar.resignFirstResponder()
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         searchActive = false;
+        searchBar.resignFirstResponder()
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
@@ -185,6 +187,8 @@ class PubMemberSelect: UIViewController {
         // 沒有輸入字元
         if (searchText.isEmpty) {
             searchActive = false;
+            searchBar.resignFirstResponder()
+            
             aryNewMember = aryMember
             self.tableData.reloadData()
             
