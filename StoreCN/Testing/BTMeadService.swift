@@ -278,7 +278,9 @@ class BTMeadService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         }
         
         // 連接的 BT device, 寫入讀寫更新通知 value
+        /*
         self.mConnDev?.writeValue( NSData(bytes: [0x01] as [UInt8], length: 1), forCharacteristic: self.mUIDChart_I, type: CBCharacteristicWriteType.WithResponse)
+        */
         
         // 連接的 BT device, 讀寫通知更新開關已開啟，設備可以開始使用
         if (characteristic.isNotifying == true) {

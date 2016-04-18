@@ -14,7 +14,7 @@
 //  4. 校驗值: 字節 0, 1, 2 總和, 取低字節
 //
 //  本 class 主要使用以下指令
-//  1. 04 00 A0 A4 => APP 回復 BPM 已連接,
+//  1. 04 00 A0 A4 => APP 回覆 BPM 已連接,
 //  2. 04 00 A1 A5 => APP 要求開始量測
 //
 
@@ -84,7 +84,7 @@ class BTBPService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     private var dictUserData: Dictionary<String, String>!
     private var mTimer = NSTimer()
     
-    // 設備回傳處理
+    // 血壓計設備回傳處理
     private var countCMD: Int = 0  // 回傳值字節 count
     private var currAryCode: Array<UInt8> = []  // 目前取得完整的回傳字節 array
     
@@ -343,14 +343,6 @@ class BTBPService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             for val in mIntVal {
                 analyVal(val)
             }
-            
-            //analyVal()
-            
-            // parent handler
-            /*
-            let dictRS = self.getTestingResult(mIntVal)
-            delegate?.handlerBLE("BT_data", result: true, msg: pubClass.getLang("bt_testing_success"), dictData: dictRS)
-            */
             
             return
         }

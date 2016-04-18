@@ -51,7 +51,7 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
     private var currValCount = 0  // 目前檢測數值計算加總的次數
     private var mapTestValCount: Dictionary<String, Int> = [:] // 檢測數值 => 出現次數, 目的取得最多次數的 val
     
-    /** 
+    /**
      * 檢測數值 array data, 從 'MeadCFG' class 初始取得<P>
      * 資料設定如下<br>
      * id :辨識 id, ex. H1, H2 ...<br>
@@ -66,7 +66,7 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
     private var currDataPosition = 0;
     private var currIndexPath = NSIndexPath(forRow: 0, inSection:0)
     
-    // class 
+    // class
     private var mBTMeadService: BTMeadService!  // 檢測儀藍牙 Service
     private var mMeadCFG = MeadCFG() // MEAD, 設定檔
     private var mMeadClass = MeadClass() // MEAD class
@@ -89,7 +89,7 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
         // BTScaleService 實體化與相關參數設定
         mBTMeadService = BTMeadService()
         mBTMeadService.delegate = self
-
+        
         // view field value 設定
         labBTMsg.text = pubClass.getLang("bt_searching")
         btnConn.alpha = 0.0
@@ -126,8 +126,8 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
     }
     
     /**
-    * Button 點取無作用，藍牙狀態為 '已連線' 才設定 enable
-    */
+     * Button 點取無作用，藍牙狀態為 '已連線' 才設定 enable
+     */
     private func setBtnActive(isEnable: Bool) {
         btnMember.enabled = isEnable
         btnReset.enabled = isEnable
@@ -185,8 +185,8 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
     }
     
     /**
-    * 設定會員相關資料
-    */
+     * 設定會員相關資料
+     */
     private func resetMemberData(MemberData: Dictionary<String, AnyObject>!, IndexPath: NSIndexPath) {
         
         currIndexMember = IndexPath
@@ -241,7 +241,7 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
             self.moveCollectCell(indexPath.row)
         }
     }
-
+    
     /**
      * CollectionView 移動到指定的 position cell
      * 本頁面 IBOutlet 跟著變動
@@ -392,7 +392,7 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
      * 解析檢測儀傳來的數值資料
      * <P>
      * 檢測狀態: <BR>
-     * STATU_READY: 檢測值 = 1, 探針未與任何量測點接觸<BR>
+     * STATU_READY: 檢測值 <= 1, 探針未與任何量測點接觸<BR>
      * STATU_RECEIVE: 檢測值 > 1, 量測點正在確認中<BR>
      * STATU_FINISH: 到達 maxCount, 完成數值讀取，移到下一個/檢測完成(Item position = 最後一個)<BR>
      *
@@ -555,7 +555,7 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
         
         return dictRS
     }
-
+    
     /**
      * act, 點取 '重新連線'
      */
@@ -577,7 +577,7 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
             pubClass.popIsee(self, Msg: pubClass.getLang("mead_selmemberfirst"))
             return
         }
-         
+        
         // 跳轉 MEAD 報告頁面
         self.performSegueWithIdentifier("RecordDetail", sender: self.getPreSaveData(aryTestingData))
     }
@@ -624,7 +624,7 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
         for strDev in aryHotDevCode {
             dictParm[strDev] = "0"
         }
-
+        
         // 有問題的  iNo, 重設 設備對應的分鐘數
         let dictRS = self.getPreSaveData(aryTestingData)
         //let dictRS = self.getTestVal()
@@ -664,7 +664,7 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
             pubClass.popIsee(self, Msg: pubClass.getLang("mead_valalreadysave"))
             return
         }
-
+        
         // 檢測數值重新整理為 dict array, key 對應 MeadCFG 的 'D_ARY_MEADDBID'
         let dictRS = self.getPreSaveData(aryTestingData)
         //let dictRS = self.getTestVal()  // 測試資料
@@ -723,7 +723,7 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
                 self.dismissViewControllerAnimated(true, completion: nil)
             })
         })
-
+        
         return
     }
     
@@ -754,11 +754,11 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
     }
     
     /**
-    * TODO 測試資料
-    */
+     * TODO 測試資料
+     */
     private func getTestVal() -> Dictionary<String, String>! {
         var dictRS: Dictionary<String, String> = [:]
-            
+        
         dictRS["memberid"] = "MT000081"
         dictRS["avgL"] = "43"
         dictRS["gender"] = "M"
