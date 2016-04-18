@@ -448,7 +448,6 @@
 "bt_mobile_unsupported" = "蓝芽不支援";
 "bt_testingvalerr" = "量测数值异常, 请重新量测!";
 "bt_testing_success" = "量测完成!";
-
 "bt_savefirstseeresultmsg" = "量测资料储存后, 才能看到今日的量测结果说明!";
 
 "sale_pruchaseqtyeditmsg" = "出货数量修改，将会影响以下资料：\n1. 该商品的库存数量\n2. 进货总金额\n3. 实际进货金额\n\n请再次确认是否修改?!";

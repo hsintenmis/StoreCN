@@ -1,6 +1,21 @@
 //
-// 藍芽血壓計
-// 藍牙預設 NOTIFY: "00002902-0000-1000-8000-00805f9b34fb" (Descriptor)
+// 藍芽血壓計, 指令與設備回傳 HEX code
+// 命令功能解析：例如: 
+//
+//  0  1  2  3
+//  -----------
+//  04 00 A0 A4
+//
+//  1. 字結長度
+//  2. 配置碼：BIT7(原手冊認為低字結為 BIT7)
+//     1 = 主動測量, 例如: BPM 設備需要實際按下測量按鈕
+//     0 = 被動測量, 例如: APP 傳送命令碼後，BPM 才會開始量測
+//  3. 命令對照碼
+//  4. 校驗值: 字節 0, 1, 2 總和, 取低字節
+//
+//  本 class 主要使用以下指令
+//  1. 04 00 A0 A4 => APP 回復 BPM 已連接,
+//  2. 04 00 A1 A5 => APP 要求開始量測
 //
 
 import CoreBluetooth
@@ -36,7 +51,11 @@ protocol BTBPServiceDelegate {
  *
  */
 class BTBPService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
-    private let IS_DEBUG = true
+    private let IS_DEBUG = false
+    
+    // 固定參數
+    private var CMD_BTCONN: Array<UInt8> = [0x04, 0x00, 0xA0, 0xA4]
+    private var CMD_STARTTEST: Array<UInt8> = [0x04, 0x01, 0xA1, 0xA6]
     
     // protocol BTBPService Delegate
     var delegate: BTBPServiceDelegate?
@@ -64,6 +83,10 @@ class BTBPService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     private var pubClass = PubClass()
     private var dictUserData: Dictionary<String, String>!
     private var mTimer = NSTimer()
+    
+    // 設備回傳處理
+    private var countCMD: Int = 0  // 回傳值字節 count
+    private var currAryCode: Array<UInt8> = []  // 目前取得完整的回傳字節 array
     
     /**
      * init
@@ -256,6 +279,9 @@ class BTBPService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                 // 直接執行關閉或打開通知 'Notify' 的 UUID, 藍牙規格固定值
                 peripheral.setNotifyValue(true, forCharacteristic: mChart)
                 
+                // 連接的 BT device, 寫入讀寫更新通知 value
+                //self.mConnDev?.writeValue( NSData(bytes: [0x01] as [UInt8], length: 1), forCharacteristic: self.mUIDChart_I, type: CBCharacteristicWriteType.WithResponse)
+                
                 if (IS_DEBUG) {print("start set notify:\(mChart.UUID)") }
             }
                 // Character = 'UID_CHAR_W'
@@ -278,9 +304,6 @@ class BTBPService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             print("isNotifying: \(characteristic.isNotifying)\n")
         }
         
-        // 連接的 BT device, 寫入讀寫更新通知 value
-        self.mConnDev?.writeValue( NSData(bytes: [0x01] as [UInt8], length: 1), forCharacteristic: self.mUIDChart_I, type: CBCharacteristicWriteType.WithResponse)
-        
         // 連接的 BT device, 讀寫通知更新開關已開啟，設備可以開始使用
         if (characteristic.isNotifying == true) {
             if (IS_DEBUG) {
@@ -289,57 +312,123 @@ class BTBPService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             
             // 通知上層可以開始使用藍芽設備, 設定 'handler', 標記：'BT_conn'
             delegate?.handlerBLE("BT_conn", result: true, msg: pubClass.getLang("bt_btdeviceready"), dictData: nil)
-            
             BT_ISREADYFOTESTING = true
+            
+            // 寫入命令
+            self.mConnDev?.writeValue( NSData(bytes: CMD_BTCONN, length: CMD_BTCONN.count), forCharacteristic: self.mUIDChart_W, type: CBCharacteristicWriteType.WithResponse)
+            
+            self.mConnDev?.writeValue( NSData(bytes: CMD_STARTTEST, length: CMD_STARTTEST.count), forCharacteristic: self.mUIDChart_W, type: CBCharacteristicWriteType.WithResponse)
         }
     }
     
     /**
      * #mark: CBPeripheral Delegate
      * Dev 的 Characteristi 有資料變動通知
-     *
-     * BT 有資料更新，傳送到本機 BT 顯示
-     *
-     * 主 Service 數值回傳：血壓計回傳如下：
-     *
-     *  0  1   2   3   4   5   6   7   8   9   10  11   12  13  14  15  16 17 18 19
-     * ----------------------------------------------------------------------------
-     *            YY  MM  DD  HH  mm  ss      Val      Val  Ht
-     * [0, 5, 12, 15, 08, 20, 21, 46, 18, 00, 125, 00, 077, 88, 255, 0, 0, 0, 0, 0]
+     * 因為一次回傳 8bits, 拆解一個個回傳分析
      */
     func peripheral(peripheral: CBPeripheral, didUpdateValueForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
-        print(characteristic.value)
+
         // 有資料
         if (characteristic.value?.length > 0) {
             if (IS_DEBUG) {print("chart update:\n\(characteristic.value!)")}
             
             // 取得回傳資料，格式如: HEX: 01 00 23 A0 02 ..., [Byte] = [UInt8]
             let mNSData = characteristic.value!
+            
             var mIntVal = [UInt8](count:mNSData.length, repeatedValue:0)
             mNSData.getBytes(&mIntVal, length:mNSData.length)
-            
             if (IS_DEBUG) { print("int val: \(mIntVal)") }
             
+            // 數值加入到 'aryResponVal'
+            for val in mIntVal {
+                analyVal(val)
+            }
+            
+            //analyVal()
+            
             // parent handler
+            /*
             let dictRS = self.getTestingResult(mIntVal)
             delegate?.handlerBLE("BT_data", result: true, msg: pubClass.getLang("bt_testing_success"), dictData: dictRS)
+            */
             
             return
         }
     }
     
     /**
-     * 將血壓計傳回的 bit array 轉為可閱讀的 Dictionary<String, String>
-     * 規格參考 'didUpdateValueForCharacteristic'
+     * 解析回傳 HEX code
+     * 
+     * 血壓計數值歸 '0' 傳回值
+     * HEX: 04 01 B4 B9, 
+     * 辨識標記: 長度:第0字節='04', 命令:第2字節 = 'B4
+     *
+     * 量測過程傳回：
+     *       字結長度  配置碼  命令 有無心跳   氣壓值  校驗碼
+     * --------------------------------------------------
+     *  HEX: 06       01     B7    00      76       34
+     *  INT:  6       1      183   0       118      52
+     *
+     *
+     * 量測成功, 長度:第0字節 = '08', 命令:第2字節 = 'B8'
+     *     
+     *        0  1   2  3   4  5  6  7
+     * --------------------------------------------------
+     *  HEX: 08 01  B8 00  9C 5A 57 0E
+     *  INT:  8  1 184  0 156 90 87 14
+     * 
+     *  取字節 4, 5 ,6 為 高壓/低壓/心跳
+     *  字節 3 心律: 00=正常, 01 異常
      */
-    private func getTestingResult(aryRS: Array<UInt8>)-> Dictionary<String, String>! {
-        var dictRS: Dictionary<String, String> = [:]
-        dictRS["val_H"] = String(aryRS[10])
-        dictRS["val_L"] = String(aryRS[12])
-        dictRS["beat"] = String(aryRS[13])
+    private func analyVal(uint8Val: UInt8!) {
+        // 開頭為 04 ~ 08, 表示回傳 code 開始
+        if (uint8Val >= 0x04 && uint8Val <= 0x08) {
+            countCMD = Int(uint8Val)
+            currAryCode = []
+        }
         
-        return dictRS
+        if (countCMD > 0) {
+            currAryCode.append(uint8Val)
+            countCMD -= 1
+            
+            if (countCMD == 0) {
+                var aryRS: Array<UInt8> = [0, 0 ,0]
+                var aryHEXStr: Array<String> = []
+                
+                for val in currAryCode {
+                    aryHEXStr.append(NSString(format:"%02X", val) as String)
+                }
+                if (IS_DEBUG) { print("HEX: \(aryHEXStr)") }
+                if (IS_DEBUG) { print("INT: \(currAryCode)") }
+                
+                // 血壓計數值歸 0, 通知上層 UILabTExt 重設數值
+                if (currAryCode[0] == 0x04 && currAryCode[2] == 0xB4) {
+                    getTestingResult(aryRS, strMsg: pubClass.getLang("bt_btdeviceready"))
+                }
+                
+                // 判斷最後量測結果值
+                if (currAryCode[0] == 0x08 && currAryCode[2] == 0xB8) {
+                    aryRS[0] = currAryCode[4]
+                    aryRS[1] = currAryCode[5]
+                    aryRS[2] = currAryCode[6]
+                    getTestingResult(aryRS, strMsg: pubClass.getLang("bt_testing_success"))
+                }
+            }
+        }
     }
     
+    /**
+     * 將血壓計傳回的 bit array 轉為可閱讀的 Dictionary<String, String>
+     *  取字節 4, 5 ,6 為 高壓/低壓/心跳
+     *  字節 3 心律: 00=正常, 01 異常
+     */
+    private func getTestingResult(aryRS: Array<UInt8>, strMsg: String!) {
+        var dictRS: Dictionary<String, String> = [:]
+        dictRS["val_H"] = String(aryRS[0])
+        dictRS["val_L"] = String(aryRS[1])
+        dictRS["beat"] = String(aryRS[2])
+        
+        delegate?.handlerBLE("BT_data", result: true, msg: strMsg, dictData: dictRS)
+    }
     
 }

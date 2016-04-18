@@ -201,9 +201,12 @@ class BTBPMain: UIViewController, TestingMemberSelDelegate, BTBPServiceDelegate 
                 dictTestUILabel["sbp"]!.text = dictData!["val_H"] as? String
                 dictTestUILabel["dbp"]!.text = dictData!["val_L"] as? String
                 dictTestUILabel["heartbeat"]!.text = dictData!["beat"] as? String
+                
+                if ((dictData!["val_H"] as! String) == "0") {
+                    clearTestingVal()
+                }
             }
             
-            print(dictData)
             labBTStat.text = msg
             
             break
