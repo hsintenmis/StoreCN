@@ -91,12 +91,10 @@ class BTMeadService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         // BT dev 是否連線
         if (mConnDev != nil) {
             if (IS_DEBUG) { print("let BT dev cancel connect") }
+            
+            //  handler 'centralManager' 的 'didDisconnectPeripheral'
             mCentMgr.cancelPeripheralConnection(mConnDev!)
         }
-        
-        mCentMgr = nil
-        mConnDev = nil
-        BT_ISREADYFOTESTING = false
     }
     
     /**
@@ -156,7 +154,10 @@ class BTMeadService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         if (IS_DEBUG) { print("CBCentralManager Disconnection!") }
         
         // 本 class 執行相關 BLE 中斷程序, 標記：'BT_conn'
-        BTDisconn()
+        mCentMgr = nil
+        mConnDev = nil
+        BT_ISREADYFOTESTING = false
+        
         delegate?.handlerBLE("BT_conn", result: false, msg: pubClass.getLang("bt_connect_break"), intVal: nil)
     }
     
@@ -203,9 +204,9 @@ class BTMeadService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         
         // 設定 'handler', 標記：'BT_statu'
         if (bolRS != true) {
-            var code = 2
+            var code = 2  // 不能使用藍芽設備
             if (msg == "bt_mobile_off") {
-                code = 3
+                code = 3  // 手機藍牙未開
             }
             
             delegate?.handlerBLE("BT_statu", result: true, msg: pubClass.getLang(msg), intVal: code)
@@ -220,7 +221,7 @@ class BTMeadService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             mCentMgr.stopScan()
         }
         
-        // 連接不到裝置，顯示找不到裝置, 回傳 int 代碼 1
+        // 搜尋不到藍芽設備，顯示找不到裝置, 回傳 int 代碼 1
         if (mConnDev == nil) {
             delegate?.handlerBLE("BT_statu", result: true, msg: pubClass.getLang("bt_cantfindbtdevice"), intVal: 1)
         }

@@ -35,7 +35,7 @@ class PubPurReturnPdListCell: UITableViewCell, UIPickerViewDelegate, UIPickerVie
     // Picker 設定
     private var pubClass = PubClass()
     private var mPKView = UIPickerView()
-    private var aryRowVal: Array<String> = []  // Picker 的資料
+    private var aryRowVal: Array<String>!  // Picker 的資料
     private var aryMaxMin = [0, 99] // 數量選擇，最小/最大 值
     private var mKBNavyBar = KBNavyBar()  // 彈出的虛擬鍵盤, 上方的 UIToolbar
     
@@ -47,8 +47,6 @@ class PubPurReturnPdListCell: UITableViewCell, UIPickerViewDelegate, UIPickerVie
     * Cell Load
     */
     override func awakeFromNib() {
-        super.awakeFromNib()
-        aryRowVal = []
         mPKView.delegate = self
         mKBNavyBar.delegate = self
     }
@@ -60,6 +58,7 @@ class PubPurReturnPdListCell: UITableViewCell, UIPickerViewDelegate, UIPickerVie
         currIndexPath = indexPath
         
         // 設定每個 Picker row 的 array data
+        aryRowVal = []
         aryMaxMin[1] = 0
         if let intTmp = Int(ditItem["maxqty"] as! String) {
             aryMaxMin[1] = intTmp

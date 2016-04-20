@@ -100,6 +100,7 @@ class BTBPService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
      */
     func BTConnStart() {
         if (BT_ISREADYFOTESTING != true) {
+            mConnDev = nil
             mCentMgr = CBCentralManager(delegate: self, queue: nil)
         }
     }
@@ -121,10 +122,6 @@ class BTBPService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             if (IS_DEBUG) { print("let BT dev cancel connect") }
             mCentMgr.cancelPeripheralConnection(mConnDev!)
         }
-        
-        mCentMgr = nil
-        mConnDev = nil
-        BT_ISREADYFOTESTING = false
     }
     
     /**
@@ -142,7 +139,6 @@ class BTBPService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                 self.mConnDev = peripheral
                 self.mCentMgr.stopScan()
                 self.mCentMgr.connectPeripheral(peripheral, options: nil)
-                
                 break
             }
         }
@@ -173,7 +169,6 @@ class BTBPService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         if (IS_DEBUG) { print("CBCentralManager Disconnection!") }
         
         // 本 class 執行相關 BLE 中斷程序, 標記：'BT_conn'
-        BTDisconn()
         delegate?.handlerBLE("BT_conn", result: false, msg: pubClass.getLang("bt_connect_break"), dictData: nil)
     }
     

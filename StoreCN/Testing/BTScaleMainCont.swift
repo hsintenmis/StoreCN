@@ -247,7 +247,6 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate, BTScaleS
             
         case "BT_statu":
             if (result != true) {
-                mBTScaleService.BTDisconn()
                 pubClass.popIsee(self, Msg: msg, withHandler: {
                     self.dismissViewControllerAnimated(true, completion: nil)
                 })
@@ -284,8 +283,13 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate, BTScaleS
     /**
     * public, parent 調用, 斷開藍芽連線
     */
-    func dicConnBT() {
-        mBTScaleService.BTDisconn()
+    func dicConnBT(dismissVCHandler handler: ()->Void ) {
+        if (mBTScaleService.BT_ISREADYFOTESTING == true) {
+            mBTScaleService.BTDisconn()
+            return
+        }
+ 
+        handler()
     }
     
     /**

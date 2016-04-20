@@ -297,8 +297,8 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
             break
             
         case "BT_statu":
+            // 回傳 false 一定跳離
             if (result != true) {
-                mBTMeadService.BTDisconn()
                 pubClass.popIsee(self, Msg: msg, withHandler: {
                     self.dismissViewControllerAnimated(true, completion: nil)
                 })
@@ -336,7 +336,7 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
                 if (intVal! < mMeadCFG.D_VALUE_MAX) {
                     
                     // 數值介於 1 ~ 最小值，回傳  1
-                    if (intVal! >= 1 && intVal! <= mMeadCFG.D_VALUE_MIN) {
+                    if (intVal! <= mMeadCFG.D_VALUE_MIN) {
                         analyMEADVal(1)
                     } else {
                         analyMEADVal(intVal!)
@@ -748,7 +748,10 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
      */
     @IBAction func actBack(sender: UIBarButtonItem) {
         // BT 強制中斷
-        mBTMeadService.BTDisconn()
+        if (self.mBTMeadService.BT_ISREADYFOTESTING == true) {
+            mBTMeadService.BTDisconn()
+            return
+        }
         
         self.dismissViewControllerAnimated(true, completion: nil)
     }

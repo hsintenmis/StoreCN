@@ -104,8 +104,7 @@ class BTScaleMain: UIViewController {
                 return
             }
             
-            // 儲存失敗，直接跳離
-            self.mBTScaleMainCont.dicConnBT()
+            // 儲存失敗，直接跳離            
             self.pubClass.popIsee(self, Msg: self.pubClass.getLang("err_trylatermsg"), withHandler: {
                 self.dismissViewControllerAnimated(true, completion: nil)
             })
@@ -119,9 +118,7 @@ class BTScaleMain: UIViewController {
      */
     @IBAction func actHome(sender: UIBarButtonItem) {
         // BT 強制中斷
-        mBTScaleMainCont.dicConnBT()
-        
-        self.dismissViewControllerAnimated(true, completion: nil)
+        mBTScaleMainCont.dicConnBT(dismissVCHandler: {self.dismissViewControllerAnimated(true, completion: nil)})
     }
     
 }

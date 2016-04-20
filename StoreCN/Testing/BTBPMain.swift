@@ -157,6 +157,7 @@ class BTBPMain: UIViewController, TestingMemberSelDelegate, BTBPServiceDelegate 
                 pubClass.popIsee(self, Msg: msg, withHandler: {
                     self.dismissViewControllerAnimated(true, completion: nil)
                 })
+                return
             }
             
             labBTStat.text = msg
@@ -164,7 +165,6 @@ class BTBPMain: UIViewController, TestingMemberSelDelegate, BTBPServiceDelegate 
             
         case "BT_statu":
             if (result != true) {
-                mBTBPService.BTDisconn()
                 pubClass.popIsee(self, Msg: msg, withHandler: {
                     self.dismissViewControllerAnimated(true, completion: nil)
                 })
@@ -214,13 +214,6 @@ class BTBPMain: UIViewController, TestingMemberSelDelegate, BTBPServiceDelegate 
         default:
             break
         }
-    }
-    
-    /**
-     * public, parent 調用, 斷開藍芽連線
-     */
-    func dicConnBT() {
-        mBTBPService.BTDisconn()
     }
     
     /**
@@ -365,7 +358,10 @@ class BTBPMain: UIViewController, TestingMemberSelDelegate, BTBPServiceDelegate 
      */
     @IBAction func actBack(sender: UIBarButtonItem) {
         // BT 強制中斷
-        mBTBPService.BTDisconn()
+        if (mBTBPService.BT_ISREADYFOTESTING == true) {
+            mBTBPService.BTDisconn()
+            return
+        }
         
         self.dismissViewControllerAnimated(true, completion: nil)
     }
