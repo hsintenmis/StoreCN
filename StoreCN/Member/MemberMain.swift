@@ -120,6 +120,8 @@ class MemberMain: UIViewController, MFMessageComposeViewControllerDelegate, Memb
         if (arg0 == "memberpict") {
             let imgURL = pubClass.D_WEBURL + "upload/HP_" + (dictMember["memberid"] as! String) + ".png"
             imgPict.downloadImageFrom(link: imgURL, contentMode: UIViewContentMode.ScaleAspectFit)
+            bolParentReload = true
+            
             return
         }
     }

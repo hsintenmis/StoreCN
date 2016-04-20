@@ -29,7 +29,7 @@ class PubClass {
     // public
     /** 伺服器/網站 URL: http://pub.mysoqi.com/store_cn/001/ */
     let D_WEBURL = "http://pub.mysoqi.com/store_cn/001/"
-    //let D_WEBURL = "http://cn.mysoqi.com/store_cn/001/"
+    //let D_WEBURL = "http ://cn.mysoqi.com/store_cn/001/"
     
     /** HTE 網站 http://cnwww.mysoqi.com/storecn/ */
     let D_CNWWWURL = "http://cnwww.mysoqi.com/storecn/"

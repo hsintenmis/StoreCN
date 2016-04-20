@@ -115,8 +115,18 @@ class ImageClass {
      */
     private func taskHTTPConn(strURL: String!, AlertVC vcPopLoading: UIAlertController, callBack: (NewImage: UIImage?)->Void) {
         
+        // 刪除 caching data
+        NSURLCache.sharedURLCache().removeAllCachedResponses()
+        NSURLCache.sharedURLCache().diskCapacity = 0
+        NSURLCache.sharedURLCache().memoryCapacity = 0
+        
+        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        configuration.requestCachePolicy = .ReloadIgnoringLocalAndRemoteCacheData
+        let mSession = NSURLSession(configuration: configuration)
+        
+        
         // 產生 'task' 使用閉包
-        let task = NSURLSession.sharedSession().dataTaskWithURL( NSURL(string: strURL)!, completionHandler:{ (mNSData, mRespon, mNSErr) -> Void in
+        let task = mSession.dataTaskWithURL( NSURL(string: strURL)!, completionHandler:{ (mNSData, mRespon, mNSErr) -> Void in
             
             // http 回傳代碼, 200=OK
             if let httpResponse = mRespon as? NSHTTPURLResponse {

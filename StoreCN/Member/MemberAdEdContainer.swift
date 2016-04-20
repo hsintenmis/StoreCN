@@ -75,9 +75,9 @@ class MemberAdEdContainer: UITableViewController, UITextFieldDelegate {
         let intMaxYY = Int(pubClass.subStr(strToday, strFrom: 0, strEnd: 4))! - 10
         dictPickParm["birth_max"] = String(intMaxYY) + "1231"
         
-        dictPickParm["H_def"] = ["160", ".", "0"]
-        dictPickParm["H_minmax"] = [["max":220, "min":60], ["max":1, "min":1], ["max":9, "min":0]]
-        dictPickParm["W_def"] = ["50", ".", "0"]
+        dictPickParm["H_def"] = ["120", ".", "0"]
+        dictPickParm["H_minmax"] = [["max":220, "min":80], ["max":1, "min":1], ["max":9, "min":0]]
+        dictPickParm["W_def"] = ["15", ".", "0"]
         dictPickParm["W_minmax"] = [["max":180, "min":10], ["max":1, "min":1], ["max":9, "min":0]]
     }
     

@@ -20,11 +20,23 @@ protocol PubMemberSelectDelegate {
  */
 extension UIImageView {
     func downloadImageFrom(link link:String, contentMode: UIViewContentMode) {
-        NSURLSession.sharedSession().dataTaskWithURL( NSURL(string:link)!, completionHandler: {
+
+        // 刪除 caching data
+        NSURLCache.sharedURLCache().removeAllCachedResponses()
+        NSURLCache.sharedURLCache().diskCapacity = 0
+        NSURLCache.sharedURLCache().memoryCapacity = 0
+        
+        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        configuration.requestCachePolicy = .ReloadIgnoringLocalAndRemoteCacheData
+        let mSession = NSURLSession(configuration: configuration)
+        
+        // Session task 連線開始
+        mSession.dataTaskWithURL( NSURL(string:link)!, completionHandler: {
             (data, response, error) -> Void in
+            
             dispatch_async(dispatch_get_main_queue()) {
                 self.contentMode =  contentMode
-                if let data = data { self.image = UIImage(data: data) }
+                if let nsdataTmp = data { self.image = UIImage(data: nsdataTmp) }
                 
                 var hasImg = false;
                 if let httpResponse = response as? NSHTTPURLResponse {

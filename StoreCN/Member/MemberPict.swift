@@ -6,7 +6,7 @@ import UIKit
 import Foundation
 
 /**
- * 會員新增/編輯, 文字/圖片 資料儲存
+ * 會員圖片
  */
 class MemberPict: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CutImageDelegate {
     // delegate

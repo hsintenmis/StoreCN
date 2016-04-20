@@ -62,7 +62,7 @@ class MsgEditCont: UITableViewController, UIImagePickerControllerDelegate, UINav
         labDate.text = pubClass.formatDateWithStr(dictData["sdate"] as! String, type: 14)
         edTitle.text = dictData["title"] as? String
         txtContent.text = dictData["content"] as? String
-        swchType.on = (dictData["pict"] as! String == "pub") ? true : false
+        swchType.on = (dictData["type"] as! String == "pub") ? true : false
         
         // textView 外觀樣式
         txtContent.layer.cornerRadius = 5
