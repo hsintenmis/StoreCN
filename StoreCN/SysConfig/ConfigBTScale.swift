@@ -39,12 +39,12 @@ class ConfigBTScale: UIViewController, CBCentralManagerDelegate {
     private var aryTableData: Array<CBPeripheral> = []
     
     // 藍牙 CBCentralManager 參數
-    private var mBTCenter: CBCentralManager!  // BT mamager center
+    private var mBTCenter: CBCentralManager?  // BT mamager center
     private var currConnBTDev: CBPeripheral?  // 目前已連線的藍牙週邊設備
     
     /**
-    * View Load 程序
-    */
+     * View Load 程序
+     */
     override func viewDidLoad() {
         super.viewDidLoad()
         pubClass = PubClass()
@@ -54,8 +54,8 @@ class ConfigBTScale: UIViewController, CBCentralManagerDelegate {
     }
     
     /**
-    * 開始啟動藍牙 CBCentralManager
-    */
+     * 開始啟動藍牙 CBCentralManager
+     */
     private func actBTCenter() {
         mBTCenter = CBCentralManager(delegate: self, queue: nil)
     }
@@ -64,21 +64,26 @@ class ConfigBTScale: UIViewController, CBCentralManagerDelegate {
      * 中斷目前本機 與 連線的藍芽週邊裝置
      */
     private func disconnBTDev() {
+        mBTCenter!.stopScan()
+        mBTCenter = nil
+        
+        /*
         if (currConnBTDev != nil) {
             mBTCenter.cancelPeripheralConnection(currConnBTDev!)
         }
+        */
     }
     
     /**
      * 開始執行搜索程序
      */
     private func scanBTDev() {
-        mBTCenter.scanForPeripheralsWithServices(nil, options: nil)
+        mBTCenter!.scanForPeripheralsWithServices(nil, options: nil)
     }
     
     /**
      * #mark: CBCentralManagerDelegate
-     * 搜索藍牙週邊裝置
+     * 搜索藍牙週邊裝置, 找到裝置取得 'identifier' 立即斷開該裝置連線
      */
     func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
         
@@ -101,35 +106,6 @@ class ConfigBTScale: UIViewController, CBCentralManagerDelegate {
                 tableList.reloadData()
             }
         }
-    }
-    
-    /**
-     * #mark: CBCentralManagerDelegate
-     * 找到指定的BT, 開始查詢與連接 BT Service channel
-     */
-    func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral) {
-        
-        currConnBTDev = peripheral
-        
-        // 彈出確認視窗，資料儲存並跳離
-        let aryMsg = [pubClass.getLang("sysprompt"), pubClass.getLang("btsacel_bondmsg")]
-        
-        pubClass.popConfirm(self, aryMsg: aryMsg,
-            withHandlerYes: {
-                // 資料存入 'Prefer'
-                let strID = peripheral.identifier.UUIDString
-                let mPref = NSUserDefaults(suiteName: "standardUserDefaults")!
-                mPref.setObject(strID, forKey: "vscale")
-                
-                // 斷開連線跳離本頁
-                self.mBTCenter.stopScan()
-                self.disconnBTDev()
-                self.delegate?.BTScaleBondChange(strID)
-                
-                self.dismissViewControllerAnimated(true, completion: nil)
-            },
-            withHandlerNo: {}
-        )
     }
     
     /**
@@ -160,7 +136,7 @@ class ConfigBTScale: UIViewController, CBCentralManagerDelegate {
         case .Unsupported:
             msg = "本机蓝牙不支援目前的系统平台..."
         }
-
+        
         // 跳離或開始執行周邊搜索
         if (!bolReady) {
             pubClass.popIsee(self, Msg: msg, withHandler: {
@@ -168,10 +144,10 @@ class ConfigBTScale: UIViewController, CBCentralManagerDelegate {
             })
         }
         
-        self.mBTCenter.stopScan()
+        self.mBTCenter!.stopScan()
         scanBTDev()
     }
-
+    
     /**
      * #mark: UITableView Delegate
      * Section 的數量
@@ -214,41 +190,39 @@ class ConfigBTScale: UIViewController, CBCentralManagerDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         // 連結選擇的藍芽設備
-        self.mBTCenter.stopScan()
-        self.mBTCenter.connectPeripheral(aryTableData[indexPath.row], options: nil)
+        self.mBTCenter!.stopScan()
+        
+        // 取得該裝置 'ident' stirng 執行 prefer 存檔
+        let strId = (aryTableData[indexPath.row]).identifier.UUIDString
+        
+        pubClass.popConfirm(self, aryMsg: [pubClass.getLang("sysprompt"), pubClass.getLang("btsacel_bondmsg")], withHandlerYes: {self.saveProc(strId)}, withHandlerNo: {return})
+    }
+    
+    /**
+     * 取得該裝置 'ident' stirng, 資料存入 'Prefer'
+     */
+    private func saveProc(strId: String!) {
+        // 資料存入 'Prefer'
+        let mPref = NSUserDefaults(suiteName: "standardUserDefaults")!
+        mPref.setObject(strId, forKey: "vscale")
+        
+        // 斷開連線跳離本頁
+        self.disconnBTDev()
+        self.dismissViewControllerAnimated(true, completion: {self.delegate?.BTScaleBondChange(strId)})
     }
     
     /**
      * act, '解除綁定'
      */
     @IBAction func actDisBond(sender: UIBarButtonItem) {
-        let aryMsg = [pubClass.getLang("sysprompt"), pubClass.getLang("btsacel_disbondmsg")]
-        
-        pubClass.popConfirm(self, aryMsg: aryMsg,
-            withHandlerYes: {
-                // 資料存入 'Prefer'
-                let strID = ""
-                let mPref = NSUserDefaults(suiteName: "standardUserDefaults")!
-                mPref.setObject(strID, forKey: "vscale")
-                
-                // 斷開連線跳離本頁
-                self.mBTCenter.stopScan()
-                self.disconnBTDev()
-                self.delegate?.BTScaleBondChange(strID)
-                
-                self.dismissViewControllerAnimated(true, completion: nil)
-            },
-            withHandlerNo: {}
-        )
+        pubClass.popConfirm(self, aryMsg: [pubClass.getLang("sysprompt"), pubClass.getLang("btsacel_disbondmsg")], withHandlerYes: {self.saveProc("")}, withHandlerNo: {return})
     }
     
     /**
-    * act, 返回
-    */
+     * act, 返回
+     */
     @IBAction func actBack(sender: UIBarButtonItem) {
-        self.mBTCenter.stopScan()
         self.disconnBTDev()
-        
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     

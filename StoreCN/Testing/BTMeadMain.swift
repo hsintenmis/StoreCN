@@ -719,9 +719,8 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
             
             // 儲存失敗，直接跳離
             self.mBTMeadService.BTDisconn()
-            self.pubClass.popIsee(self, Msg: self.pubClass.getLang("err_trylatermsg"), withHandler: {
-                self.dismissViewControllerAnimated(true, completion: nil)
-            })
+            //self.pubClass.popIsee(self, Msg: self.pubClass.getLang("err_trylatermsg"), withHandler: {self.dismissViewControllerAnimated(true, completion: nil)})
+            return
         })
         
         return
@@ -747,13 +746,7 @@ class BTMeadMain: UIViewController, TestingMemberSelDelegate, BTMeadServiceDeleg
      * act, 點取 '返回' button
      */
     @IBAction func actBack(sender: UIBarButtonItem) {
-        // BT 強制中斷
-        if (self.mBTMeadService.BT_ISREADYFOTESTING == true) {
-            mBTMeadService.BTDisconn()
-            return
-        }
-        
-        self.dismissViewControllerAnimated(true, completion: nil)
+        mBTMeadService.BTDisconn()
     }
     
     /**

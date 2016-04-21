@@ -62,13 +62,6 @@ class BTBPMain: UIViewController, TestingMemberSelDelegate, BTBPServiceDelegate 
     }
     
     /**
-     * View DidAppear 程序
-     */
-    override func viewDidAppear(animated: Bool) {
-
-    }
-    
-    /**
      * 初始量測數值資料歸 0
      */
     private func clearTestingVal() {
@@ -345,9 +338,8 @@ class BTBPMain: UIViewController, TestingMemberSelDelegate, BTBPServiceDelegate 
             
             // 儲存失敗，直接跳離
             self.mBTBPService.BTDisconn()
-            self.pubClass.popIsee(self, Msg: self.pubClass.getLang("err_trylatermsg"), withHandler: {
-                self.dismissViewControllerAnimated(true, completion: nil)
-            })
+            //self.pubClass.popIsee(self, Msg: self.pubClass.getLang("err_trylatermsg"), withHandler: {self.dismissViewControllerAnimated(true, completion: nil)})
+            return
         })
         
         return
@@ -358,12 +350,10 @@ class BTBPMain: UIViewController, TestingMemberSelDelegate, BTBPServiceDelegate 
      */
     @IBAction func actBack(sender: UIBarButtonItem) {
         // BT 強制中斷
-        if (mBTBPService.BT_ISREADYFOTESTING == true) {
-            mBTBPService.BTDisconn()
-            return
-        }
+        mBTBPService.BTDisconn()
+        //self.dismissViewControllerAnimated(true, completion: nil)
         
-        self.dismissViewControllerAnimated(true, completion: nil)
+        return
     }
     
 }

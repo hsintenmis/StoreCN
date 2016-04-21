@@ -233,6 +233,7 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate, BTScaleS
 
         switch (identCode) {
         case "BT_conn":
+            // 藍牙斷線，一定跳離 VC
             if (result != true) {
                 pubClass.popIsee(self, Msg: msg, withHandler: {
                     self.dismissViewControllerAnimated(true, completion: nil)
@@ -283,13 +284,9 @@ class BTScaleMainCont: UITableViewController, TestingMemberSelDelegate, BTScaleS
     /**
     * public, parent 調用, 斷開藍芽連線
     */
-    func dicConnBT(dismissVCHandler handler: ()->Void ) {
-        if (mBTScaleService.BT_ISREADYFOTESTING == true) {
-            mBTScaleService.BTDisconn()
-            return
-        }
- 
-        handler()
+    func dicConnBT() {
+        mBTScaleService.BTDisconn()
+        return
     }
     
     /**

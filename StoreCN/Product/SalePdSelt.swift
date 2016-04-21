@@ -61,25 +61,9 @@ class SalePdSelt: UIViewController, SalePdSeltCellDelegate {
     /**
      * View DidAppear 程序
      */
-    override func viewDidAppear(animated: Bool) {
-        dispatch_async(dispatch_get_main_queue(), {
-            
-        })
-    }
-    
-    /**
-     * View DidAppear 程序
-     */
     override func viewWillDisappear(animated: Bool) {
         // 註銷鍵盤監聽
         NSNotificationCenter.defaultCenter().removeObserver(self)
-    }
-    
-    /**
-     * 初始與設定 VCview 內的 field
-     */
-    private func initViewField() {
-        
     }
     
     /**
@@ -251,4 +235,3 @@ class SalePdSelt: UIViewController, SalePdSeltCellDelegate {
     
     
 }
-

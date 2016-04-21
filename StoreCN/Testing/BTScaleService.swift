@@ -127,6 +127,8 @@ class BTScaleService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         if (mConnDev != nil) {
             if (IS_DEBUG) { print("let BT dev cancel connect") }
             mCentMgr.cancelPeripheralConnection(mConnDev!)
+        } else {
+            delegate?.handlerBLE("BT_conn", result: false, msg: pubClass.getLang("bt_connect_break"), dictData: nil)
         }
     }
     
@@ -140,6 +142,9 @@ class BTScaleService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         if (IS_DEBUG) { print("Discovered: \(peripheral.name)") }
         
         // 找到指定裝置 名稱 or addr
+         peripheral.identifier
+        
+        
         if (peripheral.name == D_BTDEVNAME0) {
             self.mConnDev = peripheral
             self.mCentMgr.stopScan()
@@ -172,6 +177,7 @@ class BTScaleService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         if (IS_DEBUG) { print("CBCentralManager Disconnection!") }
 
         // 本 class 執行相關 BLE 中斷程序, 標記：'BT_conn'
+        mConnDev = nil
         delegate?.handlerBLE("BT_conn", result: false, msg: pubClass.getLang("bt_connect_break"), dictData: nil)
     }
     

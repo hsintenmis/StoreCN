@@ -94,6 +94,8 @@ class BTMeadService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             
             //  handler 'centralManager' 的 'didDisconnectPeripheral'
             mCentMgr.cancelPeripheralConnection(mConnDev!)
+        } else {
+            delegate?.handlerBLE("BT_conn", result: false, msg: pubClass.getLang("bt_connect_break"), intVal: nil)
         }
     }
     
@@ -154,10 +156,7 @@ class BTMeadService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         if (IS_DEBUG) { print("CBCentralManager Disconnection!") }
         
         // 本 class 執行相關 BLE 中斷程序, 標記：'BT_conn'
-        mCentMgr = nil
-        mConnDev = nil
-        BT_ISREADYFOTESTING = false
-        
+        mConnDev = nil        
         delegate?.handlerBLE("BT_conn", result: false, msg: pubClass.getLang("bt_connect_break"), intVal: nil)
     }
     

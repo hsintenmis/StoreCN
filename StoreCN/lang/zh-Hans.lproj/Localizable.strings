@@ -205,7 +205,7 @@
 "config_profile_err_edTel" = "联络电话错误!";
 "config_profile_err_edStoreMaster" = "店长姓名错误!";
 
-"btsacel_bondmsg" = "要绑定的设备,是否有出现蓝牙标记符号?";
+"btsacel_bondmsg" = "請確認現場僅有一部藍芽設備,\n若有其他藍芽設備請務必關閉!\n請再次確定要绑定這個蓝牙設備?!";
 "btsacel_disbondmsg" = "确定要解除已绑定的蓝牙设备?";
 "btsacel_bondY" = "已绑定";
 "btsacel_bondN" = "未绑定";
@@ -449,6 +449,7 @@
 "bt_testingvalerr" = "量测数值异常, 请重新量测!";
 "bt_testing_success" = "量测完成!";
 "bt_savefirstseeresultmsg" = "量测资料储存后, 才能看到今日的量测结果说明!";
+"bt_devscalenobondmsg" = "體脂計未綁定!\n請到 [設定] 綁定體脂計";
 
 "sale_pruchaseqtyeditmsg" = "出货数量修改，将会影响以下资料：\n1. 该商品的库存数量\n2. 进货总金额\n3. 实际进货金额\n\n请再次确认是否修改?!";
 "sale_pricecusterr" = "出货实际金额错误!";

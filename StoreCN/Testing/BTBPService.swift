@@ -121,6 +121,8 @@ class BTBPService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         if (mConnDev != nil) {
             if (IS_DEBUG) { print("let BT dev cancel connect") }
             mCentMgr.cancelPeripheralConnection(mConnDev!)
+        } else {
+            delegate?.handlerBLE("BT_conn", result: false, msg: pubClass.getLang("bt_connect_break"), dictData: nil)
         }
     }
     

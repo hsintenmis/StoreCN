@@ -8,7 +8,7 @@ import Foundation
 /**
  * 進貨明細 編輯, 日期/總金額/備註
  */
-class PurchaseDetailEditContainer: UITableViewController, UITextFieldDelegate, UITextViewDelegate, PickerDateTimeDelegate {
+class PurchaseDetailEditContainer: UITableViewController, PickerDateTimeDelegate {
     
     // @IBOutlet
     @IBOutlet var tableList: UITableView!
@@ -31,6 +31,8 @@ class PurchaseDetailEditContainer: UITableViewController, UITextFieldDelegate, U
     // 其他參數
     private var mPicker: PickerDateTime!  // datetime Picker
     private var strCurrDate: String!  // 目前選擇的退貨日期
+    private var keyboardHeight: CGFloat = 150.0  // 固定虛擬鍵盤高度
+    private var currTextField: UITextField?  // 目前點取的 'UITextField'
     
     /**
      * View Load 程序
@@ -61,7 +63,20 @@ class PurchaseDetailEditContainer: UITableViewController, UITextFieldDelegate, U
      * View WillAppear 程序
      */
     override func viewWillAppear(animated: Bool) {
+        // 设置监听键盘事件函数
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        
         initViewField()
+    }
+    
+    /**
+     * View DidAppear 程序
+     */
+    override func viewWillDisappear(animated: Bool) {
+        // 註銷鍵盤監聽
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     /**
@@ -93,13 +108,21 @@ class PurchaseDetailEditContainer: UITableViewController, UITextFieldDelegate, U
     }
     
     /**
-     * #mark: UITextFieldDelegate
+     * #mark: UIText 'View' Delegate
      * 虛擬鍵盤: 點取 edText 開始輸入字元
      */
     func textViewDidBeginEditing(textView: UITextView) {
         if (textView == txtMemo) {
             btnCloseKB.alpha = 1.0
         }
+    }
+    
+    /**
+     * #mark: UIText 'Field' Delegate
+     * 虛擬鍵盤: 點取 edField 開始輸入字元
+     */
+    func textFieldDidBeginEditing(textField: UITextField) {
+        currTextField = textField
     }
     
     /**
@@ -154,5 +177,39 @@ class PurchaseDetailEditContainer: UITableViewController, UITextFieldDelegate, U
     @IBAction func actCloseKB(sender: UIButton) {
         txtMemo.resignFirstResponder()
         btnCloseKB.alpha = 0.0
+    }
+    
+    /**
+     * NSNotificationCenter
+     * #mark: 鍵盤: 处理弹出事件, 僅針對最底端的 editview 作用
+     */
+    func keyboardWillShow(notification:NSNotification) {
+        if (currTextField != edPriceCust) {
+            return
+        }
+        
+        if let _ = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+
+            let width = self.view.frame.width
+            let height = self.view.frame.height
+            let rect = CGRectMake(0.0, -(keyboardHeight), width, height)
+            self.view.frame = rect
+        }
+    }
+    
+    /**
+     * NSNotificationCenter
+     * #mark: 鍵盤: 处理關閉事件, 僅針對最底端的 editview 作用
+     */
+    func keyboardWillHide(notification:NSNotification) {
+        if (currTextField != edPriceCust) {
+            return
+        }
+        currTextField = nil
+        
+        let width = self.view.frame.width
+        let height = self.view.frame.height
+        let rect = CGRectMake(0.0, 0.0, width, height)
+        self.view.frame = rect
     }
 }

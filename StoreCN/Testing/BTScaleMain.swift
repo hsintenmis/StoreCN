@@ -26,6 +26,20 @@ class BTScaleMain: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    
+    /**
+     * View DidAppear 程序
+     */
+    override func viewDidAppear(animated: Bool) {
+        // 檢查設備是否已綁定
+        if let strTmp = pubClass.getPrefData("vscale") as? String {
+            if (strTmp.characters.count > 0) {
+                return
+            }
+        }
+        
+        pubClass.popIsee(self, Msg: pubClass.getLang("bt_devscalenobondmsg"), withHandler: {self.dismissViewControllerAnimated(true, completion: nil)})
+    }
 
     /**
      * Segue 跳轉頁面
@@ -105,9 +119,9 @@ class BTScaleMain: UIViewController {
             }
             
             // 儲存失敗，直接跳離            
-            self.pubClass.popIsee(self, Msg: self.pubClass.getLang("err_trylatermsg"), withHandler: {
-                self.dismissViewControllerAnimated(true, completion: nil)
-            })
+            self.mBTScaleMainCont.dicConnBT()
+            //self.pubClass.popIsee(self, Msg: self.pubClass.getLang("err_trylatermsg"), withHandler: {self.dismissViewControllerAnimated(true, completion: nil)})
+            return
         })
         
         return
@@ -118,7 +132,7 @@ class BTScaleMain: UIViewController {
      */
     @IBAction func actHome(sender: UIBarButtonItem) {
         // BT 強制中斷
-        mBTScaleMainCont.dicConnBT(dismissVCHandler: {self.dismissViewControllerAnimated(true, completion: nil)})
+        mBTScaleMainCont.dicConnBT()
     }
     
 }
