@@ -15,7 +15,10 @@ class MainMenu: UIViewController {
     @IBOutlet weak var colviewMenu: UICollectionView!
     @IBOutlet weak var btnRemind: UIButton!
     @IBOutlet weak var labMsg: UILabel!
-
+    @IBOutlet weak var labActTitle: UILabel!
+    @IBOutlet weak var labActMsg: UILabel!
+    @IBOutlet weak var btnActInfo: UIButton!
+    
     // common property
     private let pubClass = PubClass()
     private let mJSONClass = JSONClass()
@@ -31,15 +34,15 @@ class MainMenu: UIViewController {
     private var strTodayMsg = ""
     private var currMenuIndexPath: NSIndexPath?
     private var dictRemind: Dictionary<String, AnyObject> = [:]  // 今日提醒全部資料
-
+    private var dictActInfo: Dictionary<String, AnyObject> = [:]  // 店家活動專區資料
+    
     /**
      * View Load 程序
      */
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 全域變數 delegate reload
-        //pubClass.ReloadAppDelg()
+        btnActInfo.layer.cornerRadius = 5.0
     }
     
     /**
@@ -118,6 +121,11 @@ class MainMenu: UIViewController {
         
         // 目前登入者名稱
         labMsg.text = String(format: pubClass.getLang("FMT_currentloginname"), dictRS["data"]!["name"] as! String)
+        
+        // 2016/04/27, 新增店家活動專區
+        dictActInfo = dictData["actinfo"] as! Dictionary<String, String>
+        labActTitle.text = dictActInfo["title"] as? String
+        labActMsg.text = dictActInfo["msg"] as? String
     }
     
     /**
@@ -451,6 +459,14 @@ class MainMenu: UIViewController {
         if (strIdent == "RemindList") {
             let mVC = segue.destinationViewController as! RemindList
             mVC.dictAllData = self.dictRemind
+            mVC.strToday = strToday
+            return
+        }
+        
+        // 店家活動專區
+        if (strIdent == "ActInfo") {
+            let mVC = segue.destinationViewController as! ActInfo
+            mVC.dictAllData = self.dictActInfo
             mVC.strToday = strToday
             return
         }
