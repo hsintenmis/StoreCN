@@ -28,7 +28,7 @@ class AnalyDataHealth: UIViewController {
     private var dictTableData: Dictionary<String, Array<Dictionary<String, AnyObject>>> = [:]
     
     // 其他參數設定
-    private let aryField = ["login", "testing"]  // 兩個 table datasource field name
+    private let aryField = ["testing", "login"]  // 兩個 table datasource field name
     private var currPosition = 0
     private var bolReload = true // 頁面是否需要 http reload
     

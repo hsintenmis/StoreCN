@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -510,10 +509,10 @@
             </objects>
             <point key="canvasLocation" x="3019" y="-267"/>
         </scene>
-        <!--Analy Data Health-->
+        <!--健康精灵分析-->
         <scene sceneID="d2V-e2-CZO">
             <objects>
-                <viewController storyboardIdentifier="AnalyDataHealth" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ezv-to-ZKW" customClass="AnalyDataHealth" customModule="StoreCN" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AnalyDataHealth" title="健康精灵分析" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ezv-to-ZKW" customClass="AnalyDataHealth" customModule="StoreCN" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="vXy-Bh-Qql"/>
                         <viewControllerLayoutGuide type="bottom" id="wtW-zW-Po6"/>
