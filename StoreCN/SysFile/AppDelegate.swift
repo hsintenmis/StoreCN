@@ -20,6 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
+        // 螢幕鎖定取消
+        UIApplication.sharedApplication().idleTimerDisabled = true
+        
         return true
     }
     
