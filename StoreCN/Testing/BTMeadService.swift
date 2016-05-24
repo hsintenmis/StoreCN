@@ -39,8 +39,8 @@ class BTMeadService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     var BT_ISREADYFOTESTING = false  // 藍牙周邊是否可以開始使用
     
     // 藍芽裝置名稱
-    private let aryBTNAME = ["HC-08", "HTEBT401"]
-    private let strSimDevName = "EMD"  // %EMD%
+    private let aryBTNAME = ["HC", "HTE", "EMD", "MD", "MEAD"]
+    //private let strSimDevName = "EMD"  // %EMD%
     
     // UUID, Service, Char
     private let UID_SERV: CBUUID = CBUUID(string: "0000ffe0-0000-1000-8000-00805f9b34fb")
@@ -121,7 +121,8 @@ class BTMeadService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         
         // 找到指定裝置 名稱 or addr
         for strDevName in aryBTNAME {
-            if (currDevName == strDevName || currDevName.uppercaseString.rangeOfString(strSimDevName) != nil ) {
+            //if (currDevName == strDevName || currDevName.uppercaseString.rangeOfString(strSimDevName) != nil ) {
+            if (currDevName.uppercaseString.rangeOfString(strDevName) != nil ) {
                 self.mConnDev = peripheral
                 self.mCentMgr.stopScan()
                 self.mCentMgr.connectPeripheral(peripheral, options: nil)
